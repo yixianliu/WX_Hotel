@@ -35,27 +35,6 @@ VALUES
  */
 
 /**
- * 诚信值
- */
-INSERT INTO `#DB_PREFIX#User_Honest`
-VALUES
-  (NULL, 'H1', 1, '一诺千金', 10000, '非常可靠', 'On', #TIME#, #TIME#),
-  (NULL, 'H2', 2, '妥妥当当', 9000, '可靠', 'On', #TIME#, #TIME#),
-  (NULL, 'H3', 3, '踏实小伙子', 8000, '不浮躁,工作踏实,让人安全信服.', 'On', #TIME#, #TIME#),
-  (NULL, 'H4', 4, '稳重诚实', 4000, '有安稳沉着性格的成年人.', 'On', #TIME#, #TIME#),
-  (NULL, 'H5', 5, '背景清白', 7000, '本版块贡献最高者', 'On', #TIME#, #TIME#),
-  (NULL, 'H6', 6, '江湖好手', 6000, '金牌会员', 'On', #TIME#, #TIME#),
-  (NULL, 'H7', 7, '赤诚相待', 5000, '高级会员', 'On', #TIME#, #TIME#),
-  (NULL, 'H8', 8, '和蔼可亲', 2000, '中级会员', 'On', #TIME#, #TIME#),
-  (NULL, 'H9', 9, '平平实实', 1000, '初级会员', 'On', #TIME#, #TIME#),
-  (NULL, 'H10', 10, '迷途小羔羊', 500, '普通会员', 'On', #TIME#, #TIME#),
-  (NULL, 'H11', 11, '不务正业', 100, '验证用户', 'On', #TIME#, #TIME#),
-  (NULL, 'H12', 12, '偷偷摸摸', 50, '瞒着别人做事,不敢让别人知道.', 'On', #TIME#, #TIME#),
-  (NULL, 'H13', 13, '街头流氓', 10, '有待验证', 'On', #TIME#, #TIME#),
-  (NULL, 'H14', 14, '居心不良', -10, '不老实', 'On', #TIME#, #TIME#),
-  (NULL, 'H15', 15, '穷凶极恶', -100, '居心不良的人', 'On', #TIME#, #TIME#);
-
-/**
  * 用户安全问题
  */
 INSERT INTO `#DB_PREFIX#User_Problems`
@@ -110,10 +89,10 @@ VALUES
   (NULL, 'H1', 1, null, null, 'R15', NULL, 'M0', '酒店中心', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'HN1', 1, 'urls', 'center/index', 'R15', NULL, 'H1', '首页', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'HN2', 2, 'urls', 'product/index', 'R15', NULL, 'H1', '酒店中心', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'HN2', 2, 'urls', null, 'R15', NULL, 'H1', '酒店中心', NULL, 'On', 'On', #TIME#, #TIME#),
 
-  (NULL, 'HSV1', 1, 'urls', 'center/index', 'R15', NULL, 'HN2', '酒店中心', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'HSI2', 2, 'urls', 'center/index', 'R15', NULL, 'HN2', '热门酒店', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'HSV1', 1, 'urls', 'hotel/index', 'R15', NULL, 'HN2', '房间分类', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'HSI2', 2, 'urls', 'hotel/index', 'R15', NULL, 'HN2', '海景房', NULL, 'On', 'On', #TIME#, #TIME#),
 
   /*
    用户中心 / User

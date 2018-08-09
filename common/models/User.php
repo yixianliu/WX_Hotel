@@ -52,7 +52,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'user_id'    => '用户 Id',
             'username'   => '用户名称',
             'r_key'      => '角色',
-            'h_key'      => '诚信级别',
             'reg_time'   => '注册时间',
             'is_using'   => '审核状态',
             'nickname'   => '昵称',

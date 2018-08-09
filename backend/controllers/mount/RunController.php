@@ -37,11 +37,10 @@ class RunController extends BaseController
         }
 
         // 批量SQL语句
-        $Sql_Data = file_get_contents(Yii::getAlias('@common') . '/Sample/base.sql') .
-            file_get_contents(Yii::getAlias('@common') . '/Sample/merchant.sql') .
-            file_get_contents(Yii::getAlias('@common') . '/Sample/product.sql') .
-            file_get_contents(Yii::getAlias('@common') . '/Sample/power.sql') .
-            file_get_contents(Yii::getAlias('@common') . '/Sample/data.sql');
+        $Sql_Data = file_get_contents(Yii::getAlias('@backend') . '/web/Sql/base.sql') .
+            file_get_contents(Yii::getAlias('@backend') . '/web/Sql/product.sql') .
+            file_get_contents(Yii::getAlias('@backend') . '/web/Sql/power.sql') .
+            file_get_contents(Yii::getAlias('@backend') . '/web/Sql/data.sql');
 
         $Sql_Data = str_ireplace('#DB_PREFIX#', Yii::$app->components['db']['tablePrefix'], $Sql_Data);
 

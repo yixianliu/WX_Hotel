@@ -111,50 +111,6 @@ CREATE TABLE `#DB_PREFIX#Management` (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /**
- * 版块
- */
-DROP TABLE IF EXISTS `#DB_PREFIX#Section`;
-CREATE TABLE `#DB_PREFIX#Section` (
-    `id` INT(11) NULL AUTO_INCREMENT,
-    `appoint_role_id` INT(11) UNSIGNED NULL COMMENT '指定角色ID访问',
-    `greater_role_id` INT(11) UNSIGNED NULL COMMENT '大于等于此角色ID才能访问',
-    `s_key` VARCHAR(55) NOT NULL COMMENT '版块关键KEY',
-    `sort_id` INT(11) UNSIGNED NOT NULL COMMENT '排序ID',
-    `name` VARCHAR(85) NOT NULL COMMENT '名称',
-    `description` TEXT NULL COMMENT '描述',
-    `keywords` VARCHAR(125) NULL COMMENT '关键字',
-    `ico_class` VARCHAR(85) NOT NULL COMMENT '版块图标样式',
-    `parent_id` VARCHAR(55) NOT NULL COMMENT '父类KEY',
-    `is_ad` SET('On', 'Off') NOT NULL COMMENT '广告',
-    `is_post` SET('On', 'Off') NOT NULL COMMENT '发布帖子',
-    `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `s_key` (`s_key`),
-    UNIQUE `name` (`name`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/**
- * 黑名单
- */
-DROP TABLE IF EXISTS `#DB_PREFIX#Section_BlackList`;
-CREATE TABLE `#DB_PREFIX#Section_Blacklist` (
-    `id` INT(11) NULL AUTO_INCREMENT,
-    `s_key` VARCHAR(20) NOT NULL COMMENT '版块ID',
-    `user_id` VARCHAR(55) NOT NULL COMMENT '用户ID',
-    `name` VARCHAR(55) NOT NULL COMMENT '名称',
-    `address` VARCHAR(80) NOT NULL COMMENT 'IP地址',
-    `mac` VARCHAR(80) NOT NULL COMMENT 'MAC地址',
-    `area` VARCHAR(80) NOT NULL COMMENT '区域',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
-    PRIMARY KEY (`id`),
-    KEY `s_key` (`s_key`),
-    KEY `user_id` (`user_id`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/**
  * + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + -
  * 用户
  * + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + -
@@ -172,7 +128,6 @@ CREATE TABLE `#DB_PREFIX#User` (
     `r_key` VARCHAR(55) NOT NULL COMMENT '角色关键KEY',
     `exp` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '经验值',
     `credit` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '积分',
-    `gold` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '金币',
     `nickname` VARCHAR(85) NULL DEFAULT NULL COMMENT '昵称',
     `signature` TEXT NULL DEFAULT NULL COMMENT '个性签名',
     `address` VARCHAR(125) NULL DEFAULT NULL COMMENT '通讯地址',
@@ -230,44 +185,6 @@ CREATE TABLE `#DB_PREFIX#User_Config` (
     `updated_at` integer NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
     UNIQUE KEY `user_id` (`user_id`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/**
- * 用户权威值
- */
-DROP TABLE IF EXISTS `#DB_PREFIX#User_Authority`;
-CREATE TABLE `#DB_PREFIX#User_Authority` (
-    `id` INT(11) NULL AUTO_INCREMENT,
-    `authority_key` VARCHAR(55) NOT NULL COMMENT '权威KEY',
-    `sort_id` INT(11) UNSIGNED NOT NULL COMMENT '排序',
-    `name` VARCHAR(55) NOT NULL COMMENT '名称',
-    `exp` INT(11) UNSIGNED NOT NULL COMMENT '经验值',
-    `description` TEXT NOT NULL COMMENT '描述',
-    `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `authority_key` (`authority_key`),
-    UNIQUE `name` (`name`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/**
- * 用户诚信度
- */
-DROP TABLE IF EXISTS `#DB_PREFIX#User_Honest`;
-CREATE TABLE `#DB_PREFIX#User_Honest` (
-    `id` INT(11) NULL AUTO_INCREMENT,
-    `h_key` VARCHAR(20) NOT NULL COMMENT '诚信KEY',
-    `sort_id` INT(11) UNSIGNED NOT NULL COMMENT '排序',
-    `name` VARCHAR(55) NOT NULL COMMENT '名称',
-    `exp` INT(11) UNSIGNED NOT NULL COMMENT '诚信经验值',
-    `description` TEXT NOT NULL COMMENT '描述',
-    `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `honest_key` (`h_key`),
-    UNIQUE `name` (`name`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /**

@@ -23,7 +23,7 @@ CREATE TABLE `#DB_PREFIX#Role` (
     `name` VARCHAR(85) NOT NULL COMMENT '名称',
     `exp` INT(11) UNSIGNED NOT NULL COMMENT '经验值',
     `description` TEXT NULL COMMENT '注释',
-    `ico_class` VARCHAR(125) NULL COMMENT '角色图标样式',
+    `json_data` VARCHAR(125) NULL COMMENT 'Json 数据',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
     `created_at` integer NOT NULL DEFAULT '0',
     `updated_at` integer NOT NULL DEFAULT '0',
