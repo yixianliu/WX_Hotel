@@ -1,34 +1,22 @@
 <?php
+
+/**
+ * @abstract 用户模型
+ * @author   Yxl <zccem@163.com>
+ */
+
 namespace common\models;
 
 use Yii;
 use yii\base\NotSupportedException;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
-use yii\web\IdentityInterface;
 
-/**
- * User model
- *
- * @property integer $id
- * @property string $username
- * @property string $password_hash
- * @property string $password_reset_token
- * @property string $email
- * @property string $auth_key
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
- */
-class User extends ActiveRecord implements IdentityInterface
+class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
 
+    public $auth_key;
 
     /**
-     * {@inheritdoc}
+     * @abstract 数据库表名
      */
     public static function tableName()
     {
@@ -36,36 +24,81 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
+     * @abstract 验证规则
      */
     public function rules()
     {
+
         return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+
+            [['username', 'r_key',], 'required'],
+            [['r_key', 'nickname',], 'string'],
+
+            // 默认
+            [['nickname',], 'default', 'value' => null],
+            [['is_microhurt', 'is_head',], 'default', 'value' => 'Off'],
+            [['is_display',], 'default', 'value' => 'On'],
+            [['is_using',], 'default', 'value' => 'Not'],
+            [['r_key',], 'default', 'value' => 'R15'],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @abstract 指定属性标签
      */
-    public static function findIdentity($id)
+    public function attributeLabels()
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return [
+            'user_id'    => '用户 Id',
+            'username'   => '用户名称',
+            'r_key'      => '角色',
+            'h_key'      => '诚信级别',
+            'reg_time'   => '注册时间',
+            'is_using'   => '审核状态',
+            'nickname'   => '昵称',
+            'rePassword' => '二次密码',
+            'birthday'   => '出生年月日',
+        ];
     }
 
     /**
-     * {@inheritdoc}
+     * 查找用户ID
+     *
+     * @param $id
+     *
+     * @return static
+     */
+    public static function findById($id)
+    {
+        return static::find()->select(Role::tableName() . ".name as rname, " . self::tableName() . ".*, ")
+            ->joinWith('role')
+            ->where([self::tableName() . '.id' => $id])
+            ->one();
+    }
+
+    /**
+     * Finds user by username
+     *
+     * @param string $username
+     *
+     * @return static|null
+     */
+    public static function findByUsername($username)
+    {
+        return static::find()->where(['username' => $username]);
+    }
+
+    /**
+     * @inheritdoc 登录会调用
+     */
+    public static function findIdentity($id)
+    {
+        return static::findOne(['id' => $id]);
+        // return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+    }
+
+    /**
+     * @inheritdoc
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
@@ -73,53 +106,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
-    }
-
-    /**
-     * Finds user by password reset token
-     *
-     * @param string $token password reset token
-     * @return static|null
-     */
-    public static function findByPasswordResetToken($token)
-    {
-        if (!static::isPasswordResetTokenValid($token)) {
-            return null;
-        }
-
-        return static::findOne([
-            'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
-        ]);
-    }
-
-    /**
-     * Finds out if password reset token is valid
-     *
-     * @param string $token password reset token
-     * @return bool
-     */
-    public static function isPasswordResetTokenValid($token)
-    {
-        if (empty($token)) {
-            return false;
-        }
-
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
-        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
-        return $timestamp + $expire >= time();
-    }
-
-    /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getId()
     {
@@ -127,7 +114,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAuthKey()
     {
@@ -135,22 +122,11 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function validateAuthKey($authKey)
     {
         return $this->getAuthKey() === $authKey;
-    }
-
-    /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
-     */
-    public function validatePassword($password)
-    {
-        return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
 
     /**
@@ -160,7 +136,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function setPassword($password)
     {
-        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+        $this->password = Yii::$app->security->generatePasswordHash($password);
     }
 
     /**
@@ -186,4 +162,32 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    /**
+     * 所有用户
+     *
+     * @param null $status
+     *
+     * @return $this
+     */
+    public static function findByAll($status = null)
+    {
+
+        // 审核状态
+        $array = !empty($status) ? [self::tableName() . '.is_using' => $status] : ['!=', self::tableName() . '.is_using', 'null'];
+
+        return static::find()->where($array)
+            ->joinWith('role')
+            ->orderBy(self::tableName() . '.user_id')
+            ->all();
+    }
+
+    /**
+     * @abstract 获取产品的等级
+     */
+    public function getRole()
+    {
+        return $this->hasOne(Role::className(), ['r_key' => 'r_key']);
+    }
+
 }

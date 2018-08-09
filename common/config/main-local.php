@@ -6,7 +6,7 @@ return [
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=fc_hotel',
             'username' => 'root',
-            'password' => '',
+            'password' => 'root',
             'charset' => 'utf8',
         ],
 
