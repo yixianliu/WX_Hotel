@@ -137,21 +137,16 @@ class Product extends \yii\db\ActiveRecord
         // 审核状态
         $array = !empty($status) ? [self::tableName() . '.is_audit' => $status] : ['!=', self::tableName() . '.is_audit', null];
 
-        // 版块
-        $skeyArray = !empty($sKey) ? [self::tableName() . '.s_key' => $sKey] : ['!=', self::tableName() . '.s_key', null];
-
         // 分类
-        $ckeyArray = !empty($cKey) ? [self::tableName() . '.c_key' => $cKey] : ['!=', self::tableName() . '.s_key', null];
+        $cKeyArray = !empty($cKey) ? [self::tableName() . '.c_key' => $cKey] : ['!=', self::tableName() . '.c_key', null];
 
         if ($page == 'off') {
 
             // 不能用all(), 用了分页无法使用
-            return static::find()->select(User::tableName() . ".username, " . ProductLevel::tableName() . '.name as lname, ' . self::tableName() . ".*")
+            return static::find()->select(User::tableName() . ".username, " . ', ' . self::tableName() . ".*")
                 ->joinWith('user')
-                ->joinWith('level')
                 ->where($array)
-                ->andWhere($ckeyArray)
-                ->andWhere($skeyArray)
+                ->andWhere($cKeyArray)
                 ->orderBy([self::tableName() . '.product_id' => SORT_DESC])
                 ->asArray()
                 ->all();
@@ -160,10 +155,8 @@ class Product extends \yii\db\ActiveRecord
 
         return static::find()->select(User::tableName() . ".username, " . ProductLevel::tableName() . '.name as lname, ' . self::tableName() . ".*")
             ->joinWith('user')
-            ->joinWith('level')
             ->where($array)
-            ->andWhere($ckeyArray)
-            ->andWhere($skeyArray)
+            ->andWhere($cKeyArray)
             ->orderBy([self::tableName() . '.product_id' => SORT_DESC]);
 
     }
@@ -223,14 +216,6 @@ class Product extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['user_id' => 'user_id']);
-    }
-
-    /**
-     * @abstract 获取产品的等级
-     */
-    public function getLevel()
-    {
-        return $this->hasOne(ProductLevel::className(), ['l_key' => 'l_key']);
     }
 
     /**
