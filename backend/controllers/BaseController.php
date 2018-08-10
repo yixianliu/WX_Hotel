@@ -34,7 +34,7 @@ class BaseController extends Controller
 
         // Session
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(['/login/view']);
+            return $this->redirect(['/member/login']);
         }
 
         static::$assist = \common\models\Assist::findByData();

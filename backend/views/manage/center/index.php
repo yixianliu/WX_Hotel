@@ -18,18 +18,19 @@ function quick_dev_insights_phpinfo()
 {
     ob_start();
     phpinfo(11);
-    $phpinfo = array('phpinfo' => array());
+    $phpinfo = ['phpinfo' => []];
 
     if (preg_match_all('#(?:<h2>(?:<a name=".*?">)?(.*?)(?:</a>)?</h2>)|(?:<tr(?: class=".*?")?><t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>)?)?</tr>)#s', ob_get_clean(), $matches, PREG_SET_ORDER)) {
         foreach ($matches as $match) {
+
             if (strlen($match[1])) {
-                $phpinfo[ $match[1] ] = array();
+                $phpinfo[$match[1]] = [];
             } else if (isset($match[3])) {
                 $keys1 = array_keys($phpinfo);
-                $phpinfo[ end($keys1) ][ $match[2] ] = isset($match[4]) ? array($match[3], $match[4]) : $match[3];
+                $phpinfo[end($keys1)][$match[2]] = isset($match[4]) ? [$match[3], $match[4]] : $match[3];
             } else {
                 $keys1 = array_keys($phpinfo);
-                $phpinfo[ end($keys1) ][] = $match[2];
+                $phpinfo[end($keys1)][] = $match[2];
 
             }
 
@@ -69,31 +70,26 @@ $data = null;
 
 ?>
 
-<div class="col-lg-12">
-    <section class="box ">
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-body" style="word-break : break-all;">
 
-        <header class="panel_header"><h2 class="title pull-left"><?= Html::encode($this->title) ?></h2></header>
+                <?php if (!empty($data)): ?>
 
-        <div class="content-body">
-            <div class="row" style="word-break : break-all;">
-                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <?= $data ?>
 
-                    <?php if (!empty($data)): ?>
+                <?php else: ?>
 
-                        <?= $data ?>
+                    <h1>欢迎使用企业网站后台!!</h1>
 
-                    <?php else: ?>
+                    <h3><?= Html::a('发布产品', Url::to(['admin/product/create'])) ?></h3>
+                    <h3><?= Html::a('发布新闻', Url::to(['admin/news/create'])) ?></h3>
+                    <h3><?= Html::a('发布采购', Url::to(['admin/purchase/create'])) ?></h3>
 
-                        <h1>欢迎使用企业网站后台!!</h1>
+                <?php endif; ?>
 
-                        <h3><?= Html::a('发布产品', Url::to(['admin/product/create'])) ?></h3>
-                        <h3><?= Html::a('发布新闻', Url::to(['admin/news/create'])) ?></h3>
-                        <h3><?= Html::a('发布采购', Url::to(['admin/purchase/create'])) ?></h3>
-
-                    <?php endif; ?>
-
-                </div>
             </div>
         </div>
-    </section>
+    </div>
 </div>

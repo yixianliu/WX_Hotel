@@ -153,6 +153,12 @@ VALUES
   (NULL, 'AuditA6', 14, 'urls', null, 'R15', NULL, 'A3', '认证角色管理', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuditA7', 15, 'urls', null, 'R15', NULL, 'A3', '订单中心', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuditA8', 16, 'urls', null, 'R15', NULL, 'A3', '卡卷管理', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuditA9', 17, 'urls', null, 'R15', NULL, 'A3', '酒店管理', NULL, 'On', 'On', #TIME#, #TIME#),
+
+  (NULL, 'AuthRoom1', 1, 'urls', '/hotel/index', 'R15', NULL, 'AuditA9', '房间列表', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom2', 2, 'urls', '/hotel/create', 'R15', NULL, 'AuditA9', '添加房间', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom3', 3, 'urls', '/hotel-cls/index', 'R15', NULL, 'AuditA9', '房间分类列表', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom4', 4, 'urls', '/hotel-cls/create', 'R15', NULL, 'AuditA9', '添加房间分类', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'AuthCoupon1', 1, 'urls', '/coupon/index', 'R15', NULL, 'AuditA8', '卡卷列表', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthCoupon2', 2, 'urls', '/coupon/create', 'R15', NULL, 'AuditA8', '添加卡卷', NULL, 'On', 'On', #TIME#, #TIME#),

@@ -23,7 +23,7 @@ class BaseController extends Controller
 
         // 跳转
         if (file_exists(Yii::getAlias('@common') . '/' . Yii::$app->params['WebInfo']['RD_FILE']))
-            $this->redirect(['/center/view']);
+            $this->redirect(['/center/index']);
 
         // 帐号密码
         Yii::setAlias('@Username', 'yixianliu');

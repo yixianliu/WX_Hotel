@@ -15,7 +15,7 @@ return [
     'id'                  => 'app-backend',
     'basePath'            => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
-//    'bootstrap'           => ['log'],
+    'bootstrap'           => ['log'],
     'modules'             => [],
     'components' => [
 

@@ -22,10 +22,6 @@ class CenterController extends BaseController
 	public function actionIndex()
 	{
 
-        $result['noAuditProduct'] = Product::findByAll('On');
-
-        $result['noAuditUser'] = User::findByAll('Off');
-
 		return $this->render('index');
 	}
 
@@ -37,6 +33,10 @@ class CenterController extends BaseController
 
         // 初始化
         $result = array();
+
+        $result['noAuditProduct'] = Product::findByAll('On');
+
+        $result['noAuditUser'] = User::findByAll('Off');
 
         return $this->render('view', ['result' => $result]);
     }

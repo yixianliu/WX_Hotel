@@ -38,7 +38,7 @@ $this->beginPage();
 
         <h1><a href="#" title="<?= Yii::$app->params['Conf']['NAME'] ?>" tabindex="-1"><?= Yii::$app->params['Conf']['NAME'] ?></a></h1>
 
-        <?php $form = ActiveForm::begin(['action' => ['admin/member/login'], 'method' => 'post', 'id' => $model->formName()]); ?>
+        <?php $form = ActiveForm::begin(['action' => ['member/login'], 'method' => 'post', 'id' => $model->formName()]); ?>
 
         <p>
             <?= $form->field($model, 'username')->textInput(['class' => 'input', 'placeholder' => '帐号...'])->label('帐号'); ?>

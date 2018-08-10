@@ -98,4 +98,5 @@ class Conf extends ActiveRecord
     {
         return static::findOne(['id' => $id]);
     }
+
 }

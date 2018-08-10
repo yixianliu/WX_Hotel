@@ -1,120 +1,111 @@
 <?php
 
+/**
+ * @abstract 安装全局文件
+ * @author   Yxl <zccem@163.com>
+ */
+
 use yii\helpers\Url;
 use yii\helpers\Html;
 use backend\assets\AppAsset;
-use common\widgets\iConf\ConfList;
 
-// $this 代表视图对象
-AppAsset::register($this);
-
-if (!file_exists(Yii::getAlias('@webroot') . '/' . Yii::$app->params['WebInfo']['RD_FILE']) || Yii::$app->user->isGuest) {
-    return false;
+// 跳转安装
+if (!file_exists(Yii::getAlias('@common') . '/' . Yii::$app->params['WebInfo']['RD_FILE'])) {
+    return;
 }
+
+AppAsset::register($this);  // $this 代表视图对象
+
+$session = Yii::$app->session;
 
 $this->beginPage();
 
 ?>
 
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
+    <!DOCTYPE html>
+    <html lang="<?= Yii::$app->language ?>">
+    <head>
 
-    <?= ConfList::widget(['config' => [$this->title, 'head']]); ?>
+        <meta charset="<?= Yii::$app->charset ?>">
 
-    <?php $this->head() ?>
+        <title><?= Html::encode($this->title) ?> - <?= Yii::$app->params['WebInfo']['TITLE']; ?> - <?= Yii::$app->params['WebInfo']['NAME']; ?></title>
 
-</head>
-<body class=" ">
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'/>
+        <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+        <meta name='keywords' content="<?= Yii::$app->params['WebInfo']['KEYWORDS']; ?>"/>
+        <meta name='description' content="<?= Yii::$app->params['WebInfo']['DESCRIPTION']; ?>"/>
+        <meta name='author' content="<?= Yii::$app->params['WebInfo']['DEVELOPERS']; ?>"/>
 
-<?php $this->beginBody() ?>
+        <?= Html::csrfMetaTags() ?>
 
-<div class='page-topbar '>
+        <?php $this->head() ?>
 
-    <div class='logo-area'></div>
+    </head>
+    <body>
 
-    <div class='quick-area'>
-        <div class='pull-left'>
-            <ul class="info-menu left-links list-inline list-unstyled">
+    <?php $this->beginBody() ?>
 
-            </ul>
+    <!-- START PAGE CONTAINER -->
+    <div class="page-container page-navigation-top-fixed">
+
+        <!-- START PAGE SIDEBAR -->
+        <div class="page-sidebar page-sidebar-fixed scroll">
+
+            <?= \common\widgets\iMenu\MenuAdmin::widget(['config' => ['A3']]); ?>
+
         </div>
-        <div class='pull-right'>
-            <ul class="info-menu right-links list-inline list-unstyled">
-                <li class="profile">
 
-                    <a href="#" data-toggle="dropdown" class="toggle"><?= Html::img(Url::to('@web/themes/data/profile/user.jpg'), ['class' => 'img-circle img-inline']); ?><span><i class="fa fa-angle-down"></i></span></a>
+        <div class="page-content">
 
-                    <ul class="dropdown-menu profile animated fadeIn">
-                        <li><a href="<?= Url::to(['/admin/center/conf']) ?>"><i class="fa fa-wrench"></i>站点设置</a></li>
-                        <li><a href="<?= Url::to(['/admin/center/seo']) ?>"><i class="fa fa-user"></i>站点档案</a></li>
-                        <li><a href="<?= Url::to(['/admin/faq/index']) ?>"><i class="fa fa-info"></i>站点帮助</a></li>
-                        <li><a href="<?= Url::to(['/admin/center/setpassword']) ?>"><i class="fa fa-info"></i>修改密码</a></li>
-                        <li class="last"><a href="<?= Url::to(['/admin/member/logout']) ?>"><i class="fa fa-lock"></i>注销用户</a></li>
-                    </ul>
+            <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
 
-                </li>
-
-                <li>
-                    <a href="<?= Url::to(['/admin/center/language', 'type' => 'cn']) ?>">中文版</a> /
-                </li>
-
-                <li>
-                    <a href="<?= Url::to(['/admin/center/language', 'type' => 'en']) ?>">英文版</a> /
-                </li>
-
-                <li>
-                    <a href="<?= Yii::$app->request->hostInfo ?>" target="_blank">站点首页</a>
+                <li class="xn-icon-button pull-right">
+                    <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>
                 </li>
 
             </ul>
+
+            <ul class="breadcrumb">
+                <li><a href="#">挂载中心</a></li>
+                <li class="active"><?= $this->title ?></li>
+            </ul>
+
+            <div class="page-title">
+                <h2><span class="fa fa-arrow-circle-o-left"></span> <?= Html::encode($this->title) ?></h2>
+            </div>
+
+            <div class="page-content-wrap">
+                <?= $content; ?>
+            </div>
+
         </div>
     </div>
 
-</div>
+    <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
+        <div class="mb-container">
+            <div class="mb-middle">
 
-<div class="page-container row-fluid">
-    <div class="page-sidebar ">
-        <div class="page-sidebar-wrapper" id="main-menu-wrapper">
-            <div class="profile-info row">
+                <div class="mb-title"><span class="fa fa-sign-out"></span> 注销 <strong>当前用户</strong> ?</div>
 
-                <div class="profile-image col-md-4 col-sm-4 col-xs-4">
-                    <a href="#">
-                        <?= Html::img(Url::to('@web/themes/data/profile/user.jpg'), ['class' => 'img-responsive img-circle']); ?>
-                    </a>
+                <div class="mb-content">
+                    <p>您确定要退出？</p>
+                    <p>如果要继续工作，请按 "否"。 按 "是" 注销当前用户。</p>
                 </div>
 
-                <div class="profile-details col-md-8 col-sm-8 col-xs-8">
-
-                    <h3>
-                        <a href="#"><?= Yii::$app->user->identity->username; ?></a>
-                        <span class="profile-status online"><?= Yii::$app->user->identity->item_name; ?></span>
-                    </h3>
-
-                    <p class="profile-title"><?= Yii::$app->request->userIP; ?></p>
-
+                <div class="mb-footer">
+                    <div class="pull-right">
+                        <a href="<?= Url::to(['mount/member/logout']) ?>" class="btn btn-success btn-lg">是</a>
+                        <button class="btn btn-default btn-lg mb-control-close">否</button>
+                    </div>
                 </div>
 
             </div>
-
-            <?= \common\widgets\iMenu\MenuAdmin::widget(['config' => ['A3']]) ?>
-
         </div>
     </div>
 
-    <section id="main-content" class=" ">
-        <section class="wrapper" style='margin-top:60px;display:inline-block;width:100%;padding:15px 0 0 15px;'>
+    <?php $this->endBody(); ?>
 
-            <?= $content ?>
-
-        </section>
-    </section>
-
-</div>
-
-<?php $this->endBody(); ?>
-
-</body>
-</html>
+    </body>
+    </html>
 
 <?php $this->endPage() ?>
