@@ -16,8 +16,9 @@ return [
     'basePath'            => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap'           => ['log'],
+    'language'            => 'zh-CN',
     'modules'             => [],
-    'components' => [
+    'components'          => [
 
         // 视图文件
         'view' => [

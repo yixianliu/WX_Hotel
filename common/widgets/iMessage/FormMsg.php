@@ -2,7 +2,7 @@
 
 /**
  * @abstract 针对本程序的表单插件
- * @author Yxl <zccem@163.com>
+ * @author   Yxl <zccem@163.com>
  */
 
 namespace common\widgets\iMessage;
@@ -13,7 +13,7 @@ use common\widgets\iMenu\assets\MessageAsset;
 class FormMsg extends InputWidget
 {
 
-    public $config = array();
+    public $config = [];
 
     public function init()
     {
@@ -41,10 +41,11 @@ class FormMsg extends InputWidget
      */
     public function registerClientScript()
     {
+
         MenuAsset::register($this->view);
         //$script = "FormFileUpload.init();";
         //$this->view->registerJs($script, View::POS_READY);
 
-        return ;
+        return;
     }
 }

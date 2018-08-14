@@ -9,10 +9,12 @@
  * Time: 17:28
  */
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use backend\assets\AppAsset;
-use common\widgets\iConf\ConfList;
+
+$this->title = '登录';
 
 AppAsset::register($this); // $this 代表视图对象
 
@@ -21,48 +23,82 @@ $this->beginPage();
 ?>
 
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en" class="body-full-height">
 <head>
 
-    <?= ConfList::widget(['config' => ['登录', 'head']]); ?>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+    <meta charset="utf-8"/>
+
+    <?= Html::csrfMetaTags() ?>
+
+    <title> 登 录 - <?= $result['title']; ?> - <?= $result['name']; ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name='keywords' content='<?= Yii::$app->params['WebInfo']['KEYWORDS']; ?>'/>
+    <meta name='description' content='<?= Yii::$app->params['WebInfo']['DESCRIPTION']; ?>'/>
+    <meta name='author' content='<?= Yii::$app->params['WebInfo']['DEVELOPERS']; ?>'/>
+
+    <link rel='shortcut icon' type='image/x-icon' href='./favicon.ico'/>
 
     <?php $this->head() ?>
 
 </head>
-<body class=" login_page">
+<body>
 
 <?php $this->beginBody() ?>
 
-<div class="login-wrapper">
-    <div id="login" class="login loginpage col-lg-offset-4 col-lg-4 col-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-offset-2 col-xs-8">
+<div class="login-container">
 
-        <h1><a href="#" title="<?= Yii::$app->params['Conf']['NAME'] ?>" tabindex="-1"><?= Yii::$app->params['Conf']['NAME'] ?></a></h1>
+    <div class="login-box animated fadeInDown">
 
-        <?php $form = ActiveForm::begin(['action' => ['member/login'], 'method' => 'post', 'id' => $model->formName()]); ?>
+        <div class="login-body">
 
-        <p>
-            <?= $form->field($model, 'username')->textInput(['class' => 'input', 'placeholder' => '帐号...'])->label('帐号'); ?>
-        </p>
+            <?php $form = ActiveForm::begin(['action' => ['member/login'], 'class' => "form-horizontal", 'method' => 'post', 'id' => $model->formName()]); ?>
 
-        <p>
-            <?= $form->field($model, 'password')->passwordInput(['class' => 'input', 'placeholder' => '密码...'])->label('密码'); ?>
-        </p>
+            <div class="form-group">
+                <?= $form->field($model, 'username')->label('帐号')->textInput(['maxlength' => 30, 'placeholder' => '帐号...', 'class' => 'form-control', 'autofocus' => true]); ?>
+            </div>
 
-        <p class="submit">
-            <?= Html::submitButton('登录', ['class' => 'btn btn-orange btn-block']) ?>
-        </p>
+            <div class="form-group">
+                <?= $form->field($model, 'password')->label('密码')->passwordInput(['maxlength' => 30, 'placeholder' => '密码...', 'class' => 'form-control']); ?>
 
-        <?php ActiveForm::end() ?>
+            </div>
 
-        <?= Yii::$app->view->renderFile('@app/views/formMsg.php'); ?>
+            <div class="form-group">
+                <div style="width: 100%;height: 15px;"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    <a href="#" class="btn btn-link btn-block">忘记密码 ?</a>
+                </div>
+                <div class="col-md-7">
+                    <?= Html::submitButton('立即登录', ['class' => 'btn btn-orange btn-block btn-lg']); ?>
+                </div>
+            </div>
+
+            <?php ActiveForm::end(); ?>
+
+            <div class="form-group">
+                <div style="width: 100%;height: 30px;"></div>
+            </div>
+
+        </div>
+
+        <div class="login-footer">
+            <div class="pull-left">
+                &copy; 2004 - 2020 <?= $result['name']; ?>
+            </div>
+        </div>
 
     </div>
+
 </div>
 
-<?php $this->endBody(); ?>
+<?php $this->endBody() ?>
 
 </body>
 </html>
 
 <?php $this->endPage() ?>
+
 

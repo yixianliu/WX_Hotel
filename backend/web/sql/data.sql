@@ -3,7 +3,8 @@
  */
 INSERT INTO `#DB_PREFIX#Conf`
 VALUES
-  (NULL, '#NAME#', '#TITLE#', '#EMAIL#', '#PHONE#', '#KEYWORDS#', '#SITE_URL#', '#DEVELOPERS#', '#ICP#', '#DESCRIPTION#', '#COPYRIGHT#', #TIME#, #TIME#);
+  (NULL, 'cn', '#NAME#', '#TITLE#', '#EMAIL#', '#PHONE#', '#KEYWORDS#', '#SITE_URL#', '#DEVELOPERS#', '#ICP#', '#DESCRIPTION#', '#COPYRIGHT#', #TIME#, #TIME#),
+  (NULL, 'en', '#NAME#', '#TITLE#', '#EMAIL#', '#PHONE#', '#KEYWORDS#', '#SITE_URL#', '#DEVELOPERS#', '#ICP#', '#DESCRIPTION#', '#COPYRIGHT#', #TIME#, #TIME#);
 
 /**
  * 网站辅助配置参数
@@ -26,7 +27,7 @@ VALUES
  */
 INSERT INTO `#DB_PREFIX#Friend_link`
 VALUES
-(NULL, '#DEVELOPERS#', '#TITLE#', '#USERNAME#', NULL, '#SITE_URL#', 'On', 'On', #TIME#, #TIME#);
+  (NULL, '#DEVELOPERS#', '#TITLE#', '#USERNAME#', NULL, '#SITE_URL#', 'On', 'On', #TIME#, #TIME#);
 
 /**
  * + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + -
@@ -144,6 +145,8 @@ VALUES
   (NULL, 'A3', 1, null, null, 'R15', NULL, 'M0', '后台管理', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'AC2', 1, 'urls', null, 'R15', NULL, 'A3', '管理中心', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuditA9', 2, 'urls', null, 'R15', NULL, 'A3', '酒店管理', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuditA8', 3, 'urls', null, 'R15', NULL, 'A3', '卡卷管理', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AM1', 4, 'urls', null, 'R15', NULL, 'A3', '菜单管理', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AU1', 5, 'urls', null, 'R15', NULL, 'A3', '用户管理', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AR1', 7, 'urls', null, 'R15', NULL, 'A3', '角色管理', NULL, 'On', 'On', #TIME#, #TIME#),
@@ -152,13 +155,11 @@ VALUES
   (NULL, 'AuditA5', 13, 'urls', null, 'R15', NULL, 'A3', '产品分类管理', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuditA6', 14, 'urls', null, 'R15', NULL, 'A3', '认证角色管理', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuditA7', 15, 'urls', null, 'R15', NULL, 'A3', '订单中心', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuditA8', 16, 'urls', null, 'R15', NULL, 'A3', '卡卷管理', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuditA9', 17, 'urls', null, 'R15', NULL, 'A3', '酒店管理', NULL, 'On', 'On', #TIME#, #TIME#),
 
-  (NULL, 'AuthRoom1', 1, 'urls', '/hotel/index', 'R15', NULL, 'AuditA9', '房间列表', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuthRoom2', 2, 'urls', '/hotel/create', 'R15', NULL, 'AuditA9', '添加房间', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuthRoom3', 3, 'urls', '/hotel-cls/index', 'R15', NULL, 'AuditA9', '房间分类列表', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuthRoom4', 4, 'urls', '/hotel-cls/create', 'R15', NULL, 'AuditA9', '添加房间分类', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom1', 1, 'urls', '/hotels/index', 'R15', NULL, 'AuditA9', '房间列表', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom2', 2, 'urls', '/hotels/create', 'R15', NULL, 'AuditA9', '添加房间', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom3', 3, 'urls', '/hotels-cls/index', 'R15', NULL, 'AuditA9', '房间分类列表', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom4', 4, 'urls', '/hotels-cls/create', 'R15', NULL, 'AuditA9', '添加房间分类', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'AuthCoupon1', 1, 'urls', '/coupon/index', 'R15', NULL, 'AuditA8', '卡卷列表', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthCoupon2', 2, 'urls', '/coupon/create', 'R15', NULL, 'AuditA8', '添加卡卷', NULL, 'On', 'On', #TIME#, #TIME#),
@@ -169,11 +170,11 @@ VALUES
   (NULL, 'AuthRole1', 1, 'urls', '/auth-role/index', 'R15', NULL, 'AuditA6', '认证角色列表', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthRole2', 2, 'urls', '/auth-role/create', 'R15', NULL, 'AuditA6', '添加认证角色', NULL, 'On', 'On', #TIME#, #TIME#),
 
-  (NULL, 'AUUV1', 1, 'urls', '/user/index', 'R15', NULL, 'AU1', '所有用户', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AUUV2', 2, 'urls', '/comment/index', 'R15', NULL, 'AU1', '用户留言', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AUUserV1', 1, 'urls', '/user/index', 'R15', NULL, 'AU1', '所有用户', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AUUserV2', 2, 'urls', '/comment/index', 'R15', NULL, 'AU1', '用户留言', NULL, 'On', 'On', #TIME#, #TIME#),
 
-  (NULL, 'AUMV1', 1, 'urls', '/menu/index', 'R15', NULL, 'AM1', '所有菜单', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AUMV2', 2, 'urls', '/menu/create', 'R15', NULL, 'AM1', '创建菜单', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AUMenuV1', 1, 'urls', '/menu/index', 'R15', NULL, 'AM1', '所有菜单', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AUMenuV2', 2, 'urls', '/menu/create', 'R15', NULL, 'AM1', '创建菜单', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'ACCC1', 1, 'urls', '/center/conf', 'R15', NULL, 'AC2', '网站配置', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'ACCC2', 2, 'urls', '/center/view', 'R15', NULL, 'AC2', '配置单', NULL, 'On', 'On', #TIME#, #TIME#),

@@ -8,8 +8,6 @@ use common\models\MenuModel;
 use common\models\Role;
 use common\models\Pages;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 
 /**
  * MenuController implements the CRUD actions for Menu model.
@@ -27,7 +25,7 @@ class MenuController extends BaseController
         return [
 
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
                     [
                         'allow' => true,
@@ -37,7 +35,7 @@ class MenuController extends BaseController
             ],
 
             'verbs' => [
-                'class'   => VerbFilter::className(),
+                'class'   => \yii\filters\VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],

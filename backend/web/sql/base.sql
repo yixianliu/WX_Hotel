@@ -4,6 +4,7 @@
 DROP TABLE IF EXISTS `#DB_PREFIX#Conf`;
 CREATE TABLE `#DB_PREFIX#Conf` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `language` VARCHAR(85) NOT NULL COMMENT '配置语言',
     `name` VARCHAR(85) NOT NULL COMMENT '网站名称',
     `title` VARCHAR(135) NOT NULL COMMENT '网站标题',
     `email` VARCHAR(135) NOT NULL COMMENT '网站联系邮箱',
@@ -227,7 +228,7 @@ CREATE TABLE `#DB_PREFIX#Menu` (
     UNIQUE KEY `m_key` (`m_key`),
     KEY `r_key` (`r_key`),
     KEY `name` (`name`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单表';
 
 /**
  * 菜单模型
@@ -246,7 +247,7 @@ CREATE TABLE `#DB_PREFIX#Menu_Model` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `m_key` (`m_key`),
     UNIQUE KEY `url_key` (`url_key`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单模型';
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单模型表';
 
 /**
  + ------------------------------------------------------------------------------------------------------------

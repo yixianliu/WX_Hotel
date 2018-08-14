@@ -162,10 +162,11 @@ CREATE TABLE `#DB_PREFIX#Hotels` (
     `hotel_id` VARCHAR(85) NOT NULL COMMENT '产品编号,唯一识别码',
     `user_id` VARCHAR(55) NOT NULL COMMENT '用户ID',
     `c_key` VARCHAR(55) NOT NULL COMMENT '产品分类KEY',
+    `room_num` VARCHAR(55) NOT NULL COMMENT '房间号码',
     `title` VARCHAR(125) NOT NULL COMMENT '产品标题',
     `content` TEXT NOT NULL COMMENT '产品内容',
     `num` INT(11) UNSIGNED NOT NULL COMMENT '房间数量',
-    `checkin_num` INT(11) UNSIGNED NOT NULL COMMENT '入住房间数量',
+    `check_in_num` INT(11) UNSIGNED NOT NULL COMMENT '入住房间数量',
     `price` INT(11) UNSIGNED NOT NULL COMMENT '一口价',
     `discount` INT(11) UNSIGNED NULL COMMENT '折扣价',
     `introduction` VARCHAR(255) NULL COMMENT '导读,获取房间介绍第一段.',
@@ -175,7 +176,6 @@ CREATE TABLE `#DB_PREFIX#Hotels` (
     `images` VARCHAR(85) NULL COMMENT '房间图片',
     `is_promote` SET('On', 'Off') NOT NULL COMMENT '推广',
     `is_audit` SET('On', 'Off', 'Out', 'Not') NOT NULL COMMENT '审核',
-    `is_field` SET('On', 'Off') NOT NULL COMMENT '是否生成字段JSON文件,没有生成的话,产品异常!',
     `is_comments` SET('On', 'Off') NOT NULL COMMENT '是否启用评论',
     `created_at` integer NOT NULL DEFAULT '0',
     `updated_at` integer NOT NULL DEFAULT '0',
@@ -187,20 +187,34 @@ CREATE TABLE `#DB_PREFIX#Hotels` (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /**
- * 产品参数
+ * 房间参数
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Hotels_Field`;
 CREATE TABLE `#DB_PREFIX#Hotels_Field` (
     `id` INT(11) NULL AUTO_INCREMENT,
-    `c_key` VARCHAR(55) NOT NULL COMMENT '产品分类KEY (根据分类生成产品参数)',
+    `f_key` VARCHAR(55) NOT NULL COMMENT '参数关键KEY',
     `name` VARCHAR(85) NULL COMMENT '字段名',
     `description` VARCHAR(125) NULL COMMENT '字段描述',
+    `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
     `is_required` SET('On', 'Off') NOT NULL COMMENT '是否必填',
     `created_at` integer NOT NULL DEFAULT '0',
     `updated_at` integer NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
     UNIQUE `name` (`name`),
-    KEY `c_key` (`c_key`)
+    KEY `f_key` (`f_key`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+ * 关联房间参数
+ */
+DROP TABLE IF EXISTS `#DB_PREFIX#Relevance_Hotels_Field`;
+CREATE TABLE `#DB_PREFIX#Relevance_Hotels_Field` (
+    `id` INT(11) NULL AUTO_INCREMENT,
+    `f_key` VARCHAR(55) NOT NULL COMMENT '房间参数关键KEY',
+    `hotel_id` VARCHAR(55) NOT NULL COMMENT '房间关键KEY',
+    `created_at` integer NOT NULL DEFAULT '0',
+    `updated_at` integer NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /**

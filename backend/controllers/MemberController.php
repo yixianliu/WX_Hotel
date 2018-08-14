@@ -30,7 +30,7 @@ class MemberController extends Controller
         $result = Conf::findByOne();
 
         // 是否安装
-        if (!file_exists(Yii::getAlias('@webroot') . '/' . Yii::$app->params['WebInfo']['RD_FILE'])) {
+        if (!file_exists(Yii::getAlias('@common') . '/' . Yii::$app->params['WebInfo']['RD_FILE'])) {
             return $this->redirect(['/mount/member/login']);
         }
 
