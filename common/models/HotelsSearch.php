@@ -18,8 +18,8 @@ class HotelsSearch extends Hotels
     public function rules()
     {
         return [
-            [['id', 'num', 'checkin_num', 'price', 'discount', 'created_at', 'updated_at'], 'integer'],
-            [['hotel_id', 'user_id', 'c_key', 'title', 'content', 'introduction', 'keywords', 'path', 'thumb', 'images', 'is_promote', 'is_audit', 'is_field', 'is_comments'], 'safe'],
+            [['num', 'check_in_num', 'price', 'discount', 'created_at', 'updated_at'], 'integer'],
+            [['hotel_id', 'user_id', 'c_key', 'title', 'content', 'introduction', 'keywords', 'path', 'thumb', 'images', 'is_promote', 'is_audit', 'is_comments'], 'safe'],
         ];
     }
 
@@ -61,7 +61,7 @@ class HotelsSearch extends Hotels
         $query->andFilterWhere([
             'id' => $this->id,
             'num' => $this->num,
-            'checkin_num' => $this->checkin_num,
+            'checkin_num' => $this->check_in_num,
             'price' => $this->price,
             'discount' => $this->discount,
             'created_at' => $this->created_at,
@@ -80,7 +80,6 @@ class HotelsSearch extends Hotels
             ->andFilterWhere(['like', 'images', $this->images])
             ->andFilterWhere(['like', 'is_promote', $this->is_promote])
             ->andFilterWhere(['like', 'is_audit', $this->is_audit])
-            ->andFilterWhere(['like', 'is_field', $this->is_field])
             ->andFilterWhere(['like', 'is_comments', $this->is_comments]);
 
         return $dataProvider;

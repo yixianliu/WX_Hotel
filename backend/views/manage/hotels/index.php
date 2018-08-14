@@ -29,31 +29,35 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProvider,
                 'filterModel'  => $searchModel,
                 'columns'      => [
-                    ['class' => 'yii\grid\SerialColumn'],
-
-                    'id',
+                    [
+                        'class'   => 'yii\grid\CheckboxColumn',
+                        'name'    => 'id',
+                        'options' => ['width' => 40],
+                    ],
+                    [
+                        'class'   => 'yii\grid\SerialColumn',
+                        'options' => ['width' => 70],
+                    ],
                     'hotel_id',
                     'user_id',
                     'c_key',
                     'title',
-                    //'content:ntext',
-                    //'num',
-                    //'checkin_num',
-                    //'price',
-                    //'discount',
-                    //'introduction',
-                    //'keywords',
-                    //'path',
-                    //'thumb',
-                    //'images',
-                    //'is_promote',
-                    //'is_audit',
-                    //'is_field',
-                    //'is_comments',
-                    //'created_at',
-                    //'updated_at',
-
-                    ['class' => 'yii\grid\ActionColumn'],
+                    'num',
+                    'check_in_num',
+                    'price',
+                    'thumb',
+                    'is_audit',
+                    [
+                        'attribute' => 'updated_at',
+                        'value'     => function ($model) {
+                            return date('Y - m -d , H:i:s', $model->updated_at);
+                        },
+                        'options'   => ['width' => 180],
+                    ],
+                    [
+                        'class'   => 'yii\grid\ActionColumn',
+                        'options' => ['width' => 100],
+                    ],
                 ],
                 'tableOptions' => ['class' => 'table table-hover'],
                 'pager'        => [

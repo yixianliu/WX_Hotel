@@ -32,7 +32,7 @@ use kartik\select2\Select2;
 
             <?= $form->field($model, 'num')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'checkin_num')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'check_in_num')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
 
@@ -60,9 +60,15 @@ use kartik\select2\Select2;
             ]);
             ?>
 
-            <?= $form->field($model, 'is_field')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'is_comments')->textInput(['maxlength' => true]) ?>
+			<?=
+            $form->field($model, 'is_comments')->widget(Select2::classname(), [
+                'data'          => ['1' => '启用', '2' => '禁用'],
+                'options'       => ['placeholder' => '评论状态...'],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ]);
+            ?>
 
             <div class="form-group">
 

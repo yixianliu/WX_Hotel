@@ -66,4 +66,10 @@ class HotelsClassify extends \yii\db\ActiveRecord
             'updated_at'  => '更新数据时间',
         ];
     }
+	
+	public static function findByAll()
+	{
+		
+	}
+	
 }

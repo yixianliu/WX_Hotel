@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\HotelsClassify;
 use Yii;
 use common\models\Hotels;
 use common\models\HotelsSearch;
@@ -49,7 +50,7 @@ class HotelsController extends BaseController
         $searchModel = new HotelsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $result['classify'] = '';
+        $result['classify'] = HotelsClassify::findByAll();
 
         return $this->render('index', [
             'searchModel' => $searchModel,

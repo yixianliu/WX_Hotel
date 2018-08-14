@@ -238,7 +238,6 @@ CREATE TABLE `#DB_PREFIX#Hotels_Classify` (
     UNIQUE `name` (`name`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
 /**
  + ------------------------------------------------------------------------------------------------------------
  * 订单中心
