@@ -58,7 +58,6 @@ VALUES
  * 权限 / 角色
  * + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + -
  */
-
 DROP TABLE IF EXISTS `#DB_PREFIX#auth_role`;
 CREATE TABLE `#DB_PREFIX#auth_role` (
     `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
