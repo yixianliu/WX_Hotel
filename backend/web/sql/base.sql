@@ -127,7 +127,10 @@ CREATE TABLE `#DB_PREFIX#User` (
     `username` VARCHAR(55) NOT NULL COMMENT '邮箱 / 用户名',
     `password` VARCHAR(255) NOT NULL COMMENT '密码',
     `r_key` VARCHAR(55) NOT NULL COMMENT '角色关键KEY',
-    `exp` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '经验值',
+    `l_key` VARCHAR(55) NOT NULL COMMENT '等级关键KEY',
+    `position` VARCHAR(55) NOT NULL COMMENT '角色关键KEY',
+    `source` VARCHAR(55) NOT NULL COMMENT '来源',
+    `superior` VARCHAR(55) NOT NULL COMMENT '上级(分销机制)',
     `credit` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '积分',
     `nickname` VARCHAR(85) NULL DEFAULT NULL COMMENT '昵称',
     `signature` TEXT NULL DEFAULT NULL COMMENT '个性签名',
@@ -140,7 +143,6 @@ CREATE TABLE `#DB_PREFIX#User` (
     `last_login_time` INT(11) UNSIGNED NOT NULL COMMENT '最后登陆时间',
     `login_ip` VARCHAR(55) NULL DEFAULT 0 COMMENT '登陆IP',
     `sex` SET('Male' , 'Female') NOT NULL DEFAULT 'Female' COMMENT '性别',
-    `is_microhurt` SET('On', 'Off', 'Not') NOT NULL COMMENT '是否开启商户',
     `is_display` SET('On', 'Off') NOT NULL DEFAULT 'Off' COMMENT '显示信息',
     `is_head` SET('On', 'Off') NOT NULL DEFAULT 'Off' COMMENT '上传头像',
     `is_security` SET('On', 'Off') NOT NULL DEFAULT 'Off' COMMENT '安全设置',
@@ -150,23 +152,6 @@ CREATE TABLE `#DB_PREFIX#User` (
     UNIQUE KEY `user_id` (`user_id`),
     UNIQUE KEY `username` (`username`),
     UNIQUE `nickname` (`nickname`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/**
- * 用户优惠券
- */
-DROP TABLE IF EXISTS `#DB_PREFIX#User_Coupon`;
-CREATE TABLE `#DB_PREFIX#User_Coupon` (
-    `id` INT(11) NULL AUTO_INCREMENT,
-    `user_id` VARCHAR(55) NOT NULL COMMENT '用户ID',
-    `m_id` INT(11) UNSIGNED NOT NULL COMMENT '商户ID',
-    `coupon_key` VARCHAR(125) NULL DEFAULT NULL COMMENT '优惠券识别KEY',
-    `receive` INT(11) UNSIGNED NOT NULL COMMENT '优惠券领取日期',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `user_id` (`user_id`),
-    KEY `m_id` (`m_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /**

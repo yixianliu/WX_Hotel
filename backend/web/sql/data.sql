@@ -151,15 +151,15 @@ VALUES
   (NULL, 'AU1', 5, 'urls', null, 'R15', NULL, 'A3', '用户管理', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AR1', 7, 'urls', null, 'R15', NULL, 'A3', '角色管理', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AP1', 8, 'urls', null, 'R15', NULL, 'A3', '权限管理', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuditA1', 9, 'urls', null, 'R15', NULL, 'A3', '产品管理', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuditA5', 13, 'urls', null, 'R15', NULL, 'A3', '产品分类管理', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuditA6', 14, 'urls', null, 'R15', NULL, 'A3', '认证角色管理', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuditA7', 15, 'urls', null, 'R15', NULL, 'A3', '订单中心', NULL, 'On', 'On', #TIME#, #TIME#),
 
-  (NULL, 'AuthRoom1', 1, 'urls', '/hotels/index', 'R15', NULL, 'AuditA9', '房间列表', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuthRoom2', 2, 'urls', '/hotels/create', 'R15', NULL, 'AuditA9', '添加房间', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuthRoom3', 3, 'urls', '/hotels-cls/index', 'R15', NULL, 'AuditA9', '房间分类列表', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuthRoom4', 4, 'urls', '/hotels-cls/create', 'R15', NULL, 'AuditA9', '添加房间分类', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom1', 1, 'urls', '/rooms/index', 'R15', NULL, 'AuditA9', '房间列表', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom2', 2, 'urls', '/rooms/create', 'R15', NULL, 'AuditA9', '添加房间', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom3', 3, 'urls', '/rooms-cls/index', 'R15', NULL, 'AuditA9', '房间分类列表', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom4', 4, 'urls', '/rooms-cls/create', 'R15', NULL, 'AuditA9', '添加房间分类', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom5', 5, 'urls', '/hotels/index', 'R15', NULL, 'AuditA9', '酒店列表', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom6', 6, 'urls', '/hotels/create', 'R15', NULL, 'AuditA9', '添加酒店', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'AuthCoupon1', 1, 'urls', '/coupon/index', 'R15', NULL, 'AuditA8', '卡卷列表', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthCoupon2', 2, 'urls', '/coupon/create', 'R15', NULL, 'AuditA8', '添加卡卷', NULL, 'On', 'On', #TIME#, #TIME#),
@@ -176,31 +176,14 @@ VALUES
   (NULL, 'AUMenuV1', 1, 'urls', '/menu/index', 'R15', NULL, 'AM1', '所有菜单', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AUMenuV2', 2, 'urls', '/menu/create', 'R15', NULL, 'AM1', '创建菜单', NULL, 'On', 'On', #TIME#, #TIME#),
 
-  (NULL, 'ACCC1', 1, 'urls', '/center/conf', 'R15', NULL, 'AC2', '网站配置', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'ACCC2', 2, 'urls', '/center/view', 'R15', NULL, 'AC2', '配置单', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'ACCC3', 3, 'urls', '/center/index', 'R15', NULL, 'AC2', '管理中心', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'ACCC4', 4, 'urls', '/backup/index', 'R15', NULL, 'AC2', '备份数据', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'ACCC5', 5, 'urls', '/assist/index', 'R15', NULL, 'AC2', '辅助参数', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'ACCCenter1', 1, 'urls', '/center/conf', 'R15', NULL, 'AC2', '网站配置', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'ACCCenter2', 2, 'urls', '/center/view', 'R15', NULL, 'AC2', '配置单', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'ACCCenter3', 3, 'urls', '/center/index', 'R15', NULL, 'AC2', '管理中心', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'ACCCenter4', 4, 'urls', '/backup/index', 'R15', NULL, 'AC2', '备份数据', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'ACCCenter5', 5, 'urls', '/assist/index', 'R15', NULL, 'AC2', '辅助参数', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'AURR1', 1, 'urls', '/role/index', 'R15', NULL, 'AR1', '所有角色', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AURR2', 2, 'urls', '/role/create', 'R15', NULL, 'AR1', '创建角色', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'AUPP1', 1, 'urls', '/power/index', 'R15', NULL, 'AP1', '所有权限', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AUPP2', 2, 'urls', '/power/create', 'R15', NULL, 'AP1', '创建权限', NULL, 'On', 'On', #TIME#, #TIME#),
-
-  (NULL, 'AuditAAC1', 1, 'urls', '/product-cls/index', 'R15', NULL, 'AuditA5', '所有产品分类', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuditAAC2', 1, 'urls', '/product-cls/create', 'R15', NULL, 'AuditA5', '添加产品分类', NULL, 'On', 'On', #TIME#, #TIME#),
-
-  (NULL, 'AuditAAP1', 1, 'urls', '/product/index', 'R15', NULL, 'AuditA1', '所有产品', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuditAAP2', 2, 'urls', '/product/create', 'R15', NULL, 'AuditA1', '添加产品', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuditAAP3', 3, 'urls', '/product-level/index', 'R15', NULL, 'AuditA1', '产品等级', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuditAAP4', 4, 'urls', '/product-level/create', 'R15', NULL, 'AuditA1', '添加产品等级', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuditAAP5', 5, 'urls', '/product-promote/index', 'R15', NULL, 'AuditA1', '推广产品', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuditAAP6', 6, 'urls', '/product-comment/index', 'R15', NULL, 'AuditA1', '产品留言管理', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuditAAP7', 7, 'urls', '/product-image/index', 'R15', NULL, 'AuditA1', '产品图片管理', NULL, 'On', 'On', #TIME#, #TIME#),
-
-  (NULL, 'AuditAAM1', 1, 'urls', '/merchant/index', 'R15', NULL, 'AuditA3', '所有商户', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuditAAM2', 5, 'urls', '/merchant/create', 'R15', NULL, 'AuditA3', '添加商户', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuditAAM3', 2, 'urls', '/merchant-coupon/index', 'R15', NULL, 'AuditA3', '优惠卷', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuditAAM4', 3, 'urls', '/merchant-level/index', 'R15', NULL, 'AuditA3', '商户等级', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuditAAM5', 4, 'urls', '/merchant-image/index', 'R15', NULL, 'AuditA3', '商户图片管理', NULL, 'On', 'On', #TIME#, #TIME#)
+  (NULL, 'AUPP2', 2, 'urls', '/power/create', 'R15', NULL, 'AP1', '创建权限', NULL, 'On', 'On', #TIME#, #TIME#)

@@ -44,7 +44,7 @@ VALUES
   (NULL, 5, 'R5', '江湖奇才', 7000, '本版块贡献最高者', NULL, 'On', #TIME#, #TIME#),
   (NULL, 6, 'R6', '金牌会员', 6000, '金牌会员', NULL, 'On', #TIME#, #TIME#),
   (NULL, 7, 'R7', '高级会员', 5000, '高级会员', NULL, 'On', #TIME#, #TIME#),
-  (NULL, 8, 'R8', '特约撰稿人', 3000, '特约撰稿人', NULL, 'On', #TIME#, #TIME#),
+  (NULL, 8, 'R8', '特约会员', 3000, '特约撰稿人', NULL, 'On', #TIME#, #TIME#),
   (NULL, 9, 'R9', '中级会员', 2000, '中级会员', NULL, 'On', #TIME#, #TIME#),
   (NULL, 10, 'R10', '初级会员', 1000, '初级会员', NULL, 'On', #TIME#, #TIME#),
   (NULL, 11, 'R11', '普通会员', 500, '普通会员', NULL, 'On', #TIME#, #TIME#),
