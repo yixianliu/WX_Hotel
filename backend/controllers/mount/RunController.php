@@ -38,7 +38,7 @@ class RunController extends BaseController
 
         // 批量SQL语句
         $Sql_Data = file_get_contents(Yii::getAlias('@backend') . '/web/sql/base.sql') .
-            file_get_contents(Yii::getAlias('@backend') . '/web/sql/product.sql') .
+            file_get_contents(Yii::getAlias('@backend') . '/web/sql/hotel.sql') .
             file_get_contents(Yii::getAlias('@backend') . '/web/sql/power.sql') .
             file_get_contents(Yii::getAlias('@backend') . '/web/sql/data.sql');
 

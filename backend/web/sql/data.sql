@@ -149,10 +149,16 @@ VALUES
   (NULL, 'AuditA8', 3, 'urls', null, 'R15', NULL, 'A3', '卡卷管理', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AM1', 4, 'urls', null, 'R15', NULL, 'A3', '菜单管理', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AU1', 5, 'urls', null, 'R15', NULL, 'A3', '用户管理', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AArticle1', 5, 'urls', null, 'R15', NULL, 'A3', '文章管理', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AR1', 7, 'urls', null, 'R15', NULL, 'A3', '角色管理', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AP1', 8, 'urls', null, 'R15', NULL, 'A3', '权限管理', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuditA6', 14, 'urls', null, 'R15', NULL, 'A3', '认证角色管理', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuditA7', 15, 'urls', null, 'R15', NULL, 'A3', '订单中心', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AOrder7', 15, 'urls', null, 'R15', NULL, 'A3', '订单中心', NULL, 'On', 'On', #TIME#, #TIME#),
+
+  (NULL, 'AAArticle1', 1, 'urls', '/article/index', 'R15', NULL, 'AArticle1', '文章列表', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AAArticle2', 2, 'urls', '/article/create', 'R15', NULL, 'AArticle1', '添加文章', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AAArticle3', 3, 'urls', '/article-cls/index', 'R15', NULL, 'AArticle1', '文章分类列表', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AAArticle4', 4, 'urls', '/article-cls/create', 'R15', NULL, 'AArticle1', '添加文章分类', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'AuthRoom1', 1, 'urls', '/rooms/index', 'R15', NULL, 'AuditA9', '房间列表', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthRoom2', 2, 'urls', '/rooms/create', 'R15', NULL, 'AuditA9', '添加房间', NULL, 'On', 'On', #TIME#, #TIME#),
@@ -164,8 +170,8 @@ VALUES
   (NULL, 'AuthCoupon1', 1, 'urls', '/coupon/index', 'R15', NULL, 'AuditA8', '卡卷列表', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthCoupon2', 2, 'urls', '/coupon/create', 'R15', NULL, 'AuditA8', '添加卡卷', NULL, 'On', 'On', #TIME#, #TIME#),
 
-  (NULL, 'AuthOrder1', 1, 'urls', '/order/index', 'R15', NULL, 'AuditA7', '订单列表', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuthOrder2', 2, 'urls', '/order/create', 'R15', NULL, 'AuditA7', '添加订单', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthOrder1', 1, 'urls', '/order/index', 'R15', NULL, 'AOrder7', '订单列表', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthOrder2', 2, 'urls', '/order/statistics', 'R15', NULL, 'AOrder7', '订单统计', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'AuthRole1', 1, 'urls', '/auth-role/index', 'R15', NULL, 'AuditA6', '认证角色列表', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthRole2', 2, 'urls', '/auth-role/create', 'R15', NULL, 'AuditA6', '添加认证角色', NULL, 'On', 'On', #TIME#, #TIME#),

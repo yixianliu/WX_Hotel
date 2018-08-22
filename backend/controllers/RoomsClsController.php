@@ -2,16 +2,15 @@
 
 namespace backend\controllers;
 
-use common\models\HotelsClassify;
 use Yii;
-use common\models\Hotels;
-use common\models\HotelsSearch;
+use common\models\RoomsClassify;
+use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
 /**
- * HotelsController implements the CRUD actions for Hotels model.
+ * RoomsClsController implements the CRUD actions for RoomsClassify model.
  */
-class HotelsController extends BaseController
+class RoomsClsController extends BaseController
 {
 
     /**
@@ -41,25 +40,22 @@ class HotelsController extends BaseController
     }
 
     /**
-     * Lists all Hotels models.
+     * Lists all RoomsClassify models.
      * @return mixed
      */
     public function actionIndex()
     {
-
-        $searchModel = new HotelsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        $result['classify'] = HotelsClassify::findByAll();
+        $dataProvider = new ActiveDataProvider([
+            'query' => RoomsClassify::find(),
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Hotels model.
+     * Displays a single RoomsClassify model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -72,13 +68,13 @@ class HotelsController extends BaseController
     }
 
     /**
-     * Creates a new Hotels model.
+     * Creates a new RoomsClassify model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Hotels();
+        $model = new RoomsClassify();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -90,7 +86,7 @@ class HotelsController extends BaseController
     }
 
     /**
-     * Updates an existing Hotels model.
+     * Updates an existing RoomsClassify model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -110,7 +106,7 @@ class HotelsController extends BaseController
     }
 
     /**
-     * Deletes an existing Hotels model.
+     * Deletes an existing RoomsClassify model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -124,15 +120,15 @@ class HotelsController extends BaseController
     }
 
     /**
-     * Finds the Hotels model based on its primary key value.
+     * Finds the RoomsClassify model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Hotels the loaded model
+     * @return RoomsClassify the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Hotels::findOne($id)) !== null) {
+        if (($model = RoomsClassify::findOne($id)) !== null) {
             return $model;
         }
 

@@ -5,7 +5,7 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "w_hotels_classify".
+ * This is the model class for table "w_rooms_classify".
  *
  * @property int    $id
  * @property string $c_key       分类KEY
@@ -19,37 +19,37 @@ use Yii;
  * @property int    $created_at
  * @property int    $updated_at
  */
-class HotelsClassify extends \yii\db\ActiveRecord
+class RoomsClassify extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'w_hotels_classify';
+        return 'w_rooms_classify';
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['name', 'parent_id'], 'required'],
+            [['c_key', 'name', 'parent_id'], 'required'],
             [['sort_id', 'created_at', 'updated_at'], 'integer'],
             [['description', 'is_using'], 'string'],
-            [['c_key', 'keywords', 'json_data', 'parent_id'], 'string', 'max' => 85],
+            [['c_key', 'keywords', 'json_data', 'parent_id'], 'string', 'max' => 55],
             [['name'], 'string', 'max' => 85],
             [['c_key'], 'unique'],
             [['name'], 'unique'],
 
-            [['is_using',], 'default', 'value' => 'On'],
-            [['sort_id',], 'default', 'value' => 1],
+            [['is_using'], 'default', 'value' => 'On'],
+            [['sort_id'], 'default', 'value' => 1],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
@@ -60,16 +60,16 @@ class HotelsClassify extends \yii\db\ActiveRecord
             'description' => '分类描述',
             'keywords'    => '分类关键词',
             'json_data'   => 'Json 数据',
-            'parent_id'   => '父类类目',
-            'is_using'    => '是否启用',
+            'parent_id'   => '父类分类',
+            'is_using'    => '审核状态',
             'created_at'  => '添加数据时间',
             'updated_at'  => '更新数据时间',
         ];
     }
-	
-	public static function findByAll()
-	{
-		
-	}
-	
+
+    public static function findByAll()
+    {
+
+    }
+
 }

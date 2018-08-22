@@ -1,30 +1,30 @@
 <?php
 
-namespace common\models;
+namespace backend\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Hotels;
+use common\models\Rooms;
 
 /**
- * HotelsSearch represents the model behind the search form of `common\models\Hotels`.
+ * SearchRooms represents the model behind the search form of `common\models\Rooms`.
  */
-class HotelsSearch extends Hotels
+class SearchRooms extends Rooms
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
             [['num', 'check_in_num', 'price', 'discount', 'created_at', 'updated_at'], 'integer'],
-            [['hotel_id', 'user_id', 'c_key', 'title', 'content', 'introduction', 'keywords', 'path', 'thumb', 'images', 'is_promote', 'is_audit', 'is_comments'], 'safe'],
+            [['hotel_id', 'room_id', 'user_id', 'c_key', 'room_num', 'title', 'content', 'introduction', 'keywords', 'path', 'thumb', 'images', 'is_promote', 'is_using', 'is_comments'], 'safe'],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function scenarios()
     {
@@ -41,7 +41,7 @@ class HotelsSearch extends Hotels
      */
     public function search($params)
     {
-        $query = Hotels::find();
+        $query = Rooms::find();
 
         // add conditions that should always apply here
 
@@ -61,7 +61,7 @@ class HotelsSearch extends Hotels
         $query->andFilterWhere([
             'id' => $this->id,
             'num' => $this->num,
-            'checkin_num' => $this->check_in_num,
+            'check_in_num' => $this->check_in_num,
             'price' => $this->price,
             'discount' => $this->discount,
             'created_at' => $this->created_at,
@@ -69,8 +69,10 @@ class HotelsSearch extends Hotels
         ]);
 
         $query->andFilterWhere(['like', 'hotel_id', $this->hotel_id])
+            ->andFilterWhere(['like', 'room_id', $this->room_id])
             ->andFilterWhere(['like', 'user_id', $this->user_id])
             ->andFilterWhere(['like', 'c_key', $this->c_key])
+            ->andFilterWhere(['like', 'room_num', $this->room_num])
             ->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'content', $this->content])
             ->andFilterWhere(['like', 'introduction', $this->introduction])
@@ -79,7 +81,7 @@ class HotelsSearch extends Hotels
             ->andFilterWhere(['like', 'thumb', $this->thumb])
             ->andFilterWhere(['like', 'images', $this->images])
             ->andFilterWhere(['like', 'is_promote', $this->is_promote])
-            ->andFilterWhere(['like', 'is_audit', $this->is_audit])
+            ->andFilterWhere(['like', 'is_using', $this->is_using])
             ->andFilterWhere(['like', 'is_comments', $this->is_comments]);
 
         return $dataProvider;

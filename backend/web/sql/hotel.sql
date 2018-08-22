@@ -115,13 +115,13 @@ CREATE TABLE `#DB_PREFIX#Rooms_Classify` (
  */
 INSERT INTO `#DB_PREFIX#Rooms_Classify`
 VALUES
-(NULL, 'C1', 1, '数码周边', NULL, NULL, NULL, 'C0', 'On', #TIME#, #TIME#),
-(NULL, 'C2', 2, '母婴用品', NULL, NULL, NULL, 'C0', 'On', #TIME#, #TIME#),
-(NULL, 'C3', 3, '时尚服装', NULL, NULL, NULL, 'C0', 'On', #TIME#, #TIME#),
-(NULL, 'C4', 4, '商场百货', NULL, NULL, NULL, 'C0', 'On', #TIME#, #TIME#),
-(NULL, 'C5', 5, '运动户外', NULL, NULL, NULL, 'C0', 'On', #TIME#, #TIME#),
-(NULL, 'C6', 6, '美容美肤', NULL, NULL, NULL, 'C0', 'On', #TIME#, #TIME#),
-(NULL, 'C7', 7, '珠玉宝石', NULL, NULL, NULL, 'C0', 'On', #TIME#, #TIME#);
+(NULL, 'C1', 1, '商务大床房', NULL, NULL, NULL, 'C0', 'On', #TIME#, #TIME#),
+(NULL, 'C2', 2, '大床房', NULL, NULL, NULL, 'C0', 'On', #TIME#, #TIME#),
+(NULL, 'C3', 3, '标准双床房', NULL, NULL, NULL, 'C0', 'On', #TIME#, #TIME#),
+(NULL, 'C4', 4, '商务套房', NULL, NULL, NULL, 'C0', 'On', #TIME#, #TIME#),
+(NULL, 'C5', 5, '豪华商务房', NULL, NULL, NULL, 'C0', 'On', #TIME#, #TIME#),
+(NULL, 'C6', 6, '公寓套房', NULL, NULL, NULL, 'C0', 'On', #TIME#, #TIME#),
+(NULL, 'C7', 7, '总统套房', NULL, NULL, NULL, 'C0', 'On', #TIME#, #TIME#);
 
 /**
  + ------------------------------------------------------------------------------------------------------------
@@ -131,18 +131,23 @@ VALUES
 DROP TABLE IF EXISTS `#DB_PREFIX#Order`;
 CREATE TABLE `#DB_PREFIX#Order` (
     `id` INT(11) NULL AUTO_INCREMENT,
-    `hotel_id` VARCHAR(55) NOT NULL COMMENT '房间编号',
+    `hotel_id` VARCHAR(55) NOT NULL COMMENT '酒店编号',
+    `room_id` VARCHAR(55) NOT NULL COMMENT '房间编号',
     `user_id` VARCHAR(55) NOT NULL COMMENT '用户ID',
-    `c_key` VARCHAR(55) NOT NULL COMMENT '房间分类',
+    `c_key` VARCHAR(55) NOT NULL COMMENT '订单分类',
     `price` INT(11) UNSIGNED NOT NULL COMMENT '价格',
     `title` VARCHAR(125) NOT NULL COMMENT '标题',
     `content` TEXT NOT NULL COMMENT '描述内容',
     `keywords` VARCHAR(55) NULL COMMENT '关键字',
-    `html` VARCHAR(55) NULL COMMENT '静态路径',
+    `username` VARCHAR(55) NULL COMMENT '制单人',
+    `path` VARCHAR(55) NULL COMMENT '订单路径',
     `num` integer NOT NULL DEFAULT '0' COMMENT '入住人数',
     `check_in` integer NOT NULL DEFAULT '0' COMMENT '入住时间',
     `check_out` integer NOT NULL DEFAULT '0' COMMENT '退房时间',
+    `pay_type` SET('wechat', 'alipay', 'cash') NOT NULL COMMENT '支付方式',
     `is_using` SET('On', 'Off', 'Out', 'Not') NOT NULL COMMENT '审核',
+    `place_order` integer NOT NULL DEFAULT '0' COMMENT '下单时间',
+    `pay_order` integer NOT NULL DEFAULT '0' COMMENT '支付时间',
     `created_at` integer NOT NULL DEFAULT '0',
     `updated_at` integer NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
@@ -157,7 +162,7 @@ CREATE TABLE `#DB_PREFIX#Order` (
  */
 
 /**
- * 本司卡卷
+ * 卡卷
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Coupon`;
 CREATE TABLE `#DB_PREFIX#Coupon` (

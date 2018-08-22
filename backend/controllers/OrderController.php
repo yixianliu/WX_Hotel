@@ -3,25 +3,35 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\HotelsClassify;
+use common\models\Order;
 use yii\data\ActiveDataProvider;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
- * HotelsClsController implements the CRUD actions for HotelsClassify model.
+ * OrderController implements the CRUD actions for Order model.
  */
-class HotelsClsController extends Controller
+class OrderController extends BaseController
 {
+
     /**
      * @inheritdoc
      */
     public function behaviors()
     {
         return [
+
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class'   => \yii\filters\VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -30,13 +40,13 @@ class HotelsClsController extends Controller
     }
 
     /**
-     * Lists all HotelsClassify models.
+     * Lists all Order models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => HotelsClassify::find(),
+            'query' => Order::find(),
         ]);
 
         return $this->render('index', [
@@ -45,8 +55,10 @@ class HotelsClsController extends Controller
     }
 
     /**
-     * Displays a single HotelsClassify model.
+     * Displays a single Order model.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -58,13 +70,14 @@ class HotelsClsController extends Controller
     }
 
     /**
-     * Creates a new HotelsClassify model.
+     * Creates a new Order model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new HotelsClassify();
+
+        $model = new Order();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,9 +89,11 @@ class HotelsClsController extends Controller
     }
 
     /**
-     * Updates an existing HotelsClassify model.
+     * Updates an existing Order model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -96,9 +111,11 @@ class HotelsClsController extends Controller
     }
 
     /**
-     * Deletes an existing HotelsClassify model.
+     * Deletes an existing Order model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -110,15 +127,17 @@ class HotelsClsController extends Controller
     }
 
     /**
-     * Finds the HotelsClassify model based on its primary key value.
+     * Finds the Order model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
-     * @return HotelsClassify the loaded model
+     *
+     * @return Order the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = HotelsClassify::findOne($id)) !== null) {
+        if (($model = Order::findOne($id)) !== null) {
             return $model;
         }
 
