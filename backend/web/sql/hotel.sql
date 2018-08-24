@@ -11,7 +11,7 @@ CREATE TABLE `#DB_PREFIX#Hotels` (
     `password` VARCHAR(125) NOT NULL COMMENT '酒店密码',
     `name` VARCHAR(125) NOT NULL COMMENT '酒店名称',
     `content` TEXT NOT NULL COMMENT '产品内容',
-	`address` VARCHAR(125) NOT NULL COMMENT '酒店地址',
+	  `address` VARCHAR(125) NOT NULL COMMENT '酒店地址',
     `introduction` VARCHAR(255) NULL COMMENT '导读',
     `keywords` VARCHAR(120) NULL COMMENT '关键字',
     `path` VARCHAR(255) NULL COMMENT '酒店文件路径',
@@ -41,7 +41,7 @@ CREATE TABLE `#DB_PREFIX#Rooms` (
     `num` INT(11) UNSIGNED NOT NULL COMMENT '房间数量',
     `check_in_num` INT(11) UNSIGNED NOT NULL COMMENT '入住房间数量',
     `price` INT(11) UNSIGNED NOT NULL COMMENT '一口价',
-    `discount` INT(11) UNSIGNED NULL COMMENT '折扣价',
+    `discount` DECIMAL(6,2) NULL COMMENT '折扣价',
     `introduction` VARCHAR(255) NULL COMMENT '导读,获取房间介绍第一段.',
     `keywords` VARCHAR(120) NULL COMMENT '关键字',
     `path` VARCHAR(255) NULL COMMENT '房间文件路径',
@@ -145,6 +145,7 @@ CREATE TABLE `#DB_PREFIX#Order` (
     `check_in` integer NOT NULL DEFAULT '0' COMMENT '入住时间',
     `check_out` integer NOT NULL DEFAULT '0' COMMENT '退房时间',
     `pay_type` SET('wechat', 'alipay', 'cash') NOT NULL COMMENT '支付方式',
+    `express_type` SET('On', 'Off', 'Out', 'Not', 'Hold') NOT NULL COMMENT '发货状态, hold (待发货)',
     `is_using` SET('On', 'Off', 'Out', 'Not') NOT NULL COMMENT '审核',
     `place_order` integer NOT NULL DEFAULT '0' COMMENT '下单时间',
     `pay_order` integer NOT NULL DEFAULT '0' COMMENT '支付时间',
@@ -170,11 +171,12 @@ CREATE TABLE `#DB_PREFIX#Coupon` (
     `coupon_key` VARCHAR(125) NULL DEFAULT NULL COMMENT '优惠券识别KEY',
     `validity` VARCHAR(125) NOT NULL COMMENT '优惠券有效日期',
     `title` VARCHAR(125) NULL COMMENT '优惠券标题',
-	`num` integer NOT NULL DEFAULT '0' COMMENT '卡卷数量',
+	  `num` integer NOT NULL DEFAULT '0' COMMENT '卡卷数量',
     `denomination` INT(6) UNSIGNED NOT NULL COMMENT '优惠券面额',
     `quota` INT(6) UNSIGNED NOT NULL COMMENT '优惠券使用限额',
     `remarks` VARCHAR(125) NULL COMMENT '优惠券备注',
     `coupon_type` SET('discount', 'coupon') NOT NULL COMMENT '卡卷类型：折扣劵 / 优惠卷',
+    `pay_type` SET('discount', 'coupon') NOT NULL COMMENT '消费方式：消费后送,消费前送,关注公众号',
     `created_at` integer NOT NULL DEFAULT '0',
     `updated_at` integer NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
@@ -195,3 +197,51 @@ CREATE TABLE `#DB_PREFIX#Relevance_Rooms_Coupon` (
 	KEY `user_id` (`user_id`),
 	KEY `coupon_key` (`coupon_key`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+ + ------------------------------------------------------------------------------------------------------------
+ * 积分系统
+ + ------------------------------------------------------------------------------------------------------------
+ */
+DROP TABLE IF EXISTS `#DB_PREFIX#Credit`;
+CREATE TABLE `#DB_PREFIX#Credit` (
+    `id` INT(11) NULL AUTO_INCREMENT,
+    `user_id` VARCHAR(55) NOT NULL COMMENT '用户编号ID',
+    `credit_change` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '积分变化',
+    `remarks` VARCHAR(125) NULL COMMENT '备注',
+    `created_at` integer NOT NULL DEFAULT '0',
+    `updated_at` integer NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `user_id` (`user_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+ + ------------------------------------------------------------------------------------------------------------
+ * 财务系统
+ + ------------------------------------------------------------------------------------------------------------
+ */
+DROP TABLE IF EXISTS `#DB_PREFIX#Finance_Detailed`;
+CREATE TABLE `#DB_PREFIX#Finance_Detailed` (
+    `id` INT(11) NULL AUTO_INCREMENT,
+    `user_id` VARCHAR(55) NOT NULL COMMENT '用户编号ID',
+    `money_change` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '余额变化',
+    `remarks` VARCHAR(125) NULL COMMENT '备注',
+    `created_at` integer NOT NULL DEFAULT '0',
+    `updated_at` integer NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `user_id` (`user_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='余额明细表';
+
+DROP TABLE IF EXISTS `#DB_PREFIX#Recharge_Detailed`;
+CREATE TABLE `#DB_PREFIX#Recharge_Detailed` (
+    `id` INT(11) NULL AUTO_INCREMENT,
+    `user_id` VARCHAR(55) NOT NULL COMMENT '用户编号ID',
+    `money` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '充值记录',
+    `remarks` VARCHAR(125) NULL COMMENT '备注',
+    `pay_type` SET('wechat', 'alipay', 'cash') NOT NULL COMMENT '支付方式',
+    `status_type` SET('On', 'Off', 'Not', 'Out') NOT NULL COMMENT '状态',
+    `created_at` integer NOT NULL DEFAULT '0',
+    `updated_at` integer NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `user_id` (`user_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='充值记录表';
