@@ -10,36 +10,66 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Rooms Classifies', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="rooms-classify-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+    <div class="panel panel-default">
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'c_key',
-            'sort_id',
-            'name',
-            'description:ntext',
-            'keywords',
-            'json_data',
-            'parent_id',
-            'is_using',
-            'created_at',
-            'updated_at',
-        ],
-    ]) ?>
+        <div class="panel-heading"><h3 class="panel-title"><?= Html::encode($this->title) ?></h3></div>
 
+        <div class="panel-body">
+
+            <p>
+                <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('删除', ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data'  => [
+                        'confirm' => '是否删除这条记录?',
+                        'method'  => 'post',
+                    ],
+                ]) ?>
+                <?= Html::a('返回列表', ['index'], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('继续添加', ['create'], ['class' => 'btn btn-success']) ?>
+            </p>
+
+            <?= DetailView::widget([
+                'model'      => $model,
+                'attributes' => [
+                    'c_key',
+                    'sort_id',
+                    'name',
+                    'description:ntext',
+                    'keywords',
+                    'json_data',
+                    'parent_id',
+                    [
+                        'attribute' => 'is_using',
+                        'value'     => function ($model) {
+                            $state = [
+                                'On'  => '开启',
+                                'Off' => '未启用',
+                            ];
+
+                            return $state[$model->is_using];
+                        },
+                    ],
+                    [
+                        'attribute' => 'created_at',
+                        'value'     => function ($model) {
+                            return date('Y - m -d , h:i', $model->created_at);
+                        },
+                    ],
+                    [
+                        'attribute' => 'updated_at',
+                        'value'     => function ($model) {
+                            return date('Y - m -d , h:i', $model->updated_at);
+                        },
+                    ],
+                ],
+                'template'   => '<tr><th width="200">{label}</th><td>{value}</td></tr>',
+            ]) ?>
+
+        </div>
+    </div>
 </div>
+

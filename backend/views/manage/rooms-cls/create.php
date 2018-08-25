@@ -8,7 +8,5 @@ $this->params['breadcrumbs'][] = ['label' => '酒店房间分类', 'url' => ['in
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+<?= $this->render('_form', ['model' => $model, 'result' => $result]) ?>
 

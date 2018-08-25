@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\RoomsClassify;
 use Yii;
 use common\models\Rooms;
 use backend\models\SearchRooms;
@@ -49,14 +50,16 @@ class RoomsController extends BaseController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
      * Displays a single Rooms model.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -84,15 +87,20 @@ class RoomsController extends BaseController
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $result['classify'] = RoomsClassify::getClsSelect('Off');
+
         return $this->render('create', [
-            'model' => $model,
+            'model'  => $model,
+            'result' => $result,
         ]);
     }
 
     /**
      * Updates an existing Rooms model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -104,15 +112,20 @@ class RoomsController extends BaseController
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $result['classify'] = RoomsClassify::getClsSelect('Off');
+
         return $this->render('update', [
-            'model' => $model,
+            'model'  => $model,
+            'result' => $result,
         ]);
     }
 
     /**
      * Deletes an existing Rooms model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -126,7 +139,9 @@ class RoomsController extends BaseController
     /**
      * Finds the Rooms model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
+     *
      * @return Rooms the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */

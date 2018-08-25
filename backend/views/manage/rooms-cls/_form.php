@@ -20,7 +20,15 @@ use kartik\select2\Select2;
 
             <?php $form = ActiveForm::begin(); ?>
 
-            <?= $form->field($model, 'parent_id')->textInput(['maxlength' => true]) ?>
+            <?=
+            $form->field($model, 'parent_id')->widget(Select2::classname(), [
+                'data'          => $result['classify'],
+                'options'       => ['placeholder' => '父级类目...'],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ]);
+            ?>
 
             <?= $form->field($model, 'sort_id')->textInput(['maxlength' => true]) ?>
 

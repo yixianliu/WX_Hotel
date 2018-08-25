@@ -9,7 +9,4 @@ $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'i
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 
-<?= $this->render('_form', [
-    'model' => $model,
-]) ?>
-
+<?= $this->render('_form', ['model' => $model, 'result' => $result]) ?>

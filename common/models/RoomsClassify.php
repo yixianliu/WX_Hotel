@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "w_rooms_classify".
@@ -21,6 +22,9 @@ use Yii;
  */
 class RoomsClassify extends \yii\db\ActiveRecord
 {
+
+    public static $parentId = 'C0';
+
     /**
      * {@inheritdoc}
      */
@@ -30,12 +34,22 @@ class RoomsClassify extends \yii\db\ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['c_key', 'name', 'parent_id'], 'required'],
+            [['name', 'parent_id'], 'required'],
             [['sort_id', 'created_at', 'updated_at'], 'integer'],
             [['description', 'is_using'], 'string'],
             [['c_key', 'keywords', 'json_data', 'parent_id'], 'string', 'max' => 55],
@@ -67,9 +81,142 @@ class RoomsClassify extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function findByAll()
+    public static function findByAll($status = null, $pid = null)
     {
 
+        // 审核状态
+        $array = !empty($status) ? ['is_using' => $status] : ['!=', 'is_using', ''];
+
+        $pid = empty($pid) ? static::$parentId : $pid;
+
+        return static::find()->where($array)->andWhere(['parent_id' => $pid])
+            ->asArray()
+            ->all();
     }
 
+    /**
+     * 查找版块
+     *
+     * @param $id
+     *
+     * @return array|ProductClassify|null|ActiveRecord
+     */
+    public static function findWhereClassify($id)
+    {
+        return static::find()->where(['is_using' => 'On', 'c_key' => $id])->one();
+    }
+
+    /**
+     * 递归处理
+     *
+     * @param      $pid
+     * @param null $one
+     *
+     * @return array|ProductClassify|null|void|ActiveRecord
+     */
+    public static function recursionData($pid)
+    {
+
+        if (empty($pid))
+            return;
+
+        $result = static::findWhereClassify($pid);
+
+        if (empty($result)) {
+            return $result;
+        }
+
+        $data = static::findByAll(null, $pid);
+
+        if (empty($data)) {
+            return $result;
+        }
+
+        // 转换字符串类型
+        $result = $result->toArray();
+
+        foreach ($data as $key => $value) {
+            $result['child'][] = static::recursionData($value['c_key']);
+        }
+
+        return $result;
+    }
+
+    /**
+     * 获取分类(选项框)
+     *
+     * @param string $one
+     *
+     * @return array
+     */
+    public static function getClsSelect($one = 'On')
+    {
+
+        // 初始化
+        $result = [];
+
+        // 产品分类
+        $dataClassify = static::findByAll('On', static::$parentId);
+
+        if ($one == 'On')
+            $result[static::$parentId] = '父级分类 !!';
+
+        foreach ($dataClassify as $key => $value) {
+
+            $result[$value['c_key']] = $value['name'];
+
+            $child = static::recursionClsSelect($value);
+
+            if (empty($child))
+                continue;
+
+            $result = array_merge($result, $child);
+        }
+
+        return $result;
+    }
+
+    /**
+     * 无限分类(选项框)
+     *
+     * @param     $data
+     * @param int $num
+     *
+     * @return array|void
+     */
+    public static function recursionClsSelect($data, $num = 1)
+    {
+
+        if (empty($data))
+            return;
+
+        // 初始化
+        $result = [];
+        $symbol = null;
+
+        $child = static::findByAll($data['c_key']);
+
+        if (empty($child))
+            return;
+
+        if ($num != 0) {
+            for ($i = 0; $i <= $num; $i++) {
+                $symbol .= '――';
+            }
+        }
+
+        foreach ($child as $key => $value) {
+
+            $result[$value['c_key']] = $symbol . $value['name'];
+
+            $childData = static::recursionClsSelect($value, ($num + 1));
+
+            if (empty($childData))
+                continue;
+
+            $result = array_merge($result, $childData);
+        }
+
+        return $result;
+    }
 }

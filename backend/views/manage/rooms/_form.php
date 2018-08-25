@@ -20,15 +20,41 @@ use kartik\select2\Select2;
 
             <?php $form = ActiveForm::begin(); ?>
 
-            <?= $form->field($model, 'c_key')->textInput(['maxlength' => true]) ?>
+            <?=
+            $form->field($model, 'c_key')->widget(Select2::classname(), [
+                'data'          => $result['classify'],
+                'options'       => ['placeholder' => '分类'],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ]);
+            ?>
 
-            <?= $form->field($model, 'hotel_id')->textInput(['maxlength' => true]) ?>
+            <?=
+            $form->field($model, 'hotel_id')->widget(Select2::classname(), [
+                'data'          => $result['classify'],
+                'options'       => ['placeholder' => '酒店'],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ]);
+            ?>
 
             <?= $form->field($model, 'room_num')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+            <?=
+            $form->field($model, 'content')->widget('kucha\ueditor\UEditor', [
+                'clientOptions' => [
+                    //编辑区域大小
+                    'lang'               => 'zh-cn',
+                    'initialFrameHeight' => '400',
+                    'elementPathEnabled' => false,
+                    'wordCount'          => false,
+                ],
+            ]);
+            ?>
 
             <?= $form->field($model, 'num')->textInput(['maxlength' => true]) ?>
 
@@ -38,7 +64,7 @@ use kartik\select2\Select2;
 
             <?= $form->field($model, 'discount')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'introduction')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'introduction')->textarea(['maxlength' => true, 'rows' => 6]) ?>
 
             <?= $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>
 
@@ -77,6 +103,8 @@ use kartik\select2\Select2;
                 ],
             ]);
             ?>
+
+            <?= $this->render('../../upload', ['model' => $model, 'text' => '上传文件或者图片', 'form' => $form]); ?>
 
             <div class="form-group">
 

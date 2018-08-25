@@ -17,7 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <header class="panel_header"><h2 class="title pull-left"><?= Html::encode($this->title) ?></h2></header>
 
         <div class="content-body">
-            <div class="row">
 
                 <p>
                     <?= Html::a('更新', ['update', 'id' => $model->m_key], ['class' => 'btn btn-primary']) ?>
@@ -110,7 +109,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]);
                 ?>
 
-            </div>
         </div>
     </section>
 </div>

@@ -28,7 +28,6 @@ use kartik\select2\Select2;
 
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
             <?= $form->field($model, 'num')->textInput(['maxlength' => true]) ?>
 
@@ -47,6 +46,18 @@ use kartik\select2\Select2;
             <?= $form->field($model, 'thumb')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'images')->textInput(['maxlength' => true]) ?>
+
+            <?=
+            $form->field($model, 'content')->widget('kucha\ueditor\UEditor', [
+                'clientOptions' => [
+                    //编辑区域大小
+                    'lang'               => 'zh-cn',
+                    'initialFrameHeight' => '400',
+                    'elementPathEnabled' => false,
+                    'wordCount'          => false,
+                ],
+            ]);
+            ?>
 
             <?= $form->field($model, 'is_promote')->textInput(['maxlength' => true]) ?>
 
