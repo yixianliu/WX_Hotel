@@ -22,7 +22,7 @@ $attribute = empty($attribute) ? 'path' : $attribute;
 $id = empty($id) ? null : $id;
 
 // 用户 Id
-$user_id = empty($user_id) ? Yii::$app->user->identity->user_id : $user_id;
+$user_id = empty($user_id) ? Yii::$app->user->identity->username : $user_id;
 
 // 上传文件后缀名
 $uploadType = empty($uploadType) ? 'image' : $uploadType;
@@ -52,21 +52,20 @@ $text = empty($text) ? '没有描述' : $text;
 // 图片路径
 $imgPathArray = explode('/', Yii::$app->controller->id);
 
-
-switch ($imgPathArray[1]) {
+switch ($imgPathArray[0]) {
 
     case 'download':
     case 'slide':
         $imgPath = Url::to('@web/../../frontend/web/temp/') . explode('/', Yii::$app->controller->id)[1];
         break;
 
-    case 'sp-offer':
-        $imgPath = Url::to('@web/../../frontend/web/temp/') . $user_id . '/sp_offer/';
+    case 'rooms':
+        $imgPath = Url::to('@web/../../frontend/web/temp/') . $user_id . '/rooms/';
         break;
 
     default:
     case 'product':
-        $imgPath = Url::to('@web/../../frontend/web/temp/') . explode('/', Yii::$app->controller->id)[1] . '/' . $id;
+        $imgPath = Url::to('@web/../../frontend/web/temp/') . explode('/', Yii::$app->controller->id) . '/' . $id;
         break;
 
 }
@@ -90,7 +89,7 @@ switch ($imgPathArray[1]) {
     FileUploadUI::widget([
         'model'         => $model,
         'attribute'     => $attribute,
-        'url'           => ['admin/upload/image-upload', 'id' => $id, 'type' => explode('/', Yii::$app->controller->id)[1], 'attribute' => $attribute, 'ext' => $uploadType],
+        'url'           => ['admin/upload/image-upload', 'id' => $id, 'type' => explode('/', Yii::$app->controller->id), 'attribute' => $attribute, 'ext' => $uploadType],
         'gallery'       => false,
         'fieldOptions'  => [
             'accept' => $uploadType . '/*',
