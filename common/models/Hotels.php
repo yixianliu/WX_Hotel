@@ -101,4 +101,27 @@ class Hotels extends \yii\db\ActiveRecord
 
         return static::find()->where($array)->asArray()->all();
     }
+
+    /**
+     * 获取酒店(选项框)
+     *
+     * @param string $one
+     *
+     * @return array
+     */
+    public static function getHotelSelect()
+    {
+
+        // 初始化
+        $result = [];
+
+        // 产品分类
+        $dataClassify = static::findByAll('On');
+
+        foreach ($dataClassify as $key => $value) {
+            $result[$value['hotel_id']] = $value['name'];
+        }
+
+        return $result;
+    }
 }

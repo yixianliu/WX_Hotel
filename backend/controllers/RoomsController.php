@@ -6,7 +6,7 @@ use common\models\Hotels;
 use common\models\RoomsClassify;
 use Yii;
 use common\models\Rooms;
-use backend\models\SearchRooms;
+use backend\models\RoomsSearch;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -47,7 +47,7 @@ class RoomsController extends BaseController
      */
     public function actionIndex()
     {
-        $searchModel = new SearchRooms();
+        $searchModel = new RoomsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -90,7 +90,7 @@ class RoomsController extends BaseController
 
         $result['classify'] = RoomsClassify::getClsSelect('Off');
 
-        $result['hotel'] = Hotels::findByAll('On');
+        $result['hotel'] = Hotels::getHotelSelect();
 
         return $this->render('create', [
             'model'  => $model,

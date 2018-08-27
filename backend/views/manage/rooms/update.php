@@ -6,7 +6,7 @@
 $this->title = '更新房间内容: ' . $model->title;
 $this->params['breadcrumbs'][] = ['label' => '房间列表', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = '更新';
 ?>
 
 <?= $this->render('_form', ['model' => $model, 'result' => $result]) ?>

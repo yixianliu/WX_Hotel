@@ -10,7 +10,7 @@ use common\models\Rooms;
 /**
  * SearchRooms represents the model behind the search form of `common\models\Rooms`.
  */
-class SearchRooms extends Rooms
+class RoomsSearch extends Rooms
 {
     /**
      * {@inheritdoc}
