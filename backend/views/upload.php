@@ -17,7 +17,7 @@ use dosamigos\fileupload\FileUploadUI;
 if (empty($model) || empty($form))
     exit(false);
 
-$attribute = empty($attribute) ? 'path' : $attribute;
+$attribute = empty($attribute) ? 'images' : $attribute;
 
 $id = empty($id) ? null : $id;
 
@@ -54,18 +54,13 @@ $imgPathArray = explode('/', Yii::$app->controller->id);
 
 switch ($imgPathArray[0]) {
 
-    case 'download':
-    case 'slide':
-        $imgPath = Url::to('@web/../../frontend/web/temp/') . explode('/', Yii::$app->controller->id)[1];
-        break;
-
     case 'rooms':
         $imgPath = Url::to('@web/../../frontend/web/temp/') . $user_id . '/rooms/';
         break;
 
     default:
-    case 'product':
-        $imgPath = Url::to('@web/../../frontend/web/temp/') . explode('/', Yii::$app->controller->id) . '/' . $id;
+    case 'hotel':
+        $imgPath = Url::to('@web/../../frontend/web/temp/') . explode('/', Yii::$app->controller->id)[0] . '/' . $id;
         break;
 
 }
@@ -83,13 +78,13 @@ switch ($imgPathArray[0]) {
 
 <div class="form-group">
 
-    <label><?= $text ?></label>
+    <label class="control-label" for="#"><?= $text ?></label>
 
     <?=
     FileUploadUI::widget([
         'model'         => $model,
         'attribute'     => $attribute,
-        'url'           => ['admin/upload/image-upload', 'id' => $id, 'type' => explode('/', Yii::$app->controller->id), 'attribute' => $attribute, 'ext' => $uploadType],
+        'url'           => ['upload/image-upload', 'id' => $id, 'type' => explode('/', Yii::$app->controller->id)[0], 'attribute' => $attribute, 'ext' => $uploadType],
         'gallery'       => false,
         'fieldOptions'  => [
             'accept' => $uploadType . '/*',

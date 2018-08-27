@@ -46,10 +46,30 @@ $this->params['breadcrumbs'][] = $this->title;
             'thumb',
             'images',
             'is_promote',
-            'is_using',
             'is_comments',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'is_using',
+                'value'     => function ($model) {
+                    $state = [
+                        'On'  => '开启',
+                        'Off' => '未启用',
+                    ];
+
+                    return $state[$model->is_using];
+                },
+            ],
+            [
+                'attribute' => 'created_at',
+                'value'     => function ($model) {
+                    return date('Y - m -d , h:i', $model->created_at);
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value'     => function ($model) {
+                    return date('Y - m -d , h:i', $model->updated_at);
+                },
+            ],
         ],
     ]) ?>
 

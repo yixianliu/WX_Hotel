@@ -15,25 +15,13 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
     <?= $form->field($model, 'hotel_id') ?>
 
     <?= $form->field($model, 'user_id') ?>
 
-    <?= $form->field($model, 'c_key') ?>
-
-    <?= $form->field($model, 'title') ?>
+    <?= $form->field($model, 'name') ?>
 
     <?php // echo $form->field($model, 'content') ?>
-
-    <?php // echo $form->field($model, 'num') ?>
-
-    <?php // echo $form->field($model, 'checkin_num') ?>
-
-    <?php // echo $form->field($model, 'price') ?>
-
-    <?php // echo $form->field($model, 'discount') ?>
 
     <?php // echo $form->field($model, 'introduction') ?>
 
@@ -47,7 +35,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'is_promote') ?>
 
-    <?php // echo $form->field($model, 'is_audit') ?>
+    <?php // echo $form->field($model, 'is_using') ?>
 
     <?php // echo $form->field($model, 'is_field') ?>
 

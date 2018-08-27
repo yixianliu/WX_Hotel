@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Hotels */
 
-$this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Hotels', 'url' => ['index']];
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => '酒店管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="hotels-view">
@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('删除', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '是否删除这条记录?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -28,27 +28,59 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'hotel_id',
             'user_id',
-            'c_key',
-            'title',
-            'content:ntext',
-            'num',
-            'checkin_num',
-            'price',
-            'discount',
+            'name',
+            'content:html',
             'introduction',
             'keywords',
-            'path',
             'thumb',
             'images',
-            'is_promote',
-            'is_audit',
-            'is_field',
-            'is_comments',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'is_promote',
+                'value'     => function ($model) {
+                    $state = [
+                        'On'  => '开启',
+                        'Off' => '未启用',
+                    ];
+
+                    return $state[$model->is_promote];
+                },
+            ],
+            [
+                'attribute' => 'is_comments',
+                'value'     => function ($model) {
+                    $state = [
+                        'On'  => '开启',
+                        'Off' => '未启用',
+                    ];
+
+                    return $state[$model->is_comments];
+                },
+            ],
+            [
+                'attribute' => 'is_using',
+                'value'     => function ($model) {
+                    $state = [
+                        'On'  => '开启',
+                        'Off' => '未启用',
+                    ];
+
+                    return $state[$model->is_using];
+                },
+            ],
+            [
+                'attribute' => 'created_at',
+                'value'     => function ($model) {
+                    return date('Y - m -d , h:i', $model->created_at);
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value'     => function ($model) {
+                    return date('Y - m -d , h:i', $model->updated_at);
+                },
+            ],
         ],
     ]) ?>
 

@@ -32,7 +32,7 @@ use kartik\select2\Select2;
 
             <?=
             $form->field($model, 'hotel_id')->widget(Select2::classname(), [
-                'data'          => $result['classify'],
+                'data'          => $result['hotel'],
                 'options'       => ['placeholder' => '酒店'],
                 'pluginOptions' => [
                     'allowClear' => true,

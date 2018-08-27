@@ -2,10 +2,9 @@
 
 namespace backend\controllers;
 
-use common\models\HotelsClassify;
 use Yii;
 use common\models\Hotels;
-use common\models\HotelsSearch;
+use backend\models\HotelsSearch;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -50,17 +49,17 @@ class HotelsController extends BaseController
         $searchModel = new HotelsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $result['classify'] = HotelsClassify::findByAll();
-
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
      * Displays a single Hotels model.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -80,6 +79,10 @@ class HotelsController extends BaseController
     {
         $model = new Hotels();
 
+        $model->user_id = Yii::$app->user->identity->username;
+
+        $model->hotel_id = self::getRandomString();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -92,7 +95,9 @@ class HotelsController extends BaseController
     /**
      * Updates an existing Hotels model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -112,7 +117,9 @@ class HotelsController extends BaseController
     /**
      * Deletes an existing Hotels model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -126,7 +133,9 @@ class HotelsController extends BaseController
     /**
      * Finds the Hotels model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
+     *
      * @return Hotels the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */

@@ -20,32 +20,11 @@ use kartik\select2\Select2;
 
             <?php $form = ActiveForm::begin(); ?>
 
-            <?= $form->field($model, 'hotel_id')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'user_id')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'c_key')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-
-
-            <?= $form->field($model, 'num')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'check_in_num')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'discount')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'introduction')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'introduction')->textarea(['maxlength' => true, 'rows' => 6]) ?>
 
             <?= $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'path')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'thumb')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'images')->textInput(['maxlength' => true]) ?>
 
             <?=
             $form->field($model, 'content')->widget('kucha\ueditor\UEditor', [
@@ -59,12 +38,20 @@ use kartik\select2\Select2;
             ]);
             ?>
 
-            <?= $form->field($model, 'is_promote')->textInput(['maxlength' => true]) ?>
+            <?=
+            $form->field($model, 'is_promote')->widget(Select2::classname(), [
+                'data'          => ['1' => '启用', '2' => '禁用'],
+                'options'       => ['placeholder' => '推广状态...'],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ]);
+            ?>
 
             <?=
-            $form->field($model, 'is_audit')->widget(Select2::classname(), [
+            $form->field($model, 'is_using')->widget(Select2::classname(), [
                 'data'          => ['1' => '启用', '2' => '禁用'],
-                'options'       => ['placeholder' => '角色状态...'],
+                'options'       => ['placeholder' => '审核状态...'],
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
@@ -80,6 +67,10 @@ use kartik\select2\Select2;
                 ],
             ]);
             ?>
+
+            <?= $this->render('../../upload', ['model' => $model, 'attribute' => 'thumb', 'text' => '上传缩略图', 'form' => $form]); ?>
+
+            <?= $this->render('../../upload', ['model' => $model, 'text' => '上传图片', 'form' => $form]); ?>
 
             <div class="form-group">
 

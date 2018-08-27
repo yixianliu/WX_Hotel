@@ -194,7 +194,7 @@ class RoomsClassify extends \yii\db\ActiveRecord
         $result = [];
         $symbol = null;
 
-        $child = static::findByAll($data['c_key']);
+        $child = static::findByAll('On', $data['c_key']);
 
         if (empty($child))
             return;

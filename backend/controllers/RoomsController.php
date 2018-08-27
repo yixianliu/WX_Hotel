@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Hotels;
 use common\models\RoomsClassify;
 use Yii;
 use common\models\Rooms;
@@ -88,6 +89,8 @@ class RoomsController extends BaseController
         }
 
         $result['classify'] = RoomsClassify::getClsSelect('Off');
+
+        $result['hotel'] = Hotels::findByAll('On');
 
         return $this->render('create', [
             'model'  => $model,

@@ -5,26 +5,26 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Hotels;
+use common\models\Article;
 
 /**
- * HotelsSearch represents the model behind the search form of `common\models\Hotels`.
+ * SearchArticle represents the model behind the search form of `common\models\Article`.
  */
-class HotelsSearch extends Hotels
+class ArticleSearch extends Article
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['created_at', 'updated_at'], 'integer'],
-            [['hotel_id', 'user_id', 'name', 'content', 'introduction', 'keywords', 'path', 'images', 'is_promote', 'is_comments'], 'safe'],
+            [['id', 'praise', 'forward', 'collection', 'share', 'attention', 'created_at', 'updated_at'], 'integer'],
+            [['article_id', 'user_id', 'c_key', 'title', 'content', 'introduction', 'keywords', 'path', 'is_promote', 'is_hot', 'is_classic', 'is_winnow', 'is_recommend', 'is_comments', 'is_using'], 'safe'],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function scenarios()
     {
@@ -41,7 +41,7 @@ class HotelsSearch extends Hotels
      */
     public function search($params)
     {
-        $query = Hotels::find();
+        $query = Article::find();
 
         // add conditions that should always apply here
 
@@ -60,20 +60,30 @@ class HotelsSearch extends Hotels
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'praise' => $this->praise,
+            'forward' => $this->forward,
+            'collection' => $this->collection,
+            'share' => $this->share,
+            'attention' => $this->attention,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'hotel_id', $this->hotel_id])
+        $query->andFilterWhere(['like', 'article_id', $this->article_id])
             ->andFilterWhere(['like', 'user_id', $this->user_id])
-            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'c_key', $this->c_key])
+            ->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'content', $this->content])
             ->andFilterWhere(['like', 'introduction', $this->introduction])
             ->andFilterWhere(['like', 'keywords', $this->keywords])
             ->andFilterWhere(['like', 'path', $this->path])
-            ->andFilterWhere(['like', 'images', $this->images])
             ->andFilterWhere(['like', 'is_promote', $this->is_promote])
-            ->andFilterWhere(['like', 'is_comments', $this->is_comments]);
+            ->andFilterWhere(['like', 'is_hot', $this->is_hot])
+            ->andFilterWhere(['like', 'is_classic', $this->is_classic])
+            ->andFilterWhere(['like', 'is_winnow', $this->is_winnow])
+            ->andFilterWhere(['like', 'is_recommend', $this->is_recommend])
+            ->andFilterWhere(['like', 'is_comments', $this->is_comments])
+            ->andFilterWhere(['like', 'is_using', $this->is_using]);
 
         return $dataProvider;
     }

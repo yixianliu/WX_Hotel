@@ -8,15 +8,15 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\HotelsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '酒店房间管理';
+$this->title = '酒店管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="col-lg-12">
 
     <div class="form-group">
-        <a href='<?= Url::to(['create']) ?>' class='btn btn-primary btn-lg' title='添加酒店房间'>添加酒店房间</a>
-        <a href='<?= Url::to(['auth-role/create', 'type' => 2]) ?>' class='btn btn-primary btn-lg' title='添加认证权限'>添加认证权限</a>
+        <a href='<?= Url::to(['create']) ?>' class='btn btn-primary btn-lg' title='添加酒店'>添加酒店</a>
+        <a href='<?= Url::to(['rooms/create']) ?>' class='btn btn-primary btn-lg' title='添加房间'>添加房间</a>
     </div>
 
     <div class="panel panel-default">
@@ -38,15 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'class'   => 'yii\grid\SerialColumn',
                         'options' => ['width' => 70],
                     ],
+                    'thumb',
                     'hotel_id',
                     'user_id',
-                    'c_key',
-                    'title',
-                    'num',
-                    'check_in_num',
-                    'price',
-                    'thumb',
-                    'is_audit',
+                    'name',
                     [
                         'attribute' => 'updated_at',
                         'value'     => function ($model) {
