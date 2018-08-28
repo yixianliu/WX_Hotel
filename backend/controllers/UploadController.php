@@ -11,6 +11,7 @@
 
 namespace backend\controllers;
 
+use common\models\Assist;
 use Yii;
 use yii\web\UploadedFile;
 use yii\helpers\FileHelper;
@@ -72,7 +73,7 @@ class UploadController extends BaseController
 
             // 配置
             case 'conf':
-                $model = new \common\models\Conf();
+                $model = new Conf();
                 break;
 
             // 文章
@@ -152,17 +153,10 @@ class UploadController extends BaseController
         if (empty($ext) || empty($fileExt))
             return false;
 
-        // 初始化
-        $result = [];
+        $result = Assist::findByData();
 
-        $confData = Conf::find()->where(['is_using' => 'On', 'is_language' => null])->asArray()->all();
-
-        if (empty($confData))
-            return false;
-
-        foreach ($confData as $value) {
-            $result[$value['c_key']] = $value['parameter'];
-        }
+        if (empty($result))
+            return true;
 
         switch ($ext) {
 

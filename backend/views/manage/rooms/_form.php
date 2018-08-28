@@ -104,7 +104,11 @@ use kartik\select2\Select2;
             ]);
             ?>
 
-            <?= $this->render('../../upload', ['model' => $model, 'text' => '上传文件或者图片', 'form' => $form]); ?>
+            <?= $this->render('../../upload', ['model' => $model, 'id' => $model->room_id, 'attribute' => 'thumb', 'text' => '上传缩略图', 'form' => $form]); ?>
+
+            <?= $this->render('../../upload', ['model' => $model, 'id' => $model->room_id, 'text' => '上传图片', 'form' => $form]); ?>
+
+            <?= $form->field($model, 'room_id')->hiddenInput()->label(false) ?>
 
             <div class="form-group">
 

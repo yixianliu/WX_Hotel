@@ -166,6 +166,8 @@ VALUES
   (NULL, 'AuthRoom4', 4, 'urls', '/rooms-cls/create', 'R15', NULL, 'AuditA9', '添加房间分类', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthRoom5', 5, 'urls', '/hotels/index', 'R15', NULL, 'AuditA9', '酒店列表', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthRoom6', 6, 'urls', '/hotels/create', 'R15', NULL, 'AuditA9', '添加酒店', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom7', 7, 'urls', '/rooms-field/index', 'R15', NULL, 'AuditA9', '房间参数', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom8', 8, 'urls', '/rooms-field/create', 'R15', NULL, 'AuditA9', '添加房间参数', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'AuthCoupon1', 1, 'urls', '/coupon/index', 'R15', NULL, 'AuditA8', '卡卷列表', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthCoupon2', 2, 'urls', '/coupon/create', 'R15', NULL, 'AuditA8', '添加卡卷', NULL, 'On', 'On', #TIME#, #TIME#),

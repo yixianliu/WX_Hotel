@@ -21,7 +21,7 @@ class RoomsController extends Controller
     {
         return [
             'verbs' => [
-                'class'   => VerbFilter::className(),
+                'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -46,9 +46,7 @@ class RoomsController extends Controller
 
     /**
      * Displays a single Rooms model.
-     *
      * @param integer $id
-     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -80,9 +78,7 @@ class RoomsController extends Controller
     /**
      * Updates an existing Rooms model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     *
      * @param integer $id
-     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -102,9 +98,7 @@ class RoomsController extends Controller
     /**
      * Deletes an existing Rooms model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     *
      * @param integer $id
-     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -118,9 +112,7 @@ class RoomsController extends Controller
     /**
      * Finds the Rooms model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     *
      * @param integer $id
-     *
      * @return Rooms the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */

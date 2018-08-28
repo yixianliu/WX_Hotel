@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Rooms';
+$this->title = '房间列表';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="rooms-index">
@@ -14,15 +14,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Rooms', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('添加房间', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'hotel_id',
             'room_id',
             'user_id',
@@ -30,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'room_num',
             //'title',
             //'content:ntext',
-            //'num',
+            'num',
             //'check_in_num',
             //'price',
             //'discount',
@@ -44,8 +43,8 @@ $this->params['breadcrumbs'][] = $this->title;
             //'is_comments',
             //'created_at',
             //'updated_at',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+    ]);
+    ?>
 </div>

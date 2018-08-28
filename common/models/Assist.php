@@ -58,6 +58,11 @@ class Assist extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * 网站辅助配置内容
+     *
+     * @return array
+     */
     public static function findByData()
     {
 

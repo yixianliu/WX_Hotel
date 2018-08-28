@@ -55,7 +55,7 @@ $imgPathArray = explode('/', Yii::$app->controller->id);
 switch ($imgPathArray[0]) {
 
     case 'rooms':
-        $imgPath = Url::to('@web/../../frontend/web/temp/') . $user_id . '/rooms/';
+        $imgPath = Url::to('@web/../../frontend/web/temp/rooms/') . $id;
         break;
 
     default:

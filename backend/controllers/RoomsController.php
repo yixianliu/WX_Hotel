@@ -80,13 +80,13 @@ class RoomsController extends BaseController
     {
         $model = new Rooms();
 
-        $model->room_id = self::getRandomString();
-
         $model->user_id = Yii::$app->user->identity->username;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
+        $model->room_id = self::getRandomString();
 
         $result['classify'] = RoomsClassify::getClsSelect('Off');
 
@@ -116,6 +116,8 @@ class RoomsController extends BaseController
         }
 
         $result['classify'] = RoomsClassify::getClsSelect('Off');
+
+        $result['hotel'] = Hotels::getHotelSelect();
 
         return $this->render('update', [
             'model'  => $model,
