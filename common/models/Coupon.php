@@ -56,6 +56,7 @@ class Coupon extends \yii\db\ActiveRecord
             'denomination' => '优惠券面额',
             'quota'        => '优惠券使用限额',
             'remarks'      => '优惠券备注',
+            'num'          => '优惠券数量',
             'coupon_type'  => '卡卷类型',
             'created_at'   => '添加数据时间',
             'updated_at'   => '更新数据时间',

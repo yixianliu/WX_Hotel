@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Coupons';
+$this->title = '优惠卷管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -36,14 +36,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         'class'   => 'yii\grid\SerialColumn',
                         'options' => ['width' => 70],
                     ],
-
-                    'id',
                     'coupon_key',
                     'validity',
                     'title',
                     'num',
                     //'denomination',
-                    //'quota',
+                    'quota',
                     //'remarks',
                     //'coupon_type',
                     //'created_at',

@@ -20,15 +20,22 @@ use kartik\select2\Select2;
 
             <?php $form = ActiveForm::begin(); ?>
 
-            <?= $form->field($model, 'validity')->textInput(['maxlength' => true]) ?>
-
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'denomination')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'quota')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
+            <?=
+            $form->field($model, 'validity')->widget('kartik\daterange\DateRangePicker', [
+                'convertFormat' => true,
+                'pluginOptions' => [
+                    'timePicker'          => true,
+                    'timePickerIncrement' => 30,
+                    'format'              => 'Y年 - m月 - d日 h:i A',
+                ],
+            ]);
+            ?>
 
             <?=
             $form->field($model, 'coupon_type')->widget(Select2::classname(), [
@@ -39,6 +46,8 @@ use kartik\select2\Select2;
                 ],
             ]);
             ?>
+
+            <?= $form->field($model, 'remarks')->textarea(['maxlength' => true, 'rows' => 6]) ?>
 
             <div class="form-group">
 
