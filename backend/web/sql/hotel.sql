@@ -177,7 +177,7 @@ CREATE TABLE `#DB_PREFIX#Coupon` (
     `remarks` VARCHAR(125) NULL COMMENT '优惠券备注',
     `images` VARCHAR(255) NULL COMMENT '优惠券图片',
     `coupon_type` SET('discount', 'coupon') NOT NULL COMMENT '卡卷类型：折扣劵 / 优惠卷',
-    `pay_type` SET('discount', 'coupon') NOT NULL COMMENT '消费方式：消费后送,消费前送,关注公众号',
+    `pay_type` SET('before', 'after', 'wechat') NOT NULL COMMENT '消费方式：消费后送,消费前送,关注公众号',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
     `created_at` integer NOT NULL DEFAULT '0',
     `updated_at` integer NOT NULL DEFAULT '0',
@@ -196,8 +196,8 @@ CREATE TABLE `#DB_PREFIX#Relevance_Rooms_Coupon` (
     `created_at` integer NOT NULL DEFAULT '0',
     `updated_at` integer NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
-	KEY `user_id` (`user_id`),
-	KEY `coupon_key` (`coupon_key`)
+	  KEY `user_id` (`user_id`),
+	  KEY `coupon_key` (`coupon_key`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /**
