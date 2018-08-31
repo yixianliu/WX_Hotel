@@ -93,6 +93,13 @@ class Hotels extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * 列表
+     *
+     * @param null $status
+     *
+     * @return array|Hotels[]|\yii\db\ActiveRecord[]
+     */
     public static function findByAll($status = null)
     {
 
@@ -100,6 +107,23 @@ class Hotels extends \yii\db\ActiveRecord
         $array = !empty($status) ? ['is_using' => $status] : ['!=', 'is_using', ''];
 
         return static::find()->where($array)->asArray()->all();
+    }
+
+    /**
+     * 查找指定酒店
+     *
+     * @param        $id
+     * @param string $status
+     *
+     * @return array|Hotels|null|\yii\db\ActiveRecord
+     */
+    public static function findByOne($id, $status = 'On')
+    {
+
+        // 审核状态
+        $array = !empty($status) ? ['is_using' => $status] : ['!=', 'is_using', ''];
+
+        return static::find()->where(['hotel_id' => $id])->andWhere($array)->one();
     }
 
     /**

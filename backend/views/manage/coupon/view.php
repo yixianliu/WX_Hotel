@@ -22,28 +22,47 @@ $this->params['breadcrumbs'][] = $this->title;
             <h1><?= Html::encode($this->title) ?></h1>
 
             <p>
-                <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+                <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('删除', ['delete', 'id' => $model->id], [
                     'class' => 'btn btn-danger',
                     'data'  => [
-                        'confirm' => 'Are you sure you want to delete this item?',
+                        'confirm' => '是否删除这条记录?',
                         'method'  => 'post',
                     ],
                 ]) ?>
+                <?= Html::a('返回列表', ['index'], ['class' => 'btn btn-primary']) ?>
             </p>
 
             <?= DetailView::widget([
                 'model'      => $model,
                 'attributes' => [
-                    'id',
+                    'title',
                     'coupon_key',
                     'validity',
-                    'title',
                     'num',
                     'denomination',
                     'quota',
-                    'remarks',
-                    'coupon_type',
+                    [
+                        'attribute' => 'coupon_type',
+                        'value'     => function ($model) {
+
+                            $state = ['discount' => '折扣劵', 'coupon' => '优惠卷'];
+
+                            return $state[$model->coupon_type];
+                        },
+                    ],
+                    [
+                        'attribute' => 'pay_type',
+                        'value'     => function ($model) {
+                            $state = [
+                                'before' => '消费后送优惠卷',
+                                'after'  => '消费前送优惠卷',
+                                'wechat' => '关注公众号',
+                            ];
+
+                            return $state[$model->pay_type];
+                        },
+                    ],
                     [
                         'attribute' => 'is_using',
                         'value'     => function ($model) {
@@ -67,6 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             return date('Y - m -d , h:i', $model->updated_at);
                         },
                     ],
+                    'remarks',
                 ],
                 'template'   => '<tr><th width="200">{label}</th><td>{value}</td></tr>',
             ]) ?>

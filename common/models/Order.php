@@ -59,8 +59,8 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             'hotel_id'    => '所属酒店',
-            'room_id'     => '房间 ID',
-            'user_id'     => '用户 ID',
+            'room_id'     => '房间',
+            'user_id'     => '用户',
             'c_key'       => '房间分类',
             'price'       => '房间价格',
             'title'       => '房间标题',
@@ -79,4 +79,29 @@ class Order extends \yii\db\ActiveRecord
             'updated_at'  => '更新数据时间',
         ];
     }
+
+    /**
+     * @abstract 获取酒店
+     */
+    public function getHotels()
+    {
+        return $this->hasOne(Hotels::className(), ['hotel_id' => 'hotel_id']);
+    }
+
+    /**
+     * @abstract 获取用户
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['user_id' => 'user_id']);
+    }
+
+    /**
+     * @abstract 获取房间
+     */
+    public function getRooms()
+    {
+        return $this->hasOne(Rooms::className(), ['room_id' => 'room_id']);
+    }
+
 }

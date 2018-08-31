@@ -26,13 +26,15 @@ use kartik\select2\Select2;
 
             <?= $form->field($model, 'quota')->textInput(['maxlength' => true]) ?>
 
+            <?= $form->field($model, 'num')->textInput(['maxlength' => true]) ?>
+
             <?=
             $form->field($model, 'validity')->widget('kartik\daterange\DateRangePicker', [
                 'convertFormat' => true,
                 'pluginOptions' => [
                     'timePicker'          => true,
                     'timePickerIncrement' => 30,
-                    'format'              => 'Y年 - m月 - d日 h:i A',
+                    'format'              => 'Y年 - m月 - d日 h:i:A',
                 ],
             ]);
             ?>
@@ -41,6 +43,20 @@ use kartik\select2\Select2;
             $form->field($model, 'coupon_type')->widget(Select2::classname(), [
                 'data'          => ['discount' => '折扣劵', 'coupon' => '优惠卷'],
                 'options'       => ['placeholder' => '卡卷类型...'],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ]);
+            ?>
+
+            <?=
+            $form->field($model, 'pay_type')->widget(Select2::classname(), [
+                'data'          => [
+                    'before' => '消费后送优惠卷',
+                    'after'  => '消费前送优惠卷',
+                    'wechat' => '关注公众号',
+                ],
+                'options'       => ['placeholder' => '使用...'],
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],

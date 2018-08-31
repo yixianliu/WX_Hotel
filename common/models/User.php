@@ -49,7 +49,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function attributeLabels()
     {
         return [
-            'user_id'    => '用户 Id',
+            'user_id'    => '用户',
             'username'   => '用户名称',
             'r_key'      => '角色',
             'reg_time'   => '注册时间',

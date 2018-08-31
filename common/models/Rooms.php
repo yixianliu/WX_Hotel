@@ -107,4 +107,12 @@ class Rooms extends \yii\db\ActiveRecord
 
     }
 
+    /**
+     * @abstract 获取酒店
+     */
+    public function getHotels()
+    {
+        return $this->hasOne(Hotels::className(), ['hotel_id' => 'hotel_id']);
+    }
+
 }

@@ -37,9 +37,9 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => '首页', 'url' => ['/site/index']],
+        ['label' => '关于我们', 'url' => ['/site/about']],
+        ['label' => '酒店', 'url' => ['/rooms/index']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];

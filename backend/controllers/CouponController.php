@@ -5,9 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\Coupon;
 use yii\data\ActiveDataProvider;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * CouponController implements the CRUD actions for Coupon model.
@@ -84,9 +82,7 @@ class CouponController extends BaseController
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        return $this->render('create', ['model' => $model,]);
     }
 
     /**
@@ -98,15 +94,14 @@ class CouponController extends BaseController
      */
     public function actionUpdate($id)
     {
+
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return $this->render('update', ['model' => $model,]);
     }
 
     /**

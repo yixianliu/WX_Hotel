@@ -191,12 +191,13 @@ CREATE TABLE `#DB_PREFIX#Coupon` (
 DROP TABLE IF EXISTS `#DB_PREFIX#Relevance_Rooms_Coupon`;
 CREATE TABLE `#DB_PREFIX#Relevance_Rooms_Coupon` (
     `id` INT(11) NULL AUTO_INCREMENT,
-    `user_id` VARCHAR(55) NOT NULL COMMENT '房间参数关键KEY',
-    `coupon_key` VARCHAR(55) NOT NULL COMMENT '房间关键KEY',
+    `coupon_key` VARCHAR(55) NOT NULL COMMENT '优惠卷关键KEY',
+    `room_id` VARCHAR(55) NOT NULL COMMENT '房间关键KEY',
+    `use_up` integer NOT NULL COMMENT '消耗了几张优惠卷',
     `created_at` integer NOT NULL DEFAULT '0',
     `updated_at` integer NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
-	  KEY `user_id` (`user_id`),
+	  KEY `room_id` (`room_id`),
 	  KEY `coupon_key` (`coupon_key`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

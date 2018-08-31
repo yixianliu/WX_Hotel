@@ -2,16 +2,17 @@
 
 namespace frontend\controllers;
 
-use Yii;
 use common\models\Rooms;
+use Yii;
+use common\models\Order;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * RoomsController implements the CRUD actions for Rooms model.
+ * OrderController implements the CRUD actions for Order model.
  */
-class RoomsController extends BaseController
+class OrderController extends BaseController
 {
     /**
      * {@inheritdoc}
@@ -29,13 +30,13 @@ class RoomsController extends BaseController
     }
 
     /**
-     * Lists all Rooms models.
+     * Lists all Order models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Rooms::find(),
+            'query' => Order::find(),
         ]);
 
         return $this->render('index', [
@@ -44,34 +45,32 @@ class RoomsController extends BaseController
     }
 
     /**
-     * Displays a single Rooms model.
+     * Displays a single Order model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-
-        // 入驻
-        if (Yii::$app->request->isPost) {
-
-
-
-        }
-
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new Rooms model.
+     * Creates a new Order model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Rooms();
+        $model = new Order();
+
+        $roomModel = Rooms::findOne(['id' => Yii::$app->request->get('id', null)]);
+
+        $model->room_id = $roomModel->room_id;
+
+        $model->user_id = Yii::$app->user->identity->user_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -83,7 +82,7 @@ class RoomsController extends BaseController
     }
 
     /**
-     * Updates an existing Rooms model.
+     * Updates an existing Order model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -103,7 +102,7 @@ class RoomsController extends BaseController
     }
 
     /**
-     * Deletes an existing Rooms model.
+     * Deletes an existing Order model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -117,15 +116,15 @@ class RoomsController extends BaseController
     }
 
     /**
-     * Finds the Rooms model based on its primary key value.
+     * Finds the Order model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Rooms the loaded model
+     * @return Order the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Rooms::findOne($id)) !== null) {
+        if (($model = Order::findOne($id)) !== null) {
             return $model;
         }
 

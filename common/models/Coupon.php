@@ -34,13 +34,14 @@ class Coupon extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['validity', 'denomination', 'quota', 'coupon_type'], 'required'],
-            [['denomination', 'quota', 'created_at', 'updated_at'], 'integer'],
+            [['title', 'validity', 'denomination', 'quota', 'coupon_type', 'pay_type'], 'required'],
+            [['denomination', 'quota', 'num'], 'integer'],
             [['coupon_type', 'images'], 'string'],
             [['coupon_key', 'validity', 'title', 'remarks'], 'string', 'max' => 125],
             [['coupon_key'], 'unique'],
 
             [['is_using'], 'default', 'value' => 'On'],
+            [['num'], 'default', 'value' => 10],
         ];
     }
 
@@ -58,6 +59,7 @@ class Coupon extends \yii\db\ActiveRecord
             'remarks'      => '优惠券备注',
             'num'          => '优惠券数量',
             'coupon_type'  => '卡卷类型',
+            'pay_type'     => '赠送卡卷类型',
             'created_at'   => '添加数据时间',
             'updated_at'   => '更新数据时间',
         ];
