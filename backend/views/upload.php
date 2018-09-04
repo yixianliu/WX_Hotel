@@ -139,7 +139,7 @@ switch ($imgPathArray[0]) {
     ]);
     ?>
 
-    <?= $form->field($model, $attribute)->textInput(['id' => 'ImagesContent_' . $attribute, 'style' => 'display:none;'])->label(false) ?>
+    <?= $form->field($model, $attribute)->hiddenInput(['id' => 'ImagesContent_' . $attribute])->label(false) ?>
 
 </div>
 
@@ -215,16 +215,6 @@ switch ($imgPathArray[0]) {
 
         </script>
 
-    <?php else: ?>
-
-        <div class="row">
-            <div class="col-md-12">
-                <h3>暂无任何上传的内容 !!</h3>
-            </div>
-        </div>
-
     <?php endif ?>
-
-    <hr/>
 
 </div>

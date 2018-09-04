@@ -1,7 +1,7 @@
 <?php
 return [
     'adminEmail' => 'admin@example.com',
-    'WebInfo' => [
+    'WebInfo'    => [
 
         // +----------------------------------------------------------------------
         // | 站点资讯
@@ -59,4 +59,5 @@ return [
         // 安装文件
         'RD_FILE'               => 'WxMall.rd',
     ],
+
 ];

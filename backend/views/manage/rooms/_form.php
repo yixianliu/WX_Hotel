@@ -68,12 +68,6 @@ use kartik\select2\Select2;
 
             <?= $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'path')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'thumb')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'images')->textInput(['maxlength' => true]) ?>
-
             <?=
             $form->field($model, 'is_promote')->widget(Select2::classname(), [
                 'data'          => ['1' => '启用', '2' => '禁用'],
@@ -106,7 +100,23 @@ use kartik\select2\Select2;
 
             <?= $this->render('../../upload', ['model' => $model, 'id' => $model->room_id, 'attribute' => 'thumb', 'text' => '上传缩略图', 'form' => $form]); ?>
 
+            <div class="form-group">
+                <div class="alert alert-info" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <strong>提示!</strong> 此类图片的最佳尺寸为 400 x 400 像素，用于产品列表，购物车等地方展示
+                </div>
+            </div>
+
             <?= $this->render('../../upload', ['model' => $model, 'id' => $model->room_id, 'text' => '上传图片', 'form' => $form]); ?>
+
+            <div class="form-group">
+                <div class="alert alert-info" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <strong>提示!</strong> 此类图片的最佳尺寸为 750 x 464 像素，用于显示类型为【每行一条数据】的板块产品的列表显示，推荐高度仅做参考，可以自我调整，显示时宽度按屏幕100%显示，高度自动变化，保持原图宽高比不变.
+                </div>
+            </div>
+
+            <br/> <br/> <br/> <br/>
 
             <?= $form->field($model, 'room_id')->hiddenInput()->label(false) ?>
 

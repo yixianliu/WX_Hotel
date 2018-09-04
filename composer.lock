@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e16afe58685ca44da9b1750d175106b8",
+    "content-hash": "0f4b65dfc9f48c6fda7842222149a44c",
     "packages": [
         {
             "name": "2amigos/yii2-file-upload-widget",
@@ -124,6 +124,40 @@
                 "yii2"
             ],
             "time": "2017-09-09T16:01:44+00:00"
+        },
+        {
+            "name": "bailangzhan/yii2-webuploader",
+            "version": "1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bailangzhan/yii2-webuploader.git",
+                "reference": "dcc6c5ed20f6b15ee46365d0b52167d96f69c566"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bailangzhan/yii2-webuploader/zipball/dcc6c5ed20f6b15ee46365d0b52167d96f69c566",
+                "reference": "dcc6c5ed20f6b15ee46365d0b52167d96f69c566",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": ">=2.0.4"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "manks\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "yii2-webuploader组件",
+            "keywords": [
+                "webuploader",
+                "yii2"
+            ],
+            "time": "2017-08-17T06:22:57+00:00"
         },
         {
             "name": "bower-asset/blueimp-canvas-to-blob",
