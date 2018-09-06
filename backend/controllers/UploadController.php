@@ -11,14 +11,12 @@
 
 namespace backend\controllers;
 
-use common\models\Assist;
 use Yii;
 use yii\web\UploadedFile;
 use yii\helpers\FileHelper;
 use yii\helpers\Json;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use common\models\Conf;
+use common\models\Assist;
 
 /**
  * SlideController implements the CRUD actions for Slide model.
@@ -34,7 +32,7 @@ class UploadController extends BaseController
         return [
 
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
                     [
                         'allow' => true,
@@ -44,7 +42,7 @@ class UploadController extends BaseController
             ],
 
             'verbs' => [
-                'class'   => VerbFilter::className(),
+                'class'   => \yii\filters\VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -82,7 +80,7 @@ class UploadController extends BaseController
                 break;
 
             // 酒店
-            case 'hotel':
+            case 'hotels':
                 $model = new \common\models\Hotels();
                 break;
 

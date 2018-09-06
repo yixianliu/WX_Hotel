@@ -2,21 +2,16 @@
 
 namespace backend\controllers;
 
-use common\models\Hotels;
-use common\models\RoomsClassify;
-use common\models\RoomsField;
-use common\models\RoomsTag;
 use Yii;
-use common\models\Rooms;
-use backend\models\RoomsSearch;
+use common\models\RoomsTag;
+use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
 /**
- * RoomsController implements the CRUD actions for Rooms model.
+ * RoomsTagController implements the CRUD actions for RoomsTag model.
  */
-class RoomsController extends BaseController
+class RoomsTagController extends BaseController
 {
-
     /**
      * @inheritdoc
      */
@@ -44,25 +39,23 @@ class RoomsController extends BaseController
     }
 
     /**
-     * Lists all Rooms models.
+     * Lists all RoomsTag models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new RoomsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => RoomsTag::find(),
+        ]);
 
         return $this->render('index', [
-            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Rooms model.
-     *
+     * Displays a single RoomsTag model.
      * @param integer $id
-     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -74,46 +67,29 @@ class RoomsController extends BaseController
     }
 
     /**
-     * Creates a new Rooms model.
+     * Creates a new RoomsTag model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Rooms();
+        $model = new RoomsTag();
 
-        $model->user_id = Yii::$app->user->identity->username;
+        $model->t_key = self::getRandomString();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-            if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        $model->room_id = self::getRandomString();
-
-        $result['classify'] = RoomsClassify::getClsSelect('Off');
-
-        $result['hotel'] = Hotels::getHotelSelect();
-
-        $result['field'] = RoomsField::findByAll();
-
-        $result['tag'] = RoomsTag::findByAll();
-
         return $this->render('create', [
-            'model'  => $model,
-            'result' => $result,
+            'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing Rooms model.
+     * Updates an existing RoomsTag model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     *
      * @param integer $id
-     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -125,22 +101,15 @@ class RoomsController extends BaseController
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        $result['classify'] = RoomsClassify::getClsSelect('Off');
-
-        $result['hotel'] = Hotels::getHotelSelect();
-
         return $this->render('update', [
-            'model'  => $model,
-            'result' => $result,
+            'model' => $model,
         ]);
     }
 
     /**
-     * Deletes an existing Rooms model.
+     * Deletes an existing RoomsTag model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     *
      * @param integer $id
-     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -152,17 +121,15 @@ class RoomsController extends BaseController
     }
 
     /**
-     * Finds the Rooms model based on its primary key value.
+     * Finds the RoomsTag model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     *
      * @param integer $id
-     *
-     * @return Rooms the loaded model
+     * @return RoomsTag the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Rooms::findOne($id)) !== null) {
+        if (($model = RoomsTag::findOne($id)) !== null) {
             return $model;
         }
 

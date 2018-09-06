@@ -52,25 +52,14 @@ $text = empty($text) ? '没有描述' : $text;
 // 图片路径
 $imgPathArray = explode('/', Yii::$app->controller->id);
 
-switch ($imgPathArray[0]) {
-
-    case 'rooms':
-        $imgPath = Url::to('@web/../../frontend/web/temp/rooms/') . $id;
-        break;
-
-    default:
-    case 'hotel':
-        $imgPath = Url::to('@web/../../frontend/web/temp/') . explode('/', Yii::$app->controller->id)[0] . '/' . $id;
-        break;
-
-}
+$imgPath = Url::to('@web/../../frontend/web/temp/') . explode('/', Yii::$app->controller->id)[0] . '/' . $id;
 
 ?>
 
 <style type="text/css">
     .preview img {
-        width: 180px;
-        height: 100px;
+        width: 120px;
+        height: 120px;
     }
 </style>
 
@@ -163,9 +152,9 @@ switch ($imgPathArray[0]) {
 
             <?php foreach ($images as $value): ?>
 
-                <div class="col-md-3">
+                <div class="col-md-1">
 
-                    <?= Html::img($imgPath . '/' . $value, ['width' => 350, 'height' => 150]); ?>
+                    <?= Html::img($imgPath . '/' . $value, ['width' => 120, 'height' => 120]); ?>
 
                     <div class="portfolio-info" style="margin-top: 10px;margin-bottom: 10px;">
 

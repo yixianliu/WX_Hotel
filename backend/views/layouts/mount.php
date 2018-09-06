@@ -41,6 +41,8 @@ $this->beginPage();
         <meta name='description' content="<?= Yii::$app->params['WebInfo']['DESCRIPTION']; ?>"/>
         <meta name='author' content="<?= Yii::$app->params['WebInfo']['DEVELOPERS']; ?>"/>
 
+        <link rel="shortcut icon" href="<?= Yii::getAlias('@web') ?>/favicon.ico" type="image/x-icon"/>
+
         <?= Html::csrfMetaTags() ?>
 
         <?php $this->head() ?>

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @abstract 安装全局文件
+ * @abstract 全局文件
  * @author   Yxl <zccem@163.com>
  */
 
@@ -9,14 +9,11 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use backend\assets\AppAsset;
 
-// 跳转安装
-if (!file_exists(Yii::getAlias('@common') . '/' . Yii::$app->params['WebInfo']['RD_FILE'])) {
-    return;
-}
-
 AppAsset::register($this);  // $this 代表视图对象
 
 $session = Yii::$app->session;
+
+$Conf = \common\models\Conf::findOne(1);
 
 $this->beginPage();
 
@@ -28,13 +25,18 @@ $this->beginPage();
 
         <meta charset="<?= Yii::$app->charset ?>">
 
-        <title><?= Html::encode($this->title) ?> - <?= Yii::$app->params['WebInfo']['TITLE']; ?> - <?= Yii::$app->params['WebInfo']['NAME']; ?></title>
+        <title><?= Html::encode($this->title) ?> - <?= $Conf['title']; ?> - <?= $Conf['name']; ?></title>
 
         <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'/>
         <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
-        <meta name='keywords' content="<?= Yii::$app->params['WebInfo']['KEYWORDS']; ?>"/>
-        <meta name='description' content="<?= Yii::$app->params['WebInfo']['DESCRIPTION']; ?>"/>
-        <meta name='author' content="<?= Yii::$app->params['WebInfo']['DEVELOPERS']; ?>"/>
+
+        <meta name="generator" content="<?= $Conf['copyright']; ?>" data-variable="<?= $Conf['site_url']; ?>" />
+
+        <meta name='keywords' content="<?= $Conf['keywords']; ?>"/>
+        <meta name='description' content="<?= $Conf['description']; ?>"/>
+        <meta name='author' content="<?= $Conf['developers']; ?>"/>
+
+        <link rel="shortcut icon" href="<?= Yii::getAlias('@web') ?>/favicon.ico" type="image/x-icon"/>
 
         <?= Html::csrfMetaTags() ?>
 
@@ -45,10 +47,8 @@ $this->beginPage();
 
     <?php $this->beginBody() ?>
 
-    <!-- START PAGE CONTAINER -->
-    <div class="page-container page-navigation-top-fixed">
+    <div class="page-container">
 
-        <!-- START PAGE SIDEBAR -->
         <div class="page-sidebar page-sidebar-fixed scroll">
 
             <?= \common\widgets\iMenu\MenuAdmin::widget(['config' => ['A3']]); ?>
@@ -66,13 +66,9 @@ $this->beginPage();
             </ul>
 
             <ul class="breadcrumb">
-                <li><a href="#">挂载中心</a></li>
+                <li><a href="#"></a></li>
                 <li class="active"><?= $this->title ?></li>
             </ul>
-
-            <div class="page-title">
-                <h2><span class="fa fa-arrow-circle-o-left"></span> <?= Html::encode($this->title) ?></h2>
-            </div>
 
             <div class="page-content-wrap">
                 <?= $content; ?>

@@ -67,7 +67,6 @@ CREATE TABLE `#DB_PREFIX#Rooms_Field` (
     `id` INT(11) NULL AUTO_INCREMENT,
     `f_key` VARCHAR(55) NOT NULL COMMENT '参数关键KEY',
     `name` VARCHAR(85) NULL COMMENT '字段名',
-    `description` VARCHAR(125) NULL COMMENT '字段描述',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
     `created_at` integer NOT NULL DEFAULT '0',
     `updated_at` integer NOT NULL DEFAULT '0',
@@ -77,12 +76,42 @@ CREATE TABLE `#DB_PREFIX#Rooms_Field` (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /**
- * 关联房间参数
+ * 关联房间参数 / 对应参数表的 name , 关联的房间给出的 content 进行关联 / 例如 : 床型 : xx, 建筑面积 : xxx
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Relevance_Rooms_Field`;
 CREATE TABLE `#DB_PREFIX#Relevance_Rooms_Field` (
     `id` INT(11) NULL AUTO_INCREMENT,
     `f_key` VARCHAR(55) NOT NULL COMMENT '房间参数关键KEY',
+    `content` VARCHAR(125) NULL COMMENT '字段值',
+    `hotel_id` VARCHAR(55) NOT NULL COMMENT '房间关键KEY',
+    `created_at` integer NOT NULL DEFAULT '0',
+    `updated_at` integer NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='关联房间参数 / 对应参数表的 name , 关联的房间给出的 content 进行关联 / 例如 : 床型 : xx, 建筑面积 : xxx';
+
+/**
+ * 房间标签 / 例如 : 含早,特价,景区周边
+ */
+DROP TABLE IF EXISTS `#DB_PREFIX#Rooms_Tag`;
+CREATE TABLE `#DB_PREFIX#Rooms_Tag` (
+    `id` INT(11) NULL AUTO_INCREMENT,
+    `t_key` VARCHAR(55) NOT NULL COMMENT '参数关键KEY',
+    `name` VARCHAR(85) NULL COMMENT '字段名',
+    `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
+    `created_at` integer NOT NULL DEFAULT '0',
+    `updated_at` integer NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`),
+    UNIQUE `name` (`name`),
+    KEY `t_key` (`t_key`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='房间标签表 / 例如 : 含早,特价,景区周边';
+
+/**
+ * 关联房间标签
+ */
+DROP TABLE IF EXISTS `#DB_PREFIX#Relevance_Rooms_Tag`;
+CREATE TABLE `#DB_PREFIX#Relevance_Rooms_Tag` (
+    `id` INT(11) NULL AUTO_INCREMENT,
+    `t_key` VARCHAR(55) NOT NULL COMMENT '房间参数关键KEY',
     `hotel_id` VARCHAR(55) NOT NULL COMMENT '房间关键KEY',
     `created_at` integer NOT NULL DEFAULT '0',
     `updated_at` integer NOT NULL DEFAULT '0',

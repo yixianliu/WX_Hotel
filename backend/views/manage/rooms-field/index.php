@@ -39,7 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'f_key',
                     'name',
-                    'description',
                     [
                         'attribute' => 'is_using',
                         'value'     => function ($model) {

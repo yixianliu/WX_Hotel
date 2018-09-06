@@ -102,9 +102,17 @@ class Rooms extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function findByAll()
+    public static function findByAll($status = 'On')
     {
-
+		
+		// 审核状态
+        $array = !empty($status) ? [self::tableName() . '.is_using' => $status] : ['!=', self::tableName() . '.is_using', null];
+		
+		return static::find()->select(Hotels::tableName() . ".name, " . self::tableName() . ".*")
+            ->joinWith('hotels')
+            ->where($array)
+            ->orderBy([self::tableName() . '.id' => SORT_DESC])
+			->all();
     }
 
     /**

@@ -81,11 +81,11 @@ class HotelsController extends BaseController
 
         $model->user_id = Yii::$app->user->identity->username;
 
-        $model->hotel_id = self::getRandomString();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
+        $model->hotel_id = self::getRandomString();
 
         return $this->render('create', [
             'model' => $model,

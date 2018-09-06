@@ -4,13 +4,12 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Hotels */
+/* @var $model common\models\RoomsTag */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => '酒店管理', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Rooms Tags', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
 
     <div class="panel panel-default">
@@ -19,56 +18,28 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="panel-body">
 
-            <h1><?= Html::encode($this->title) ?></h1>
-
             <p>
                 <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
                 <?= Html::a('删除', ['delete', 'id' => $model->id], [
                     'class' => 'btn btn-danger',
                     'data'  => [
-                        'confirm' => '是否删除这条记录?',
+                        'confirm' => 'Are you sure you want to delete this item?',
                         'method'  => 'post',
                     ],
                 ]) ?>
                 <?= Html::a('返回列表', ['index'], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('继续添加', ['create'], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('继续添加', ['create'], ['class' => 'btn btn-success']) ?>
             </p>
 
             <?= DetailView::widget([
                 'model'      => $model,
                 'attributes' => [
-                    'hotel_id',
-                    'user_id',
+                    't_key',
                     'name',
-                    'introduction',
-                    'keywords',
-                    'thumb',
-                    'images',
-                    [
-                        'attribute' => 'is_promote',
-                        'value'     => function ($model) {
-                            $state = [
-                                'On'  => '开启',
-                                'Off' => '未启用',
-                            ];
-
-                            return $state[$model->is_promote];
-                        },
-                    ],
-                    [
-                        'attribute' => 'is_comments',
-                        'value'     => function ($model) {
-                            $state = [
-                                'On'  => '开启',
-                                'Off' => '未启用',
-                            ];
-
-                            return $state[$model->is_comments];
-                        },
-                    ],
                     [
                         'attribute' => 'is_using',
                         'value'     => function ($model) {
+
                             $state = [
                                 'On'  => '开启',
                                 'Off' => '未启用',
@@ -76,22 +47,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             return $state[$model->is_using];
                         },
+                        'options'   => ['width' => 120],
                     ],
                     [
                         'attribute' => 'created_at',
                         'value'     => function ($model) {
-                            return date('Y - m -d , h:i', $model->created_at);
+                            return date('Y - m -d , H:i:s', $model->created_at);
                         },
+                        'options'   => ['width' => 180],
                     ],
                     [
                         'attribute' => 'updated_at',
                         'value'     => function ($model) {
-                            return date('Y - m -d , h:i', $model->updated_at);
+                            return date('Y - m -d , H:i:s', $model->updated_at);
                         },
+                        'options'   => ['width' => 180],
                     ],
-                    'content:html',
                 ],
-                'template'   => '<tr><th width="200">{label}</th><td>{value}</td></tr>',
             ]) ?>
 
         </div>

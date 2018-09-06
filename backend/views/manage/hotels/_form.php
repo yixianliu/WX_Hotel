@@ -58,7 +58,7 @@ use kartik\select2\Select2;
             ]);
             ?>
 
-			<?=
+            <?=
             $form->field($model, 'is_comments')->widget(Select2::classname(), [
                 'data'          => ['1' => '启用', '2' => '禁用'],
                 'options'       => ['placeholder' => '评论状态...'],
@@ -68,9 +68,27 @@ use kartik\select2\Select2;
             ]);
             ?>
 
-            <?= $this->render('../../upload', ['model' => $model, 'attribute' => 'thumb', 'text' => '上传缩略图', 'form' => $form]); ?>
+            <?= $this->render('../../upload', ['model' => $model, 'id' => $model->hotel_id, 'attribute' => 'thumb', 'num' => 1, 'text' => '上传缩略图', 'form' => $form]); ?>
 
-            <?= $this->render('../../upload', ['model' => $model, 'text' => '上传图片', 'form' => $form]); ?>
+            <div class="form-group">
+                <div class="alert alert-info" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    缩略图只允许上传一张，上传多张缩略图只会记录最后那张图片，此类图片的最佳尺寸为 400 x 400 像素，用于产品列表，购物车等地方展示。
+                </div>
+            </div>
+
+            <?= $this->render('../../upload', ['model' => $model, 'id' => $model->hotel_id, 'text' => '上传图片', 'form' => $form]); ?>
+
+            <div class="form-group">
+                <div class="alert alert-info" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    缩略图只允许上传一张，上传多张缩略图只会记录最后那张图片，此类图片的最佳尺寸为 400 x 400 像素，用于产品列表，购物车等地方展示。
+                </div>
+            </div>
+
+            <br/><br/><br/><br/>
+
+            <?= $form->field($model, 'hotel_id')->hiddenInput()->label(false) ?>
 
             <div class="form-group">
 

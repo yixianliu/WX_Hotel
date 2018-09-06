@@ -6,24 +6,23 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
- * This is the model class for table "w_rooms_field".
+ * This is the model class for table "w_rooms_tag".
  *
  * @property int    $id
- * @property string $f_key       参数关键KEY
- * @property string $name        字段名
- * @property string $description 字段描述
- * @property string $is_using    是否启用
+ * @property string $t_key    参数关键KEY
+ * @property string $name     字段名
+ * @property string $is_using 是否启用
  * @property int    $created_at
  * @property int    $updated_at
  */
-class RoomsField extends \yii\db\ActiveRecord
+class RoomsTag extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'w_rooms_field';
+        return 'w_rooms_tag';
     }
 
     /**
@@ -45,9 +44,9 @@ class RoomsField extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['is_using'], 'string'],
             [['created_at', 'updated_at'], 'integer'],
-            [['f_key'], 'string', 'max' => 55],
+            [['t_key'], 'string', 'max' => 55],
             [['name'], 'string', 'max' => 85],
-            [['name'], 'unique'],
+            [['name', 't_key'], 'unique'],
 
             [['is_using'], 'default', 'value' => 'On'],
         ];
@@ -59,8 +58,8 @@ class RoomsField extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'f_key'      => '参数关键KEY',
-            'name'       => '参数名称',
+            't_key'      => '标签关键KEY',
+            'name'       => '标签名称',
             'is_using'   => '审核状态',
             'created_at' => '添加数据时间',
             'updated_at' => '更新数据时间',
