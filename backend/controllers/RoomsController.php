@@ -2,14 +2,16 @@
 
 namespace backend\controllers;
 
-use common\models\Hotels;
-use common\models\RoomsClassify;
-use common\models\RoomsField;
-use common\models\RoomsTag;
+use common\models\RelevanceHotelsField;
+use common\models\RelevanceRoomsField;
 use Yii;
 use common\models\Rooms;
 use backend\models\RoomsSearch;
 use yii\web\NotFoundHttpException;
+use common\models\Hotels;
+use common\models\RoomsClassify;
+use common\models\RoomsField;
+use common\models\RoomsTag;
 
 /**
  * RoomsController implements the CRUD actions for Rooms model.
@@ -49,6 +51,7 @@ class RoomsController extends BaseController
      */
     public function actionIndex()
     {
+
         $searchModel = new RoomsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -84,9 +87,45 @@ class RoomsController extends BaseController
 
         $model->user_id = Yii::$app->user->identity->username;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
+            $post = Yii::$app->request->post();
+
+            // 创建事务
+            $transaction = Yii::$app->db->beginTransaction();
+
+            // 房间参数
+            if (!empty($post['Rooms']['f_key'])) {
+
+                foreach ($post['Rooms']['f_key'] as $key => $value) {
+
+                    $modelField = new RelevanceRoomsField();
+
+                    $modelField->f_key = $key;
+                    $modelField->rooms_id = $model->room_id;
+                    $modelField->content = $value;
+
+                    if (!$modelField->save(false)) {
+                        $transaction->rollBack();
+                        continue;
+                    }
+
+                }
+
+            }
+
+            // 房间标签
+            if (!empty($post['Rooms']['t_key'])) {
+
+
+
+            }
 
             if ($model->save()) {
+
+                // 提交事务
+                $transaction->commit();
+
                 return $this->redirect(['view', 'id' => $model->id]);
             }
 

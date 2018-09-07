@@ -43,8 +43,8 @@ class RelevanceRoomsTag extends \yii\db\ActiveRecord
         return [
             't_key'      => 'T Key',
             'hotel_id'   => 'Hotel ID',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'created_at' => '添加数据时间',
+            'updated_at' => '更新数据时间',
         ];
     }
 }

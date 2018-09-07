@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "w_relevance_hotels_field".
@@ -13,14 +14,24 @@ use Yii;
  * @property int    $created_at
  * @property int    $updated_at
  */
-class RelevanceHotelsField extends \yii\db\ActiveRecord
+class RelevanceRoomsField extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'w_relevance_hotels_field';
+        return 'w_relevance_rooms_field';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
     }
 
     /**
@@ -29,9 +40,9 @@ class RelevanceHotelsField extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['f_key', 'hotel_id'], 'required'],
+            [['f_key', 'rooms_id', 'content'], 'required'],
             [['created_at', 'updated_at'], 'integer'],
-            [['f_key', 'hotel_id'], 'string', 'max' => 55],
+            [['f_key', 'rooms_id', 'content'], 'string', 'max' => 85],
         ];
     }
 
@@ -41,10 +52,11 @@ class RelevanceHotelsField extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'f_key'      => 'F Key',
-            'hotel_id'   => 'Hotel ID',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'f_key'      => '关联KEY',
+            'rooms_id'   => '房间参数KEY',
+            'content'    => '房间参数内容',
+            'created_at' => '添加数据时间',
+            'updated_at' => '更新数据时间',
         ];
     }
 }

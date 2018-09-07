@@ -36,6 +36,7 @@ class RoomsClsController extends BaseController
                     'delete' => ['POST'],
                 ],
             ],
+
         ];
     }
 
