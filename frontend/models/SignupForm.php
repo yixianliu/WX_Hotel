@@ -11,7 +11,7 @@ use common\models\User;
 class SignupForm extends Model
 {
     public $username;
-    public $phone;
+    public $telphone;
     public $password;
     public $re_password;
 
@@ -51,7 +51,7 @@ class SignupForm extends Model
      */
     public function signup()
     {
-        if (!$this->validate()) {
+        if ( !$this->validate() ) {
             return null;
         }
 

@@ -8,17 +8,19 @@
 
 namespace frontend\controllers;
 
-use frontend\models\SignupForm;
 use Yii;
+use yii\web\Controller;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use frontend\models\SignupForm;
+use frontend\models\LoginForm;
 
 /**
  * RoomsController implements the CRUD actions for Rooms model.
  */
-class MemberController extends BaseController
+class MemberController extends Controller
 {
 
     /**
@@ -29,10 +31,10 @@ class MemberController extends BaseController
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only'  => ['logout', 'signup'],
+                'only'  => ['logout', 'reg'],
                 'rules' => [
                     [
-                        'actions' => ['signup', 'login'],
+                        'actions' => ['reg', 'login'],
                         'allow'   => true,
                         'roles'   => ['?'],
                     ],
@@ -58,9 +60,11 @@ class MemberController extends BaseController
     public function actions()
     {
         return [
+
             'error'   => [
                 'class' => 'yii\web\ErrorAction',
             ],
+
             'captcha' => [
                 'class'           => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
@@ -75,12 +79,13 @@ class MemberController extends BaseController
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
+        if ( !Yii::$app->user->isGuest ) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
+        if ( $model->load(Yii::$app->request->post()) && $model->login() ) {
             return $this->goBack();
         }
 
@@ -107,21 +112,21 @@ class MemberController extends BaseController
      *
      * @return mixed
      */
-    public function actionSignup()
+    public function actionReg()
     {
 
         $model = new SignupForm();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ( $model->load(Yii::$app->request->post()) ) {
 
-            if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
+            if ( $user = $model->signup() ) {
+                if ( Yii::$app->getUser()->login($user) ) {
                     return $this->goHome();
                 }
             }
         }
 
-        return $this->render('../center/signup', [
+        return $this->render('../center/reg', [
             'model' => $model,
         ]);
     }

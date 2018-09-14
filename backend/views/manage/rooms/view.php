@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Rooms */
@@ -37,7 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= DetailView::widget([
                 'model'      => $model,
                 'attributes' => [
-                    'id',
                     'hotel_id',
                     'room_id',
                     'user_id',
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'Off' => '未启用',
                             ];
 
-                            return $state[$model->is_using];
+                            return $state[ $model->is_using ];
                         },
                     ],
                     [
@@ -80,7 +80,100 @@ $this->params['breadcrumbs'][] = $this->title;
                     'content:html',
                 ],
                 'template'   => '<tr><th width="200">{label}</th><td>{value}</td></tr>',
-            ]) ?>
+            ]); ?>
+
+            <hr/>
+            <h3>房间参数</h3>
+            <?=
+            GridView::widget([
+                'dataProvider' => $dataFieldProvider,
+                'columns'      => [
+                    [
+                        'class'   => 'yii\grid\SerialColumn',
+                        'options' => ['width' => 70],
+                    ],
+                    [
+                        'attribute' => 'f_key',
+                        'value'     => function ($model) {
+                            $data = \common\models\RoomsField::findOne(['f_key' => $model->f_key]);
+                            return $data->name;
+                        },
+                    ],
+                    'content',
+                    [
+                        'attribute' => 'rooms_id',
+                        'value'     => function ($model) {
+                            $data = \common\models\Rooms::findOne(['room_id' => $model->rooms_id]);
+                            return $data->title;
+                        },
+                    ],
+                    [
+                        'attribute' => 'created_at',
+                        'value'     => function ($model) {
+                            return date('Y - m -d , H:i:s', $model->created_at);
+                        },
+                        'options'   => ['width' => 180],
+                    ],
+                    [
+                        'attribute' => 'updated_at',
+                        'value'     => function ($model) {
+                            return date('Y - m -d , H:i:s', $model->updated_at);
+                        },
+                        'options'   => ['width' => 180],
+                    ],
+                ],
+                'tableOptions' => ['class' => 'table table-hover'],
+                'pager'        => [
+                    'options' => ['class' => 'pagination'],
+                ],
+            ]);
+            ?>
+
+            <hr/>
+            <h3>房间标签</h3>
+            <?=
+            GridView::widget([
+                'dataProvider' => $dataTagProvider,
+                'columns'      => [
+                    [
+                        'class'   => 'yii\grid\SerialColumn',
+                        'options' => ['width' => 70],
+                    ],
+                    [
+                        'attribute' => 't_key',
+                        'value'     => function ($model) {
+                            $data = \common\models\RoomsTag::findOne(['t_key' => $model->t_key]);
+                            return $data->name;
+                        },
+                    ],
+                    [
+                        'attribute' => 'rooms_id',
+                        'value'     => function ($model) {
+                            $data = \common\models\Rooms::findOne(['room_id' => $model->rooms_id]);
+                            return $data->title;
+                        },
+                    ],
+                    [
+                        'attribute' => 'created_at',
+                        'value'     => function ($model) {
+                            return date('Y - m -d , H:i:s', $model->created_at);
+                        },
+                        'options'   => ['width' => 180],
+                    ],
+                    [
+                        'attribute' => 'updated_at',
+                        'value'     => function ($model) {
+                            return date('Y - m -d , H:i:s', $model->updated_at);
+                        },
+                        'options'   => ['width' => 180],
+                    ],
+                ],
+                'tableOptions' => ['class' => 'table table-hover'],
+                'pager'        => [
+                    'options' => ['class' => 'pagination'],
+                ],
+            ]);
+            ?>
 
         </div>
     </div>

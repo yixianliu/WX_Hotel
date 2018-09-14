@@ -10,6 +10,7 @@ return [
     'id'                  => 'app-frontend',
     'basePath'            => dirname(__DIR__),
     'bootstrap'           => ['log'],
+    'language'            => 'zh-CN',
     'controllerNamespace' => 'frontend\controllers',
     'components'          => [
 
@@ -59,7 +60,7 @@ return [
             'errorAction' => 'site/error',
         ],
 
-        'urlManager'  => [
+        'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName'  => true,
             "rules"           => [

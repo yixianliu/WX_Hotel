@@ -39,31 +39,26 @@ $this->params['breadcrumbs'][] = $this->title;
                         'class'   => 'yii\grid\SerialColumn',
                         'options' => ['width' => 70],
                     ],
-                    'hotel_id',
-                    'room_id',
+                    [
+                        'attribute' => 'hotel_id',
+                        'value'     => function ($model) {
+                            $data = \common\models\Hotels::findOne(['hotel_id' => $model->hotel_id]);
+                            return $data->name;
+                        },
+                    ],
+                    'title',
                     'user_id',
-                    'c_key',
+                    [
+                        'attribute' => 'c_key',
+                        'value'     => function ($model) {
+                            $data = \common\models\RoomsClassify::findOne(['c_key' => $model->c_key]);
+                            return $data->name;
+                        },
+                    ],
                     'room_num',
                     //'title',
                     'num',
-                    'check_in_num',
                     'price',
-                    //'discount',
-                    //'introduction',
-                    //'keywords',
-                    //'path',
-                    //'thumb',
-                    //'images',
-                    //'is_promote',
-                    //'is_using',
-                    //'is_comments',
-                    [
-                        'attribute' => 'created_at',
-                        'value'     => function ($model) {
-                            return date('Y - m -d , H:i:s', $model->created_at);
-                        },
-                        'options'   => ['width' => 180],
-                    ],
                     [
                         'attribute' => 'updated_at',
                         'value'     => function ($model) {

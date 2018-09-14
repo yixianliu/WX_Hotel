@@ -9,7 +9,7 @@
  * Time: 15:30
  */
 
-namespace backend\models;
+namespace frontend\models;
 
 use Yii;
 use yii\base\Model;

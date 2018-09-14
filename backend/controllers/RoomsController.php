@@ -4,9 +4,11 @@ namespace backend\controllers;
 
 use common\models\RelevanceHotelsField;
 use common\models\RelevanceRoomsField;
+use common\models\RelevanceRoomsTag;
 use Yii;
 use common\models\Rooms;
 use backend\models\RoomsSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use common\models\Hotels;
 use common\models\RoomsClassify;
@@ -71,8 +73,21 @@ class RoomsController extends BaseController
      */
     public function actionView($id)
     {
+
+        $model = $this->findModel($id);
+
+        $dataFieldProvider = new ActiveDataProvider([
+            'query' => RelevanceRoomsField::find()->where(['rooms_id' => $model->room_id]),
+        ]);
+
+        $dataTagProvider = new ActiveDataProvider([
+            'query' => RelevanceRoomsTag::find()->where(['rooms_id' => $model->room_id]),
+        ]);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model'             => $model,
+            'dataFieldProvider' => $dataFieldProvider,
+            'dataTagProvider'   => $dataTagProvider,
         ]);
     }
 
@@ -87,7 +102,7 @@ class RoomsController extends BaseController
 
         $model->user_id = Yii::$app->user->identity->username;
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ( $model->load(Yii::$app->request->post()) ) {
 
             $post = Yii::$app->request->post();
 
@@ -95,7 +110,7 @@ class RoomsController extends BaseController
             $transaction = Yii::$app->db->beginTransaction();
 
             // 房间参数
-            if (!empty($post['Rooms']['f_key'])) {
+            if ( !empty($post['Rooms']['f_key']) ) {
 
                 foreach ($post['Rooms']['f_key'] as $key => $value) {
 
@@ -105,23 +120,21 @@ class RoomsController extends BaseController
                     $modelField->rooms_id = $model->room_id;
                     $modelField->content = $value;
 
-                    if (!$modelField->save(false)) {
+                    if ( !$modelField->save(false) ) {
                         $transaction->rollBack();
                         continue;
                     }
 
                 }
-
             }
 
             // 房间标签
-            if (!empty($post['Rooms']['t_key'])) {
-
+            if ( !empty($post['Rooms']['t_key']) ) {
 
 
             }
 
-            if ($model->save()) {
+            if ( $model->save() ) {
 
                 // 提交事务
                 $transaction->commit();
@@ -160,13 +173,17 @@ class RoomsController extends BaseController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ( $model->load(Yii::$app->request->post()) && $model->save() ) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         $result['classify'] = RoomsClassify::getClsSelect('Off');
 
         $result['hotel'] = Hotels::getHotelSelect();
+
+        $result['tag'] = RoomsTag::findByAll();
+
+        $result['field'] = RoomsField::findByAll();
 
         return $this->render('update', [
             'model'  => $model,
@@ -201,7 +218,7 @@ class RoomsController extends BaseController
      */
     protected function findModel($id)
     {
-        if (($model = Rooms::findOne($id)) !== null) {
+        if ( ($model = Rooms::findOne($id)) !== null ) {
             return $model;
         }
 

@@ -41,8 +41,8 @@ class RelevanceRoomsTag extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            't_key'      => 'T Key',
-            'hotel_id'   => 'Hotel ID',
+            't_key'      => '标签关键KEY',
+            'rooms_id'   => '房间ID',
             'created_at' => '添加数据时间',
             'updated_at' => '更新数据时间',
         ];

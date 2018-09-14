@@ -28,12 +28,12 @@ class BaseController extends Controller
     {
 
         // 跳转
-        if (!file_exists(Yii::getAlias('@common') . '/' . Yii::$app->params['WebInfo']['RD_FILE'])) {
+        if ( !file_exists(Yii::getAlias('@common') . '/' . Yii::$app->params['WebInfo']['RD_FILE']) ) {
             return $this->redirect(['/mount/member/login']);
         }
 
         // Session
-        if (Yii::$app->user->isGuest) {
+        if ( Yii::$app->user->isGuest ) {
             return $this->redirect(['/member/login']);
         }
 
@@ -83,14 +83,14 @@ class BaseController extends Controller
     public static function getRandomString($len = 4, $chars = null)
     {
 
-        if (is_null($chars)) {
+        if ( is_null($chars) ) {
             $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         }
 
         mt_srand(10000000 * (double)microtime());
 
         for ($i = 0, $str = '', $lc = strlen($chars) - 1; $i < $len; $i++) {
-            $str .= $chars[mt_rand(0, $lc)];
+            $str .= $chars[ mt_rand(0, $lc) ];
         }
 
         $str = $str . '_' . time() . '_' . rand(0000, 9999);
