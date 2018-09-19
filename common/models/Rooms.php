@@ -60,7 +60,7 @@ class Rooms extends \yii\db\ActiveRecord
             [['hotel_id', 'c_key', 'room_num', 'title', 'content', 'num', 'check_in_num', 'price'], 'required'],
             [['content', 'is_promote', 'is_using', 'is_comments'], 'string'],
             [['num', 'check_in_num', 'price', 'discount', 'created_at', 'updated_at'], 'integer'],
-            [['hotel_id', 'room_id', 'thumb', ], 'string', 'max' => 85],
+            [['hotel_id', 'room_id', 'thumb',], 'string', 'max' => 85],
             [['images'], 'string', 'max' => 1000],
             [['user_id', 'c_key', 'room_num'], 'string', 'max' => 55],
             [['title'], 'string', 'max' => 125],
@@ -104,15 +104,20 @@ class Rooms extends \yii\db\ActiveRecord
 
     public static function findByAll($status = 'On')
     {
-		
-		// 审核状态
+
+        // 审核状态
         $array = !empty($status) ? [self::tableName() . '.is_using' => $status] : ['!=', self::tableName() . '.is_using', null];
-		
-		return static::find()->select(Hotels::tableName() . ".name, " . self::tableName() . ".*")
+
+        return static::find()->select(Hotels::tableName() . ".name, " . self::tableName() . ".*")
             ->joinWith('hotels')
             ->where($array)
             ->orderBy([self::tableName() . '.id' => SORT_DESC])
-			->all();
+            ->all();
+    }
+
+    public static function findByOne($id)
+    {
+
     }
 
     /**
@@ -121,6 +126,16 @@ class Rooms extends \yii\db\ActiveRecord
     public function getHotels()
     {
         return $this->hasOne(Hotels::className(), ['hotel_id' => 'hotel_id']);
+    }
+
+    /**
+     * 分类
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCls()
+    {
+        return $this->hasOne(RoomsClassify::className(), ['c_key' => 'c_key']);
     }
 
 }

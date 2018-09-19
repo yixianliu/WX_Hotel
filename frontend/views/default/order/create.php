@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model common\models\Order */
 
 $this->title = 'Create Order';
-$this->params['breadcrumbs'][] = ['label' => 'Orders', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '订单管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-create">
@@ -15,7 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'model'      => $model,
+        'hotelModel' => $hotelModel,
+        'roomModel'  => $roomModel,
     ]) ?>
 
 </div>

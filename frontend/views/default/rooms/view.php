@@ -55,6 +55,6 @@ $this->params['breadcrumbs'][] = $this->title;
     ]);
     ?>
 
-    <?= Html::a('拎包入住', ['order/create', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+    <?= Html::a('拎包入住', ['order/create', 'id' => $model->id, 'hid' => $model->hotel_id], ['class' => 'btn btn-primary']) ?>
 
 </div>

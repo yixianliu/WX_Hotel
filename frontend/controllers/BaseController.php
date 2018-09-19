@@ -69,4 +69,30 @@ class BaseController extends Controller
         return true;
     }
 
+    /**
+     * 随机生成关键KEY
+     *
+     * @param      $len
+     * @param null $chars
+     *
+     * @return string
+     */
+    public static function getRandomString($len = 4, $chars = null)
+    {
+
+        if ( is_null($chars) ) {
+            $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        }
+
+        mt_srand(10000000 * (double)microtime());
+
+        for ($i = 0, $str = '', $lc = strlen($chars) - 1; $i < $len; $i++) {
+            $str .= $chars[ mt_rand(0, $lc) ];
+        }
+
+        $str = $str . '_' . time() . '_' . rand(0000, 9999);
+
+        return $str;
+    }
+
 }

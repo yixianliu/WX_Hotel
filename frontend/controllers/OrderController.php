@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Hotels;
 use common\models\Rooms;
 use Yii;
 use common\models\Order;
@@ -68,18 +69,36 @@ class OrderController extends BaseController
     {
         $model = new Order();
 
+        // 房间
         $roomModel = Rooms::findOne(['id' => Yii::$app->request->get('id', null)]);
 
-        $model->room_id = $roomModel->room_id;
+        // 酒店
+        $hotelModel = Hotels::findOne(['hotel_id' => Yii::$app->request->get('hid', null)]);
 
-        $model->user_id = Yii::$app->user->identity->user_id;
+        if ( empty($roomModel) || empty($hotelModel) ) {
+            Yii::$app->session->setFlash('error', '模型异常!');
+        }
 
         if ( $model->load(Yii::$app->request->post()) && $model->save() ) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+            $model->room_id = $roomModel->room_id;
+            $model->user_id = Yii::$app->user->identity->user_id;
+            $model->hotel_id = $hotelModel->hotel_id;
+            $model->username = 'admin';
+            $model->place_order = time();
+
+            if ( !$model->save() ) {
+                Yii::$app->session->setFlash('error', '数据异常!');
+            } else {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'model'      => $model,
+            'hotelModel' => $hotelModel,
+            'roomModel'  => $roomModel,
         ]);
     }
 

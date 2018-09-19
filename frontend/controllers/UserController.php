@@ -9,7 +9,6 @@
 namespace frontend\controllers;
 
 use Yii;
-use common\models\Rooms;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

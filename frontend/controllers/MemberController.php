@@ -10,7 +10,6 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -61,7 +60,7 @@ class MemberController extends Controller
     {
         return [
 
-            'error'   => [
+            'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
 
@@ -79,6 +78,7 @@ class MemberController extends Controller
      */
     public function actionLogin()
     {
+
         if ( !Yii::$app->user->isGuest ) {
             return $this->goHome();
         }

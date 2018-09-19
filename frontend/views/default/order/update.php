@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Order */
 
-$this->title = 'Update Order: ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Orders', 'url' => ['index']];
+$this->title = '更新订单: ' . $model->title;
+$this->params['breadcrumbs'][] = ['label' => '订单管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
@@ -15,7 +15,9 @@ $this->params['breadcrumbs'][] = 'Update';
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'model'      => $model,
+        'hotelModel' => $hotelModel,
+        'roomModel'  => $roomModel,
     ]) ?>
 
 </div>

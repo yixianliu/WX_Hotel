@@ -2,6 +2,9 @@
 
 namespace frontend\models;
 
+use common\models\Role;
+use Yii;
+use frontend\controllers\BaseController;
 use yii\base\Model;
 use common\models\User;
 
@@ -38,7 +41,7 @@ class SignupForm extends Model
     {
         return [
             'username'    => '用户名称',
-            'phone'       => '手机号码',
+            'telphone'    => '手机号码',
             'password'    => '密码',
             're_password' => '二次密码',
         ];
@@ -51,16 +54,27 @@ class SignupForm extends Model
      */
     public function signup()
     {
+
         if ( !$this->validate() ) {
             return null;
         }
 
         $user = new User();
+
         $user->username = $this->username;
-        $user->email = $this->email;
+        $user->telphone = $this->telphone;
+
+        $user->user_id = BaseController::getRandomString();
+
+        $user->r_key = Role::$defaultRole;
+        $user->reg_time = time();
+        $user->last_login_time = time();
+        $user->login_ip = Yii::$app->request->userIP;
+        $user->is_using = 'Not';
+
         $user->setPassword($this->password);
         $user->generateAuthKey();
 
-        return $user->save() ? $user : null;
+        return $user->save(false) ? $user : null;
     }
 }

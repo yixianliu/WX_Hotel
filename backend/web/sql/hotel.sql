@@ -163,16 +163,18 @@ CREATE TABLE `#DB_PREFIX#Order` (
     `hotel_id` VARCHAR(55) NOT NULL COMMENT '酒店编号',
     `room_id` VARCHAR(55) NOT NULL COMMENT '房间编号',
     `user_id` VARCHAR(55) NOT NULL COMMENT '用户ID',
-    `c_key` VARCHAR(55) NOT NULL COMMENT '订单分类',
+    `coupon_key` VARCHAR(55) NOT NULL COMMENT '优惠卷KEY',
     `price` INT(11) UNSIGNED NOT NULL COMMENT '价格',
     `title` VARCHAR(125) NOT NULL COMMENT '标题',
     `content` TEXT NOT NULL COMMENT '描述内容',
-    `keywords` VARCHAR(55) NULL COMMENT '关键字',
     `username` VARCHAR(55) NULL COMMENT '制单人',
     `path` VARCHAR(55) NULL COMMENT '订单路径',
-    `num` integer NOT NULL DEFAULT '0' COMMENT '入住人数',
+    `checkin_men_num` integer NOT NULL DEFAULT '0' COMMENT '入住人数',
+    `checkin_men_name` integer NOT NULL DEFAULT '0' COMMENT '入住人名称',
+    `checkin_men_idcard` integer NOT NULL DEFAULT '0' COMMENT '入住人身份证',
     `check_in` integer NOT NULL DEFAULT '0' COMMENT '入住时间',
     `check_out` integer NOT NULL DEFAULT '0' COMMENT '退房时间',
+    `order_type` SET('On', 'Off', 'Out') NOT NULL COMMENT '订单状态, 已付款,未付款,退款',
     `pay_type` SET('wechat', 'alipay', 'cash') NOT NULL COMMENT '支付方式',
     `express_type` SET('On', 'Off', 'Out', 'Not', 'Hold') NOT NULL COMMENT '发货状态, hold (待发货)',
     `is_using` SET('On', 'Off', 'Out', 'Not') NOT NULL COMMENT '审核',
@@ -182,7 +184,9 @@ CREATE TABLE `#DB_PREFIX#Order` (
     `updated_at` integer NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
     KEY `hotel_id` (`hotel_id`),
-    KEY `user_id` (`user_id`)
+    KEY `user_id` (`user_id`),
+    KEY `room_id` (`room_id`),
+    KEY `coupon_key` (`coupon_key`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /**
