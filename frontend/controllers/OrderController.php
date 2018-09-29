@@ -2,31 +2,37 @@
 
 namespace frontend\controllers;
 
-use common\models\Hotels;
-use common\models\Rooms;
 use Yii;
 use common\models\Order;
+use common\models\Hotels;
+use common\models\Rooms;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use linslin\yii2\curl;
 
 /**
  * OrderController implements the CRUD actions for Order model.
  */
 class OrderController extends BaseController
 {
+
+    private static $curlUrl = null;
+
     /**
      * {@inheritdoc}
      */
     public function behaviors()
     {
         return [
+
             'verbs' => [
                 'class'   => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
+
         ];
     }
 
@@ -76,21 +82,42 @@ class OrderController extends BaseController
         $hotelModel = Hotels::findOne(['hotel_id' => Yii::$app->request->get('hid', null)]);
 
         if ( empty($roomModel) || empty($hotelModel) ) {
-            Yii::$app->session->setFlash('error', '模型异常!');
+            Yii::$app->session->setFlash('error', '模型产生异常!');
         }
 
-        if ( $model->load(Yii::$app->request->post()) && $model->save() ) {
+        if ( $model->load(Yii::$app->request->post()) ) {
 
+            $model->title = $roomModel->title . ' + ' . Yii::$app->user->identity->user_id . ' + ' . self::getRandomString();
             $model->room_id = $roomModel->room_id;
             $model->user_id = Yii::$app->user->identity->user_id;
             $model->hotel_id = $hotelModel->hotel_id;
             $model->username = 'admin';
             $model->place_order = time();
 
+            $transaction1 = Yii::$app->db->beginTransaction();
+
             if ( !$model->save() ) {
+
+                $transaction1->rollBack();
                 Yii::$app->session->setFlash('error', '数据异常!');
+
             } else {
-                return $this->redirect(['view', 'id' => $model->id]);
+
+                //Init curl
+                $curl = new curl\Curl();
+
+                // Post
+                $response = $curl->setOption(CURLOPT_POSTFIELDS, http_build_query(['order' => $model->toArray()]))->post(static::$curlUrl);
+
+                if ( !$response ) {
+                    $transaction1->rollBack();
+                    Yii::$app->session->setFlash('error', '订单服务器异常!');
+                } // 成功
+                else {
+                    $transaction1->commit();
+                    return $this->redirect(['view', 'id' => $model->id, 'response' => $response]);
+                }
+
             }
 
         }

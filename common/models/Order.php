@@ -53,7 +53,7 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'content', 'pay_type', 'check_in', 'check_out', 'checkin_men_num', 'checkin_men_name', 'checkin_men_idcard'], 'required'],
+            [['content', 'pay_type', 'check_in', 'check_out', 'checkin_men_num', 'checkin_men_name', 'checkin_men_idcard'], 'required'],
             [['price', 'num', 'place_order', 'pay_order', 'checkin_men_num'], 'integer'],
             [['hotel_id', 'room_id', 'user_id', 'content', 'pay_type', 'c_key', 'check_in', 'check_out', 'is_using', 'checkin_men_name', 'checkin_men_idcard'], 'string'],
             [['hotel_id', 'room_id', 'user_id', 'c_key', 'check_in', 'check_out', 'username'], 'string', 'max' => 85],
@@ -63,6 +63,7 @@ class Order extends \yii\db\ActiveRecord
             [['title'], 'string', 'max' => 125],
 
             [['is_using',], 'default', 'value' => 'Off'],
+            [['title',], 'default', 'value' => null],
         ];
     }
 

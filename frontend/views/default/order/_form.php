@@ -22,8 +22,6 @@ use kartik\select2\Select2;
 
     <?= $form->field($model, 'price')->textInput(['maxlength' => true, 'value' => $roomModel->price, 'readonly' => 'readonly']) ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'checkin_men_num')->textInput(['']) ?>
