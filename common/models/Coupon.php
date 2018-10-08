@@ -60,6 +60,7 @@ class Coupon extends \yii\db\ActiveRecord
             'num'          => '优惠券数量',
             'coupon_type'  => '卡卷类型',
             'pay_type'     => '赠送卡卷类型',
+            'is_using'     => '卡卷状态',
             'created_at'   => '添加数据时间',
             'updated_at'   => '更新数据时间',
         ];

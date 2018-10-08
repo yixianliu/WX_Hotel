@@ -40,9 +40,9 @@ class RelevanceRoomsField extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['f_key', 'rooms_id', 'content'], 'required'],
-            [['created_at', 'updated_at'], 'integer'],
-            [['f_key', 'rooms_id', 'content'], 'string', 'max' => 85],
+            [ [ 'f_key', 'rooms_id', 'content' ], 'required' ],
+            [ [ 'created_at', 'updated_at' ], 'integer' ],
+            [ [ 'f_key', 'rooms_id', 'content' ], 'string', 'max' => 85 ],
         ];
     }
 

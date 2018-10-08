@@ -33,7 +33,7 @@ class RoomsController extends BaseController
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => [ '@' ],
                     ],
                 ],
             ],
@@ -41,7 +41,7 @@ class RoomsController extends BaseController
             'verbs' => [
                 'class'   => \yii\filters\VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => [ 'POST' ],
                 ],
             ],
         ];
@@ -77,11 +77,11 @@ class RoomsController extends BaseController
         $model = $this->findModel($id);
 
         $dataFieldProvider = new ActiveDataProvider([
-            'query' => RelevanceRoomsField::find()->where(['rooms_id' => $model->room_id]),
+            'query' => RelevanceRoomsField::find()->where([ 'rooms_id' => $model->room_id ]),
         ]);
 
         $dataTagProvider = new ActiveDataProvider([
-            'query' => RelevanceRoomsTag::find()->where(['rooms_id' => $model->room_id]),
+            'query' => RelevanceRoomsTag::find()->where([ 'rooms_id' => $model->room_id ]),
         ]);
 
         return $this->render('view', [
@@ -110,9 +110,9 @@ class RoomsController extends BaseController
             $transaction = Yii::$app->db->beginTransaction();
 
             // 房间参数
-            if ( !empty($post['Rooms']['f_key']) ) {
+            if ( !empty($post[ 'Rooms' ][ 'f_key' ]) ) {
 
-                foreach ($post['Rooms']['f_key'] as $key => $value) {
+                foreach ($post[ 'Rooms' ][ 'f_key' ] as $key => $value) {
 
                     $modelField = new RelevanceRoomsField();
 
@@ -129,8 +129,20 @@ class RoomsController extends BaseController
             }
 
             // 房间标签
-            if ( !empty($post['Rooms']['t_key']) ) {
+            if ( !empty($post[ 'Rooms' ][ 't_key' ]) ) {
 
+                foreach ($post[ 'Rooms' ][ 't_key' ] as $key => $value) {
+
+                    $modelTag = new RelevanceRoomsTag();
+
+                    $modelTag->t_key = $key;
+                    $modelTag->rooms_id = $model->room_id;
+
+                    if ( !$modelTag->save(false) ) {
+                        $transaction->rollBack();
+                        continue;
+                    }
+                }
 
             }
 
@@ -139,20 +151,20 @@ class RoomsController extends BaseController
                 // 提交事务
                 $transaction->commit();
 
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect([ 'view', 'id' => $model->id ]);
             }
 
         }
 
         $model->room_id = self::getRandomString();
 
-        $result['classify'] = RoomsClassify::getClsSelect('Off');
+        $result[ 'classify' ] = RoomsClassify::getClsSelect('Off');
 
-        $result['hotel'] = Hotels::getHotelSelect();
+        $result[ 'hotel' ] = Hotels::getHotelSelect();
 
-        $result['field'] = RoomsField::findByAll();
+        $result[ 'field' ] = RoomsField::findByAll();
 
-        $result['tag'] = RoomsTag::findByAll();
+        $result[ 'tag' ] = RoomsTag::findByAll();
 
         return $this->render('create', [
             'model'  => $model,
@@ -173,17 +185,51 @@ class RoomsController extends BaseController
     {
         $model = $this->findModel($id);
 
-        if ( $model->load(Yii::$app->request->post()) && $model->save() ) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ( $model->load(Yii::$app->request->post()) ) {
+
+            $post = Yii::$app->request->post();
+
+            // 创建事务
+            $transaction = Yii::$app->db->beginTransaction();
+
+            // 房间标签
+            if ( !empty($post[ 'Rooms' ][ 't_key' ]) ) {
+
+                if (!RelevanceRoomsTag::deleteAll(['rooms_id' => $model->room_id])) {
+                    $transaction->rollBack();
+                }
+
+                foreach ($post[ 'Rooms' ][ 't_key' ] as $key => $value) {
+
+                    $modelTag = new RelevanceRoomsTag();
+
+                    $modelTag->t_key = $key;
+                    $modelTag->rooms_id = $model->room_id;
+
+                    if ( !$modelTag->save(false) ) {
+                        $transaction->rollBack();
+                        continue;
+                    }
+                }
+
+            }
+
+            if ( $model->save() ) {
+
+                // 提交事务
+                $transaction->commit();
+
+                return $this->redirect([ 'view', 'id' => $model->id ]);
+            }
         }
 
-        $result['classify'] = RoomsClassify::getClsSelect('Off');
+        $result[ 'classify' ] = RoomsClassify::getClsSelect('Off');
 
-        $result['hotel'] = Hotels::getHotelSelect();
+        $result[ 'hotel' ] = Hotels::getHotelSelect();
 
-        $result['tag'] = RoomsTag::findByAll();
+        $result[ 'tag' ] = RoomsTag::findByAll();
 
-        $result['field'] = RoomsField::findByAll();
+        $result[ 'field' ] = RoomsField::findByAll();
 
         return $this->render('update', [
             'model'  => $model,
@@ -204,7 +250,7 @@ class RoomsController extends BaseController
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect([ 'index' ]);
     }
 
     /**
