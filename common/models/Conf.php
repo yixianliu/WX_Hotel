@@ -40,14 +40,14 @@ class Conf extends ActiveRecord
     public function rules()
     {
         return [
-            [['c_key', 'name', 'parameter'], 'required'],
-            [['description', 'is_using', 'is_language'], 'string'],
-            [['c_key'], 'string', 'max' => 55],
-            [['name'], 'string', 'max' => 80],
-            [['parameter'], 'string', 'max' => 255],
+            [ [ 'c_key', 'name', 'parameter' ], 'required' ],
+            [ [ 'description', 'is_using', 'is_language' ], 'string' ],
+            [ [ 'c_key' ], 'string', 'max' => 55 ],
+            [ [ 'name' ], 'string', 'max' => 80 ],
+            [ [ 'parameter' ], 'string', 'max' => 255 ],
 
-            [['is_language'], 'default', 'value' => 'cn'],
-            [['is_using'], 'default', 'value' => 'On'],
+            [ [ 'is_language' ], 'default', 'value' => 'cn' ],
+            [ [ 'is_using' ], 'default', 'value' => 'On' ],
         ];
     }
 
@@ -79,10 +79,10 @@ class Conf extends ActiveRecord
     public static function findByAll($status = null, $language = 'cn')
     {
 
-        $array = !empty($status) ? ['is_using' => $status] : ['!=', 'is_using', 'null'];
+        $array = !empty( $status ) ? [ 'is_using' => $status ] : [ '!=', 'is_using', 'null' ];
 
-        return static::find()->where($array)
-            ->andWhere(['is_language' => $language])
+        return static::find()->where( $array )
+            ->andWhere( [ 'is_language' => $language ] )
             ->asArray()
             ->all();
     }
@@ -96,7 +96,7 @@ class Conf extends ActiveRecord
      */
     public static function findByOne($id = 1)
     {
-        return static::findOne(['id' => $id]);
+        return static::findOne( [ 'id' => $id ] );
     }
 
 }

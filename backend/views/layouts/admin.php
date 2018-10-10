@@ -9,11 +9,11 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use backend\assets\AppAsset;
 
-AppAsset::register($this);  // $this 代表视图对象
+AppAsset::register( $this );  // $this 代表视图对象
 
 $session = Yii::$app->session;
 
-$Conf = \common\models\Conf::findOne(1);
+$Conf = \common\models\Conf::findOne( 1 );
 
 $this->beginPage();
 
@@ -25,18 +25,18 @@ $this->beginPage();
 
         <meta charset="<?= Yii::$app->charset ?>">
 
-        <title><?= Html::encode($this->title) ?> - <?= $Conf['title']; ?> - <?= $Conf['name']; ?></title>
+        <title><?= Html::encode( $this->title ) ?> - <?= $Conf['title']; ?> - <?= $Conf['name']; ?></title>
 
         <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'/>
         <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
 
-        <meta name="generator" content="<?= $Conf['copyright']; ?>" data-variable="<?= $Conf['site_url']; ?>" />
+        <meta name="generator" content="<?= $Conf['copyright']; ?>" data-variable="<?= $Conf['site_url']; ?>"/>
 
         <meta name='keywords' content="<?= $Conf['keywords']; ?>"/>
         <meta name='description' content="<?= $Conf['description']; ?>"/>
         <meta name='author' content="<?= $Conf['developers']; ?>"/>
 
-        <link rel="shortcut icon" href="<?= Yii::getAlias('@web') ?>/favicon.ico" type="image/x-icon"/>
+        <link rel="shortcut icon" href="<?= Yii::getAlias( '@web' ) ?>/favicon.ico" type="image/x-icon"/>
 
         <?= Html::csrfMetaTags() ?>
 
@@ -51,7 +51,7 @@ $this->beginPage();
 
         <div class="page-sidebar page-sidebar-fixed scroll">
 
-            <?= \common\widgets\iMenu\MenuAdmin::widget(['config' => ['A3']]); ?>
+            <?= \common\widgets\iMenu\MenuAdmin::widget( [ 'config' => [ 'A3' ] ] ); ?>
 
         </div>
 
@@ -90,7 +90,7 @@ $this->beginPage();
 
                 <div class="mb-footer">
                     <div class="pull-right">
-                        <a href="<?= Url::to(['mount/member/logout']) ?>" class="btn btn-success btn-lg">是</a>
+                        <a href="<?= Url::to( [ 'mount/member/logout' ] ) ?>" class="btn btn-success btn-lg">是</a>
                         <button class="btn btn-default btn-lg mb-control-close">否</button>
                     </div>
                 </div>

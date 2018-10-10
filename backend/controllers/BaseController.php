@@ -28,13 +28,13 @@ class BaseController extends Controller
     {
 
         // 跳转
-        if ( !file_exists(Yii::getAlias('@common') . '/' . Yii::$app->params['WebInfo']['RD_FILE']) ) {
-            return $this->redirect(['/mount/member/login']);
+        if (!file_exists( Yii::getAlias( '@common' ) . '/' . Yii::$app->params['WebInfo']['RD_FILE'] )) {
+            return $this->redirect( [ '/mount/member/login' ] );
         }
 
         // Session
-        if ( Yii::$app->user->isGuest ) {
-            return $this->redirect(['/member/login']);
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect( [ '/member/login' ] );
         }
 
         static::$assist = \common\models\Assist::findByData();
@@ -66,7 +66,7 @@ class BaseController extends Controller
                 'config' => [
                     "imageUrlPrefix"  => "http://www.baidu.com",//图片访问路径前缀
                     "imagePathFormat" => "/upload/image/{yyyy}{mm}{dd}/{time}{rand:6}", //上传保存路径
-                    "imageRoot"       => Yii::getAlias("@webroot"),
+                    "imageRoot"       => Yii::getAlias( "@webroot" ),
                 ],
             ],
         ];
@@ -83,17 +83,17 @@ class BaseController extends Controller
     public static function getRandomString($len = 4, $chars = null)
     {
 
-        if ( is_null($chars) ) {
+        if (is_null( $chars )) {
             $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         }
 
-        mt_srand(10000000 * (double)microtime());
+        mt_srand( 10000000 * (double)microtime() );
 
-        for ($i = 0, $str = '', $lc = strlen($chars) - 1; $i < $len; $i++) {
-            $str .= $chars[ mt_rand(0, $lc) ];
+        for ($i = 0, $str = '', $lc = strlen( $chars ) - 1; $i < $len; $i++) {
+            $str .= $chars[ mt_rand( 0, $lc ) ];
         }
 
-        $str = $str . '_' . time() . '_' . rand(0000, 9999);
+        $str = $str . '_' . time() . '_' . rand( 0000, 9999 );
 
         return $str;
     }

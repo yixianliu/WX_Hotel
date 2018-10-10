@@ -2,7 +2,7 @@
 
 /**
  * @abstract 首页控制器
- * @author Yxl <zccem@163.com>
+ * @author   Yxl <zccem@163.com>
  */
 
 namespace backend\controllers;
@@ -28,7 +28,7 @@ class CenterController extends BaseController
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => [ '@' ],
                     ],
                 ],
             ],
@@ -36,7 +36,7 @@ class CenterController extends BaseController
             'verbs' => [
                 'class'   => \yii\filters\VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => [ 'POST' ],
                 ],
             ],
         ];
@@ -45,11 +45,11 @@ class CenterController extends BaseController
     /**
      * @abstract 首页
      */
-	public function actionIndex()
-	{
+    public function actionIndex()
+    {
 
-		return $this->render('index');
-	}
+        return $this->render( 'index' );
+    }
 
     /**
      * @abstract 网页配置单
@@ -58,13 +58,13 @@ class CenterController extends BaseController
     {
 
         // 初始化
-        $result = array();
+        $result = [];
 
-        $result['noAuditProduct'] = Product::findByAll('On');
+        $result['noAuditProduct'] = Product::findByAll( 'On' );
 
-        $result['noAuditUser'] = User::findByAll('Off');
+        $result['noAuditUser'] = User::findByAll( 'Off' );
 
-        return $this->render('view', ['result' => $result]);
+        return $this->render( 'view', [ 'result' => $result ] );
     }
 
     /**
@@ -75,7 +75,7 @@ class CenterController extends BaseController
 
         $model = new ConfForm;
 
-        return $this->render('backup', ['model' => $model]);
+        return $this->render( 'backup', [ 'model' => $model ] );
     }
 
     /**
@@ -84,30 +84,7 @@ class CenterController extends BaseController
     public function actionDblist()
     {
 
-        return $this->render('dblist');
-    }
-
-    /**
-     * @abstract 网站设置
-     */
-    public function actionConf()
-    {
-
-        $model = new Conf();
-
-        $request = Yii::$app->request;
-
-        // Ajax
-        if ($request->isAjax) {
-
-            if (!$model->load($request->post()) || !$model->validators()) {
-                return Json::encode($model->getErrors());
-            }
-
-            return Json::encode(['msg' => '更新网站配置成功 !!', 'status' => true]);
-        }
-
-        return $this->render('conf', ['model' => $model]);
+        return $this->render( 'dblist' );
     }
 
 }
