@@ -13,45 +13,46 @@ use kartik\select2\Select2;
 <div class="row">
     <div class="col-md-12">
 
-        <?php $form = ActiveForm::begin(['class' => 'form-horizontal']); ?>
+        <?php $form = ActiveForm::begin( [ 'class' => 'form-horizontal' ] ); ?>
 
         <div class="panel panel-default tabs">
 
             <ul class="nav nav-tabs" role="tablist">
-                <li class="active"><a href="#tab-first" role="tab" data-toggle="tab">基本资料</a></li>
-                <li><a href="#tab-second" role="tab" data-toggle="tab">房间参数</a></li>
-                <li><a href="#tab-third" role="tab" data-toggle="tab">房间标签</a></li>
+                <li class="active"><a href="#tab-1" role="tab" data-toggle="tab">基本资料</a></li>
+                <li><a href="#tab-2" role="tab" data-toggle="tab">房间参数</a></li>
+                <li><a href="#tab-3" role="tab" data-toggle="tab">房间标签</a></li>
+                <li><a href="#tab-4" role="tab" data-toggle="tab">房间状态</a></li>
             </ul>
 
             <div class="panel-body tab-content">
 
-                <div class="tab-pane active" id="tab-first">
+                <div class="tab-pane active" id="tab-1">
                     <?=
-                    $form->field($model, 'c_key')->widget(Select2::classname(), [
+                    $form->field( $model, 'c_key' )->widget( Select2::classname(), [
                         'data'          => $result['classify'],
-                        'options'       => ['placeholder' => '分类'],
+                        'options'       => [ 'placeholder' => '分类' ],
                         'pluginOptions' => [
                             'allowClear' => true,
                         ],
-                    ]);
+                    ] );
                     ?>
 
                     <?=
-                    $form->field($model, 'hotel_id')->widget(Select2::classname(), [
+                    $form->field( $model, 'hotel_id' )->widget( Select2::classname(), [
                         'data'          => $result['hotel'],
-                        'options'       => ['placeholder' => '酒店'],
+                        'options'       => [ 'placeholder' => '酒店' ],
                         'pluginOptions' => [
                             'allowClear' => true,
                         ],
-                    ]);
+                    ] );
                     ?>
 
-                    <?= $form->field($model, 'room_num')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field( $model, 'room_num' )->textInput( [ 'maxlength' => true ] ) ?>
 
-                    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field( $model, 'title' )->textInput( [ 'maxlength' => true ] ) ?>
 
                     <?=
-                    $form->field($model, 'content')->widget('kucha\ueditor\UEditor', [
+                    $form->field( $model, 'content' )->widget( 'kucha\ueditor\UEditor', [
                         'clientOptions' => [
                             //编辑区域大小
                             'lang'               => 'zh-cn',
@@ -59,52 +60,14 @@ use kartik\select2\Select2;
                             'elementPathEnabled' => false,
                             'wordCount'          => false,
                         ],
-                    ]);
+                    ] );
                     ?>
 
-                    <?= $form->field($model, 'num')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field( $model, 'num' )->textInput( [ 'maxlength' => true ] ) ?>
 
-                    <?= $form->field($model, 'check_in_num')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field( $model, 'price' )->textInput( [ 'maxlength' => true ] ) ?>
 
-                    <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
-
-                    <?= $form->field($model, 'discount')->textInput(['maxlength' => true]) ?>
-
-                    <?= $form->field($model, 'introduction')->textarea(['maxlength' => true, 'rows' => 6]) ?>
-
-                    <?= $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>
-
-                    <?=
-                    $form->field($model, 'is_promote')->widget(Select2::classname(), [
-                        'data'          => ['1' => '启用', '2' => '禁用'],
-                        'options'       => ['placeholder' => '推广状态...'],
-                        'pluginOptions' => [
-                            'allowClear' => true,
-                        ],
-                    ]);
-                    ?>
-
-                    <?=
-                    $form->field($model, 'is_using')->widget(Select2::classname(), [
-                        'data'          => ['1' => '启用', '2' => '禁用'],
-                        'options'       => ['placeholder' => '审核状态...'],
-                        'pluginOptions' => [
-                            'allowClear' => true,
-                        ],
-                    ]);
-                    ?>
-
-                    <?=
-                    $form->field($model, 'is_comments')->widget(Select2::classname(), [
-                        'data'          => ['1' => '启用', '2' => '禁用'],
-                        'options'       => ['placeholder' => '评论状态...'],
-                        'pluginOptions' => [
-                            'allowClear' => true,
-                        ],
-                    ]);
-                    ?>
-
-                    <?= $this->render('../../upload', ['model' => $model, 'id' => $model->room_id, 'num' => 1, 'attribute' => 'thumb', 'text' => '上传缩略图', 'form' => $form]); ?>
+                    <?= $this->render( '../../upload', [ 'model' => $model, 'id' => $model->room_id, 'num' => 1, 'attribute' => 'thumb', 'text' => '上传缩略图', 'form' => $form ] ); ?>
 
                     <div class="form-group">
                         <div class="alert alert-info" role="alert">
@@ -113,7 +76,7 @@ use kartik\select2\Select2;
                         </div>
                     </div>
 
-                    <?= $this->render('../../upload', ['model' => $model, 'id' => $model->room_id, 'text' => '上传图片', 'form' => $form]); ?>
+                    <?= $this->render( '../../upload', [ 'model' => $model, 'id' => $model->room_id, 'text' => '上传图片', 'form' => $form ] ); ?>
 
                     <div class="form-group">
                         <div class="alert alert-info" role="alert">
@@ -125,28 +88,29 @@ use kartik\select2\Select2;
                 </div>
 
 
-                <div class="tab-pane" id="tab-second">
-                    <div class='row' style="height: 800px;">
-                        <?php if (!empty($result['field'])): ?>
+                <div class="tab-pane" id="tab-2">
+                    <div class='row' style="min-height: 800px;">
+
+                        <?php if (!empty( $result['field'] )): ?>
+
                             <?php foreach ($result['field'] as $value): ?>
 
                                 <div class="col-md-3">
-
                                     <label class="control-label" for="rooms-<?= $value['f_key']; ?>"><?= $value['name'] ?></label>
-
                                     <input type="text" id="rooms-<?= $value['f_key']; ?>" class="form-control" name="Rooms[f_key][<?= $value['f_key'] ?>]" aria-required="true">
-
                                 </div>
 
                             <?php endforeach; ?>
+
                         <?php endif; ?>
+
                     </div>
                 </div>
 
-                <div class="tab-pane" id="tab-third">
-                    <div class='row' style="height: 800px;">
+                <div class="tab-pane" id="tab-3">
+                    <div class='row' style="min-height: 800px;">
 
-                        <?php if (!empty($result['tag'])): ?>
+                        <?php if (!empty( $result['tag'] )): ?>
 
                             <?php foreach ($result['tag'] as $value): ?>
                                 <div class="col-md-2">
@@ -163,15 +127,57 @@ use kartik\select2\Select2;
                     </div>
                 </div>
 
+                <div class="tab-pane" id="tab-4">
+                    <div class='row' style="min-height: 800px;">
+
+                        <?= $form->field( $model, 'discount' )->textInput( [ 'maxlength' => true ] ) ?>
+
+                        <?= $form->field( $model, 'introduction' )->textarea( [ 'maxlength' => true, 'rows' => 6 ] ) ?>
+
+                        <?= $form->field( $model, 'keywords' )->textInput( [ 'maxlength' => true ] ) ?>
+
+                        <?=
+                        $form->field( $model, 'is_promote' )->widget( Select2::classname(), [
+                            'data'          => [ '1' => '启用', '2' => '禁用' ],
+                            'options'       => [ 'placeholder' => '推广状态...' ],
+                            'pluginOptions' => [
+                                'allowClear' => true,
+                            ],
+                        ] );
+                        ?>
+
+                        <?=
+                        $form->field( $model, 'is_using' )->widget( Select2::classname(), [
+                            'data'          => [ '1' => '启用', '2' => '禁用' ],
+                            'options'       => [ 'placeholder' => '审核状态...' ],
+                            'pluginOptions' => [
+                                'allowClear' => true,
+                            ],
+                        ] );
+                        ?>
+
+                        <?=
+                        $form->field( $model, 'is_comments' )->widget( Select2::classname(), [
+                            'data'          => [ '1' => '启用', '2' => '禁用' ],
+                            'options'       => [ 'placeholder' => '评论状态...' ],
+                            'pluginOptions' => [
+                                'allowClear' => true,
+                            ],
+                        ] );
+                        ?>
+
+                    </div>
+                </div>
+
             </div>
 
             <div class="panel-footer">
 
-                <?= $form->field($model, 'room_id')->hiddenInput()->label(false) ?>
+                <?= $form->field( $model, 'room_id' )->hiddenInput()->label( false ) ?>
 
-                <?= Html::submitButton($model->isNewRecord ? '添加' : '更新', ['class' => $model->isNewRecord ? 'btn btn-success btn-lg' : 'btn btn-primary btn-lg']) ?>
+                <?= Html::submitButton( $model->isNewRecord ? '添加' : '更新', [ 'class' => $model->isNewRecord ? 'btn btn-success btn-lg' : 'btn btn-primary btn-lg' ] ) ?>
 
-                <a href='<?= Url::to(['index']) ?>' class='btn btn-primary btn-lg' title='返回列表'>返回列表</a>
+                <a href='<?= Url::to( [ 'index' ] ) ?>' class='btn btn-primary btn-lg' title='返回列表'>返回列表</a>
 
             </div>
         </div>
