@@ -4,6 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
+use phpnt\ICheck\ICheck;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Coupon */
@@ -39,31 +40,35 @@ use kartik\select2\Select2;
             ]);
             ?>
 
-            <?=
-            $form->field($model, 'coupon_type')->widget(Select2::classname(), [
-                'data'          => ['discount' => '折扣劵', 'coupon' => '优惠卷'],
-                'options'       => ['placeholder' => '卡卷类型...'],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                ],
-            ]);
-            ?>
-
-            <?=
-            $form->field($model, 'pay_type')->widget(Select2::classname(), [
-                'data'          => [
-                    'before' => '消费后送优惠卷',
-                    'after'  => '消费前送优惠卷',
-                    'wechat' => '关注公众号',
-                ],
-                'options'       => ['placeholder' => '使用...'],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                ],
-            ]);
-            ?>
-
             <?= $form->field($model, 'remarks')->textarea(['maxlength' => true, 'rows' => 6]) ?>
+
+            <?= $form->field($model, 'coupon_type')->widget(ICheck::className(), [
+                'type'    => ICheck::TYPE_RADIO_LIST,
+                'style'   => ICheck::STYLE_SQUARE,
+                'items'   => ['discount' => '折扣劵', 'coupon' => '优惠卷'],
+                'color'   => 'red',                  // цвет
+                'options' => [
+                    'item' => function ($index, $label, $name, $checked, $value) {
+                        return '<input type="radio" id="coupon_type' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="coupon_type' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
+                    },
+                ] ])
+            ?>
+
+            <?= $form->field($model, 'pay_type')->widget(ICheck::className(), [
+                'type'    => ICheck::TYPE_RADIO_LIST,
+                'style'   => ICheck::STYLE_SQUARE,
+                'items'   => [ 'before' => '消费后送优惠卷', 'after' => '消费前送优惠卷', 'wechat' => '关注公众号' ],
+                'color'   => 'red',                  // цвет
+                'options' => [
+                    'item' => function ($index, $label, $name, $checked, $value) {
+                        return '<input type="radio" id="pay_type' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="pay_type' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
+                    },
+                ] ])
+            ?>
+
+            <?= Yii::$app->view->renderFile( '@app/views/upload.php', [ 'model' => $model, 'id' => $model->coupon_key, 'num' => 1, 'attribute' => 'thumb', 'text' => '上传缩略图', 'form' => $form ] ); ?>
+
+            <?= Yii::$app->view->renderFile( '@app/views/upload.php', [ 'model' => $model, 'id' => $model->coupon_key, 'num' => 1, 'attribute' => 'images', 'text' => '上传图片', 'form' => $form ] ); ?>
 
             <div class="form-group">
 

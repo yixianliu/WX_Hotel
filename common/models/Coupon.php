@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "w_coupon".
@@ -29,19 +30,29 @@ class Coupon extends \yii\db\ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['title', 'validity', 'denomination', 'quota', 'coupon_type', 'pay_type'], 'required'],
-            [['denomination', 'quota', 'num'], 'integer'],
-            [['coupon_type', 'images'], 'string'],
-            [['coupon_key', 'validity', 'title', 'remarks'], 'string', 'max' => 125],
-            [['coupon_key'], 'unique'],
+            [ [ 'title', 'validity', 'denomination', 'quota', 'coupon_type', 'pay_type' ], 'required' ],
+            [ [ 'denomination', 'quota', 'num' ], 'integer' ],
+            [ [ 'coupon_type', 'images', 'thumb', ], 'string' ],
+            [ [ 'coupon_key', 'validity', 'title', 'remarks' ], 'string', 'max' => 125 ],
+            [ [ 'coupon_key' ], 'unique' ],
 
-            [['is_using'], 'default', 'value' => 'On'],
-            [['num'], 'default', 'value' => 10],
+            [ [ 'is_using' ], 'default', 'value' => 'On' ],
+            [ [ 'num' ], 'default', 'value' => 10 ],
         ];
     }
 
@@ -58,6 +69,8 @@ class Coupon extends \yii\db\ActiveRecord
             'quota'        => '优惠券使用限额',
             'remarks'      => '优惠券备注',
             'num'          => '优惠券数量',
+            'thumb'        => '缩略图',
+            'images'       => '图片',
             'coupon_type'  => '卡卷类型',
             'pay_type'     => '赠送卡卷类型',
             'is_using'     => '卡卷状态',

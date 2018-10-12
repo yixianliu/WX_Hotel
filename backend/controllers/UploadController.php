@@ -36,7 +36,7 @@ class UploadController extends BaseController
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => [ '@' ],
                     ],
                 ],
             ],
@@ -44,7 +44,7 @@ class UploadController extends BaseController
             'verbs' => [
                 'class'   => \yii\filters\VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => [ 'POST' ],
                 ],
             ],
         ];
@@ -53,19 +53,20 @@ class UploadController extends BaseController
     /**
      * 上传文件
      *
-     * @param string $id
-     * @param        $type
-     * @param        $ext
-     * @param string $attribute
-     *
      * @return string
      * @throws \yii\base\Exception
      */
-    public function actionImageUpload($id = null, $type, $ext, $attribute = 'images')
+    public function actionUploads()
     {
 
-        if (empty($type) || empty($ext))
-            return Json::encode(['error' => 8003, 'success' => false, 'status' => false, 'message' => '参数错误 !!']);
+        $type = Yii::$app->request->get('type', null);
+
+        $ext = Yii::$app->request->get('ext', null);
+
+        $attribute = Yii::$app->request->get('attribute', 'images');
+
+        if ( empty($type) || empty($ext) || !Yii::$app->request->isAjax )
+            return Json::encode([ 'error' => '参数错误!' ]);
 
         switch ($type) {
 
@@ -94,32 +95,36 @@ class UploadController extends BaseController
                 $model = new \common\models\Rooms();
                 break;
 
-            default:
-                return Json::encode(['error' => 8003, 'success' => false, 'status' => false, 'message' => '没有此模型 !!',]);
+            // 房间
+            case 'coupon':
+                $model = new \common\models\Coupon();
                 break;
+
+            default:
+                return Json::encode([ 'error' => '没有此模型!' ]);
         }
 
         // 上传组件对应model
-        if (!($imageFile = UploadedFile::getInstance($model, $attribute)))
-            return Json::encode(['error' => 8003, 'success' => false, 'status' => false, 'message' => '上传组件文件异常 !!']);
+        if ( !($imageFile = UploadedFile::getInstance($model, $attribute)) )
+            return Json::encode([ 'error' => '上传组件文件异常!' ]);
 
         // 验证后缀名
-        if (!static::UploadExt($ext, $imageFile->extension))
-            return Json::encode(['error' => 8003, 'success' => false, 'status' => false, 'message' => '上传格式有问题 !!']);
+        if ( !static::UploadExt($ext, $imageFile->extension) )
+            return Json::encode([ 'error' => '上传格式有问题!' ]);
 
         // 上传路径
-        $directory = Yii::getAlias('@backend/../frontend/web/temp') . DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR . $id . DIRECTORY_SEPARATOR;
+        $directory = Yii::getAlias('@backend/../frontend/web/temp') . DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR;
 
-        if (!is_dir($directory))
+        if ( !is_dir($directory) )
             FileHelper::createDirectory($directory);
 
         $fileName = self::getRandomString() . '.' . $imageFile->extension;
 
         $filePath = $directory . $fileName;
 
-        if ($imageFile->saveAs($filePath)) {
+        if ( $imageFile->saveAs($filePath) ) {
 
-            $path = Yii::getAlias('@web/../../frontend/web/temp') . DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR . $id . DIRECTORY_SEPARATOR . $fileName;
+            $path = Yii::getAlias('@web/../../frontend/web/temp') . DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR . $fileName;
 
             return Json::encode([
 
@@ -134,7 +139,7 @@ class UploadController extends BaseController
             ]);
         }
 
-        return Json::encode(['error' => 8003, 'success' => false, 'status' => false, 'message' => '上传失败 !!']);
+        return Json::encode([ 'error' => '上传失败!' ]);
     }
 
     /**
@@ -148,26 +153,26 @@ class UploadController extends BaseController
     public static function UploadExt($ext, $fileExt)
     {
 
-        if (empty($ext) || empty($fileExt))
+        if ( empty($ext) || empty($fileExt) )
             return false;
 
         $result = Assist::findByData();
 
-        if (empty($result))
+        if ( empty($result) )
             return true;
 
         switch ($ext) {
 
             case 'image':
 
-                if (empty($result['IMAGE_UPLOAD_TYPE']) || strpos($result['IMAGE_UPLOAD_TYPE'], $fileExt) === false) {
+                if ( empty($result[ 'IMAGE_UPLOAD_TYPE' ]) || strpos($result[ 'IMAGE_UPLOAD_TYPE' ], $fileExt) === false ) {
                     return false;
                 }
                 break;
 
             case 'file':
 
-                if (empty($result['FILE_UPLOAD_TYPE']) || strpos($result['FILE_UPLOAD_TYPE'], $fileExt) === false) {
+                if ( empty($result[ 'FILE_UPLOAD_TYPE' ]) || strpos($result[ 'FILE_UPLOAD_TYPE' ], $fileExt) === false ) {
                     return false;
                 }
                 break;
@@ -191,13 +196,13 @@ class UploadController extends BaseController
     public function actionImageDelete($name, $type)
     {
 
-        if (empty($name) || empty($type)) {
-            return Json::encode(['message' => '参数有误 !!']);
+        if ( empty($name) || empty($type) ) {
+            return Json::encode([ 'message' => '参数有误 !!' ]);
         }
 
-        $directory = Yii::getAlias('@frontend/web/temp/') . Yii::$app->user->identity->user_id . DIRECTORY_SEPARATOR . $type;
+        $directory = Yii::getAlias('@frontend/web/temp/') . DIRECTORY_SEPARATOR . $type;
 
-        if (is_file($directory . DIRECTORY_SEPARATOR . $name)) {
+        if ( is_file($directory . DIRECTORY_SEPARATOR . $name) ) {
             unlink($directory . DIRECTORY_SEPARATOR . $name);
         }
 
@@ -210,12 +215,12 @@ class UploadController extends BaseController
             $fileName = basename($file);
             $path = '/img/temp/' . $type . DIRECTORY_SEPARATOR . $fileName;
 
-            $output['files'][] = [
+            $output[ 'files' ][] = [
                 'name'         => $fileName,
                 'size'         => filesize($file),
                 'url'          => $path,
                 'thumbnailUrl' => $path,
-                'deleteUrl'    => Url::to(['upload/image-delete', 'name' => $fileName, 'type' => $type]),
+                'deleteUrl'    => Url::to([ 'upload/image-delete', 'name' => $fileName, 'type' => $type ]),
                 'deleteType'   => 'GET',
             ];
         }

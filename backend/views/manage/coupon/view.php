@@ -75,6 +75,22 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                     ],
                     [
+                        'attribute' => 'thumb',
+                        'format'    => 'html',
+                        'value'     => function ($model) {
+                            return '<img width="280" height="150" src="' . Yii::getAlias('@web/../../frontend/web/temp/coupon/') . $model->thumb . '" alt="' . $model->title . '" />';
+                        },
+                        'options'   => [ 'width' => 180 ],
+                    ],
+                    [
+                        'attribute' => 'images',
+                        'format'    => 'html',
+                        'value'     => function ($model) {
+                            return '<img width="520" height="350" src="' . Yii::getAlias('@web/../../frontend/web/temp/coupon/') . $model->images . '" alt="' . $model->title . '" />';
+                        },
+                        'options'   => [ 'width' => 180 ],
+                    ],
+                    [
                         'attribute' => 'created_at',
                         'value'     => function ($model) {
                             return date('Y - m -d , h:i', $model->created_at);

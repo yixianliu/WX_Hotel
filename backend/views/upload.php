@@ -14,15 +14,12 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use dosamigos\fileupload\FileUploadUI;
 
-if (empty($model) || empty($form))
+if ( empty($model) || empty($form) || Yii::$app->user->isGuest )
     exit(false);
 
-$attribute = empty($attribute) ? 'images' : $attribute;
+$attribute = empty($attribute) ? 'path' : $attribute;
 
 $id = empty($id) ? null : $id;
-
-// 用户 Id
-$user_id = empty($user_id) ? Yii::$app->user->identity->username : $user_id;
 
 // 上传文件后缀名
 $uploadType = empty($uploadType) ? 'image' : $uploadType;
@@ -34,13 +31,13 @@ $num = empty($num) ? 5 : $num;
 $images = [];
 
 // 取出图片,存储为数组
-if (!empty($model->$attribute)) {
+if ( !empty($model->$attribute) ) {
 
     $imagesArray = explode(',', $model->$attribute);
 
     foreach ($imagesArray as $value) {
 
-        if (empty($value))
+        if ( empty($value) )
             break;
 
         $images[] = $value;
@@ -52,14 +49,14 @@ $text = empty($text) ? '没有描述' : $text;
 // 图片路径
 $imgPathArray = explode('/', Yii::$app->controller->id);
 
-$imgPath = Url::to('@web/../../frontend/web/temp/') . explode('/', Yii::$app->controller->id)[0] . '/' . $id;
+$imgPath = Url::to('@web/../../frontend/web/temp/') . $imgPathArray[ 0 ];
 
 ?>
 
 <style type="text/css">
     .preview img {
-        width: 120px;
-        height: 120px;
+        width: 180px;
+        height: 100px;
     }
 </style>
 
@@ -67,13 +64,13 @@ $imgPath = Url::to('@web/../../frontend/web/temp/') . explode('/', Yii::$app->co
 
 <div class="form-group">
 
-    <label class="control-label" for="#"><?= $text ?></label>
+    <label><?= $text ?></label>
 
     <?=
     FileUploadUI::widget([
         'model'         => $model,
         'attribute'     => $attribute,
-        'url'           => ['upload/image-upload', 'id' => $id, 'type' => explode('/', Yii::$app->controller->id)[0], 'attribute' => $attribute, 'ext' => $uploadType],
+        'url'           => [ 'upload/uploads', 'type' => $imgPathArray[ 0 ], 'attribute' => $attribute, 'ext' => $uploadType ],
         'gallery'       => false,
         'fieldOptions'  => [
             'accept' => $uploadType . '/*',
@@ -89,56 +86,48 @@ $imgPath = Url::to('@web/../../frontend/web/temp/') . explode('/', Yii::$app->co
 
             'fileuploaddone' => 'function(e, data) {
             
-                                console.log(e);
-                                console.log(data);
-                                
-                                var ImagesContent = $("#ImagesContent_' . $attribute . '");
-                                
-                                var num = ' . $num . ';
-                                
-                                var html = "";
-                                 
-                                if (num > 1) {
-                                
-                                    $.each(data.result.files, function (index, file) {
-                                        html += file.name + \',\';
-                                    });
-                                    
-                                    html += ImagesContent.val();
-                                    
-                                } else {
-                                    html = data.result.files[0].name;
-                                }
-                                
-                                ImagesContent.attr("value", html);
-                                
-                                if (data.result.error != "" && data.result.files == "") {
-                                    $("#UploadMessage").show().append(data.result.message);
-                                }
-                                
-                            }',
+                console.log(e);
+                console.log(data);
+            
+                var ImagesContent = $("#ImagesContent_' . $attribute . '");
+                
+                var num = ' . $num . ';
+                
+                var html = "";
+            
+                if (data.result.error == "" || data.result.error == null) {
+                
+                    if (num > 1) {
+                    
+                        $.each(data.result.files, function (index, file) {
+                            html += file.name + \',\';
+                        });
+                        
+                        html += ImagesContent.val();
+                        
+                    } else {
+                        html = data.result.files[0].name;
+                    }
+                    
+                    ImagesContent.attr("value", html);
+                }
+                 
+                if (data.result.error != "") {
+                    $(".error").show().append(data.result.error);
+                }
+                
+            }',
 
             'fileuploadfail' => 'function(e, data) {
-            
-                                console.log(e);
-                                console.log(data);
-                      
-                            }',
+                
+                console.log(e);
+                console.log(data);
+            }',
         ],
     ]);
     ?>
 
-    <?= $form->field($model, $attribute)->hiddenInput(['id' => 'ImagesContent_' . $attribute])->label(false) ?>
-
-</div>
-
-<div class="row">
-
-    <div class="col-md-12">
-        <h5>
-            <div id='UploadMessage' style='display: none;'><span class="label label-danger">错误</span>&nbsp;&nbsp;</div>
-        </h5>
-    </div>
+    <?= $form->field($model, $attribute)->textInput([ 'id' => 'ImagesContent_' . $attribute, 'style' => 'display:none;' ])->label(false) ?>
 
 </div>
 
@@ -146,19 +135,19 @@ $imgPath = Url::to('@web/../../frontend/web/temp/') . explode('/', Yii::$app->co
 
 <div class="form-group">
 
-    <?php if (!empty($images) && is_array($images)): ?>
+    <?php if ( !empty($images) && is_array($images) ): ?>
 
         <div class="row">
 
             <?php foreach ($images as $value): ?>
 
-                <div class="col-md-1">
+                <div class="col-md-3">
 
-                    <?= Html::img($imgPath . '/' . $value, ['width' => 120, 'height' => 120]); ?>
+                    <?= Html::img($imgPath . '/' . $value, [ 'width' => 350, 'height' => 150 ]); ?>
 
                     <div class="portfolio-info" style="margin-top: 10px;margin-bottom: 10px;">
 
-                        <?php if (Yii::$app->controller->id != 'sp-offer'): ?>
+                        <?php if ( Yii::$app->controller->id != 'sp-offer' ): ?>
                             <a class="btn btn-danger DeleteImg" data-type="GET" title="删除这个文件 : <?= $value ?>">
                                 <input class="DeleteImgHidden" type="hidden" value="<?= $value ?>"/><i class="glyphicon glyphicon-trash"></i> <font>删除</font>
                             </a>
@@ -204,6 +193,14 @@ $imgPath = Url::to('@web/../../frontend/web/temp/') . explode('/', Yii::$app->co
 
         </script>
 
+    <?php else: ?>
+
+        <div class="row">
+            <div class="col-md-12"><h3>暂无任何上传的内容 !!</h3></div>
+        </div>
+
     <?php endif ?>
+
+    <hr/>
 
 </div>
