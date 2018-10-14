@@ -79,10 +79,10 @@ class Conf extends ActiveRecord
     public static function findByAll($status = null, $language = 'cn')
     {
 
-        $array = !empty( $status ) ? [ 'is_using' => $status ] : [ '!=', 'is_using', 'null' ];
+        $array = !empty($status) ? [ 'is_using' => $status ] : [ '!=', 'is_using', 'null' ];
 
-        return static::find()->where( $array )
-            ->andWhere( [ 'is_language' => $language ] )
+        return static::find()->where($array)
+            ->andWhere([ 'is_language' => $language ])
             ->asArray()
             ->all();
     }
@@ -96,7 +96,7 @@ class Conf extends ActiveRecord
      */
     public static function findByOne($id = 1)
     {
-        return static::findOne( [ 'id' => $id ] );
+        return static::findOne([ 'id' => $id ]);
     }
 
 }
