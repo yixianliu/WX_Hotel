@@ -61,7 +61,7 @@ return [
             // 是否或略脚本名index.php
             'showScriptName'      => false,
             // 是否开启严格解析路由
-            'enableStrictParsing' => true,
+            'enableStrictParsing' => false,
             'suffix'              => '.html',
             'rules'               => [
 

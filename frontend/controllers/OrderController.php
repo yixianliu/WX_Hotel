@@ -8,7 +8,6 @@ use common\models\Hotels;
 use common\models\Rooms;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use linslin\yii2\curl;
 
 /**
@@ -17,23 +16,34 @@ use linslin\yii2\curl;
 class OrderController extends BaseController
 {
 
-    private static $curlUrl = null;
+    private static $curlUrl = 'http://www.yxlcms.com:7777/Wx_Platform/';
 
     /**
      * {@inheritdoc}
      */
     public function behaviors()
     {
+
         return [
 
-            'verbs' => [
-                'class'   => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
 
+            'verbs' => [
+                'class'   => \yii\filters\VerbFilter::className(),
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
         ];
+
     }
 
     /**
@@ -42,13 +52,13 @@ class OrderController extends BaseController
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
+        $dataProvider = new ActiveDataProvider( [
             'query' => Order::find(),
-        ]);
+        ] );
 
-        return $this->render('index', [
+        return $this->render( 'index', [
             'dataProvider' => $dataProvider,
-        ]);
+        ] );
     }
 
     /**
@@ -61,9 +71,9 @@ class OrderController extends BaseController
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return $this->render( 'view', [
+            'model' => $this->findModel( $id ),
+        ] );
     }
 
     /**
@@ -76,16 +86,16 @@ class OrderController extends BaseController
         $model = new Order();
 
         // 房间
-        $roomModel = Rooms::findOne(['id' => Yii::$app->request->get('id', null)]);
+        $roomModel = Rooms::findOne( ['id' => Yii::$app->request->get( 'id', null )] );
 
         // 酒店
-        $hotelModel = Hotels::findOne(['hotel_id' => Yii::$app->request->get('hid', null)]);
+        $hotelModel = Hotels::findOne( ['hotel_id' => Yii::$app->request->get( 'hid', null )] );
 
-        if ( empty($roomModel) || empty($hotelModel) ) {
-            Yii::$app->session->setFlash('error', '模型产生异常!');
+        if (empty( $roomModel ) || empty( $hotelModel )) {
+            Yii::$app->session->setFlash( 'error', '模型产生异常!' );
         }
 
-        if ( $model->load(Yii::$app->request->post()) ) {
+        if ($model->load( Yii::$app->request->post() )) {
 
             $model->title = $roomModel->title . ' + ' . Yii::$app->user->identity->user_id . ' + ' . self::getRandomString();
             $model->room_id = $roomModel->room_id;
@@ -96,37 +106,42 @@ class OrderController extends BaseController
 
             $transaction1 = Yii::$app->db->beginTransaction();
 
-            if ( !$model->save() ) {
-
+            // 保存订单出错
+            if (!$model->save()) {
                 $transaction1->rollBack();
-                Yii::$app->session->setFlash('error', '数据异常!');
-
-            } else {
-
-                //Init curl
-                $curl = new curl\Curl();
-
-                // Post
-                $response = $curl->setOption(CURLOPT_POSTFIELDS, http_build_query(['order' => $model->toArray()]))->post(static::$curlUrl);
-
-                if ( !$response ) {
-                    $transaction1->rollBack();
-                    Yii::$app->session->setFlash('error', '订单服务器异常!');
-                } // 成功
-                else {
-                    $transaction1->commit();
-                    return $this->redirect(['view', 'id' => $model->id, 'response' => $response]);
-                }
-
+                Yii::$app->session->setFlash( 'error', '数据异常!' );
+                return $this->redirect( ['order/create', 'hid' => Yii::$app->request->get( 'hid', null ), 'id' => Yii::$app->request->get( 'id', null )] );
             }
 
+            // Init curl
+            $curl = new curl\Curl();
+
+            $array = [
+                'order' => $model->toArray(),
+                'type'  => 'hotel',
+            ];
+
+            // Post
+            $response = $curl->setOption( CURLOPT_POSTFIELDS, http_build_query( $array ) )->post( static::$curlUrl );
+
+            if (!$response) {
+                $transaction1->rollBack();
+                Yii::$app->session->setFlash( 'error', '订单服务器异常!' );
+                return $this->redirect( ['order/create', 'hid' => Yii::$app->request->get( 'hid', null ), 'id' => Yii::$app->request->get( 'id', null )] );
+            }
+
+            $transaction1->commit();
+
+            return $this->redirect( ['view', 'id' => $model->id, 'response' => $response] );
         }
 
-        return $this->render('create', [
+        $model->order_id = self::getRandomString();
+
+        return $this->render( 'create', [
             'model'      => $model,
             'hotelModel' => $hotelModel,
             'roomModel'  => $roomModel,
-        ]);
+        ] );
     }
 
     /**
@@ -140,15 +155,15 @@ class OrderController extends BaseController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel( $id );
 
-        if ( $model->load(Yii::$app->request->post()) && $model->save() ) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load( Yii::$app->request->post() ) && $model->save()) {
+            return $this->redirect( ['view', 'id' => $model->id] );
         }
 
-        return $this->render('update', [
+        return $this->render( 'update', [
             'model' => $model,
-        ]);
+        ] );
     }
 
     /**
@@ -162,9 +177,9 @@ class OrderController extends BaseController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel( $id )->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect( ['index'] );
     }
 
     /**
@@ -178,10 +193,10 @@ class OrderController extends BaseController
      */
     protected function findModel($id)
     {
-        if ( ($model = Order::findOne($id)) !== null ) {
+        if (($model = Order::findOne( $id )) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException( 'The requested page does not exist.' );
     }
 }

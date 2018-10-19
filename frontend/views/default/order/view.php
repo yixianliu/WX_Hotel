@@ -12,21 +12,21 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode( $this->title ) ?></h1>
 
     <p>
-        <?= Html::a('更新', ['更新', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('删除', ['删除', 'id' => $model->id], [
+        <?= Html::a( '更新', ['更新', 'id' => $model->id], ['class' => 'btn btn-primary'] ) ?>
+        <?= Html::a( '删除', ['删除', 'id' => $model->id], [
             'class' => 'btn btn-danger',
-            'data' => [
+            'data'  => [
                 'confirm' => '是否删除这条记录?',
-                'method' => 'post',
+                'method'  => 'post',
             ],
-        ]) ?>
+        ] ) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
+    <?= DetailView::widget( [
+        'model'      => $model,
         'attributes' => [
             'hotel_id',
             'room_id',
@@ -49,6 +49,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at',
             'updated_at',
         ],
-    ]) ?>
+    ] ) ?>
 
 </div>

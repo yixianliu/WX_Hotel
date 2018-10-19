@@ -50,7 +50,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'discount',
                     'introduction',
                     'keywords',
-                    'thumb',
+                    [
+                        'attribute' => 'thumb',
+                        'format'    => 'html',
+                        'value'     => function ($model) {
+                            return '<img width="280" height="150" src="' . Yii::getAlias('@web/../../frontend/web/temp/rooms/') . $model->thumb . '" alt="' . $model->title . '" />';
+                        },
+                        'options'   => [ 'width' => 180 ],
+                    ],
                     'images',
                     'is_promote',
                     'is_comments',

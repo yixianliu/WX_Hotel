@@ -45,13 +45,13 @@ class OrderController extends BaseController
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
+        $dataProvider = new ActiveDataProvider( [
             'query' => Order::find(),
-        ]);
+        ] );
 
-        return $this->render('index', [
+        return $this->render( 'index', [
             'dataProvider' => $dataProvider,
-        ]);
+        ] );
     }
 
     /**
@@ -64,9 +64,9 @@ class OrderController extends BaseController
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return $this->render( 'view', [
+            'model' => $this->findModel( $id ),
+        ] );
     }
 
     /**
@@ -79,13 +79,13 @@ class OrderController extends BaseController
 
         $model = new Order();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load( Yii::$app->request->post() ) && $model->save()) {
+            return $this->redirect( ['view', 'id' => $model->id] );
         }
 
-        return $this->render('create', [
+        return $this->render( 'create', [
             'model' => $model,
-        ]);
+        ] );
     }
 
     /**
@@ -99,15 +99,15 @@ class OrderController extends BaseController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel( $id );
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load( Yii::$app->request->post() ) && $model->save()) {
+            return $this->redirect( ['view', 'id' => $model->id] );
         }
 
-        return $this->render('update', [
+        return $this->render( 'update', [
             'model' => $model,
-        ]);
+        ] );
     }
 
     /**
@@ -121,9 +121,9 @@ class OrderController extends BaseController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel( $id )->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect( ['index'] );
     }
 
     /**
@@ -137,10 +137,10 @@ class OrderController extends BaseController
      */
     protected function findModel($id)
     {
-        if (($model = Order::findOne($id)) !== null) {
+        if (($model = Order::findOne( $id )) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException( 'The requested page does not exist.' );
     }
 }

@@ -40,6 +40,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'options' => ['width' => 70],
                     ],
                     [
+                        'attribute' => 'thumb',
+                        'format'    => 'html',
+                        'value'     => function ($model) {
+                            return '<img width="280" height="150" src="' . Yii::getAlias('@web/../../frontend/web/temp/rooms/') . $model->thumb . '" alt="' . $model->title . '" />';
+                        },
+                        'options'   => [ 'width' => 180 ],
+                    ],
+                    [
                         'attribute' => 'hotel_id',
                         'value'     => function ($model) {
                             $data = \common\models\Hotels::findOne(['hotel_id' => $model->hotel_id]);

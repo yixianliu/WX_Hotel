@@ -53,17 +53,18 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['content', 'pay_type', 'check_in', 'check_out', 'checkin_men_num', 'checkin_men_name', 'checkin_men_idcard'], 'required'],
+            [['pay_type', 'check_in', 'check_out', 'checkin_men_name', 'checkin_men_idcard'], 'required'],
             [['price', 'num', 'place_order', 'pay_order', 'checkin_men_num'], 'integer'],
-            [['hotel_id', 'room_id', 'user_id', 'content', 'pay_type', 'c_key', 'check_in', 'check_out', 'is_using', 'checkin_men_name', 'checkin_men_idcard'], 'string'],
+            [['hotel_id', 'order_id', 'room_id', 'user_id', 'content', 'pay_type', 'c_key', 'check_in', 'check_out', 'is_using', 'checkin_men_name', 'checkin_men_idcard'], 'string'],
             [['hotel_id', 'room_id', 'user_id', 'c_key', 'check_in', 'check_out', 'username'], 'string', 'max' => 85],
             [['checkin_men_name'], 'string', 'max' => 10],
             [['checkin_men_idcard'], 'string', 'max' => 32],
             [['path'], 'string', 'max' => 255],
             [['title'], 'string', 'max' => 125],
 
+            [['checkin_men_num',], 'default', 'value' => 1],
             [['is_using',], 'default', 'value' => 'Off'],
-            [['title',], 'default', 'value' => null],
+            [['title', 'content',], 'default', 'value' => null],
         ];
     }
 
@@ -73,6 +74,7 @@ class Order extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'order_id'           => '订单编号',
             'hotel_id'           => '所属酒店',
             'room_id'            => '房间',
             'user_id'            => '用户',
@@ -101,7 +103,7 @@ class Order extends \yii\db\ActiveRecord
      */
     public function getHotels()
     {
-        return $this->hasOne(Hotels::className(), ['hotel_id' => 'hotel_id']);
+        return $this->hasOne( Hotels::className(), ['hotel_id' => 'hotel_id'] );
     }
 
     /**
@@ -109,7 +111,7 @@ class Order extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['user_id' => 'user_id']);
+        return $this->hasOne( User::className(), ['user_id' => 'user_id'] );
     }
 
     /**
@@ -117,7 +119,7 @@ class Order extends \yii\db\ActiveRecord
      */
     public function getRooms()
     {
-        return $this->hasOne(Rooms::className(), ['room_id' => 'room_id']);
+        return $this->hasOne( Rooms::className(), ['room_id' => 'room_id'] );
     }
 
 }

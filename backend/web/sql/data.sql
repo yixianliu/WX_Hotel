@@ -171,6 +171,7 @@ VALUES
 
   (NULL, 'AuthCoupon1', 1, 'urls', '/coupon/index', 'R15', NULL, 'AuditA8', '卡卷列表', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthCoupon2', 2, 'urls', '/coupon/create', 'R15', NULL, 'AuditA8', '添加卡卷', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthCoupon3', 3, 'urls', '/rooms-coupon/create', 'R15', NULL, 'AuditA8', '房间关联优惠卷', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'AuthOrder1', 1, 'urls', '/order/index', 'R15', NULL, 'AOrder7', '订单列表', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthOrder2', 2, 'urls', '/order/statistics', 'R15', NULL, 'AOrder7', '订单统计', NULL, 'On', 'On', #TIME#, #TIME#),

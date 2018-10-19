@@ -29,9 +29,7 @@ class RelevanceRoomsCoupon extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['room_ide', 'coupon_key'], 'required'],
-            [['created_at', 'updated_at'], 'integer'],
-            [['user_id', 'coupon_key'], 'string', 'max' => 55],
+            [['user_id', 'room_id', 'coupon_key'], 'required'],
         ];
     }
 
@@ -41,18 +39,24 @@ class RelevanceRoomsCoupon extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'room_id'    => '房间关键KEY',
-            'coupon_key' => '优惠卷关键KEY',
+            'room_id'    => '房间关键 KEY',
+            'coupon_key' => '优惠卷关键 KEY',
             'use_up'     => '消费了多少张优惠卷',
             'created_at' => '添加数据时间',
             'updated_at' => '更新数据时间',
         ];
     }
 
-    // 菜单模型
+    // 房间模型
     public function getRooms()
     {
-        return $this->hasOne(MenuModel::className(), ['room_id' => 'room_id']);
+        return $this->hasOne( MenuModel::className(), ['room_id' => 'room_id'] );
+    }
+
+    // 房间模型
+    public function getCoupon()
+    {
+        return $this->hasOne( Coupon::className(), ['coupon_key' => 'coupon_key'] );
     }
 
 }

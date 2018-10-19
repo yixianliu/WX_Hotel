@@ -11,7 +11,6 @@ namespace frontend\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use frontend\models\SignupForm;
 use frontend\models\LoginForm;
@@ -28,6 +27,7 @@ class MemberController extends Controller
     public function behaviors()
     {
         return [
+
             'access' => [
                 'class' => AccessControl::className(),
                 'only'  => ['logout', 'reg'],
@@ -44,6 +44,7 @@ class MemberController extends Controller
                     ],
                 ],
             ],
+
             'verbs'  => [
                 'class'   => VerbFilter::className(),
                 'actions' => [
@@ -79,21 +80,21 @@ class MemberController extends Controller
     public function actionLogin()
     {
 
-        if ( !Yii::$app->user->isGuest ) {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
 
-        if ( $model->load(Yii::$app->request->post()) && $model->login() ) {
+        if ($model->load( Yii::$app->request->post() ) && $model->login()) {
             return $this->goBack();
         }
 
         $model->password = '';
 
-        return $this->render('../center/login', [
+        return $this->render( '../center/login', [
             'model' => $model,
-        ]);
+        ] );
     }
 
     /**
@@ -117,18 +118,26 @@ class MemberController extends Controller
 
         $model = new SignupForm();
 
-        if ( $model->load(Yii::$app->request->post()) ) {
+        if ($model->load( Yii::$app->request->post() )) {
 
-            if ( $user = $model->signup() ) {
-                if ( Yii::$app->getUser()->login($user) ) {
-                    return $this->goHome();
-                }
+            if (!($user = $model->signup())) {
+                Yii::$app->getSession()->setFlash( 'error', '注册失败,请检查!' );
+            } else if (!Yii::$app->getUser()->login( $user )) {
+                Yii::$app->getSession()->setFlash( 'error', '系统无法记录!' );
+            } else {
+                return $this->goHome();
             }
+
         }
 
-        return $this->render('../center/reg', [
+        return $this->render( '../center/reg', [
             'model' => $model,
-        ]);
+        ] );
+    }
+
+    public function actionReset()
+    {
+
     }
 
 }

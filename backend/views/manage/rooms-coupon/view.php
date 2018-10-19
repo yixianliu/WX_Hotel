@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Order */
+/* @var $model common\models\RelevanceRoomsCoupon */
 
-$this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => '订单列表', 'url' => ['index']];
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => '房间关联优惠卷', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="order-view">
+<div class="relevance-rooms-coupon-view">
 
     <h1><?= Html::encode( $this->title ) ?></h1>
 
@@ -23,32 +23,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method'  => 'post',
             ],
         ] ) ?>
-        <?= Html::a( '返回列表', ['index'], ['class' => 'btn btn-success'] ) ?>
     </p>
 
-    <?= DetailView::widget( [
+    <?=
+    DetailView::widget( [
         'model'      => $model,
         'attributes' => [
-            'hotel_id',
+            'coupon_key',
             'room_id',
-            'user_id',
-            'c_key',
-            'price',
-            'title',
-            'content:ntext',
-            'keywords',
-            'username',
-            'path',
-            'num',
-            'check_in',
-            'check_out',
-            'pay_type',
-            'is_using',
-            'place_order',
-            'pay_order',
+            'use_up',
             'created_at',
             'updated_at',
         ],
-    ] ) ?>
+    ] )
+    ?>
 
 </div>

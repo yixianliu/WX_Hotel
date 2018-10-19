@@ -60,13 +60,24 @@ return [
             'errorAction' => 'site/error',
         ],
 
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName'  => true,
-            "rules"           => [
+        // Urls
+        'urlManager'  => [
+            // 是否开启美化效果
+            'enablePrettyUrl'     => true,
+            // 是否或略脚本名index.php
+            'showScriptName'      => false,
+            // 是否开启严格解析路由
+            'enableStrictParsing' => false,
+            'suffix'              => '.html',
+            'rules'               => [
 
                 // 默认
                 '' => 'center/index',
+
+                '<controller:\w+>/<action:\w+>-<id:\d+>'   => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>-<page:\d+>' => '<controller>/<action>',
+                "<controller:\w+>/<action:\w+>"            => "<controller>/<action>",
+
             ],
         ],
     ],

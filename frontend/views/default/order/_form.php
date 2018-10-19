@@ -18,15 +18,11 @@ use kartik\select2\Select2;
 
     <?= $form->field($model, 'room_id')->textInput(['maxlength' => true, 'value' => $roomModel->title, 'readonly' => 'readonly']) ?>
 
-    <?= $form->field($model, 'user_id')->textInput(['maxlength' => true, 'value' => Yii::$app->user->identity->username, 'readonly' => 'readonly']) ?>
+
 
     <?= $form->field($model, 'price')->textInput(['maxlength' => true, 'value' => $roomModel->price, 'readonly' => 'readonly']) ?>
 
-    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'checkin_men_num')->textInput(['']) ?>
-
-    <?= $form->field($model, 'checkin_men_name')->textInput(['']) ?>
+    <?= $form->field($model, 'checkin_men_name')->textInput(['autofocus' => true]) ?>
 
     <?= $form->field($model, 'checkin_men_idcard')->textInput(['']) ?>
 
@@ -63,6 +59,14 @@ use kartik\select2\Select2;
         ],
     ]);
     ?>
+
+    <?= $form->field($model, 'checkin_men_num')->textInput([]) ?>
+
+    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'order_id')->hiddenInput(['value' => $model->order_id])->label(false) ?>
+
+    <?= $form->field($model, 'user_id')->hiddenInput(['value' => Yii::$app->user->identity->username])->label(false) ?>
 
     <div class="form-group">
         <?= Html::submitButton('同意协议并且下单', ['class' => 'btn btn-success']) ?>

@@ -50,15 +50,15 @@ class RoomsClsController extends BaseController
         // 初始化
         $result = [];
 
-        $data = RoomsClassify::findByAll('On', RoomsClassify::$parentId);
+        $data = RoomsClassify::findByAll( 'On', RoomsClassify::$parentId );
 
         foreach ($data as $key => $value) {
-            $result[] = RoomsClassify::recursionData($value['c_key']);
+            $result[] = RoomsClassify::recursionData( $value['c_key'] );
         }
 
-        return $this->render('index', [
+        return $this->render( 'index', [
             'result' => $result,
-        ]);
+        ] );
     }
 
     /**
@@ -71,9 +71,9 @@ class RoomsClsController extends BaseController
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return $this->render( 'view', [
+            'model' => $this->findModel( $id ),
+        ] );
     }
 
     /**
@@ -87,18 +87,18 @@ class RoomsClsController extends BaseController
 
         $model->c_key = self::getRandomString();
 
-        $model->parent_id = Yii::$app->request->get('id', null);
+        $model->parent_id = Yii::$app->request->get( 'id', null );
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load( Yii::$app->request->post() ) && $model->save()) {
+            return $this->redirect( ['view', 'id' => $model->id] );
         }
 
-        $result['classify'] = RoomsClassify::getClsSelect('On');
+        $result['classify'] = RoomsClassify::getClsSelect( 'On' );
 
-        return $this->render('create', [
+        return $this->render( 'create', [
             'model'  => $model,
             'result' => $result,
-        ]);
+        ] );
     }
 
     /**
@@ -112,18 +112,18 @@ class RoomsClsController extends BaseController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel( $id );
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load( Yii::$app->request->post() ) && $model->save()) {
+            return $this->redirect( ['view', 'id' => $model->id] );
         }
 
-        $result['classify'] = RoomsClassify::getClsSelect('On');
+        $result['classify'] = RoomsClassify::getClsSelect( 'On' );
 
-        return $this->render('update', [
+        return $this->render( 'update', [
             'model'  => $model,
             'result' => $result,
-        ]);
+        ] );
     }
 
     /**
@@ -137,9 +137,9 @@ class RoomsClsController extends BaseController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel( $id )->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect( ['index'] );
     }
 
     /**
@@ -153,10 +153,10 @@ class RoomsClsController extends BaseController
      */
     protected function findModel($id)
     {
-        if (($model = RoomsClassify::findOne($id)) !== null) {
+        if (($model = RoomsClassify::findOne( $id )) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException( 'The requested page does not exist.' );
     }
 }
