@@ -16,7 +16,7 @@ use linslin\yii2\curl;
 class OrderController extends BaseController
 {
 
-    private static $curlUrl = 'http://www.yxlcms.com:7777/Wx_Platform/';
+    private static $curlUrl = 'http://www.yxlcms.com:7777/Wx_Platform/index.php/order-hotel/index';
 
     /**
      * {@inheritdoc}
@@ -117,8 +117,9 @@ class OrderController extends BaseController
             $curl = new curl\Curl();
 
             $array = [
-                'order' => $model->toArray(),
-                'type'  => 'hotel',
+                'order'     => $model->toArray(),
+                'type'      => 'hotel',
+                'type_name' => '微酒店',
             ];
 
             // Post
