@@ -125,13 +125,18 @@ class OrderController extends BaseController
             // Post
             $response = $curl->setOption( CURLOPT_POSTFIELDS, http_build_query( $array ) )->post( static::$curlUrl );
 
-            if (!$response) {
+            print_r($response);
+            exit();
+
+            if (!$curl->response['status']) {
                 $transaction1->rollBack();
                 Yii::$app->session->setFlash( 'error', '订单服务器异常!' );
                 return $this->redirect( ['order/create', 'hid' => Yii::$app->request->get( 'hid', null ), 'id' => Yii::$app->request->get( 'id', null )] );
             }
 
             $transaction1->commit();
+
+            Yii::$app->session->setFlash( 'success', '等待付款!' );
 
             return $this->redirect( ['view', 'id' => $model->id, 'response' => $response] );
         }
