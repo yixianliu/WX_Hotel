@@ -16,7 +16,7 @@ use linslin\yii2\curl;
 class OrderController extends BaseController
 {
 
-    private static $curlUrl = 'http://www.yxlcms.com:7777/Wx_Platform/index.php/order-hotel/index';
+    private static $curlUrl = 'http://www.yxlcms.com:7777/Wx_Platform/backend/web/index.php/order-hotel/index';
 
     /**
      * {@inheritdoc}
@@ -114,23 +114,45 @@ class OrderController extends BaseController
             }
 
             // Init curl
-            $curl = new curl\Curl();
+//            $curl = new curl\Curl();
 
             $array = [
-                'order'     => $model->toArray(),
                 'type'      => 'hotel',
                 'type_name' => '微酒店',
             ];
 
-            // Post
-            $response = $curl->setOption( CURLOPT_POSTFIELDS, http_build_query( $array ) )->post( static::$curlUrl );
+            $array = array_merge( $array, $model->toArray() );
 
-            print_r($response);
+            $curl = curl_init();
+
+            // 设置抓取的url
+            curl_setopt( $curl, CURLOPT_URL, static::$curlUrl );
+
+            // 设置头文件的信息作为数据流输出
+            curl_setopt( $curl, CURLOPT_HEADER, 1 );
+
+            // 设置获取的信息以文件流的形式返回，而不是直接输出。
+            curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+
+            // 设置post方式提交
+            curl_setopt( $curl, CURLOPT_POST, 1 );
+            curl_setopt( $curl, CURLOPT_POSTFIELDS, $array );
+
+            // 执行命令
+            $response = curl_exec( $curl );
+
+            echo $response;
             exit();
 
             if (!$curl->response['status']) {
                 $transaction1->rollBack();
-                Yii::$app->session->setFlash( 'error', '订单服务器异常!' );
+
+                if (empty( $response['msg'] )) {
+                    Yii::$app->session->setFlash( 'error', '订单服务器异常!' );
+                } else {
+                    Yii::$app->session->setFlash( 'error', $response['msg'] );
+                }
+
                 return $this->redirect( ['order/create', 'hid' => Yii::$app->request->get( 'hid', null ), 'id' => Yii::$app->request->get( 'id', null )] );
             }
 
