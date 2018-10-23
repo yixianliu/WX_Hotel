@@ -5,6 +5,7 @@
  * Date: 2018/8/27
  * Time: 16:33
  */
+
 namespace frontend\controllers;
 
 use Yii;
@@ -35,6 +36,6 @@ class CenterController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->render( 'index' );
     }
 }

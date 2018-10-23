@@ -107,14 +107,14 @@ class OrderController extends BaseController
             $transaction1 = Yii::$app->db->beginTransaction();
 
             // 保存订单出错
-            if (!$model->save()) {
-                $transaction1->rollBack();
-                Yii::$app->session->setFlash( 'error', '数据异常!' );
-                return $this->redirect( ['order/create', 'hid' => Yii::$app->request->get( 'hid', null ), 'id' => Yii::$app->request->get( 'id', null )] );
-            }
+//            if (!$model->save()) {
+//                $transaction1->rollBack();
+//                Yii::$app->session->setFlash( 'error', '数据异常!' );
+//                return $this->redirect( ['order/create', 'hid' => Yii::$app->request->get( 'hid', null ), 'id' => Yii::$app->request->get( 'id', null )] );
+//            }
 
             // Init curl
-//            $curl = new curl\Curl();
+            $curl = new curl\Curl();
 
             $array = [
                 'type'      => 'hotel',
@@ -123,28 +123,12 @@ class OrderController extends BaseController
 
             $array = array_merge( $array, $model->toArray() );
 
-            $curl = curl_init();
+            $response = $curl->setPostParams( $array )->setHeaders( ['Content-Type' => 'application/json', 'Content-Length' => strlen( json_encode( $array ) )] )->post( static::$curlUrl );
 
-            // 设置抓取的url
-            curl_setopt( $curl, CURLOPT_URL, static::$curlUrl );
-
-            // 设置头文件的信息作为数据流输出
-            curl_setopt( $curl, CURLOPT_HEADER, 1 );
-
-            // 设置获取的信息以文件流的形式返回，而不是直接输出。
-            curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
-
-            // 设置post方式提交
-            curl_setopt( $curl, CURLOPT_POST, 1 );
-            curl_setopt( $curl, CURLOPT_POSTFIELDS, $array );
-
-            // 执行命令
-            $response = curl_exec( $curl );
-
-            echo $response;
+            print_r( $curl );
             exit();
 
-            if (!$curl->response['status']) {
+            if (!$curl) {
                 $transaction1->rollBack();
 
                 if (empty( $response['msg'] )) {
