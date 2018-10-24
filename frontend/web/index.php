@@ -1,4 +1,9 @@
 <?php
+
+set_time_limit(0);
+
+date_default_timezone_set('PRC'); // 默认时区
+
 defined('YII_DEBUG') or define('YII_DEBUG', true);
 defined('YII_ENV') or define('YII_ENV', 'dev');
 

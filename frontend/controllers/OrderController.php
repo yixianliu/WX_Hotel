@@ -123,18 +123,19 @@ class OrderController extends BaseController
 
             $array = array_merge( $array, $model->toArray() );
 
-            $response = $curl->setPostParams( $array )->setHeaders( ['Content-Type' => 'application/json', 'Content-Length' => strlen( json_encode( $array ) )] )->post( static::$curlUrl );
+            $response = $curl->setPostParams( $array )
+                ->setHeaders( ['Content-Type' => 'application/json', 'Content-Length' => strlen( json_encode( $array ) )] )
+                ->setOption( CURLOPT_TIMEOUT, 60 )
+                ->post( static::$curlUrl );
 
-            print_r( $curl );
-            exit();
+            if (!empty( $curl->errorCode ) || !empty( $curl->errorText )) {
 
-            if (!$curl) {
                 $transaction1->rollBack();
 
-                if (empty( $response['msg'] )) {
+                if (empty( $curl->errorText )) {
                     Yii::$app->session->setFlash( 'error', '订单服务器异常!' );
                 } else {
-                    Yii::$app->session->setFlash( 'error', $response['msg'] );
+                    Yii::$app->session->setFlash( 'error', $curl->errorText . ' - ' . $curl->errorCode );
                 }
 
                 return $this->redirect( ['order/create', 'hid' => Yii::$app->request->get( 'hid', null ), 'id' => Yii::$app->request->get( 'id', null )] );
