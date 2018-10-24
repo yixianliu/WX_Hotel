@@ -107,11 +107,11 @@ class OrderController extends BaseController
             $transaction1 = Yii::$app->db->beginTransaction();
 
             // 保存订单出错
-//            if (!$model->save()) {
-//                $transaction1->rollBack();
-//                Yii::$app->session->setFlash( 'error', '数据异常!' );
-//                return $this->redirect( ['order/create', 'hid' => Yii::$app->request->get( 'hid', null ), 'id' => Yii::$app->request->get( 'id', null )] );
-//            }
+            if (!$model->save()) {
+                $transaction1->rollBack();
+                Yii::$app->session->setFlash( 'error', '数据异常!' );
+                return $this->redirect( ['order/create', 'hid' => Yii::$app->request->get( 'hid', null ), 'id' => Yii::$app->request->get( 'id', null )] );
+            }
 
             // Init curl
             $curl = new curl\Curl();
