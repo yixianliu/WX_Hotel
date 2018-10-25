@@ -16,7 +16,9 @@ use linslin\yii2\curl;
 class OrderController extends BaseController
 {
 
-    private static $curlUrl = 'http://www.yxlcms.com:7777/Wx_Platform/backend/web/index.php/order-hotel/index';
+    private static $curlUrl = 'http://www.yxlcms.com:7777/Wx_Platform/backend/web/index.php/order-hotel/index?id=1';
+
+    private static $targetUrl = 'http://www.yxlcms.com:7777/Wx_Platform/backend/web/index.php/order-hotel/view';
 
     /**
      * {@inheritdoc}
@@ -72,14 +74,16 @@ class OrderController extends BaseController
     public function actionView($id)
     {
         return $this->render( 'view', [
-            'model' => $this->findModel( $id ),
+            'model'     => $this->findModel( $id ),
+            'TargetUrl' => static::$targetUrl . '?csrf=' .  Yii::$app->request->get( 'csrf', null ),
         ] );
     }
 
     /**
-     * Creates a new Order model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * 添加订单
+     *
+     * @return string|\yii\web\Response
+     * @throws \yii\db\Exception
      */
     public function actionCreate()
     {
@@ -119,14 +123,12 @@ class OrderController extends BaseController
             $array = [
                 'type'      => 'hotel',
                 'type_name' => '微酒店',
+                'CsrfToken' => Yii::$app->request->csrfToken,
             ];
 
             $array = array_merge( $array, $model->toArray() );
 
-            $response = $curl->setPostParams( $array )
-                ->setHeaders( ['Content-Type' => 'application/json', 'Content-Length' => strlen( json_encode( $array ) )] )
-                ->setOption( CURLOPT_TIMEOUT, 60 )
-                ->post( static::$curlUrl );
+            $curl->setPostParams( $array )->setOption( CURLOPT_TIMEOUT, 60 )->post( static::$curlUrl );
 
             if (!empty( $curl->errorCode ) || !empty( $curl->errorText )) {
 
@@ -141,11 +143,18 @@ class OrderController extends BaseController
                 return $this->redirect( ['order/create', 'hid' => Yii::$app->request->get( 'hid', null ), 'id' => Yii::$app->request->get( 'id', null )] );
             }
 
+            $response = json_decode( $curl->response, true );
+
+            if (!empty( $response['status'] ) && $response['status'] == 'error') {
+                Yii::$app->session->setFlash( 'error', $response['msg'] );
+                return $this->redirect( ['order/create', 'hid' => Yii::$app->request->get( 'hid', null ), 'id' => Yii::$app->request->get( 'id', null )] );
+            }
+
             $transaction1->commit();
 
             Yii::$app->session->setFlash( 'success', '等待付款!' );
 
-            return $this->redirect( ['view', 'id' => $model->id, 'response' => $response] );
+            return $this->redirect( ['view', 'id' => $model->id, 'response' => $response, 'csrf' => $array['CsrfToken']] );
         }
 
         $model->order_id = self::getRandomString();

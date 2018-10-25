@@ -52,3 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ] ) ?>
 
 </div>
+
+<script>
+    window.open("<?= $TargetUrl ?>", "_blank");
+</script>
