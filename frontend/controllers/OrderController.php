@@ -73,9 +73,10 @@ class OrderController extends BaseController
      */
     public function actionView($id)
     {
+
         return $this->render( 'view', [
             'model'     => $this->findModel( $id ),
-            'TargetUrl' => static::$targetUrl . '?csrf=' .  Yii::$app->request->get( 'csrf', null ),
+            'TargetUrl' => static::$targetUrl . '?oid=' .  Yii::$app->request->get( 'oid', null ),
         ] );
     }
 
@@ -152,9 +153,9 @@ class OrderController extends BaseController
 
             $transaction1->commit();
 
-            Yii::$app->session->setFlash( 'success', '等待付款!' );
+            Yii::$app->session->setFlash( 'success', $response['msg'] );
 
-            return $this->redirect( ['view', 'id' => $model->id, 'response' => $response, 'csrf' => $array['CsrfToken']] );
+            return $this->redirect( ['view', 'id' => $model->id, 'response' => $response, 'oid' => $array['order_id']] );
         }
 
         $model->order_id = self::getRandomString();
