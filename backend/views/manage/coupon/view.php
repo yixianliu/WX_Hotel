@@ -75,14 +75,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                     ],
                     [
-                        'attribute' => 'thumb',
-                        'format'    => 'html',
-                        'value'     => function ($model) {
-                            return '<img width="280" height="150" src="' . Yii::getAlias('@web/../../frontend/web/temp/coupon/') . $model->thumb . '" alt="' . $model->title . '" />';
-                        },
-                        'options'   => [ 'width' => 180 ],
-                    ],
-                    [
                         'attribute' => 'images',
                         'format'    => 'html',
                         'value'     => function ($model) {

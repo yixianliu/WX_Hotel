@@ -49,7 +49,7 @@ $this->beginPage();
 
     <div class="page-container">
 
-        <div class="page-sidebar page-sidebar-fixed scroll">
+        <div class="page-sidebar page-sidebar-fixed">
 
             <?= \common\widgets\iMenu\MenuAdmin::widget( [ 'config' => [ 'A3' ] ] ); ?>
 

@@ -38,10 +38,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         'options' => ['width' => 70],
                     ],
                     [
-                        'attribute' => 'thumb',
+                        'attribute' => 'images',
                         'format'    => 'html',
                         'value'     => function ($model) {
-                            return '<img width="280" height="150" src="' . Yii::getAlias( '@web/../../frontend/web/temp/coupon/' ) . $model->thumb . '" alt="' . $model->title . '" />';
+
+                            if (!file_exists(Yii::getAlias( '@web/../../frontend/web/temp/coupon/' ) . $model->images)) {
+                                $images = Yii::getAlias( '@web/../../frontend/web/img/not.gif' );
+                            } else {
+                                $images = Yii::getAlias( '@web/../../frontend/web/temp/coupon/' ) . $model->images;
+                            }
+
+                            return '<img width="280" height="150" src="' . $images . '" alt="' . $model->title . '" />';
                         },
                         'options'   => ['width' => 180],
                     ],

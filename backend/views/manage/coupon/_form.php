@@ -67,8 +67,6 @@ use phpnt\ICheck\ICheck;
                 ] ] )
             ?>
 
-            <?= Yii::$app->view->renderFile( '@app/views/upload.php', [ 'model' => $model, 'id' => $model->coupon_key, 'num' => 1, 'attribute' => 'thumb', 'text' => '上传缩略图', 'form' => $form ] ); ?>
-
             <?= Yii::$app->view->renderFile( '@app/views/upload.php', [ 'model' => $model, 'id' => $model->coupon_key, 'num' => 1, 'attribute' => 'images', 'text' => '上传图片', 'form' => $form ] ); ?>
 
             <div class="form-group">

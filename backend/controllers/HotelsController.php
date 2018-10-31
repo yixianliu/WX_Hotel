@@ -25,7 +25,7 @@ class HotelsController extends BaseController
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => [ '@' ],
                     ],
                 ],
             ],
@@ -33,7 +33,7 @@ class HotelsController extends BaseController
             'verbs' => [
                 'class'   => \yii\filters\VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => [ 'POST' ],
                 ],
             ],
         ];
@@ -47,12 +47,12 @@ class HotelsController extends BaseController
     {
 
         $searchModel = new HotelsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search( Yii::$app->request->queryParams );
 
-        return $this->render('index', [
+        return $this->render( 'index', [
             'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
+        ] );
     }
 
     /**
@@ -65,9 +65,9 @@ class HotelsController extends BaseController
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return $this->render( 'view', [
+            'model' => $this->findModel( $id ),
+        ] );
     }
 
     /**
@@ -81,15 +81,15 @@ class HotelsController extends BaseController
 
         $model->user_id = Yii::$app->user->identity->username;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load( Yii::$app->request->post() ) && $model->save()) {
+            return $this->redirect( [ 'view', 'id' => $model->id ] );
         }
 
         $model->hotel_id = self::getRandomString();
 
-        return $this->render('create', [
+        return $this->render( 'create', [
             'model' => $model,
-        ]);
+        ] );
     }
 
     /**
@@ -103,15 +103,15 @@ class HotelsController extends BaseController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel( $id );
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load( Yii::$app->request->post() ) && $model->save()) {
+            return $this->redirect( [ 'view', 'id' => $model->id ] );
         }
 
-        return $this->render('update', [
+        return $this->render( 'update', [
             'model' => $model,
-        ]);
+        ] );
     }
 
     /**
@@ -125,9 +125,9 @@ class HotelsController extends BaseController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel( $id )->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect( [ 'index' ] );
     }
 
     /**
@@ -141,10 +141,10 @@ class HotelsController extends BaseController
      */
     protected function findModel($id)
     {
-        if (($model = Hotels::findOne($id)) !== null) {
+        if (($model = Hotels::findOne( $id )) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException( 'The requested page does not exist.' );
     }
 }

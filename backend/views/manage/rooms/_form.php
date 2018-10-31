@@ -135,7 +135,7 @@ use phpnt\ICheck\ICheck;
 
                         <?= $form->field( $model, 'introduction' )->textarea( [ 'maxlength' => true, 'rows' => 6 ] ) ?>
 
-                        <?= $form->field( $model, 'keywords' )->textInput( [ 'maxlength' => true ] ) ?>
+                        <?= $form->field( $model, 'keywords' )->textInput( [ 'maxlength' => true, 'class' => 'tagsinput' ] ) ?>
 
                         <div class="form-group">
                             <div class="alert alert-info" role="alert">
@@ -201,3 +201,4 @@ use phpnt\ICheck\ICheck;
     </div>
 </div>
 
+<?php $this->registerJsFile('../themes/js/plugins/tagsinput/jquery.tagsinput.min.js');?>
