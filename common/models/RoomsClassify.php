@@ -49,16 +49,16 @@ class RoomsClassify extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'parent_id'], 'required'],
-            [['sort_id', 'created_at', 'updated_at'], 'integer'],
-            [['description', 'is_using'], 'string'],
-            [['c_key', 'keywords', 'json_data', 'parent_id'], 'string', 'max' => 55],
-            [['name'], 'string', 'max' => 85],
-            [['c_key'], 'unique'],
-            [['name'], 'unique'],
+            [ [ 'name', 'parent_id' ], 'required' ],
+            [ [ 'sort_id', 'created_at', 'updated_at' ], 'integer' ],
+            [ [ 'description', 'is_using' ], 'string' ],
+            [ [ 'c_key', 'keywords', 'json_data', 'parent_id' ], 'string', 'max' => 55 ],
+            [ [ 'name' ], 'string', 'max' => 85 ],
+            [ [ 'c_key' ], 'unique' ],
+            [ [ 'name' ], 'unique' ],
 
-            [['is_using'], 'default', 'value' => 'On'],
-            [['sort_id'], 'default', 'value' => 1],
+            [ [ 'is_using' ], 'default', 'value' => 'On' ],
+            [ [ 'sort_id' ], 'default', 'value' => 1 ],
         ];
     }
 
@@ -85,11 +85,15 @@ class RoomsClassify extends \yii\db\ActiveRecord
     {
 
         // 审核状态
-        $array = !empty($status) ? ['is_using' => $status] : ['!=', 'is_using', ''];
+        $array = !empty( $status ) ? [ 'is_using' => $status ] : [ '!=', 'is_using', '' ];
 
-        $pid = empty($pid) ? static::$parentId : $pid;
+        $pid = empty( $pid ) ? static::$parentId : $pid;
 
-        return static::find()->where($array)->andWhere(['parent_id' => $pid])
+        return static::find()->where( $array )->andWhere( [ 'parent_id' => $pid ] )
+            ->orderBy( [
+                'sort_id' => SORT_DESC,
+                'c_key'   => SORT_DESC,
+            ] )
             ->asArray()
             ->all();
     }
@@ -103,7 +107,7 @@ class RoomsClassify extends \yii\db\ActiveRecord
      */
     public static function findWhereClassify($id)
     {
-        return static::find()->where(['is_using' => 'On', 'c_key' => $id])->one();
+        return static::find()->where( [ 'is_using' => 'On', 'c_key' => $id ] )->one();
     }
 
     /**
@@ -117,18 +121,18 @@ class RoomsClassify extends \yii\db\ActiveRecord
     public static function recursionData($pid)
     {
 
-        if (empty($pid))
+        if (empty( $pid ))
             return;
 
-        $result = static::findWhereClassify($pid);
+        $result = static::findWhereClassify( $pid );
 
-        if (empty($result)) {
+        if (empty( $result )) {
             return $result;
         }
 
-        $data = static::findByAll(null, $pid);
+        $data = static::findByAll( null, $pid );
 
-        if (empty($data)) {
+        if (empty( $data )) {
             return $result;
         }
 
@@ -136,7 +140,7 @@ class RoomsClassify extends \yii\db\ActiveRecord
         $result = $result->toArray();
 
         foreach ($data as $key => $value) {
-            $result['child'][] = static::recursionData($value['c_key']);
+            $result['child'][] = static::recursionData( $value['c_key'] );
         }
 
         return $result;
@@ -156,21 +160,21 @@ class RoomsClassify extends \yii\db\ActiveRecord
         $result = [];
 
         // 产品分类
-        $dataClassify = static::findByAll('On', static::$parentId);
+        $dataClassify = static::findByAll( 'On', static::$parentId );
 
         if ($one == 'On')
-            $result[static::$parentId] = '父级分类 !!';
+            $result[ static::$parentId ] = '父级分类 !!';
 
         foreach ($dataClassify as $key => $value) {
 
-            $result[$value['c_key']] = $value['name'];
+            $result[ $value['c_key'] ] = $value['name'];
 
-            $child = static::recursionClsSelect($value);
+            $child = static::recursionClsSelect( $value );
 
-            if (empty($child))
+            if (empty( $child ))
                 continue;
 
-            $result = array_merge($result, $child);
+            $result = array_merge( $result, $child );
         }
 
         return $result;
@@ -187,16 +191,16 @@ class RoomsClassify extends \yii\db\ActiveRecord
     public static function recursionClsSelect($data, $num = 1)
     {
 
-        if (empty($data))
+        if (empty( $data ))
             return;
 
         // 初始化
         $result = [];
         $symbol = null;
 
-        $child = static::findByAll('On', $data['c_key']);
+        $child = static::findByAll( 'On', $data['c_key'] );
 
-        if (empty($child))
+        if (empty( $child ))
             return;
 
         if ($num != 0) {
@@ -207,14 +211,14 @@ class RoomsClassify extends \yii\db\ActiveRecord
 
         foreach ($child as $key => $value) {
 
-            $result[$value['c_key']] = $symbol . $value['name'];
+            $result[ $value['c_key'] ] = $symbol . $value['name'];
 
-            $childData = static::recursionClsSelect($value, ($num + 1));
+            $childData = static::recursionClsSelect( $value, ($num + 1) );
 
-            if (empty($childData))
+            if (empty( $childData ))
                 continue;
 
-            $result = array_merge($result, $childData);
+            $result = array_merge( $result, $childData );
         }
 
         return $result;

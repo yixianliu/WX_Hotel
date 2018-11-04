@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Coupon */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => '优惠卷管理', 'url' => ['index']];
+$this->params['breadcrumbs'][] = [ 'label' => '优惠卷管理', 'url' => [ 'index' ] ];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -15,25 +15,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="panel panel-default">
 
-        <div class="panel-heading"><h3 class="panel-title"><?= Html::encode($this->title) ?></h3></div>
+        <div class="panel-heading"><h3 class="panel-title"><?= Html::encode( $this->title ) ?></h3></div>
 
         <div class="panel-body">
 
-            <h1><?= Html::encode($this->title) ?></h1>
+            <h1><?= Html::encode( $this->title ) ?></h1>
 
             <p>
-                <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('删除', ['delete', 'id' => $model->id], [
+                <?= Html::a( '更新', [ 'update', 'id' => $model->id ], [ 'class' => 'btn btn-primary' ] ) ?>
+                <?= Html::a( '删除', [ 'delete', 'id' => $model->id ], [
                     'class' => 'btn btn-danger',
                     'data'  => [
                         'confirm' => '是否删除这条记录?',
                         'method'  => 'post',
                     ],
-                ]) ?>
-                <?= Html::a('返回列表', ['index'], ['class' => 'btn btn-primary']) ?>
+                ] ) ?>
+                <?= Html::a( '返回列表', [ 'index' ], [ 'class' => 'btn btn-primary' ] ) ?>
             </p>
 
-            <?= DetailView::widget([
+            <?= DetailView::widget( [
                 'model'      => $model,
                 'attributes' => [
                     'title',
@@ -46,9 +46,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'coupon_type',
                         'value'     => function ($model) {
 
-                            $state = ['discount' => '折扣劵', 'coupon' => '优惠卷'];
+                            $state = [ 'discount' => '折扣劵', 'coupon' => '优惠卷' ];
 
-                            return $state[$model->coupon_type];
+                            return $state[ $model->coupon_type ];
                         },
                     ],
                     [
@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'wechat' => '关注公众号',
                             ];
 
-                            return $state[$model->pay_type];
+                            return $state[ $model->pay_type ];
                         },
                     ],
                     [
@@ -71,33 +71,38 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'Off' => '未启用',
                             ];
 
-                            return $state[$model->is_using];
+                            return $state[ $model->is_using ];
                         },
                     ],
                     [
                         'attribute' => 'images',
                         'format'    => 'html',
                         'value'     => function ($model) {
-                            return '<img width="520" height="350" src="' . Yii::getAlias('@web/../../frontend/web/temp/coupon/') . $model->images . '" alt="' . $model->title . '" />';
+
+                            $images = (!is_file( Yii::getAlias( '@webroot/../../frontend/web/temp/coupon/' ) . $model->images )) ?
+                                Yii::getAlias( '@web/../../frontend/web/img/not.gif' ) :
+                                Yii::getAlias( '@web/../../frontend/web/temp/coupon/' ) . $model->images;
+
+                            return '<img width="520" height="350" src="' . $images . '" alt="' . $model->title . '" />';
                         },
                         'options'   => [ 'width' => 180 ],
                     ],
                     [
                         'attribute' => 'created_at',
                         'value'     => function ($model) {
-                            return date('Y - m -d , h:i', $model->created_at);
+                            return date( 'Y - m -d , h:i', $model->created_at );
                         },
                     ],
                     [
                         'attribute' => 'updated_at',
                         'value'     => function ($model) {
-                            return date('Y - m -d , h:i', $model->updated_at);
+                            return date( 'Y - m -d , h:i', $model->updated_at );
                         },
                     ],
                     'remarks',
                 ],
                 'template'   => '<tr><th width="200">{label}</th><td>{value}</td></tr>',
-            ]) ?>
+            ] ) ?>
 
         </div>
     </div>

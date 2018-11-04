@@ -46,7 +46,10 @@ class CouponController extends BaseController
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider( [
-            'query' => Coupon::find(),
+            'query' => Coupon::find()->orderBy( [
+                'id'         => SORT_DESC,
+                'coupon_key' => SORT_DESC,
+            ] ),
         ] );
 
         return $this->render( 'index', [
