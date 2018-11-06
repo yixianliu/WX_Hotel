@@ -185,7 +185,7 @@ VALUES
   (NULL, 'AUMenuV1', 1, 'urls', '/menu/index', 'R15', NULL, 'AM1', '所有菜单', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AUMenuV2', 2, 'urls', '/menu/create', 'R15', NULL, 'AM1', '创建菜单', NULL, 'On', 'On', #TIME#, #TIME#),
 
-  (NULL, 'ACCCenter1', 1, 'urls', '/center/conf', 'R15', NULL, 'AC2', '网站配置', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'ACCCenter1', 1, 'urls', '/conf/index', 'R15', NULL, 'AC2', '网站配置', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'ACCCenter2', 2, 'urls', '/center/view', 'R15', NULL, 'AC2', '配置单', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'ACCCenter3', 3, 'urls', '/center/index', 'R15', NULL, 'AC2', '管理中心', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'ACCCenter4', 4, 'urls', '/backup/index', 'R15', NULL, 'AC2', '备份数据', NULL, 'On', 'On', #TIME#, #TIME#),

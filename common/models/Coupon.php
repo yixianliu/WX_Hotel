@@ -47,7 +47,7 @@ class Coupon extends \yii\db\ActiveRecord
         return [
             [ [ 'title', 'validity', 'denomination', 'quota', 'coupon_type', 'pay_type' ], 'required' ],
             [ [ 'denomination', 'quota', 'num' ], 'integer' ],
-            [ [ 'coupon_type', 'images', 'thumb', ], 'string' ],
+            [ [ 'coupon_type', 'images', ], 'string' ],
             [ [ 'coupon_key', 'validity', 'title', 'remarks' ], 'string', 'max' => 125 ],
             [ [ 'coupon_key' ], 'unique' ],
 
@@ -69,7 +69,6 @@ class Coupon extends \yii\db\ActiveRecord
             'quota'        => '优惠券使用限额',
             'remarks'      => '优惠券备注',
             'num'          => '优惠券数量',
-            'thumb'        => '缩略图',
             'images'       => '图片',
             'coupon_type'  => '卡卷类型',
             'pay_type'     => '赠送卡卷类型',

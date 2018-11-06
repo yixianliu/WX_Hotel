@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * ConfController implements the CRUD actions for Conf model.
  */
-class ConfController extends Controller
+class ConfController extends BaseController
 {
     /**
      * {@inheritdoc}
@@ -23,7 +23,7 @@ class ConfController extends Controller
             'verbs' => [
                 'class'   => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => [ 'POST' ],
                 ],
             ],
         ];
@@ -36,7 +36,9 @@ class ConfController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider( [
-            'query' => Conf::find(),
+            'query' => Conf::find()->orderBy( [
+                'id' => SORT_DESC,
+            ] ),
         ] );
 
         return $this->render( 'index', [
@@ -69,7 +71,7 @@ class ConfController extends Controller
         $model = new Conf();
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
-            return $this->redirect( ['view', 'id' => $model->id] );
+            return $this->redirect( [ 'view', 'id' => $model->id ] );
         }
 
         return $this->render( 'create', [
@@ -91,7 +93,7 @@ class ConfController extends Controller
         $model = $this->findModel( $id );
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
-            return $this->redirect( ['view', 'id' => $model->id] );
+            return $this->redirect( [ 'view', 'id' => $model->id ] );
         }
 
         return $this->render( 'update', [
@@ -112,7 +114,7 @@ class ConfController extends Controller
     {
         $this->findModel( $id )->delete();
 
-        return $this->redirect( ['index'] );
+        return $this->redirect( [ 'index' ] );
     }
 
     /**

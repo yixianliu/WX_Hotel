@@ -19,29 +19,28 @@ $this->title = '网站配置';
 <div class="col-lg-12">
     <section class="box ">
 
-        <header class="panel_header"><h2 class="title pull-left"><?= Html::encode($this->title) ?></h2></header>
+        <header class="panel_header"><h2 class="title pull-left"><?= Html::encode( $this->title ) ?></h2></header>
 
         <div class="content-body">
             <div class="row">
 
                 <?=
-                GridView::widget([
+                GridView::widget( [
                     'dataProvider' => $dataProvider,
                     'columns'      => [
                         [
                             'class'   => 'yii\grid\SerialColumn',
-                            'options' => ['width' => 50]
+                            'options' => [ 'width' => 50 ],
                         ],
                         [
                             'attribute' => 'name',
-                            'options'   => ['width' => 110]
+                            'options'   => [ 'width' => 110 ],
                         ],
-                        'parameter',
                         [
                             'attribute' => 'is_language',
                             'value'     => function ($model) {
 
-                                if (empty($model->is_language))
+                                if (empty( $model->is_language ))
                                     return '系统配置';
 
                                 $state = [
@@ -51,21 +50,21 @@ $this->title = '网站配置';
 
                                 return $state[ $model->is_language ];
                             },
-                            'options'   => ['width' => 100]
+                            'options'   => [ 'width' => 100 ],
                         ],
                         [
                             'attribute' => 'updated_at',
                             'value'     => function ($model) {
-                                return date('Y - m -d , h:i', $model->updated_at);
+                                return date( 'Y - m -d , h:i', $model->updated_at );
                             },
-                            'options'   => ['width' => 160]
+                            'options'   => [ 'width' => 160 ],
                         ],
                         [
                             'class'   => 'yii\grid\ActionColumn',
-                            'options' => ['width' => 80]
+                            'options' => [ 'width' => 80 ],
                         ],
                     ],
-                ]);
+                ] );
                 ?>
 
             </div>
