@@ -12,6 +12,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
+<style>
+    /*设置表格文字左右和上下居中对齐*/
+    #w0 td {vertical-align: middle;}
+</style>
+
 <div class="col-lg-12">
 
     <div class="form-group">
@@ -43,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value'     => function ($model) {
 
                             $images = (!is_file( Yii::getAlias( '@webroot/../../frontend/web/temp/coupon/' ) . $model->images )) ?
-                                Yii::getAlias( '@web/../../frontend/web/img/not.gif' ) :
+                                Yii::getAlias( '@web/../../frontend/web/img/not.jpg' ) :
                                 Yii::getAlias( '@web/../../frontend/web/temp/coupon/' ) . $model->images;
 
                             return '<img width="280" height="150" src="' . $images . '" alt="' . $model->title . '" />';
@@ -67,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'options' => [ 'width' => 100 ],
                     ],
                 ],
-                'tableOptions' => [ 'class' => 'table table-hover' ],
+                'tableOptions' => [ 'class' => 'table table-hover'],
                 'pager'        => [
                     'options' => [ 'class' => 'pagination' ],
                 ],
