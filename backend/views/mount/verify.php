@@ -37,14 +37,14 @@ $this->title = '验证文件';
             </div>
 
         </div>
+
+        <?=
+        FormMsg::widget(['config' => [
+            'tpl'      => 'mountform',
+            'FormName' => $model->formName(),
+            'Url'      => Url::to(['center/index']),
+        ]]);
+        ?>
+
     </div>
-
-    <?=
-    FormMsg::widget(['config' => [
-        'tpl'      => 'mountform',
-        'FormName' => $model->formName(),
-        'Url'      => Url::to(['center/index']),
-    ]]);
-    ?>
-
 </div>

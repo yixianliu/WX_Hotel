@@ -29,9 +29,9 @@ class RelevanceRoomsTag extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [ [ 't_key', 'hotel_id' ], 'required' ],
-            [ [ 'created_at', 'updated_at' ], 'integer' ],
-            [ [ 't_key', 'hotel_id' ], 'string', 'max' => 55 ],
+            [['t_key', 'rooms_id'], 'required'],
+            [['created_at', 'updated_at'], 'integer'],
+            [['t_key', 'rooms_id'], 'string', 'max' => 55],
         ];
     }
 

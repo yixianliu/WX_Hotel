@@ -2,9 +2,6 @@
 
 namespace backend\controllers;
 
-use common\models\RelevanceHotelsField;
-use common\models\RelevanceRoomsField;
-use common\models\RelevanceRoomsTag;
 use Yii;
 use common\models\Rooms;
 use backend\models\RoomsSearch;
@@ -14,6 +11,9 @@ use common\models\Hotels;
 use common\models\RoomsClassify;
 use common\models\RoomsField;
 use common\models\RoomsTag;
+use common\models\RelevanceHotelsField;
+use common\models\RelevanceRoomsField;
+use common\models\RelevanceRoomsTag;
 
 /**
  * RoomsController implements the CRUD actions for Rooms model.

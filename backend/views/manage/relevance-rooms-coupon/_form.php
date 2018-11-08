@@ -1,29 +1,30 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use phpnt\ICheck\ICheck;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\RelevanceRoomsCoupon */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="relevance-rooms-coupon-form">
+<div class="panel panel-default">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <div class="panel-heading"><h3 class="panel-title"><?= Html::encode( $this->title ) ?></h3></div>
 
-    <?= $form->field($model, 'user_id')->textInput(['maxlength' => true]) ?>
+    <div class="panel-body">
 
-    <?= $form->field($model, 'coupon_key')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
 
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <div class="panel-footer">
+
+        <?= Html::submitButton( $model->isNewRecord ? '添加' : '更新', ['class' => $model->isNewRecord ? 'btn btn-success btn-lg' : 'btn btn-primary btn-lg'] ) ?>
+
+        <a href='<?= Url::to( ['index'] ) ?>' class='btn btn-primary btn-lg' title='返回列表'>返回列表</a>
+
+    </div>
 
 </div>

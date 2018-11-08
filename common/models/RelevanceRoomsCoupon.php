@@ -40,7 +40,7 @@ class RelevanceRoomsCoupon extends \yii\db\ActiveRecord
     {
         return [
             'room_id'    => '房间关键 KEY',
-            'coupon_key' => '优惠卷关键 KEY',
+            'coupon_key' => '优惠卷',
             'use_up'     => '消费了多少张优惠卷',
             'created_at' => '添加数据时间',
             'updated_at' => '更新数据时间',
@@ -53,7 +53,7 @@ class RelevanceRoomsCoupon extends \yii\db\ActiveRecord
         return $this->hasOne( MenuModel::className(), ['room_id' => 'room_id'] );
     }
 
-    // 房间模型
+    // 卡卷模型
     public function getCoupon()
     {
         return $this->hasOne( Coupon::className(), ['coupon_key' => 'coupon_key'] );

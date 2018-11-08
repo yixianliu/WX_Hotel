@@ -28,15 +28,6 @@ use phpnt\ICheck\ICheck;
             <div class="panel-body tab-content">
 
                 <div class="tab-pane active" id="tab-1">
-                    <?=
-                    $form->field( $model, 'c_key' )->widget( Select2::classname(), [
-                        'data'          => $result['classify'],
-                        'options'       => [ 'placeholder' => '分类' ],
-                        'pluginOptions' => [
-                            'allowClear' => true,
-                        ],
-                    ] );
-                    ?>
 
                     <?=
                     $form->field( $model, 'hotel_id' )->widget( Select2::classname(), [
@@ -48,7 +39,15 @@ use phpnt\ICheck\ICheck;
                     ] );
                     ?>
 
-                    <?= $form->field( $model, 'room_num' )->textInput( [ 'maxlength' => true ] ) ?>
+                    <?=
+                    $form->field( $model, 'c_key' )->widget( Select2::classname(), [
+                        'data'          => $result['classify'],
+                        'options'       => [ 'placeholder' => '分类' ],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                        ],
+                    ] );
+                    ?>
 
                     <?= $form->field( $model, 'title' )->textInput( [ 'maxlength' => true ] ) ?>
 
@@ -130,6 +129,8 @@ use phpnt\ICheck\ICheck;
 
                 <div class="tab-pane" id="tab-4">
                     <div class='row' style="min-height: 800px;">
+
+                        <?= $form->field( $model, 'room_num' )->textInput( [ 'maxlength' => true ] ) ?>
 
                         <?= $form->field( $model, 'discount' )->textInput( [ 'maxlength' => true ] ) ?>
 

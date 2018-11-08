@@ -185,8 +185,8 @@ VALUES
 
   (NULL, 'AuthCoupon1', 1, 'urls', '/coupon/index', 'R15', NULL, 'ACoupon1', '卡卷列表', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthCoupon2', 2, 'urls', '/coupon/create', 'R15', NULL, 'ACoupon1', '添加卡卷', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuthCoupon3', 3, 'urls', '/relevance-rooms-coupon/index', 'R15', NULL, 'ACoupon1', '卡卷关联列表', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuthCoupon4', 4, 'urls', '/relevance-rooms-coupon/create', 'R15', NULL, 'ACoupon1', '添加卡卷关联', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthCoupon3', 3, 'urls', '/relevance-rooms-coupon/index', 'R15', NULL, 'ACoupon1', '派送卡卷设置', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthCoupon4', 4, 'urls', '/relevance-rooms-coupon/create', 'R15', NULL, 'ACoupon1', '添加派送', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'AuthOrder1', 1, 'urls', '/order/index', 'R15', NULL, 'AOrder7', '订单列表', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthOrder2', 2, 'urls', '/order/statistics', 'R15', NULL, 'AOrder7', '订单统计', NULL, 'On', 'On', #TIME#, #TIME#),

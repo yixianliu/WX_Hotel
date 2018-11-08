@@ -12,10 +12,15 @@ $this->title = '房间列表';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<style>
+    /*设置表格文字左右和上下居中对齐*/
+    #w0 td {vertical-align: middle;}
+</style>
+
 <div class="col-lg-12">
 
     <div class="form-group">
-        <a href='<?= Url::to(['rooms/create']) ?>' class='btn btn-primary btn-lg' title='添加酒店房间'>添加酒店房间</a>
+        <a href='<?= Url::to(['rooms/create']) ?>' class='btn btn-primary btn-lg' title='添加酒店房间'>添加房间</a>
         <a href='<?= Url::to(['create']) ?>' class='btn btn-primary btn-lg' title='添加房间分类'>添加房间分类</a>
     </div>
 
@@ -43,7 +48,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'thumb',
                         'format'    => 'html',
                         'value'     => function ($model) {
-                            return '<img width="280" height="150" src="' . Yii::getAlias('@web/../../frontend/web/temp/rooms/') . $model->thumb . '" alt="' . $model->title . '" />';
+                            $images = (!is_file( Yii::getAlias( '@webroot/../../frontend/web/temp/coupon/' ) . $model->thumb )) ?
+                                Yii::getAlias( '@web/../../frontend/web/img/not.jpg' ) :
+                                Yii::getAlias( '@web/../../frontend/web/temp/coupon/' ) . $model->thumb;
+
+                            return '<img width="280" height="150" src="' . $images . '" alt="' . $model->title . '" />';
                         },
                         'options'   => [ 'width' => 180 ],
                     ],

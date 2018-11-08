@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use common\models\Coupon;
+use common\models\Rooms;
 use Yii;
 use common\models\RelevanceRoomsCoupon;
 use yii\data\ActiveDataProvider;
@@ -65,7 +67,7 @@ class RelevanceRoomsCouponController extends BaseController
     public function actionView($id)
     {
         return $this->render( 'view', [
-            'model' => $this->findModel( $id ),
+            'model' => Coupon::findOne(['id' => $id]),
         ] );
     }
 
@@ -82,8 +84,15 @@ class RelevanceRoomsCouponController extends BaseController
             return $this->redirect( ['view', 'id' => $model->id] );
         }
 
+        $result = [];
+
+        $result['coupon'] = Coupon::getSelect();
+
+        $result['rooms'] = Rooms::findByAll( 'On' );
+
         return $this->render( 'create', [
-            'model' => $model,
+            'model'  => $model,
+            'result' => $result,
         ] );
     }
 

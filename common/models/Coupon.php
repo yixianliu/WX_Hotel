@@ -45,14 +45,14 @@ class Coupon extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [ [ 'title', 'validity', 'denomination', 'quota', 'coupon_type', 'pay_type' ], 'required' ],
-            [ [ 'denomination', 'quota', 'num' ], 'integer' ],
-            [ [ 'coupon_type', 'images', ], 'string' ],
-            [ [ 'coupon_key', 'validity', 'title', 'remarks' ], 'string', 'max' => 125 ],
-            [ [ 'coupon_key' ], 'unique' ],
+            [['title', 'validity', 'denomination', 'quota', 'coupon_type', 'pay_type'], 'required'],
+            [['denomination', 'quota', 'num'], 'integer'],
+            [['coupon_type', 'images',], 'string'],
+            [['coupon_key', 'validity', 'title', 'remarks'], 'string', 'max' => 125],
+            [['coupon_key'], 'unique'],
 
-            [ [ 'is_using' ], 'default', 'value' => 'On' ],
-            [ [ 'num' ], 'default', 'value' => 10 ],
+            [['is_using'], 'default', 'value' => 'On'],
+            [['num'], 'default', 'value' => 10],
         ];
     }
 
@@ -76,6 +76,48 @@ class Coupon extends \yii\db\ActiveRecord
             'created_at'   => '添加数据时间',
             'updated_at'   => '更新数据时间',
         ];
+    }
+
+    /**
+     * 列表
+     *
+     * @param string $status
+     *
+     * @return array|Rooms[]|\yii\db\ActiveRecord[]
+     */
+    public static function findByAll($status = 'On')
+    {
+
+        // 审核状态
+        $array = !empty( $status ) ? ['is_using' => $status] : ['!=', 'is_using', null];
+
+        return static::find()->where( $array )
+            ->orderBy( ['id' => SORT_DESC] )
+            ->asArray()
+            ->all();
+    }
+
+    /**
+     * 选项框
+     *
+     * @return array|bool
+     */
+    public static function getSelect()
+    {
+
+        $data = static::findByAll( 'On' );
+
+        if (empty( $data )) {
+            return false;
+        }
+
+        $result = [];
+
+        foreach ($data as $value) {
+            $result[ $value['coupon_key'] ] = $value['title'];
+        }
+
+        return $result;
     }
 
 }

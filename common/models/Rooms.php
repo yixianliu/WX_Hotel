@@ -57,7 +57,7 @@ class Rooms extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['hotel_id', 'c_key', 'room_num', 'title', 'content', 'num', 'check_in_num', 'price'], 'required'],
+            [['hotel_id', 'c_key', 'title', 'content', 'num', 'price'], 'required'],
             [['content', 'is_promote', 'is_using', 'is_comments'], 'string'],
             [['discount'], 'double'],
             [['num', 'check_in_num', 'price', 'created_at', 'updated_at'], 'integer'],
@@ -70,6 +70,8 @@ class Rooms extends \yii\db\ActiveRecord
             [['title'], 'unique'],
 
             [['is_promote', 'is_using', 'is_comments'], 'default', 'value' => 'On'],
+            [['check_in_num'], 'default', 'value' => 0],
+            [['room_num'], 'default', 'value' => rand(00000, 99999)],
         ];
     }
 
@@ -103,16 +105,23 @@ class Rooms extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * 列表
+     *
+     * @param string $status
+     *
+     * @return array|Rooms[]|\yii\db\ActiveRecord[]
+     */
     public static function findByAll($status = 'On')
     {
 
         // 审核状态
-        $array = !empty($status) ? [self::tableName() . '.is_using' => $status] : ['!=', self::tableName() . '.is_using', null];
+        $array = !empty( $status ) ? [self::tableName() . '.is_using' => $status] : ['!=', self::tableName() . '.is_using', null];
 
-        return static::find()->select(Hotels::tableName() . ".name, " . self::tableName() . ".*")
-            ->joinWith('hotels')
-            ->where($array)
-            ->orderBy([self::tableName() . '.id' => SORT_DESC])
+        return static::find()->select( Hotels::tableName() . ".name, " . self::tableName() . ".*" )
+            ->joinWith( 'hotels' )
+            ->where( $array )
+            ->orderBy( [self::tableName() . '.id' => SORT_DESC] )
             ->all();
     }
 
@@ -126,7 +135,7 @@ class Rooms extends \yii\db\ActiveRecord
      */
     public function getHotels()
     {
-        return $this->hasOne(Hotels::className(), ['hotel_id' => 'hotel_id']);
+        return $this->hasOne( Hotels::className(), ['hotel_id' => 'hotel_id'] );
     }
 
     /**
@@ -136,7 +145,7 @@ class Rooms extends \yii\db\ActiveRecord
      */
     public function getCls()
     {
-        return $this->hasOne(RoomsClassify::className(), ['c_key' => 'c_key']);
+        return $this->hasOne( RoomsClassify::className(), ['c_key' => 'c_key'] );
     }
 
 }
