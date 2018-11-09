@@ -10,7 +10,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use backend\assets\AppAsset;
 
-AppAsset::register($this);  // $this 代表视图对象
+AppAsset::register( $this );  // $this 代表视图对象
 
 $this->beginPage();
 
@@ -25,7 +25,7 @@ $this->beginPage();
 
     <?= Html::csrfMetaTags() ?>
 
-    <title> 登 录 - <?= Yii::$app->params['WebInfo']['TITLE']; ?> - <?= Yii::$app->params['WebInfo']['NAME']; ?></title>
+    <title>登录 - <?= Yii::$app->params['WebInfo']['TITLE']; ?> - <?= Yii::$app->params['WebInfo']['NAME']; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta name='keywords' content='<?= Yii::$app->params['WebInfo']['KEYWORDS']; ?>'/>
     <meta name='description' content='<?= Yii::$app->params['WebInfo']['DESCRIPTION']; ?>'/>
@@ -46,23 +46,21 @@ $this->beginPage();
 
         <div class="login-body">
 
-            <?php $form = ActiveForm::begin(['action' => ['mount/member/in'], 'class' => "form-horizontal", 'method' => 'post', 'id' => $model->formName()]); ?>
+            <?php $form = ActiveForm::begin( [ 'action' => [ 'mount/member/in' ], 'class' => "form-horizontal", 'method' => 'post', 'id' => $model->formName() ] ); ?>
 
-            <?= $form->field($model, 'username')->label('帐号')->textInput(['maxlength' => true, 'class' => 'form-control', 'autofocus' => true]); ?>
+            <?= $form->field( $model, 'username' )->label( '帐号' )->textInput( [ 'maxlength' => true, 'class' => 'form-control', 'autofocus' => true ] ); ?>
 
-            <?= $form->field($model, 'password')->label('密码')->passwordInput(['maxlength' => true, 'class' => 'form-control']); ?>
+            <?= $form->field( $model, 'password' )->label( '密码' )->passwordInput( [ 'maxlength' => true, 'class' => 'form-control' ] ); ?>
 
             <div class="form-group">
-                <?= Html::submitButton('立即登录', ['class' => 'btn btn-orange btn-block btn-lg']); ?>
+                <?= Html::submitButton( '立即登录', [ 'class' => 'btn btn-orange btn-block btn-lg' ] ); ?>
             </div>
 
             <?php ActiveForm::end(); ?>
 
         </div>
 
-        <div class="login-footer">
-            <?= \common\widgets\iMessage\FormMsg::widget(['config' => ['tpl' => 'MountForm', 'FormName' => $model->formName(), 'Url' => Url::to(['mount/center/view']),]]); ?>
-        </div>
+        <?= \common\widgets\iMessage\FormMsg::widget( [ 'config' => [ 'tpl' => 'MountForm', 'FormName' => $model->formName()] ] ); ?>
 
         <div class="login-footer">
             <div class="pull-left">

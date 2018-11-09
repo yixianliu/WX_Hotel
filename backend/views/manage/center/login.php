@@ -16,7 +16,7 @@ use backend\assets\AppAsset;
 
 $this->title = '登录';
 
-AppAsset::register($this); // $this 代表视图对象
+AppAsset::register( $this ); // $this 代表视图对象
 
 $this->beginPage();
 
@@ -31,7 +31,7 @@ $this->beginPage();
 
     <?= Html::csrfMetaTags() ?>
 
-    <title> 登 录 - <?= $result['title']; ?> - <?= $result['name']; ?></title>
+    <title>登录 - <?= $result['title']; ?> - <?= $result['name']; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta name='keywords' content='<?= Yii::$app->params['WebInfo']['KEYWORDS']; ?>'/>
     <meta name='description' content='<?= Yii::$app->params['WebInfo']['DESCRIPTION']; ?>'/>
@@ -52,15 +52,15 @@ $this->beginPage();
 
         <div class="login-body">
 
-            <?php $form = ActiveForm::begin(['action' => ['member/login'], 'class' => "form-horizontal", 'method' => 'post', 'id' => $model->formName()]); ?>
+            <?php $form = ActiveForm::begin( [ 'action' => [ 'member/login' ], 'class' => "form-horizontal", 'method' => 'post', 'id' => $model->formName() ] ); ?>
 
 
-            <?= $form->field($model, 'username')->textInput(['maxlength' => true, 'placeholder' => '帐号...', 'class' => 'form-control', 'autofocus' => true]); ?>
+            <?= $form->field( $model, 'username' )->textInput( [ 'maxlength' => true, 'placeholder' => '帐号...', 'class' => 'form-control', 'autofocus' => true ] ); ?>
 
-            <?= $form->field($model, 'password')->passwordInput(['maxlength' => true, 'placeholder' => '密码...', 'class' => 'form-control']); ?>
+            <?= $form->field( $model, 'password' )->passwordInput( [ 'maxlength' => true, 'placeholder' => '密码...', 'class' => 'form-control' ] ); ?>
 
             <div class="form-group">
-                <?= Html::submitButton('立即登录', ['class' => 'btn btn-orange btn-block btn-lg']); ?>
+                <?= Html::submitButton( '立即登录', [ 'class' => 'btn btn-orange btn-block btn-lg' ] ); ?>
             </div>
 
             <?php ActiveForm::end(); ?>

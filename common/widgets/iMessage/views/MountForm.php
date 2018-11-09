@@ -1,18 +1,16 @@
-<div class="row">
-    <div class="alert alert-danger" id="ErrorFormMsg" style="display: none;">
-        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-        <strong>执行错误 !!</strong> <span id="ErrorFormText"></span>
-    </div>
+<div class="alert alert-danger" id="ErrorFormMsg" style="display: none;">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <strong>执行错误 !!</strong> <span id="ErrorFormText"></span>
+</div>
 
-    <div class="alert alert-success" id="SuccessFormMsg" style="display: none;">
-        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-        <strong>执行成功 !!</strong> <span id="successform_text"></span>
-    </div>
+<div class="alert alert-success" id="SuccessFormMsg" style="display: none;">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <strong>执行成功 !!</strong> <span id="successform_text"></span>
+</div>
 
-    <div class="alert alert-info" id="beforMsg" style="display: none;">
-        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-        <strong>请注意 !!</strong> 正在执行,切勿关闭网页,否则后果自负...
-    </div>
+<div class="alert alert-info" id="beforMsg" style="display: none;">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <strong>请注意 !!</strong> 正在执行,切勿关闭网页,否则后果自负...
 </div>
 
 <script type="text/javascript">
