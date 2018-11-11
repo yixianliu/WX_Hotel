@@ -19,10 +19,10 @@ $this->title = '程序挂载操作';
 
                 <p>全渠道新零售解决方案，以数据化运营为核心的一体化系统，将‘线上商城’与‘线下门店’销售运营完美融合。</p>
 
-                <?php $form = ActiveForm::begin( ['action' => ['mount/run/install'], 'class' => 'form-horizontal', 'method' => 'post', 'id' => $model->formName()] ); ?>
+                <?php $form = ActiveForm::begin( ['action' => ['mount/run/install'], 'class' => 'form-horizontal', 'method' => 'post', 'id' => $model->formName() ] ); ?>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 10px;">
+                    <button type="submit" class="btn btn-primary btn-lg">
                         挂载操作 (基础配置)
                     </button>
                 </div>

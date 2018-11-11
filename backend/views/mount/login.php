@@ -60,7 +60,7 @@ $this->beginPage();
 
         </div>
 
-        <?= \common\widgets\iMessage\FormMsg::widget( [ 'config' => [ 'tpl' => 'MountForm', 'FormName' => $model->formName()] ] ); ?>
+        <?= \common\widgets\iMessage\FormMsg::widget( [ 'config' => [ 'tpl' => 'MountForm', 'FormName' => $model->formName() ] ] ); ?>
 
         <div class="login-footer">
             <div class="pull-left">
