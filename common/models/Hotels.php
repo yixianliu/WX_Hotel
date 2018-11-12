@@ -57,7 +57,7 @@ class Hotels extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'content'], 'required'],
-            [['content', 'is_promote', 'is_using', 'is_comments'], 'string'],
+            [['content', 'is_promote', 'is_using', 'is_comments', 'address'], 'string'],
             [['created_at', 'updated_at'], 'integer'],
             [['hotel_id', 'thumb', 'images',], 'string', 'max' => 85],
             [['user_id'], 'string', 'max' => 55],
@@ -83,6 +83,7 @@ class Hotels extends \yii\db\ActiveRecord
             'content'      => '酒店描述',
             'introduction' => '酒店简介',
             'keywords'     => '酒店关键词',
+            'address'      => '酒店地址',
             'thumb'        => '缩略图',
             'images'       => '酒店图片',
             'is_promote'   => '是否推广',
@@ -104,9 +105,9 @@ class Hotels extends \yii\db\ActiveRecord
     {
 
         // 审核状态
-        $array = !empty($status) ? ['is_using' => $status] : ['!=', 'is_using', ''];
+        $array = !empty( $status ) ? ['is_using' => $status] : ['!=', 'is_using', ''];
 
-        return static::find()->where($array)->asArray()->all();
+        return static::find()->where( $array )->asArray()->all();
     }
 
     /**
@@ -121,29 +122,29 @@ class Hotels extends \yii\db\ActiveRecord
     {
 
         // 审核状态
-        $array = !empty($status) ? ['is_using' => $status] : ['!=', 'is_using', ''];
+        $array = !empty( $status ) ? ['is_using' => $status] : ['!=', 'is_using', ''];
 
-        return static::find()->where(['hotel_id' => $id])->andWhere($array)->one();
+        return static::find()->where( ['hotel_id' => $id] )->andWhere( $array )->one();
     }
 
     /**
      * 获取酒店(选项框)
      *
-     * @param string $one
+     * @param string $is_using
      *
      * @return array
      */
-    public static function getHotelSelect()
+    public static function getSelect($is_using = 'On')
     {
 
         // 初始化
         $result = [];
 
         // 产品分类
-        $dataClassify = static::findByAll('On');
+        $dataClassify = static::findByAll( $is_using );
 
         foreach ($dataClassify as $key => $value) {
-            $result[$value['hotel_id']] = $value['name'];
+            $result[ $value['hotel_id'] ] = $value['name'];
         }
 
         return $result;

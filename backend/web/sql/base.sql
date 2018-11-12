@@ -4,7 +4,7 @@
 DROP TABLE IF EXISTS `#DB_PREFIX#Conf`;
 CREATE TABLE `#DB_PREFIX#Conf` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
-    `language` VARCHAR(85) NOT NULL COMMENT '配置语言',
+    `lang_key` VARCHAR(85) NULL COMMENT '配置语言',
     `name` VARCHAR(85) NOT NULL COMMENT '网站名称',
     `title` VARCHAR(135) NOT NULL COMMENT '网站标题',
     `email` VARCHAR(135) NOT NULL COMMENT '网站联系邮箱',
@@ -14,7 +14,7 @@ CREATE TABLE `#DB_PREFIX#Conf` (
     `developers` VARCHAR(135) NOT NULL COMMENT '开发者',
     `icp` VARCHAR(135) NOT NULL COMMENT '备案号',
     `description` TEXT NULL COMMENT '网站描述',
-    `copyright` VARCHAR(135) NOT NULL COMMENT '字段值',
+    `copyright` VARCHAR(135) NOT NULL COMMENT '版权所有',
     `created_at` integer NOT NULL DEFAULT '0',
     `updated_at` integer NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`)
@@ -35,6 +35,22 @@ CREATE TABLE `#DB_PREFIX#Assist` (
     `updated_at` integer NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
     UNIQUE KEY `c_key` (`c_key`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+ * 语言类别
+ */
+DROP TABLE IF EXISTS `#DB_PREFIX#Language`;
+CREATE TABLE `#DB_PREFIX#Assist` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `lang_key` VARCHAR(55) NOT NULL COMMENT '网站设置关键KEY',
+    `name` VARCHAR(85) NOT NULL COMMENT '字段名',
+    `content` VARCHAR(135) NOT NULL COMMENT '国家缩写',
+    `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
+    `created_at` integer NOT NULL DEFAULT '0',
+    `updated_at` integer NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `lang_key` (`lang_key`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /**

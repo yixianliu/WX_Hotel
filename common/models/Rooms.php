@@ -131,6 +131,29 @@ class Rooms extends \yii\db\ActiveRecord
     }
 
     /**
+     * 获取房间(选项框)
+     *
+     * @param string $is_using
+     *
+     * @return array
+     */
+    public static function getSelect($is_using = 'On')
+    {
+
+        // 初始化
+        $result = [];
+
+        // 产品分类
+        $dataClassify = static::findByAll($is_using);
+
+        foreach ($dataClassify as $key => $value) {
+            $result[$value['room_id']] = $value['title'];
+        }
+
+        return $result;
+    }
+
+    /**
      * @abstract 获取酒店
      */
     public function getHotels()

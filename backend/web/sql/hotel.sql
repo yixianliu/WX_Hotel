@@ -6,7 +6,8 @@
 DROP TABLE IF EXISTS `#DB_PREFIX#Hotels`;
 CREATE TABLE `#DB_PREFIX#Hotels` (
     `id` INT(11) NULL AUTO_INCREMENT,
-    `hotel_id` VARCHAR(85) NOT NULL COMMENT ' 酒店编号,唯一识别码',
+    `hotel_id` VARCHAR(85) NOT NULL COMMENT '酒店编号,唯一识别码',
+    `lang_key` VARCHAR(85) NULL COMMENT '语言类别',
     `user_id` VARCHAR(55) NOT NULL COMMENT '用户ID',
     `password` VARCHAR(125) NOT NULL COMMENT '酒店密码',
     `name` VARCHAR(125) NOT NULL COMMENT '酒店名称',
@@ -211,7 +212,6 @@ CREATE TABLE `#DB_PREFIX#Coupon` (
     `images` VARCHAR(255) NULL COMMENT '优惠券图片',
     `coupon_type` SET('discount', 'coupon') NOT NULL COMMENT '卡卷类型：折扣劵 / 优惠卷',
     `pay_type` SET('before', 'after', 'wechat') NOT NULL COMMENT '消费方式：消费后送,消费前送,关注公众号',
-    `apply_range` SET('On', 'Off') NOT NULL COMMENT '适用范围,开启为On,就是代表所有房间均可使用该劵',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
     `created_at` integer NOT NULL DEFAULT '0',
     `updated_at` integer NOT NULL DEFAULT '0',
@@ -230,6 +230,8 @@ CREATE TABLE `#DB_PREFIX#Relevance_Rooms_Coupon` (
     `room_id` VARCHAR(55) NOT NULL COMMENT '房间关键KEY',
     `room_cls_id` VARCHAR(55) NOT NULL COMMENT '房间分类关键KEY',
     `use_up` integer NOT NULL COMMENT '消耗了几张优惠卷',
+    `content` TEXT NULL COMMENT '描述内容',
+    `apply_range` SET('hotel', 'room', 'classify', 'all') NOT NULL COMMENT '派送类别,开启为On,就是代表所有房间均可使用该劵',
     `created_at` integer NOT NULL DEFAULT '0',
     `updated_at` integer NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),

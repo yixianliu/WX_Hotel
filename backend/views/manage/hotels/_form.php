@@ -65,6 +65,8 @@ use kartik\select2\Select2;
 
                     <?= $form->field( $model, 'introduction' )->textarea( [ 'maxlength' => true, 'rows' => 6 ] ) ?>
 
+                    <?= $form->field( $model, 'address' )->textarea( [ 'maxlength' => true, 'rows' => 3 ] ) ?>
+
                     <?= $form->field( $model, 'keywords' )->textInput( [ 'maxlength' => true, 'class' => 'tagsinput' ] ) ?>
 
                     <?=

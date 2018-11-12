@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Coupon */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = [ 'label' => '优惠卷管理', 'url' => [ 'index' ] ];
+$this->params['breadcrumbs'][] = ['label' => '优惠卷管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -22,15 +22,15 @@ $this->params['breadcrumbs'][] = $this->title;
             <h1><?= Html::encode( $this->title ) ?></h1>
 
             <p>
-                <?= Html::a( '更新', [ 'update', 'id' => $model->id ], [ 'class' => 'btn btn-primary' ] ) ?>
-                <?= Html::a( '删除', [ 'delete', 'id' => $model->id ], [
+                <?= Html::a( '更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary'] ) ?>
+                <?= Html::a( '删除', ['delete', 'id' => $model->id], [
                     'class' => 'btn btn-danger',
                     'data'  => [
                         'confirm' => '是否删除这条记录?',
                         'method'  => 'post',
                     ],
                 ] ) ?>
-                <?= Html::a( '返回列表', [ 'index' ], [ 'class' => 'btn btn-primary' ] ) ?>
+                <?= Html::a( '返回列表', ['index'], ['class' => 'btn btn-primary'] ) ?>
             </p>
 
             <?= DetailView::widget( [
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'coupon_type',
                         'value'     => function ($model) {
 
-                            $state = [ 'discount' => '折扣劵', 'coupon' => '优惠卷' ];
+                            $state = ['discount' => '折扣劵', 'coupon' => '优惠卷'];
 
                             return $state[ $model->coupon_type ];
                         },
@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             return '<img width="520" height="350" src="' . $images . '" alt="' . $model->title . '" />';
                         },
-                        'options'   => [ 'width' => 180 ],
+                        'options'   => ['width' => 180],
                     ],
                     [
                         'attribute' => 'created_at',

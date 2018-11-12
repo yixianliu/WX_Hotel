@@ -12,6 +12,11 @@ $this->title = '酒店管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<style>
+    /*设置表格文字左右和上下居中对齐*/
+    #w0 td {vertical-align: middle;}
+</style>
+
 <div class="col-lg-12">
 
     <div class="form-group">
@@ -38,10 +43,27 @@ $this->params['breadcrumbs'][] = $this->title;
                         'class'   => 'yii\grid\SerialColumn',
                         'options' => ['width' => 70],
                     ],
-                    'thumb',
-                    'hotel_id',
+                    [
+                        'attribute' => 'thumb',
+                        'format'    => 'html',
+                        'value'     => function ($model) {
+                            $images = (!is_file( Yii::getAlias( '@webroot/../../frontend/web/temp/coupon/' ) . $model->thumb )) ?
+                                Yii::getAlias( '@web/../../frontend/web/img/not.jpg' ) :
+                                Yii::getAlias( '@web/../../frontend/web/temp/coupon/' ) . $model->thumb;
+
+                            return '<img width="280" height="150" src="' . $images . '" alt="' . $model->name . '" />';
+                        },
+                        'options'   => [ 'width' => 180 ],
+                    ],
                     'user_id',
                     'name',
+                    [
+                        'attribute' => 'address',
+                        'value'     => function ($model) {
+                            return $model->address;
+                        },
+                        'options'   => ['width' => 280],
+                    ],
                     [
                         'attribute' => 'updated_at',
                         'value'     => function ($model) {

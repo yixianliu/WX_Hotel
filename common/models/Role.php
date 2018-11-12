@@ -76,7 +76,7 @@ class Role extends ActiveRecord
      */
     public static function findByData($id)
     {
-        return static::find()->where(['r_key' => $id])->one();
+        return static::find()->where( ['r_key' => $id] )->one();
     }
 
     /**
@@ -90,12 +90,12 @@ class Role extends ActiveRecord
     public static function findByRole($limit = 15, $status = null)
     {
 
-        $array = !empty($status) ? [self::tableName() . '.is_using' => $status] : ['!=', self::tableName() . '.is_using', 'null'];
+        $array = !empty( $status ) ? [self::tableName() . '.is_using' => $status] : ['!=', self::tableName() . '.is_using', 'null'];
 
-        return static::find()->select(self::tableName() . ".*")
-            ->where($array)
-            ->orderBy(self::tableName() . '.sort_id')
-            ->limit($limit)
+        return static::find()->select( self::tableName() . ".*" )
+            ->where( $array )
+            ->orderBy( self::tableName() . '.sort_id' )
+            ->limit( $limit )
             ->all();
     }
 
@@ -109,11 +109,11 @@ class Role extends ActiveRecord
     public static function findByAll($status = null)
     {
 
-        $array = !empty($status) ? [self::tableName() . '.is_using' => $status] : ['!=', self::tableName() . '.is_using', 'null'];
+        $array = !empty( $status ) ? [self::tableName() . '.is_using' => $status] : ['!=', self::tableName() . '.is_using', 'null'];
 
-        return static::find()->select(self::tableName() . ".*")
-            ->where($array)
-            ->orderBy(self::tableName() . '.sort_id')
+        return static::find()->select( self::tableName() . ".*" )
+            ->where( $array )
+            ->orderBy( self::tableName() . '.sort_id' )
             ->asArray()
             ->all();
     }
@@ -127,7 +127,7 @@ class Role extends ActiveRecord
      */
     public static function findByOne($id = 1)
     {
-        return static::find()->where(['id' => $id])->one();
+        return static::find()->where( ['id' => $id] )->one();
     }
 
     public static function Reorganize()

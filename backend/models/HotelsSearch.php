@@ -19,7 +19,7 @@ class HotelsSearch extends Hotels
     {
         return [
             [ [ 'created_at', 'updated_at' ], 'integer' ],
-            [ [ 'hotel_id', 'user_id', 'name', 'content', 'introduction', 'keywords', 'path', 'images', 'is_promote', 'is_comments' ], 'safe' ],
+            [ [ 'hotel_id', 'user_id', 'name', 'content', 'address', 'introduction', 'keywords', 'path', 'images', 'is_promote', 'is_comments' ], 'safe' ],
         ];
     }
 

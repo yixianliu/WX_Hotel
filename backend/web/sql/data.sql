@@ -3,8 +3,18 @@
  */
 INSERT INTO `#DB_PREFIX#Conf`
 VALUES
-  (NULL, 'cn', '#NAME#', '#TITLE#', '#EMAIL#', '#PHONE#', '#KEYWORDS#', '#SITE_URL#', '#DEVELOPERS#', '#ICP#', '#DESCRIPTION#', '#COPYRIGHT#', #TIME#, #TIME#),
-  (NULL, 'en', '#NAME#', '#TITLE#', '#EMAIL#', '#PHONE#', '#KEYWORDS#', '#SITE_URL#', '#DEVELOPERS#', '#ICP#', '#DESCRIPTION#', '#COPYRIGHT#', #TIME#, #TIME#);
+  (NULL, 'CN', '#NAME#', '#TITLE#', '#EMAIL#', '#PHONE#', '#KEYWORDS#', '#SITE_URL#', '#DEVELOPERS#', '#ICP#', '#DESCRIPTION#', '#COPYRIGHT#', #TIME#, #TIME#),
+  (NULL, 'EN_USA', '#NAME#_USA', '#TITLE#_USA', '#EMAIL#', '#PHONE#', '#KEYWORDS#', '#SITE_URL#', '#DEVELOPERS#_USA', '#ICP#', '#DESCRIPTION#', '#COPYRIGHT#', #TIME#, #TIME#);
+
+/**
+ * 网站辅助配置参数
+ */
+INSERT INTO `#DB_PREFIX#Language`
+VALUES
+  (NULL, 'CN', '中文', 'zh-CN', 'On', #TIME#, #TIME#),
+  (NULL, 'CN_TW', '中文(台湾)', 'zh-TW', 'On', #TIME#, #TIME#),
+  (NULL, 'EN', '英文', 'en-CA', 'On', #TIME#, #TIME#),
+  (NULL, 'EN_USA', '英文(美式)', 'en-CA', 'On', #TIME#, #TIME#);
 
 /**
  * 网站辅助配置参数

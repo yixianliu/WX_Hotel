@@ -1,102 +1,93 @@
 <?php
 
-/**
- * @abstract 产品模型
- * @author   Yxl <zccem@163.com>
- */
-
 namespace common\models;
 
 use Yii;
-use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 
-class Conf extends ActiveRecord
+/**
+ * This is the model class for table "w_conf".
+ *
+ * @property int    $id
+ * @property string $language    配置语言
+ * @property string $name        网站名称
+ * @property string $title       网站标题
+ * @property string $email       网站联系邮箱
+ * @property string $phone       网站联系电话
+ * @property string $keywords    网站关键词
+ * @property string $site_url    网站URL地址
+ * @property string $developers  开发者
+ * @property string $icp         备案号
+ * @property string $description 网站描述
+ * @property string $copyright   字段值
+ * @property int    $created_at
+ * @property int    $updated_at
+ */
+class Conf extends \yii\db\ActiveRecord
 {
-
     /**
-     * 数据库表名
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%conf}}';
+        return 'w_conf';
     }
 
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             TimestampBehavior::className(),
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [ [ 'c_key', 'name', 'parameter' ], 'required' ],
-            [ [ 'description', 'is_using', 'is_language' ], 'string' ],
-            [ [ 'c_key' ], 'string', 'max' => 55 ],
-            [ [ 'name' ], 'string', 'max' => 80 ],
-            [ [ 'parameter' ], 'string', 'max' => 255 ],
-
-            [ [ 'is_language' ], 'default', 'value' => 'cn' ],
-            [ [ 'is_using' ], 'default', 'value' => 'On' ],
+            [['name', 'title', 'site_url'], 'required'],
+            [['developers', 'keywords', 'email', 'phone', 'lang_key', 'description', 'copyright', 'icp'], 'string'],
+            [['created_at', 'updated_at'], 'integer'],
+            [['lang_key', 'name'], 'string', 'max' => 85],
+            [['title', 'email', 'phone', 'keywords', 'site_url', 'developers', 'icp', 'copyright'], 'string', 'max' => 135],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
         return [
-            'c_key'       => '网站配置关键KEY',
-            'name'        => '配置名称',
-            'parameter'   => '配置值',
-            'description' => '配置描述',
-            'is_using'    => '是否启用',
-            'is_language' => '语言分类',
+            'lang_key'    => '配置语言',
+            'name'        => '网站名称',
+            'title'       => '网站标题',
+            'email'       => '网站联系邮箱',
+            'phone'       => '网站联系电话',
+            'keywords'    => '网站关键词',
+            'site_url'    => '网站URL地址',
+            'developers'  => '开发者',
+            'icp'         => '备案号',
+            'description' => '网站描述',
+            'copyright'   => '版本',
             'created_at'  => '添加数据时间',
             'updated_at'  => '更新数据时间',
         ];
     }
 
     /**
-     * 网站配置数据
-     *
-     * @param null   $status
-     * @param string $language
-     *
-     * @return array|\yii\db\ActiveRecord[]
-     */
-    public static function findByAll($status = null, $language = 'cn')
-    {
-
-        $array = !empty($status) ? [ 'is_using' => $status ] : [ '!=', 'is_using', 'null' ];
-
-        return static::find()->where($array)
-            ->andWhere([ 'is_language' => $language ])
-            ->asArray()
-            ->all();
-    }
-
-    /**
-     * 查询指定配置
+     * 查询指定
      *
      * @param int $id
      *
-     * @return Conf|null
+     * @return array|AuthRole|null|\yii\db\ActiveRecord
      */
     public static function findByOne($id = 1)
     {
-        return static::findOne([ 'id' => $id ]);
+        return static::find()->where(['id' => $id])->one();
     }
 
 }

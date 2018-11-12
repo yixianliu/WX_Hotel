@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Coupon;
+use common\models\Hotels;
 use common\models\Rooms;
 use Yii;
 use common\models\RelevanceRoomsCoupon;
@@ -88,7 +89,9 @@ class RelevanceRoomsCouponController extends BaseController
 
         $result['coupon'] = Coupon::getSelect();
 
-        $result['rooms'] = Rooms::findByAll( 'On' );
+        $result['rooms'] = Rooms::getSelect();
+
+        $result['hotel'] = Hotels::getSelect();
 
         return $this->render( 'create', [
             'model'  => $model,

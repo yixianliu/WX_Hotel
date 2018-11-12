@@ -5,9 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\Conf;
 use yii\data\ActiveDataProvider;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ConfController implements the CRUD actions for Conf model.
@@ -15,15 +13,26 @@ use yii\filters\VerbFilter;
 class ConfController extends BaseController
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function behaviors()
     {
         return [
+
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+
             'verbs' => [
-                'class'   => VerbFilter::className(),
+                'class'   => \yii\filters\VerbFilter::className(),
                 'actions' => [
-                    'delete' => [ 'POST' ],
+                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -36,9 +45,7 @@ class ConfController extends BaseController
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider( [
-            'query' => Conf::find()->orderBy( [
-                'id' => SORT_DESC,
-            ] ),
+            'query' => Conf::find(),
         ] );
 
         return $this->render( 'index', [
@@ -71,11 +78,11 @@ class ConfController extends BaseController
         $model = new Conf();
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
-            return $this->redirect( [ 'view', 'id' => $model->id ] );
+            return $this->redirect( ['view', 'id' => $model->id] );
         }
 
         return $this->render( 'create', [
-            'model' => $model,
+            'model'  => $model,
         ] );
     }
 
@@ -93,7 +100,7 @@ class ConfController extends BaseController
         $model = $this->findModel( $id );
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
-            return $this->redirect( [ 'view', 'id' => $model->id ] );
+            return $this->redirect( ['view', 'id' => $model->id] );
         }
 
         return $this->render( 'update', [
@@ -114,7 +121,7 @@ class ConfController extends BaseController
     {
         $this->findModel( $id )->delete();
 
-        return $this->redirect( [ 'index' ] );
+        return $this->redirect( ['index'] );
     }
 
     /**

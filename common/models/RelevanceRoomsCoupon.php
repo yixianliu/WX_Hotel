@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "w_relevance_rooms_coupon".
@@ -24,6 +25,15 @@ class RelevanceRoomsCoupon extends \yii\db\ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function rules()
@@ -39,11 +49,14 @@ class RelevanceRoomsCoupon extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'room_id'    => '房间关键 KEY',
-            'coupon_key' => '优惠卷',
-            'use_up'     => '消费了多少张优惠卷',
-            'created_at' => '添加数据时间',
-            'updated_at' => '更新数据时间',
+            'room_id'     => '所选房间',
+            'hotel_id'    => '所选酒店',
+            'coupon_key'  => '优惠卷',
+            'use_up'      => '消费了多少张优惠卷',
+            'content'     => '优惠卷描述',
+            'apply_range' => '派送类别',
+            'created_at'  => '添加数据时间',
+            'updated_at'  => '更新数据时间',
         ];
     }
 
