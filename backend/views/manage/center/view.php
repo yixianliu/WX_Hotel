@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Conf */
 
-$this->title = $model->name;
+$this->title = '';
 $this->params['breadcrumbs'][] = ['label' => '网站配置', 'url' => ['center/conf']];
 $this->params['breadcrumbs'][] = $this->title;
 

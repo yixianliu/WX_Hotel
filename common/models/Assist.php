@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "w_assist".
@@ -29,16 +30,25 @@ class Assist extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public function behaviors() {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
-            [['c_key', 'name', 'content', 'is_using'], 'required'],
-            [['description', 'is_using'], 'string'],
-            [['created_at', 'updated_at'], 'integer'],
-            [['c_key'], 'string', 'max' => 55],
-            [['name'], 'string', 'max' => 85],
-            [['content'], 'string', 'max' => 135],
-            [['c_key'], 'unique'],
+            [ [ 'c_key', 'name', 'content', 'is_using' ], 'required' ],
+            [ [ 'description', 'is_using' ], 'string' ],
+            [ [ 'created_at', 'updated_at' ], 'integer' ],
+            [ [ 'c_key' ], 'string', 'max' => 55 ],
+            [ [ 'name' ], 'string', 'max' => 85 ],
+            [ [ 'content' ], 'string', 'max' => 135 ],
+            [ [ 'c_key' ], 'unique' ],
         ];
     }
 
@@ -69,10 +79,10 @@ class Assist extends \yii\db\ActiveRecord
         // 初始化
         $result = [];
 
-        $data = static::find()->where(['is_using' => 'On'])->all();
+        $data = static::find()->where( [ 'is_using' => 'On' ] )->all();
 
         foreach ($data as $value) {
-            $result[$value['name']] = $value['content'];
+            $result[ $value['name'] ] = $value['content'];
         }
 
         return $result;

@@ -134,7 +134,7 @@ class Hotels extends \yii\db\ActiveRecord
      *
      * @return array
      */
-    public static function getSelect($is_using = 'On')
+    public static function getHotelSelect($is_using = 'On')
     {
 
         // 初始化

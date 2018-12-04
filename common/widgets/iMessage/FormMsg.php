@@ -30,7 +30,7 @@ class FormMsg extends InputWidget
         $result['FormName'] = $this->config['FormName'];
         $result['Url'] = !empty($this->config['Url']) ? $this->config['Url'] : null;
 
-        //模板
+        // 模板
         $this->config['tpl'] = empty($this->config['tpl']) ? 'index' : $this->config['tpl'];
 
         return $this->render($this->config['tpl'], ['result' => $result]);

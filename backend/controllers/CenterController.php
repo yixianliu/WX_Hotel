@@ -60,7 +60,7 @@ class CenterController extends BaseController
         // 初始化
         $result = [];
 
-        $result['noAuditProduct'] = Product::findByAll( 'On' );
+//        $result['noAuditProduct'] = Product::findByAll( 'On' );
 
         $result['noAuditUser'] = User::findByAll( 'Off' );
 

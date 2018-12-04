@@ -25,6 +25,9 @@ use yii\behaviors\TimestampBehavior;
  */
 class Conf extends \yii\db\ActiveRecord
 {
+
+    public static $defaultId = 1;
+
     /**
      * {@inheritdoc}
      */
@@ -85,8 +88,11 @@ class Conf extends \yii\db\ActiveRecord
      *
      * @return array|AuthRole|null|\yii\db\ActiveRecord
      */
-    public static function findByOne($id = 1)
+    public static function findByOne($id = null)
     {
+
+        $id = empty($id) ? static::$defaultId : $id;
+
         return static::find()->where(['id' => $id])->one();
     }
 

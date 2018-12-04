@@ -15,9 +15,10 @@ CREATE TABLE `#DB_PREFIX#Conf` (
     `icp` VARCHAR(135) NOT NULL COMMENT '备案号',
     `description` TEXT NULL COMMENT '网站描述',
     `copyright` VARCHAR(135) NOT NULL COMMENT '版权所有',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
-    PRIMARY KEY (`id`)
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `lang_key` (`lang_key`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /**
@@ -26,29 +27,29 @@ CREATE TABLE `#DB_PREFIX#Conf` (
 DROP TABLE IF EXISTS `#DB_PREFIX#Assist`;
 CREATE TABLE `#DB_PREFIX#Assist` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
-    `c_key` VARCHAR(55) NOT NULL COMMENT '网站设置关键KEY',
+    `a_key` VARCHAR(55) NOT NULL COMMENT '网站设置关键KEY',
     `name` VARCHAR(85) NOT NULL COMMENT '字段名',
     `content` VARCHAR(135) NOT NULL COMMENT '字段值',
     `description` TEXT NULL COMMENT '网站配置描述',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
-    UNIQUE KEY `c_key` (`c_key`)
+    UNIQUE KEY `a_key` (`a_key`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /**
  * 语言类别
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Language`;
-CREATE TABLE `#DB_PREFIX#Assist` (
+CREATE TABLE `#DB_PREFIX#Language` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `lang_key` VARCHAR(55) NOT NULL COMMENT '网站设置关键KEY',
     `name` VARCHAR(85) NOT NULL COMMENT '字段名',
     `content` VARCHAR(135) NOT NULL COMMENT '国家缩写',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     UNIQUE KEY `lang_key` (`lang_key`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -66,8 +67,8 @@ CREATE TABLE `#DB_PREFIX#Adv` (
     `is_audit` SET('On', 'Off') NOT NULL COMMENT '审核',
     `start_time` INT(11) UNSIGNED NOT NULL COMMENT '开始时间',
     `end_time` INT(11) UNSIGNED NOT NULL COMMENT '结束时间',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -84,8 +85,8 @@ CREATE TABLE `#DB_PREFIX#Friend_Link` (
     `url` VARCHAR(125) NULL COMMENT '链接地址',
     `is_status` SET('On', 'Off') NOT NULL DEFAULT 'Off' COMMENT '友情链接状态',
     `is_audit` SET('On', 'Off') NOT NULL COMMENT '审核',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     UNIQUE `title` (`title`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -100,8 +101,8 @@ CREATE TABLE `#DB_PREFIX#Announce` (
     `title` VARCHAR(85) NOT NULL COMMENT '标题',
     `content` TEXT NOT NULL COMMENT '内容',
     `is_audit` SET('On', 'Off') NOT NULL COMMENT '审核',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     KEY `user_id` (`user_id`),
     UNIQUE `title` (`title`)
@@ -121,8 +122,8 @@ CREATE TABLE `#DB_PREFIX#Management` (
     `login_ip` VARCHAR(55) COMMENT '登陆IP',
     `token` INT(11) UNSIGNED NOT NULL COMMENT '权限ID',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     UNIQUE KEY `username` (`username`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -183,8 +184,8 @@ CREATE TABLE `#DB_PREFIX#User_Config` (
     `is_show_phone` SET('On', 'Off') NOT NULL COMMENT '是否开启显示手机',
     `is_show_sex` SET('On', 'Off') NOT NULL COMMENT '是否开启显示性别',
     `is_show_address` SET('On', 'Off') NOT NULL COMMENT '是否开启显示通讯地址',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     UNIQUE KEY `user_id` (`user_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -198,8 +199,8 @@ CREATE TABLE `#DB_PREFIX#User_Level` (
 	`l_key` VARCHAR(55) NOT NULL COMMENT '等级关键KEY',
 	`name` VARCHAR(85) NOT NULL COMMENT '用户等级',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否开启',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     UNIQUE KEY `l_key` (`l_key`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -213,8 +214,8 @@ CREATE TABLE `#DB_PREFIX#User_Problems` (
     `security_key` VARCHAR(20) NOT NULL COMMENT '安全问题KEY',
     `name` VARCHAR(55) NOT NULL COMMENT '问题',
     `is_using` SET('On', 'Off') NULL DEFAULT 'On' COMMENT '是否启用',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     UNIQUE KEY `security_key` (`security_key`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -238,8 +239,8 @@ CREATE TABLE `#DB_PREFIX#Menu` (
     `json_data` VARCHAR(155) NULL COMMENT 'Json 数据',
     `is_url` SET('On', 'Off') NOT NULL COMMENT '是否启用链接(不启用的话,此分类没有链接,只会获取权限)',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     UNIQUE KEY `m_key` (`m_key`),
     KEY `r_key` (`r_key`),
@@ -258,8 +259,8 @@ CREATE TABLE `#DB_PREFIX#Menu_Model` (
     `url_key` VARCHAR(85) NULL COMMENT 'Url 模型关键KEY',
     `name` VARCHAR(85) NOT NULL COMMENT '模型名称',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     UNIQUE KEY `m_key` (`m_key`),
     UNIQUE KEY `url_key` (`url_key`)
@@ -293,8 +294,8 @@ CREATE TABLE `#DB_PREFIX#Article` (
     `is_recommend` SET('On', 'Off') NOT NULL COMMENT '推荐',
     `is_comments` SET('On', 'Off') NOT NULL COMMENT '评论',
     `is_using` SET('On', 'Off', 'Out', 'Not') NOT NULL COMMENT '审核',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     UNIQUE KEY (`article_id`),
     UNIQUE `title` (`title`),
@@ -316,8 +317,8 @@ CREATE TABLE `#DB_PREFIX#Article_Cls` (
     `json_data` VARCHAR(55) NULL COMMENT 'Json 数据',
     `parent_id` VARCHAR(55) NOT NULL COMMENT '父类ID',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     UNIQUE KEY `c_key` (`c_key`),
     UNIQUE `name` (`name`)

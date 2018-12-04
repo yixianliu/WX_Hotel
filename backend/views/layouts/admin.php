@@ -13,7 +13,7 @@ AppAsset::register( $this );  // $this 代表视图对象
 
 $session = Yii::$app->session;
 
-$Conf = \common\models\Conf::findOne( 1 );
+$Conf = \common\models\Conf::findByOne();
 
 $this->beginPage();
 
