@@ -15,26 +15,26 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="panel panel-default">
 
-        <div class="panel-heading"><h3 class="panel-title"><?= Html::encode($this->title) ?></h3></div>
+        <div class="panel-heading"><h3 class="panel-title"><?= Html::encode( $this->title ) ?></h3></div>
 
         <div class="panel-body">
 
-            <h1><?= Html::encode($this->title) ?></h1>
+            <h1><?= Html::encode( $this->title ) ?></h1>
 
             <p>
-                <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('删除', ['delete', 'id' => $model->id], [
+                <?= Html::a( '更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary'] ) ?>
+                <?= Html::a( '删除', ['delete', 'id' => $model->id], [
                     'class' => 'btn btn-danger',
                     'data'  => [
                         'confirm' => '是否删除这条记录?',
                         'method'  => 'post',
                     ],
-                ]) ?>
-                <?= Html::a('返回列表', ['index'], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('继续添加', ['create'], ['class' => 'btn btn-primary']) ?>
+                ] ) ?>
+                <?= Html::a( '返回列表', ['index'], ['class' => 'btn btn-primary'] ) ?>
+                <?= Html::a( '继续添加', ['create'], ['class' => 'btn btn-primary'] ) ?>
             </p>
 
-            <?= DetailView::widget([
+            <?= DetailView::widget( [
                 'model'      => $model,
                 'attributes' => [
                     'hotel_id',
@@ -42,7 +42,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     'name',
                     'introduction',
                     'keywords',
-                    'thumb',
+                    [
+                        'attribute' => 'thumb',
+                        'format'    => 'html',
+                        'value'     => function ($model) {
+
+                            $filenameReal = Yii::getAlias( '@webroot/../../frontend/web/temp/hotels/' ) . $model->thumb;
+
+                            if (!file_exists( $filenameReal )) {
+                                $filename = Yii::getAlias( '@web/../../frontend/web/img/' ) . 'not.jpg';
+                            } else {
+                                $filename =  Yii::getAlias( '@web/../../frontend/web/temp/hotels/' ) . $model->thumb;
+                            }
+
+                            return '<img width="280" height="150" src="' . $filename . '" alt="' . $model->name . '" />';
+                        },
+                        'options'   => ['width' => 180],
+                    ],
                     'images',
                     [
                         'attribute' => 'is_promote',
@@ -52,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'Off' => '未启用',
                             ];
 
-                            return $state[$model->is_promote];
+                            return $state[ $model->is_promote ];
                         },
                     ],
                     [
@@ -63,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'Off' => '未启用',
                             ];
 
-                            return $state[$model->is_comments];
+                            return $state[ $model->is_comments ];
                         },
                     ],
                     [
@@ -74,25 +90,25 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'Off' => '未启用',
                             ];
 
-                            return $state[$model->is_using];
+                            return $state[ $model->is_using ];
                         },
                     ],
                     [
                         'attribute' => 'created_at',
                         'value'     => function ($model) {
-                            return date('Y - m -d , h:i', $model->created_at);
+                            return date( 'Y - m -d , h:i', $model->created_at );
                         },
                     ],
                     [
                         'attribute' => 'updated_at',
                         'value'     => function ($model) {
-                            return date('Y - m -d , h:i', $model->updated_at);
+                            return date( 'Y - m -d , h:i', $model->updated_at );
                         },
                     ],
                     'content:html',
                 ],
                 'template'   => '<tr><th width="200">{label}</th><td>{value}</td></tr>',
-            ]) ?>
+            ] ) ?>
 
         </div>
     </div>

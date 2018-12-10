@@ -3,7 +3,6 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Rooms;
 use backend\models\RoomsSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
@@ -14,6 +13,7 @@ use common\models\RoomsTag;
 use common\models\RelevanceHotelsField;
 use common\models\RelevanceRoomsField;
 use common\models\RelevanceRoomsTag;
+use common\models\Rooms;
 
 /**
  * RoomsController implements the CRUD actions for Rooms model.
@@ -33,7 +33,7 @@ class RoomsController extends BaseController
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => [ '@' ],
+                        'roles' => ['@'],
                     ],
                 ],
             ],
@@ -41,7 +41,7 @@ class RoomsController extends BaseController
             'verbs' => [
                 'class'   => \yii\filters\VerbFilter::className(),
                 'actions' => [
-                    'delete' => [ 'POST' ],
+                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -77,11 +77,11 @@ class RoomsController extends BaseController
         $model = $this->findModel( $id );
 
         $dataFieldProvider = new ActiveDataProvider( [
-            'query' => RelevanceRoomsField::find()->where( [ 'rooms_id' => $model->room_id ] ),
+            'query' => RelevanceRoomsField::find()->where( ['rooms_id' => $model->room_id] ),
         ] );
 
         $dataTagProvider = new ActiveDataProvider( [
-            'query' => RelevanceRoomsTag::find()->where( [ 'rooms_id' => $model->room_id ] ),
+            'query' => RelevanceRoomsTag::find()->where( ['rooms_id' => $model->room_id] ),
         ] );
 
         return $this->render( 'view', [
@@ -109,50 +109,24 @@ class RoomsController extends BaseController
             // 创建事务
             $transaction = Yii::$app->db->beginTransaction();
 
-            // 房间参数
-            if (!empty( $post['Rooms']['f_key'] )) {
-
-                foreach ($post['Rooms']['f_key'] as $key => $value) {
-
-                    $modelField = new RelevanceRoomsField();
-
-                    $modelField->f_key = $key;
-                    $modelField->rooms_id = $model->room_id;
-                    $modelField->content = $value;
-
-                    if (!$modelField->save( false )) {
-                        $transaction->rollBack();
-                        continue;
-                    }
-
-                }
+            if (!static::CreateData( $model, $post )) {
+                $transaction->rollBack();
+                Yii::$app->getSession()->setFlash( 'error', '辅助参数无法录入!' );
+                return $this->redirect( ['create'] );
             }
 
-            // 房间标签
-            if (!empty( $post['Rooms']['t_key'] )) {
-
-                foreach ($post['Rooms']['t_key'] as $key => $value) {
-
-                    $modelTag = new RelevanceRoomsTag();
-
-                    $modelTag->t_key = $key;
-                    $modelTag->rooms_id = $model->room_id;
-
-                    if (!$modelTag->save( false )) {
-                        $transaction->rollBack();
-                        continue;
-                    }
-                }
-
+            // 提交事务
+            if (!$model->save()) {
+                $transaction->rollBack();
+                Yii::$app->getSession()->setFlash( 'error', '无法录入数据!' );
+                return $this->redirect( ['create'] );
             }
 
-            if ($model->save()) {
+            $transaction->commit();
 
-                // 提交事务
-                $transaction->commit();
+            Yii::$app->getSession()->setFlash( 'success', '添加 ' . $model->title . ' 成功!' );
 
-                return $this->redirect( [ 'view', 'id' => $model->id ] );
-            }
+            return $this->redirect( ['view', 'id' => $model->id] );
 
         }
 
@@ -192,35 +166,24 @@ class RoomsController extends BaseController
             // 创建事务
             $transaction = Yii::$app->db->beginTransaction();
 
-            // 房间标签
-            if (!empty( $post['Rooms']['t_key'] )) {
-
-                if (!RelevanceRoomsTag::deleteAll( [ 'rooms_id' => $model->room_id ] )) {
-                    $transaction->rollBack();
-                }
-
-                foreach ($post['Rooms']['t_key'] as $key => $value) {
-
-                    $modelTag = new RelevanceRoomsTag();
-
-                    $modelTag->t_key = $key;
-                    $modelTag->rooms_id = $model->room_id;
-
-                    if (!$modelTag->save( false )) {
-                        $transaction->rollBack();
-                        continue;
-                    }
-                }
-
+            if (!static::CreateData( $model, $post, 'On' )) {
+                $transaction->rollBack();
+                Yii::$app->getSession()->setFlash( 'error', '辅助参数无法录入!' );
+                return $this->redirect( ['create'] );
             }
 
-            if ($model->save()) {
-
-                // 提交事务
-                $transaction->commit();
-
-                return $this->redirect( [ 'view', 'id' => $model->id ] );
+            if (!$model->save()) {
+                $transaction->rollBack();
+                Yii::$app->getSession()->setFlash( 'error', '无法录入数据!' );
+                return $this->redirect( ['create'] );
             }
+
+            // 提交事务
+            $transaction->commit();
+
+            Yii::$app->getSession()->setFlash( 'success', '修改 ' . $model->title . ' 成功!' );
+
+            return $this->redirect( ['view', 'id' => $model->id] );
         }
 
         $result['classify'] = RoomsClassify::getClsSelect( 'Off' );
@@ -250,7 +213,7 @@ class RoomsController extends BaseController
     {
         $this->findModel( $id )->delete();
 
-        return $this->redirect( [ 'index' ] );
+        return $this->redirect( ['index'] );
     }
 
     /**
@@ -270,4 +233,79 @@ class RoomsController extends BaseController
 
         throw new NotFoundHttpException( 'The requested page does not exist.' );
     }
+
+    /**
+     * 录入参数和标签数据
+     *
+     * @param        $model
+     * @param        $post
+     * @param string $delete
+     *
+     * @return bool
+     */
+    public static function CreateData($model, $post, $delete = 'Off')
+    {
+
+        if (empty( $model ) || empty( $post )) {
+            return false;
+        }
+
+        // 房间参数
+        if (!empty( $post['Rooms']['f_key'] ) && is_array( $post['Rooms']['f_key'] )) {
+
+            if ($delete == 'On') {
+                if (!RelevanceRoomsField::deleteAll( ['rooms_id' => $model->room_id] )) {
+                    return false;
+                }
+            }
+
+            foreach ($post['Rooms']['f_key'] as $key => $value) {
+
+                if (empty( $value )) {
+                    continue;
+                }
+
+                $modelField = new RelevanceRoomsField();
+
+                $modelField->f_key = $key;
+                $modelField->rooms_id = $model->room_id;
+                $modelField->content = $value;
+
+                if (!$modelField->save( false )) {
+                    return false;
+                }
+
+            }
+        }
+
+        // 房间标签
+        if (!empty( $post['Rooms']['t_key'] )) {
+
+            if ($delete == 'On') {
+                if (!RelevanceRoomsTag::deleteAll( ['rooms_id' => $model->room_id] )) {
+                    return false;
+                }
+            }
+
+            foreach ($post['Rooms']['t_key'] as $key => $value) {
+
+                if (empty( $value )) {
+                    continue;
+                }
+
+                $modelTag = new RelevanceRoomsTag();
+
+                $modelTag->t_key = $key;
+                $modelTag->rooms_id = $model->room_id;
+
+                if (!$modelTag->save( false )) {
+                    return false;
+                }
+            }
+
+        }
+
+        return true;
+    }
+
 }

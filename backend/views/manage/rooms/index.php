@@ -20,8 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="col-lg-12">
 
     <div class="form-group">
-        <a href='<?= Url::to(['rooms/create']) ?>' class='btn btn-primary btn-lg' title='添加酒店房间'>添加房间</a>
-        <a href='<?= Url::to(['create']) ?>' class='btn btn-primary btn-lg' title='添加房间分类'>添加房间分类</a>
+        <a href='<?= Url::to(['create']) ?>' class='btn btn-primary' title='添加酒店房间'>添加房间</a>
+        <a href='<?= Url::to(['rooms-cls/create']) ?>' class='btn btn-primary' title='添加房间分类'>添加房间分类</a>
     </div>
 
     <div class="panel panel-default">
@@ -48,9 +48,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'thumb',
                         'format'    => 'html',
                         'value'     => function ($model) {
-                            $images = (!is_file( Yii::getAlias( '@webroot/../../frontend/web/temp/coupon/' ) . $model->thumb )) ?
+
+                            $images = (!is_file( Yii::getAlias( '@webroot/../../frontend/web/temp/rooms/' ) . $model->thumb )) ?
                                 Yii::getAlias( '@web/../../frontend/web/img/not.jpg' ) :
-                                Yii::getAlias( '@web/../../frontend/web/temp/coupon/' ) . $model->thumb;
+                                Yii::getAlias( '@web/../../frontend/web/temp/rooms/' ) . $model->thumb;
 
                             return '<img width="280" height="150" src="' . $images . '" alt="' . $model->title . '" />';
                         },
@@ -73,7 +74,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                     ],
                     'room_num',
-                    //'title',
                     'num',
                     'price',
                     [
@@ -97,5 +97,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
         </div>
     </div>
+
+    <?= $this->render('../../formMsg'); ?>
+
 </div>
 

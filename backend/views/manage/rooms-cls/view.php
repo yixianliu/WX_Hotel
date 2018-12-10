@@ -41,7 +41,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     'description:ntext',
                     'keywords',
                     'json_data',
-                    'parent_id',
+                    [
+                        'attribute' => 'parent_id',
+                        'value'     => function ($model) {
+
+                            if ($model->parent_id == \common\models\RoomsClassify::$parentId)
+                                return '父类级别';
+
+                            $data = \common\models\RoomsClassify::findOne(['c_key' => $model->parent_id]);
+                            return $data->name;
+                        },
+                    ],
                     [
                         'attribute' => 'is_using',
                         'value'     => function ($model) {
@@ -56,13 +66,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'created_at',
                         'value'     => function ($model) {
-                            return date('Y - m -d , h:i', $model->created_at);
+                            return date('Y - m - d , h:i', $model->created_at);
                         },
                     ],
                     [
                         'attribute' => 'updated_at',
                         'value'     => function ($model) {
-                            return date('Y - m -d , h:i', $model->updated_at);
+                            return date('Y - m - d , h:i', $model->updated_at);
                         },
                     ],
                 ],

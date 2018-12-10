@@ -49,16 +49,16 @@ class RoomsClassify extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [ [ 'name', 'parent_id' ], 'required' ],
-            [ [ 'sort_id', 'created_at', 'updated_at' ], 'integer' ],
-            [ [ 'description', 'is_using' ], 'string' ],
-            [ [ 'c_key', 'keywords', 'json_data', 'parent_id' ], 'string', 'max' => 55 ],
-            [ [ 'name' ], 'string', 'max' => 85 ],
-            [ [ 'c_key' ], 'unique' ],
-            [ [ 'name' ], 'unique' ],
+            [['name', 'parent_id'], 'required'],
+            [['sort_id', 'created_at', 'updated_at'], 'integer'],
+            [['description', 'is_using'], 'string'],
+            [['c_key', 'keywords', 'json_data', 'parent_id'], 'string', 'max' => 55],
+            [['name'], 'string', 'max' => 85],
+            [['c_key'], 'unique'],
+            [['name'], 'unique'],
 
-            [ [ 'is_using' ], 'default', 'value' => 'On' ],
-            [ [ 'sort_id' ], 'default', 'value' => 1 ],
+            [['is_using'], 'default', 'value' => 'On'],
+            [['sort_id'], 'default', 'value' => 1],
         ];
     }
 
@@ -85,11 +85,11 @@ class RoomsClassify extends \yii\db\ActiveRecord
     {
 
         // 审核状态
-        $array = !empty( $status ) ? [ 'is_using' => $status ] : [ '!=', 'is_using', '' ];
+        $array = !empty( $status ) ? ['is_using' => $status] : ['!=', 'is_using', ''];
 
         $pid = empty( $pid ) ? static::$parentId : $pid;
 
-        return static::find()->where( $array )->andWhere( [ 'parent_id' => $pid ] )
+        return static::find()->where( $array )->andWhere( ['parent_id' => $pid] )
             ->orderBy( [
                 'sort_id' => SORT_DESC,
                 'c_key'   => SORT_DESC,
@@ -107,7 +107,7 @@ class RoomsClassify extends \yii\db\ActiveRecord
      */
     public static function findWhereClassify($id)
     {
-        return static::find()->where( [ 'is_using' => 'On', 'c_key' => $id ] )->one();
+        return static::find()->where( ['is_using' => 'On', 'c_key' => $id] )->one();
     }
 
     /**

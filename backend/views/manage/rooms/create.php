@@ -8,4 +8,4 @@ $this->params['breadcrumbs'][] = ['label' => '房间列表', 'url' => ['index']]
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= $this->render('_form', ['model' => $model, 'result' => $result]) ?>
+<?= $this->render( '_form', ['model' => $model, 'result' => $result] ) ?>

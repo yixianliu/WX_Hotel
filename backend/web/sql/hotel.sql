@@ -17,7 +17,7 @@ CREATE TABLE `#DB_PREFIX#Hotels` (
     `keywords` VARCHAR(120) NULL COMMENT '关键字',
     `path` VARCHAR(255) NULL COMMENT '酒店文件路径',
     `thumb` VARCHAR(85) NULL COMMENT '酒店缩略图',
-    `images` VARCHAR(85) NULL COMMENT '酒店图片',
+    `images` VARCHAR(255) NULL COMMENT '酒店图片',
     `is_promote` SET('On', 'Off') NOT NULL COMMENT '推广',
     `is_using` SET('On', 'Off', 'Out', 'Not') NOT NULL COMMENT '审核',
     `is_comments` SET('On', 'Off') NOT NULL COMMENT '是否启用评论',

@@ -14,8 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="col-lg-12">
 
     <div class="form-group">
-        <a href='<?= Url::to(['rooms/create']) ?>' class='btn btn-primary btn-lg' title='添加酒店房间'>添加酒店房间</a>
-        <a href='<?= Url::to(['create']) ?>' class='btn btn-primary btn-lg' title='添加房间分类'>添加房间参数</a>
+        <a href='<?= Url::to(['rooms/create']) ?>' class='btn btn-primary' title='添加酒店房间'>添加酒店房间</a>
+        <a href='<?= Url::to(['create']) ?>' class='btn btn-primary' title='添加房间分类'>添加房间参数</a>
     </div>
 
     <div class="panel panel-default">

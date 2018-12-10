@@ -4,7 +4,6 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\RoomsClassify;
-use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
 /**

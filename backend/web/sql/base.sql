@@ -282,6 +282,8 @@ CREATE TABLE `#DB_PREFIX#Article` (
     `introduction` VARCHAR(255) NULL COMMENT '导读',
     `keywords` VARCHAR(255) NULL COMMENT '关键字',
     `path` VARCHAR(55) NULL COMMENT '路径',
+    `thumb` VARCHAR(85) NULL COMMENT '文章缩略图',
+    `images` VARCHAR(255) NULL COMMENT '文章图片',
     `praise` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '赞',
     `forward` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '转发',
     `collection` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '收藏',
