@@ -101,6 +101,8 @@ class Product extends \yii\db\ActiveRecord
             'introduction' => '产品导读',
             'keywords'     => '关键词',
             'path'         => '产品路径',
+            'thumb'        => '产品缩略图',
+            'images'       => '产品图片',
             'praise'       => 'Praise',
             'forward'      => 'Forward',
             'collection'   => 'Collection',

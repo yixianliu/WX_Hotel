@@ -51,7 +51,7 @@ $this->beginPage();
 
         <div class="page-sidebar page-sidebar-fixed">
 
-            <?= \common\widgets\iMenu\MenuAdmin::widget( [ 'config' => [ 'A3' ] ] ); ?>
+            <?= \common\widgets\iMenu\MenuAdmin::widget( [ 'config' => [ 'AdminManage' ] ] ); ?>
 
         </div>
 

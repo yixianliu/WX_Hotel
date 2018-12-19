@@ -13,7 +13,7 @@ use yii\behaviors\TimestampBehavior;
 
 class Menu extends ActiveRecord
 {
-	
+
     static public $parent_id = 'M0';
 
     static public $frontend_parent_id = 'E1';
@@ -89,15 +89,15 @@ class Menu extends ActiveRecord
     public static function findByAll($parent = null, $relevance = 'Off')
     {
 
-        $parent = empty($parent) ? static::$frontend_parent_id : $parent;
+        $parent = empty( $parent ) ? static::$frontend_parent_id : $parent;
 
         if ($relevance == 'On')
-            return static::find()->where(['is_using' => 'On', 'parent_id' => $parent])->asArray()->all();
+            return static::find()->where( ['is_using' => 'On', 'parent_id' => $parent] )->asArray()->all();
 
-        return static::find()->where([self::tableName() . '.is_using' => 'On', self::tableName() . '.parent_id' => $parent])
-            ->orderBy('sort_id', 'ASC')
-            ->joinWith('role')
-            ->joinWith('menuModel')
+        return static::find()->where( [self::tableName() . '.is_using' => 'On', self::tableName() . '.parent_id' => $parent] )
+            ->orderBy( 'sort_id', 'ASC' )
+            ->joinWith( 'role' )
+            ->joinWith( 'menuModel' )
             ->asArray()
             ->all();
     }
@@ -113,15 +113,15 @@ class Menu extends ActiveRecord
     public static function findByOne($id = 1, $relevance = 'Off')
     {
 
-        if (empty($id))
+        if (empty( $id ))
             return false;
 
         if ($relevance == 'On')
-            return static::find()->where(['is_using' => 'On', 'm_key' => $id])->asArray()->one();
+            return static::find()->where( ['is_using' => 'On', 'm_key' => $id] )->asArray()->one();
 
-        return static::find()->where([self::tableName() . '.m_key' => $id])
-            ->joinWith('role')
-            ->joinWith('menuModel')
+        return static::find()->where( [self::tableName() . '.m_key' => $id] )
+            ->joinWith( 'role' )
+            ->joinWith( 'menuModel' )
             ->asArray()
             ->one();
 
@@ -130,13 +130,13 @@ class Menu extends ActiveRecord
     // 菜单模型
     public function getMenuModel()
     {
-        return $this->hasOne(MenuModel::className(), ['url_key' => 'model_key']);
+        return $this->hasOne( MenuModel::className(), ['url_key' => 'model_key'] );
     }
 
     // 角色
     public function getRole()
     {
-        return $this->hasOne(Role::className(), ['r_key' => 'r_key']);
+        return $this->hasOne( Role::className(), ['r_key' => 'r_key'] );
     }
 
     /**
@@ -153,9 +153,9 @@ class Menu extends ActiveRecord
         // 初始化
         $dataMenu = [];
 
-        $data = static::findByAll($pid);
+        $data = static::findByAll( $pid );
 
-        if (empty($data))
+        if (empty( $data ))
             return;
 
         foreach ($data as $value) {
@@ -171,7 +171,7 @@ class Menu extends ActiveRecord
                         $array['open'] = 'On';
 
                     $array['url'] = ['/download/index'];
-                    $array['child'] = static::recursionJobMenu($value, $type);
+                    $array['child'] = static::recursionJobMenu( $value, $type );
                     break;
 
                 // 招聘
@@ -181,7 +181,7 @@ class Menu extends ActiveRecord
                         $array['open'] = 'On';
 
                     $array['url'] = ['/job/index'];
-                    $array['child'] = static::recursionJobMenu($value, $type);
+                    $array['child'] = static::recursionJobMenu( $value, $type );
                     break;
 
                 // 产品分类模型
@@ -190,33 +190,33 @@ class Menu extends ActiveRecord
                     if (Yii::$app->controller->id == 'product')
                         $array['open'] = 'On';
 
-                    $array['child'] = static::recursionProductMenu(null, ProductClassify::$parent_cly_id, $type);
+                    $array['child'] = static::recursionProductMenu( null, ProductClassify::$parent_cly_id, $type );
                     break;
 
                 // 采购模型
                 case 'purchase':
-                    $array['child'] = static::recursionPurchaseMenu($value, $type);
+                    $array['child'] = static::recursionPurchaseMenu( $value, $type );
                     break;
 
                 // 供应模型
                 case 'supply':
 
-                    $product = PsbClassify::findAll(['is_using' => 'On', 'is_type' => 'Supply']);
+                    $product = PsbClassify::findAll( ['is_using' => 'On', 'is_type' => 'Supply'] );
 
                     foreach ($product as $key => $values) {
-                        $array['child'][$key]['url'] = ['/supply/index', 'id' => $values['c_key']];
-                        $array['child'][$key]['child'] = static::recursionMenu($values, $type);
+                        $array['child'][ $key ]['url'] = ['/supply/index', 'id' => $values['c_key']];
+                        $array['child'][ $key ]['child'] = static::recursionMenu( $values, $type );
                     }
                     break;
 
                 // 投标模型
                 case 'bid':
 
-                    $product = PsbClassify::findAll(['is_using' => 'On', 'parent_id' => 'C0']);
+                    $product = PsbClassify::findAll( ['is_using' => 'On', 'parent_id' => 'C0'] );
 
                     foreach ($product as $key => $values) {
-                        $array['child'][$key]['url'] = ['/bid/index', 'id' => $values['c_key']];
-                        $array['child'][$key]['child'] = static::recursionMenu($values, $type);
+                        $array['child'][ $key ]['url'] = ['/bid/index', 'id' => $values['c_key']];
+                        $array['child'][ $key ]['child'] = static::recursionMenu( $values, $type );
                     }
                     break;
 
@@ -226,20 +226,20 @@ class Menu extends ActiveRecord
                     if (Yii::$app->controller->id == 'news')
                         $array['open'] = 'On';
 
-                    $array['child'] = static::recursionNewsMenu(null, NewsClassify::$parent_cly_id, $type);
+                    $array['child'] = static::recursionNewsMenu( null, NewsClassify::$parent_cly_id, $type );
                     break;
 
                 // 自定义界面
                 case 'pages':
 
-                    $id = Yii::$app->request->get('id', null);
+                    $id = Yii::$app->request->get( 'id', null );
 
-                    $array['url'] = static::setMenuModel($value);
+                    $array['url'] = static::setMenuModel( $value );
 
-                    if (!empty($array['url']['id']) && $array['url']['id'] == $id)
+                    if (!empty( $array['url']['id'] ) && $array['url']['id'] == $id)
                         $array['open'] = 'On';
 
-                    $array['child'] = static::recursionPagesMenu($value, $type);
+                    $array['child'] = static::recursionPagesMenu( $value, $type );
                     break;
 
                 // 超链接
@@ -247,10 +247,10 @@ class Menu extends ActiveRecord
 
                     $urlActive = Yii::$app->controller->id . '/' . Yii::$app->controller->action->id;
 
-                    if (!empty($array['url']) && $array['url'] == $urlActive)
+                    if (!empty( $array['url'] ) && $array['url'] == $urlActive)
                         $array['open'] = 'On';
 
-                    $array['child'] = static::recursionUrlMenu($value, $value['parent_id']);
+                    $array['child'] = static::recursionUrlMenu( $value, $value['parent_id'] );
 
                     break;
             }
@@ -273,22 +273,22 @@ class Menu extends ActiveRecord
     public static function recursionProductMenu($data = null, $pid = null, $type = null)
     {
 
-        if (empty($pid)) {
+        if (empty( $pid )) {
 
-            if (empty($data) || empty($data['c_key']))
+            if (empty( $data ) || empty( $data['c_key'] ))
                 return;
 
             $pid = $data['c_key'];
         }
 
-        $child = ProductClassify::findByAll($pid);
+        $child = ProductClassify::findByAll( $pid );
 
-        if (empty($child))
+        if (empty( $child ))
             return;
 
         foreach ($child as $key => $value) {
-            $child[$key]['url'] = ['product/index', 'id' => $value['c_key']];
-            $child[$key]['child'] = static::recursionProductMenu($value, null, $type);
+            $child[ $key ]['url'] = ['product/index', 'id' => $value['c_key']];
+            $child[ $key ]['child'] = static::recursionProductMenu( $value, null, $type );
         }
 
         return $child;
@@ -305,22 +305,22 @@ class Menu extends ActiveRecord
     public static function recursionNewsMenu($data = null, $pid = null, $type = null)
     {
 
-        if (empty($pid)) {
+        if (empty( $pid )) {
 
-            if (empty($data) || empty($data['c_key']))
+            if (empty( $data ) || empty( $data['c_key'] ))
                 return;
 
             $pid = $data['c_key'];
         }
 
-        $child = NewsClassify::findByAll($pid);
+        $child = NewsClassify::findByAll( $pid );
 
-        if (empty($child))
+        if (empty( $child ))
             return;
 
         foreach ($child as $key => $value) {
-            $child[$key]['url'] = ['news/index', 'id' => $value['c_key']];
-            $child[$key]['child'] = static::recursionNewsMenu($value, null, $type);
+            $child[ $key ]['url'] = ['news/index', 'id' => $value['c_key']];
+            $child[ $key ]['child'] = static::recursionNewsMenu( $value, null, $type );
         }
 
         return $child;
@@ -337,17 +337,17 @@ class Menu extends ActiveRecord
     public static function recursionPurchaseMenu($data, $type = null)
     {
 
-        if (empty($data) || empty($data['m_key']))
+        if (empty( $data ) || empty( $data['m_key'] ))
             return;
 
-        $child = static::findByAll($data['m_key'], $type);
+        $child = static::findByAll( $data['m_key'], $type );
 
-        if (empty($child))
+        if (empty( $child ))
             return;
 
         foreach ($child as $key => $value) {
-            $child[$key]['url'] = static::setMenuModel($value);
-            $child[$key]['child'] = static::recursionPurchaseMenu($value, $type);
+            $child[ $key ]['url'] = static::setMenuModel( $value );
+            $child[ $key ]['child'] = static::recursionPurchaseMenu( $value, $type );
         }
 
         return $child;
@@ -364,17 +364,17 @@ class Menu extends ActiveRecord
     public static function recursionJobMenu($data, $type = null)
     {
 
-        if (empty($data) || empty($data['m_key']))
+        if (empty( $data ) || empty( $data['m_key'] ))
             return;
 
-        $child = static::findByAll($data['m_key'], $type);
+        $child = static::findByAll( $data['m_key'], $type );
 
-        if (empty($child))
+        if (empty( $child ))
             return;
 
         foreach ($child as $key => $value) {
-            $child[$key]['url'] = static::setMenuModel($value);
-            $child[$key]['child'] = static::recursionJobMenu($value, $type);
+            $child[ $key ]['url'] = static::setMenuModel( $value );
+            $child[ $key ]['child'] = static::recursionJobMenu( $value, $type );
         }
 
         return $child;
@@ -391,17 +391,17 @@ class Menu extends ActiveRecord
     static public function recursionMenu($data, $type = null)
     {
 
-        if (empty($data) || empty($data['m_key']))
+        if (empty( $data ) || empty( $data['m_key'] ))
             return;
 
-        $child = static::findByAll($data['m_key'], $type);
+        $child = static::findByAll( $data['m_key'], $type );
 
-        if (empty($child))
+        if (empty( $child ))
             return;
 
         foreach ($child as $key => $value) {
-            $child[$key]['url'] = [$value['menuModel']['url_key']];
-            $child[$key]['child'] = static::recursionMenu($value, $type);
+            $child[ $key ]['url'] = [$value['menuModel']['url_key']];
+            $child[ $key ]['child'] = static::recursionMenu( $value, $type );
         }
 
         return $child;
@@ -418,27 +418,27 @@ class Menu extends ActiveRecord
     static public function recursionPagesMenu($data, $type = null)
     {
 
-        if (empty($data))
+        if (empty( $data ))
             return;
 
         $urlActive = '/' . Yii::$app->controller->id . '/' . Yii::$app->controller->action->id;
 
         // 子分类
-        $child = static::findByAll($data['m_key'], $type);
+        $child = static::findByAll( $data['m_key'], $type );
 
-        if (empty($child))
+        if (empty( $child ))
             return;
 
-        $id = Yii::$app->request->get('id', null);
+        $id = Yii::$app->request->get( 'id', null );
 
         foreach ($child as $key => $value) {
 
-            $child[$key]['url'] = static::setMenuModel($value);
+            $child[ $key ]['url'] = static::setMenuModel( $value );
 
-            if (!empty($child[$key]['url'][0]) && $urlActive == $child[$key]['url'][0] && !empty($child[$key]['url']['id']) && $child[$key]['url']['id'] == $id)
-                $child[$key]['active'] = 'On';
+            if (!empty( $child[ $key ]['url'][0] ) && $urlActive == $child[ $key ]['url'][0] && !empty( $child[ $key ]['url']['id'] ) && $child[ $key ]['url']['id'] == $id)
+                $child[ $key ]['active'] = 'On';
 
-            $child[$key]['child'] = static::recursionPagesMenu($value, $type);
+            $child[ $key ]['child'] = static::recursionPagesMenu( $value, $type );
         }
 
         return $child;
@@ -455,26 +455,26 @@ class Menu extends ActiveRecord
     static public function recursionUrlMenu($data, $adminId = null)
     {
 
-        if (empty($data) || empty($data['m_key'])) {
+        if (empty( $data ) || empty( $data['m_key'] )) {
             return;
         }
 
         $urlActive = Yii::$app->controller->id . '/' . Yii::$app->controller->action->id;
 
-        $child = static::findByAll($data['m_key']);
+        $child = static::findByAll( $data['m_key'] );
 
-        if (empty($child))
+        if (empty( $child ))
             return;
 
         foreach ($child as $key => $value) {
 
-            $child[$key]['url'] = static::setMenuModel($value, $adminId);
+            $child[ $key ]['url'] = static::setMenuModel( $value, $adminId );
 
             // 针对后台
-            if ($child[$key]['url'] == $urlActive)
-                $child[$key]['active'] = 'On';
+            if ($child[ $key ]['url'] == $urlActive)
+                $child[ $key ]['active'] = 'On';
 
-            $child[$key]['child'] = static::recursionUrlMenu($value, $adminId);
+            $child[ $key ]['child'] = static::recursionUrlMenu( $value, $adminId );
         }
 
         return $child;
@@ -494,7 +494,7 @@ class Menu extends ActiveRecord
         // 初始化
         $urls = null;
 
-        if (empty($data['menuModel']['url_key']))
+        if (empty( $data['menuModel']['url_key'] ))
             return;
 
         switch ($data['menuModel']['url_key']) {
@@ -508,13 +508,13 @@ class Menu extends ActiveRecord
             case 'pages':
 
                 // 输出调整路径
-                if (strpos($data['url'], ',') !== false) {
-                    $urlData = explode(',', $data['url']);
+                if (strpos( $data['url'], ',' ) !== false) {
+                    $urlData = explode( ',', $data['url'] );
                     $urls = [$urlData[0], 'id' => $urlData[1]];
                     break;
                 }
 
-                $urls = empty($data['url']) ? ['/pages/' . $data['is_type'], 'id' => $data['pages']['page_id']] : [$data['url']];
+                $urls = empty( $data['url'] ) ? ['/pages/' . $data['is_type'], 'id' => $data['pages']['page_id']] : [$data['url']];
 
                 break;
 
@@ -536,9 +536,9 @@ class Menu extends ActiveRecord
             // 超链接
             case 'urls':
 
-                if (!empty($data['url'])) {
+                if (!empty( $data['url'] )) {
 
-                    if (strpos($data['url_data'], 'http') !== false) {
+                    if (strpos( $data['url_data'], 'http' ) !== false) {
                         return $data['url_data'];
                     }
 
@@ -564,10 +564,10 @@ class Menu extends ActiveRecord
     public static function getSelectMenu($parent_id = null)
     {
 
-        $parent_id = empty($parent_id) ? static::$parent_id : $parent_id;
+        $parent_id = empty( $parent_id ) ? static::$parent_id : $parent_id;
 
         // 产品分类
-        $dataClassify = static::findByAll($parent_id, Yii::$app->session['language']);
+        $dataClassify = static::findByAll( $parent_id, Yii::$app->session['language'] );
 
         // 初始化
         $result = [];
@@ -576,14 +576,14 @@ class Menu extends ActiveRecord
 
         foreach ($dataClassify as $key => $value) {
 
-            $result[$value['m_key']] = $value['name'];
+            $result[ $value['m_key'] ] = $value['name'];
 
-            $child = static::recursionMenuSelect($value);
+            $child = static::recursionMenuSelect( $value );
 
-            if (empty($child))
+            if (empty( $child ))
                 continue;
 
-            $result = array_merge($result, $child);
+            $result = array_merge( $result, $child );
         }
 
         return $result;
@@ -600,16 +600,16 @@ class Menu extends ActiveRecord
     public static function recursionMenuSelect($data, $num = 1)
     {
 
-        if (empty($data))
+        if (empty( $data ))
             return;
 
         // 初始化
         $result = [];
         $symbol = null;
 
-        $child = static::findByAll($data['m_key'], Yii::$app->session['language']);
+        $child = static::findByAll( $data['m_key'], Yii::$app->session['language'] );
 
-        if (empty($child))
+        if (empty( $child ))
             return;
 
         if ($num != 0) {
@@ -620,14 +620,14 @@ class Menu extends ActiveRecord
 
         foreach ($child as $key => $value) {
 
-            $result[$value['m_key']] = $symbol . $value['name'];
+            $result[ $value['m_key'] ] = $symbol . $value['name'];
 
-            $childData = static::recursionMenuSelect($value, ($num + 1));
+            $childData = static::recursionMenuSelect( $value, ($num + 1) );
 
-            if (empty($childData))
+            if (empty( $childData ))
                 continue;
 
-            $result = array_merge($result, $childData);
+            $result = array_merge( $result, $childData );
 
         }
 

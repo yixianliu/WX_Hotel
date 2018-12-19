@@ -6,7 +6,6 @@
  */
 
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use backend\assets\AppAsset;
 
@@ -17,7 +16,7 @@ $this->beginPage();
 ?>
 
 <!DOCTYPE html>
-<html lang="en" class="body-full-height">
+<html lang="cn" class="body-full-height">
 <head>
 
     <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
@@ -31,7 +30,7 @@ $this->beginPage();
     <meta name='description' content='<?= Yii::$app->params['WebInfo']['DESCRIPTION']; ?>'/>
     <meta name='author' content='<?= Yii::$app->params['WebInfo']['DEVELOPERS']; ?>'/>
 
-    <link rel='shortcut icon' type='image/x-icon' href='./favicon.ico'/>
+    <link rel="shortcut icon" href="<?= Yii::getAlias( '@web' ) ?>/favicon.ico" type="image/x-icon"/>
 
     <?php $this->head() ?>
 
@@ -46,29 +45,29 @@ $this->beginPage();
 
         <div class="login-body">
 
-            <?php $form = ActiveForm::begin( [ 'action' => [ 'mount/member/in' ], 'class' => "form-horizontal", 'method' => 'post', 'id' => $model->formName() ] ); ?>
+            <?php $form = ActiveForm::begin( ['action' => ['mount/member/in'], 'class' => "form-horizontal"] ); ?>
 
-            <?= $form->field( $model, 'username' )->label( '帐号' )->textInput( [ 'maxlength' => true, 'class' => 'form-control', 'autofocus' => true ] ); ?>
+            <?= $form->field( $model, 'username' )->label( '帐号' )->textInput( ['maxlength' => true, 'class' => 'form-control', 'autofocus' => true] ); ?>
 
-            <?= $form->field( $model, 'password' )->label( '密码' )->passwordInput( [ 'maxlength' => true, 'class' => 'form-control' ] ); ?>
+            <?= $form->field( $model, 'password' )->label( '密码' )->passwordInput( ['maxlength' => true, 'class' => 'form-control'] ); ?>
 
             <div class="form-group">
-                <?= Html::submitButton( '立即登录', [ 'class' => 'btn btn-orange btn-block btn-lg' ] ); ?>
+                <?= Html::submitButton( '立即登录', ['class' => 'btn btn-orange btn-block btn-lg'] ); ?>
             </div>
 
             <?php ActiveForm::end(); ?>
 
         </div>
 
-        <?= \common\widgets\iMessage\FormMsg::widget( [ 'config' => [ 'tpl' => 'MountForm', 'FormName' => $model->formName() ] ] ); ?>
-
         <div class="login-footer">
             <div class="pull-left">
-                &copy; 2004 - 2017 <?= Yii::$app->params['WebInfo']['NAME']; ?>
+                &copy; 2004 - 2027 <?= Yii::$app->params['WebInfo']['NAME']; ?>
             </div>
         </div>
 
     </div>
+
+    <?= Yii::$app->view->renderFile( '@app/views/_AjaxMsg.php', ['FormUrl' => \yii\helpers\Url::to(['mount/center/view'])] ); ?>
 
 </div>
 

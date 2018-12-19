@@ -54,7 +54,6 @@ $this->beginPage();
 
             <?php $form = ActiveForm::begin( [ 'action' => [ 'member/login' ], 'class' => "form-horizontal", 'method' => 'post', 'id' => $model->formName() ] ); ?>
 
-
             <?= $form->field( $model, 'username' )->textInput( [ 'maxlength' => true, 'placeholder' => '帐号...', 'class' => 'form-control', 'autofocus' => true ] ); ?>
 
             <?= $form->field( $model, 'password' )->passwordInput( [ 'maxlength' => true, 'placeholder' => '密码...', 'class' => 'form-control' ] ); ?>
@@ -66,6 +65,8 @@ $this->beginPage();
             <?php ActiveForm::end(); ?>
 
         </div>
+
+        <?= Yii::$app->view->renderFile( '@app/views/formMsg.php' ); ?>
 
         <div class="login-footer">
             <div class="pull-left">

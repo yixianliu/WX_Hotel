@@ -20,16 +20,16 @@ use kartik\select2\Select2;
 
             <div class="panel-body">
 
-                <?= $form->field( $model, 'name' )->textInput( [ 'maxlength' => true ] ) ?>
+                <?= $form->field( $model, 'name' )->textInput( ['maxlength' => true] ) ?>
 
-                <?= $form->field( $model, 'content' )->textInput( [ 'maxlength' => true ] ) ?>
+                <?= $form->field( $model, 'content' )->textInput( ['maxlength' => true] ) ?>
 
-                <?= $form->field( $model, 'description' )->textarea( [ 'rows' => 6 ] ) ?>
+                <?= $form->field( $model, 'description' )->textarea( ['rows' => 6] ) ?>
 
                 <?=
                 $form->field( $model, 'is_using' )->widget( Select2::classname(), [
-                    'data'          => [ 'On' => '启用', 'Off' => '禁用' ],
-                    'options'       => [ 'placeholder' => '是否启用...' ],
+                    'data'          => ['On' => '启用', 'Off' => '禁用'],
+                    'options'       => ['placeholder' => '是否启用...'],
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],
@@ -40,9 +40,9 @@ use kartik\select2\Select2;
 
             <div class="panel-footer">
 
-                <?= Html::submitButton( $model->isNewRecord ? '添加' : '更新', [ 'class' => $model->isNewRecord ? 'btn btn-success btn-lg' : 'btn btn-primary btn-lg' ] ) ?>
+                <?= Html::submitButton( $model->isNewRecord ? '添加' : '更新', ['class' => $model->isNewRecord ? 'btn btn-success btn-lg' : 'btn btn-primary btn-lg'] ) ?>
 
-                <a href='<?= Url::to( [ 'index' ] ) ?>' class='btn btn-primary btn-lg' title='返回列表'>返回列表</a>
+                <a href='<?= Url::to( ['index'] ) ?>' class='btn btn-primary btn-lg' title='返回列表'>返回列表</a>
 
             </div>
 

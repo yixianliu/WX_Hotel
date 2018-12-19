@@ -56,7 +56,7 @@ use phpnt\ICheck\ICheck;
                             'clientOptions' => [
                                 //编辑区域大小
                                 'lang'               => 'zh-cn',
-                                'initialFrameHeight' => '400',
+                                'initialFrameHeight' => '500',
                                 'elementPathEnabled' => false,
                                 'wordCount'          => false,
                             ],
@@ -67,7 +67,7 @@ use phpnt\ICheck\ICheck;
 
                         <?= $form->field( $model, 'price' )->textInput( ['maxlength' => true] ) ?>
 
-                        <?= $this->render( '../../upload', ['model' => $model, 'id' => $model->room_id, 'num' => 1, 'attribute' => 'thumb', 'text' => '上传缩略图', 'form' => $form] ); ?>
+                        <?= Yii::$app->view->renderFile( '@app/views/upload.php', ['model' => $model, 'id' => $model->room_id, 'num' => 1, 'attribute' => 'thumb', 'text' => '上传缩略图', 'form' => $form] ); ?>
 
                         <div class="form-group">
                             <div class="alert alert-info" role="alert">
@@ -76,7 +76,7 @@ use phpnt\ICheck\ICheck;
                             </div>
                         </div>
 
-                        <?= $this->render( '../../upload', ['model' => $model, 'id' => $model->room_id, 'text' => '上传图片', 'attribute' => 'images', 'form' => $form] ); ?>
+                        <?= Yii::$app->view->renderFile( '@app/views/upload.php', ['model' => $model, 'id' => $model->room_id, 'text' => '上传图片', 'attribute' => 'images', 'form' => $form] ); ?>
 
                         <div class="form-group">
                             <div class="alert alert-info" role="alert">
@@ -169,7 +169,8 @@ use phpnt\ICheck\ICheck;
                                 ]] )
                             ?>
 
-                            <?= $form->field( $model, 'is_comments' )->widget( ICheck::className(), [
+                            <?=
+                            $form->field( $model, 'is_comments' )->widget( ICheck::className(), [
                                 'type'    => ICheck::TYPE_RADIO_LIST,
                                 'style'   => ICheck::STYLE_SQUARE,
                                 'items'   => ['On' => '启用', 'Off' => '禁用'],
@@ -186,9 +187,9 @@ use phpnt\ICheck\ICheck;
 
                 </div>
 
-                <div class="panel-footer">
+                <?= $form->field( $model, 'room_id' )->hiddenInput()->label( false ) ?>
 
-                    <?= $form->field( $model, 'room_id' )->hiddenInput()->label( false ) ?>
+                <div class="panel-footer">
 
                     <?= Html::submitButton( $model->isNewRecord ? '添加' : '更新', ['class' => $model->isNewRecord ? 'btn btn-success btn-lg' : 'btn btn-primary btn-lg'] ) ?>
 

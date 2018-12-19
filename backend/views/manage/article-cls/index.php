@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '房间分类列表';
+$this->title = '文章分类列表';
 $this->params['breadcrumbs'][] = $this->title;
 
 /**
@@ -35,9 +35,9 @@ function recursionData($data)
         $html .= '      <span>' . $value['name'] . '</span>';
 
         // Url
-        $editUrl = Url::to( ['rooms-cls/edit', 'id' => $value['c_key']] );
-        $auditUrl = Url::to( ['rooms-cls/audit', 'id' => $value['c_key']] );
-        $createUrl = Url::to( ['rooms-cls/create', 'id' => $value['c_key']] );
+        $editUrl = Url::to( ['article-cls/edit', 'id' => $value['c_key']] );
+        $auditUrl = Url::to( ['article-cls/audit', 'id' => $value['c_key']] );
+        $createUrl = Url::to( ['article-cls/create', 'id' => $value['c_key']] );
 
         $html .= <<<EOF
             <span>
@@ -67,8 +67,8 @@ EOF;
 <div class="col-lg-12">
 
     <div class="form-group">
-        <a href='<?= Url::to( ['rooms/create'] ) ?>' class='btn btn-primary btn-lg' title='添加酒店房间'>添加酒店房间</a>
-        <a href='<?= Url::to( ['create'] ) ?>' class='btn btn-primary btn-lg' title='添加房间分类'>添加房间分类</a>
+        <a href='<?= Url::to( ['article/create'] ) ?>' class='btn btn-primary btn-lg' title='添加酒店房间'>添加文章</a>
+        <a href='<?= Url::to( ['create'] ) ?>' class='btn btn-primary btn-lg' title='添加房间分类'>添加文章分类</a>
     </div>
 
     <div class="panel panel-default">
@@ -85,16 +85,16 @@ EOF;
                         <li class="list-group-item">
 
                             <span scope="row"><?= $key + 1; ?>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                            <span><a href="<?= Url::to( ['rooms-cls/update', 'id' => $value['c_key']] ); ?>" title="<?= $value['name']; ?>"><?= $value['name']; ?></a>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <span><a href="<?= Url::to( ['article-cls/update', 'id' => $value['c_key']] ); ?>" title="<?= $value['name']; ?>"><?= $value['name']; ?></a>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                             <span>
                                     [<?php if ($value['is_using'] == 'On'): ?>已开启<?php else: ?>已关闭<?php endif; ?>]&nbsp;&nbsp;&nbsp;&nbsp;
                                 </span>
                             <span>
 
                                     [
-                                    <a href="<?= Url::to( ['rooms-cls/update', 'id' => $value['c_key']] ); ?>" title="编辑 - <?= $value['name']; ?>">编辑</a>&nbsp;&nbsp;/&nbsp;&nbsp;
-                                    <a href="<?= Url::to( ['rooms-cls/delete', 'id' => $value['c_key']] ); ?>" title="停用分类">删除</a>&nbsp;&nbsp;/&nbsp;&nbsp;
-                                    <a href="<?= Url::to( ['rooms-cls/create', 'id' => $value['c_key']] ); ?>" title="创建分类">添加子类</a>
+                                    <a href="<?= Url::to( ['article-cls/update', 'id' => $value['c_key']] ); ?>" title="编辑 - <?= $value['name']; ?>">编辑</a>&nbsp;&nbsp;/&nbsp;&nbsp;
+                                    <a href="<?= Url::to( ['article-cls/delete', 'id' => $value['c_key']] ); ?>" title="停用分类">删除</a>&nbsp;&nbsp;/&nbsp;&nbsp;
+                                    <a href="<?= Url::to( ['article-cls/create', 'id' => $value['c_key']] ); ?>" title="创建分类">添加子类</a>
                                     ]
 
                                 </span>

@@ -2,10 +2,10 @@
 
 namespace backend\controllers;
 
+use Yii;
 use common\models\Coupon;
 use common\models\Hotels;
 use common\models\Rooms;
-use Yii;
 use common\models\RelevanceRoomsCoupon;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;

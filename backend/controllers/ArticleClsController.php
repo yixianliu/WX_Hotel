@@ -3,16 +3,14 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\MenuModel;
+use common\models\ArticleCls;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 
 /**
- * MenuModelController implements the CRUD actions for MenuModel model.
+ * ArticleClsController implements the CRUD actions for ArticleCls model.
  */
-class MenuModelController extends BaseController
+class ArticleClsController extends BaseController
 {
     /**
      * @inheritdoc
@@ -22,7 +20,7 @@ class MenuModelController extends BaseController
         return [
 
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
                     [
                         'allow' => true,
@@ -32,7 +30,7 @@ class MenuModelController extends BaseController
             ],
 
             'verbs' => [
-                'class'   => VerbFilter::className(),
+                'class'   => \yii\filters\VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -41,17 +39,13 @@ class MenuModelController extends BaseController
     }
 
     /**
-     * Lists all MenuModel models.
+     * Lists all ArticleCls models.
      * @return mixed
      */
     public function actionIndex()
     {
-
         $dataProvider = new ActiveDataProvider( [
-            'query'      => MenuModel::find(),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
+            'query' => ArticleCls::find(),
         ] );
 
         return $this->render( 'index', [
@@ -60,7 +54,7 @@ class MenuModelController extends BaseController
     }
 
     /**
-     * Displays a single MenuModel model.
+     * Displays a single ArticleCls model.
      *
      * @param integer $id
      *
@@ -75,26 +69,30 @@ class MenuModelController extends BaseController
     }
 
     /**
-     * Creates a new MenuModel model.
+     * Creates a new ArticleCls model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
+        $model = new ArticleCls();
 
-        $model = new MenuModel();
+        $model->c_key = self::getRandomString();
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
             return $this->redirect( ['view', 'id' => $model->id] );
         }
 
         return $this->render( 'create', [
-            'model' => $model,
+            'model'  => $model,
+            'result' => [
+                'classify' => ArticleCls::getClsSelect( 'On' ),
+            ],
         ] );
     }
 
     /**
-     * Updates an existing MenuModel model.
+     * Updates an existing ArticleCls model.
      * If update is successful, the browser will be redirected to the 'view' page.
      *
      * @param integer $id
@@ -116,7 +114,7 @@ class MenuModelController extends BaseController
     }
 
     /**
-     * Deletes an existing MenuModel model.
+     * Deletes an existing ArticleCls model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      *
      * @param integer $id
@@ -132,17 +130,17 @@ class MenuModelController extends BaseController
     }
 
     /**
-     * Finds the MenuModel model based on its primary key value.
+     * Finds the ArticleCls model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      *
      * @param integer $id
      *
-     * @return MenuModel the loaded model
+     * @return ArticleCls the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = MenuModel::findOne( $id )) !== null) {
+        if (($model = ArticleCls::findOne( $id )) !== null) {
             return $model;
         }
 

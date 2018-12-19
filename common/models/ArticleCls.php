@@ -1,26 +1,36 @@
 <?php
 
-/**
- * @abstract 产品模型
- * @author   Yxl <zccem@163.com>
- */
-
 namespace common\models;
 
-use yii\db\ActiveRecord;
+use Yii;
 use yii\behaviors\TimestampBehavior;
 
-class ProductClassify extends ActiveRecord
+/**
+ * This is the model class for table "w_article_cls".
+ *
+ * @property int    $id
+ * @property string $c_key       分类KEY
+ * @property string $sort_id     排序
+ * @property string $name        名称
+ * @property string $description 描述
+ * @property string $keywords    关键字
+ * @property string $json_data   Json 数据
+ * @property string $parent_id   父类ID
+ * @property string $is_using    是否启用
+ * @property int    $created_at
+ * @property int    $updated_at
+ */
+class ArticleCls extends \yii\db\ActiveRecord
 {
 
     public static $parentId = 'C0';
 
     /**
-     * @abstract 数据库表名
+     * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%product_classify}}';
+        return 'w_article_cls';
     }
 
     /**
@@ -33,48 +43,46 @@ class ProductClassify extends ActiveRecord
         ];
     }
 
-
     /**
-     * @abstract 验证规则
+     * {@inheritdoc}
      */
     public function rules()
     {
-
         return [
-            [['name', 'parent_id'], 'required'],
-            [['c_key', 'name'], 'string', 'max' => 80],
-            [['keywords'], 'string', 'max' => 255],
-            [['description'], 'string', 'max' => 5000],
+            [['c_key', 'name', 'parent_id'], 'required'],
+            [['sort_id', 'created_at', 'updated_at'], 'integer'],
+            [['description', 'is_using'], 'string'],
+            [['c_key', 'keywords', 'json_data', 'parent_id'], 'string', 'max' => 55],
+            [['name'], 'string', 'max' => 85],
+            [['c_key'], 'unique'],
+            [['name'], 'unique'],
 
-            [['sort_id'], 'default', 'value' => 1],
             [['is_using'], 'default', 'value' => 'On'],
-            [['keywords', 'description'], 'default', 'value' => null],
+            [['sort_id'], 'default', 'value' => 1],
         ];
     }
 
     /**
-     * @abstract 标签
-     * @return type
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
-
         return [
-            'name'        => '分类名称',
-            'parent_id'   => '父级分类',
-            'c_key'       => '分类关键KEY',
-            'sort_id'     => '分类排序',
-            'keywords'    => '分类关键词',
+            'c_key'       => '分类KEY',
+            'sort_id'     => '排序',
+            'name'        => '名称',
+            'description' => '描述',
+            'keywords'    => '关键字',
             'json_data'   => 'Json 数据',
-            'description' => '分类描述',
-            'is_using'    => '审核状态',
+            'parent_id'   => '父类ID',
+            'is_using'    => '是否启用',
             'created_at'  => '添加数据时间',
             'updated_at'  => '更新数据时间',
         ];
     }
 
     /**
-     * 产品分类
+     * 文章分类
      *
      * @param null $status
      * @param null $pid
@@ -96,92 +104,21 @@ class ProductClassify extends ActiveRecord
     }
 
     /**
-     * 查找版块
-     *
-     * @param $id
-     *
-     * @return array|ProductClassify|null|ActiveRecord
-     */
-    public static function findWhereClassify($id)
-    {
-
-        return static::find()->where( ['is_using' => 'On', 'c_key' => $id] )->one();
-    }
-
-    /**
-     * 指定产品分类
-     *
-     * @param string $id
-     */
-    public static function findById($id)
-    {
-        return static::find()->where( ['is_using' => 'On', 'c_key' => $id] )->asArray()->one();
-    }
-
-    /**
-     * @abstract 获取产品的登记
-     */
-    public function getProduct()
-    {
-        return $this->hasOne( Product1::className(), ['c_key' => 'c_key'] );
-    }
-
-    /**
-     * @abstract 获取用户的所有产品
-     */
-    public function getRole()
-    {
-        return $this->hasOne( Role::className(), ['r_key' => 'r_key'] );
-    }
-
-    /**
-     * 递归处理
-     *
-     * @param      $pid
-     * @param null $one
-     *
-     * @return array|ProductClassify|null|void|ActiveRecord
-     */
-    public static function recursionData($pid)
-    {
-
-        if (empty( $pid ))
-            return;
-
-        $result = static::findWhereClassify( $pid )->toArray();
-
-        if (empty( $result )) {
-            return $result;
-        }
-
-        $data = static::findByAll( null, $pid );
-
-        if (empty( $data )) {
-            return $result;
-        }
-
-        foreach ($data as $key => $value) {
-            $result['child'][] = static::recursionData( $value['c_key'] );
-        }
-
-        return $result;
-    }
-
-    /**
      * 获取分类(选项框)
      *
      * @param string $one
+     * @param string $status
      *
      * @return array
      */
-    public static function getClsSelect($one = 'On')
+    public static function getClsSelect($one = 'On', $status = 'On')
     {
 
         // 初始化
         $result = [];
 
         // 产品分类
-        $dataClassify = static::findByAll( 'On', static::$parentId );
+        $dataClassify = static::findByAll( $status, static::$parentId );
 
         if ($one == 'On')
             $result[ static::$parentId ] = '顶级分类 !!';
@@ -219,7 +156,7 @@ class ProductClassify extends ActiveRecord
         $result = [];
         $symbol = null;
 
-        $child = static::findByAll( $data['c_key'] );
+        $child = static::findByAll( null, $data['c_key'] );
 
         if (empty( $child ))
             return;
@@ -244,5 +181,4 @@ class ProductClassify extends ActiveRecord
 
         return $result;
     }
-
 }

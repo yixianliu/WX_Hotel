@@ -40,7 +40,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'content',
                     'description:ntext',
                     'is_using',
-                    'created_at',
+                    [
+                        'attribute' => 'created_at',
+                        'value'     => function ($model) {
+                            return date( 'Y - m -d , H:i:s', $model->created_at );
+                        },
+                        'options'   => [ 'width' => 180 ],
+                    ],
                     [
                         'attribute' => 'updated_at',
                         'value'     => function ($model) {

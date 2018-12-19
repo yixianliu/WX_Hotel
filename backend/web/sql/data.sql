@@ -108,28 +108,13 @@ VALUES
   /*
    用户中心 / User
   */
-  (NULL, 'U1', 1, null, null, 'R15', NULL, 'M0', '焦点世界', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'U1', 1, null, null, 'R15', NULL, 'M0', '用户中心', NULL, 'On', 'On', #TIME#, #TIME#),
 
-  (NULL, 'UN2', 1, 'urls', 'center/index', 'R15', NULL, 'U1', '评测区', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'UN2', 1, 'urls', 'user/index', 'R15', NULL, 'U1', '我的档案', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'UN3', 2, 'urls', 'center/index', 'R15', NULL, 'U1', '精选大伽', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'UN4', 3, 'urls', 'center/index', 'R15', NULL, 'U1', '淘一淘', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'UN5', 4, 'urls', 'center/index', 'R15', NULL, 'U1', '我的设置', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'UN6', 5, 'urls', 'center/index', 'R15', NULL, 'U1', '你我他的故事', NULL, 'On', 'On', #TIME#, #TIME#),
-
-  (NULL, 'UE1', 1, 'urls', 'center/index', 'R15', NULL, 'UN2', '我的评测', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'UE2', 2, 'urls', 'center/index', 'R15', NULL, 'UN2', '发布评测', NULL, 'On', 'On', #TIME#, #TIME#),
-
-  (NULL, 'UNN1', 1, 'urls', 'center/index', 'R15', NULL, 'UN6', '买卖经历', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'UNN2', 2, 'urls', 'center/index', 'R15', NULL, 'UN6', '发布经历', NULL, 'On', 'On', #TIME#, #TIME#),
-
-  (NULL, 'UT1', 1, 'urls', 'center/index', 'R15', NULL, 'UN4', '淘抢购', NULL, 'On', 'On', #TIME#, #TIME#),
-
-  (NULL, 'UC1', 1, 'urls', 'center/index', 'R15', NULL, 'UN5', '个人设置', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'UC2', 2, 'urls', 'center/index', 'R15', NULL, 'UN5', '头像设置', NULL, 'On', 'On', #TIME#, #TIME#),
-
-  (NULL, 'UP1', 1, 'urls', 'center/index', 'R15', NULL, 'UN3', '集聚人气产品', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'UP2', 2, 'urls', 'center/index', 'R15', NULL, 'UN3', '人气产品榜', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'UP3', 3, 'urls', 'center/index', 'R15', NULL, 'UN3', '大神作品', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'UN4', 3, 'urls', 'center/index', 'R15', NULL, 'U1', '历史记录', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'UN5', 4, 'urls', 'center/index', 'R15', NULL, 'U1', '我的订单', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'UN6', 5, 'urls', 'center/index', 'R15', NULL, 'U1', '我的设置', NULL, 'On', 'On', #TIME#, #TIME#),
 
   /*
    搜索中心 / Search
@@ -152,22 +137,22 @@ VALUES
   /*
    后台管理 / Admin
   */
-  (NULL, 'A3', 1, null, null, 'R15', NULL, 'M0', '后台管理', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AdminManage', 1, null, null, 'R15', NULL, 'M0', '后台管理', NULL, 'On', 'On', #TIME#, #TIME#),
 
-  (NULL, 'AC2', 1, 'urls', null, 'R15', NULL, 'A3', '管理中心', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AHotel1', 2, 'urls', null, 'R15', NULL, 'A3', '酒店管理', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'ARooms1', 2, 'urls', null, 'R15', NULL, 'A3', '房间管理', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'ACoupon1', 3, 'urls', null, 'R15', NULL, 'A3', '卡卷管理', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AM1', 4, 'urls', null, 'R15', NULL, 'A3', '菜单管理', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AU1', 5, 'urls', null, 'R15', NULL, 'A3', '用户管理', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AArticle1', 5, 'urls', null, 'R15', NULL, 'A3', '文章管理', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AR1', 7, 'urls', null, 'R15', NULL, 'A3', '角色管理', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AP1', 8, 'urls', null, 'R15', NULL, 'A3', '权限管理', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuditA6', 14, 'urls', null, 'R15', NULL, 'A3', '认证角色管理', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AOrder7', 15, 'urls', null, 'R15', NULL, 'A3', '订单中心', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AWeChat1', 16, 'urls', null, 'R15', NULL, 'A3', '公众号设置', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AWeChatPay1', 17, 'urls', null, 'R15', NULL, 'A3', '商户平台设置', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AWeChatProgram1', 18, 'urls', null, 'R15', NULL, 'A3', '小程序设置', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AC2', 1, 'urls', null, 'R15', NULL, 'AdminManage', '管理中心', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AHotel1', 2, 'urls', null, 'R15', NULL, 'AdminManage', '酒店管理', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'ARooms1', 2, 'urls', null, 'R15', NULL, 'AdminManage', '房间管理', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'ACoupon1', 3, 'urls', null, 'R15', NULL, 'AdminManage', '卡卷管理', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AM1', 4, 'urls', null, 'R15', NULL, 'AdminManage', '菜单管理', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AU1', 5, 'urls', null, 'R15', NULL, 'AdminManage', '用户管理', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AArticle1', 5, 'urls', null, 'R15', NULL, 'AdminManage', '文章管理', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AR1', 7, 'urls', null, 'R15', NULL, 'AdminManage', '角色管理', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AP1', 8, 'urls', null, 'R15', NULL, 'AdminManage', '权限管理', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuditA6', 14, 'urls', null, 'R15', NULL, 'AdminManage', '认证角色管理', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AOrder7', 15, 'urls', null, 'R15', NULL, 'AdminManage', '订单中心', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AWeChat1', 16, 'urls', null, 'R15', NULL, 'AdminManage', '公众号设置', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AWeChatPay1', 17, 'urls', null, 'R15', NULL, 'AdminManage', '商户平台设置', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AWeChatProgram1', 18, 'urls', null, 'R15', NULL, 'AdminManage', '小程序设置', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'AuthWeChatProgram1', 1, 'urls', '/we-chat-program/index', 'R15', NULL, 'AWeChat1', '小程序设置', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthWeChatProgram2', 2, 'urls', '/we-chat-program/view', 'R15', NULL, 'AWeChat1', '小程序名称', NULL, 'On', 'On', #TIME#, #TIME#),
@@ -192,8 +177,8 @@ VALUES
   (NULL, 'AuthRoom4', 4, 'urls', '/rooms-cls/create', 'R15', NULL, 'ARooms1', '添加房间分类', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthRoom5', 7, 'urls', '/rooms-field/index', 'R15', NULL, 'ARooms1', '房间参数', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthRoom6', 8, 'urls', '/rooms-field/create', 'R15', NULL, 'ARooms1', '添加房间参数', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuthRoom5', 7, 'urls', '/rooms-tag/index', 'R15', NULL, 'ARooms1', '房间标签', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'AuthRoom6', 8, 'urls', '/rooms-tag/create', 'R15', NULL, 'ARooms1', '添加房间标签', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom7', 7, 'urls', '/rooms-tag/index', 'R15', NULL, 'ARooms1', '房间标签', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom8', 8, 'urls', '/rooms-tag/create', 'R15', NULL, 'ARooms1', '添加房间标签', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'AuthCoupon1', 1, 'urls', '/coupon/index', 'R15', NULL, 'ACoupon1', '卡卷列表', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthCoupon2', 2, 'urls', '/coupon/create', 'R15', NULL, 'ACoupon1', '添加卡卷', NULL, 'On', 'On', #TIME#, #TIME#),

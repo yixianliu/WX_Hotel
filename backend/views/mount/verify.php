@@ -2,7 +2,6 @@
 
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-use common\widgets\iMessage\FormMsg;
 
 $this->title = '验证文件';
 
@@ -38,13 +37,7 @@ $this->title = '验证文件';
 
         </div>
 
-        <?=
-        FormMsg::widget(['config' => [
-            'tpl'      => 'mountform',
-            'FormName' => $model->formName(),
-            'Url'      => Url::to(['center/index']),
-        ]]);
-        ?>
+        <?= Yii::$app->view->renderFile( '@app/views/_AjaxMsg.php', ['FormUrl' => Url::to(['center/index'])] ); ?>
 
     </div>
 </div>

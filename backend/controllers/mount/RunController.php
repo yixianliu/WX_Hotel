@@ -20,10 +20,7 @@ class RunController extends BaseController
      */
     public function actionIndex()
     {
-
-        $model = new MountForm();
-
-        return $this->render( '../run', [ 'model' => $model ] );
+        return $this->render( '../run');
     }
 
     /**
@@ -33,7 +30,8 @@ class RunController extends BaseController
     {
 
         if (!Yii::$app->request->isAjax) {
-            return Json::encode( [ 'msg' => '非法提交!' ] );
+            Yii::$app->getSession()->setFlash('error', '登录失败,请检查 !!');
+            return $this->redirect( ['/mount/center/view'] );
         }
 
         // 批量SQL语句

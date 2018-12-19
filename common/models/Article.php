@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "w_article".
@@ -42,12 +43,22 @@ class Article extends \yii\db\ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['c_key', 'title', 'content',], 'required'],
+            [['c_key', 'title', 'content'], 'required'],
             [['content', 'is_promote', 'is_hot', 'is_classic', 'is_winnow', 'is_recommend', 'is_comments', 'is_using'], 'string'],
             [['praise', 'forward', 'collection', 'share', 'attention', 'created_at', 'updated_at'], 'integer'],
             [['article_id'], 'string', 'max' => 85],
@@ -69,27 +80,29 @@ class Article extends \yii\db\ActiveRecord
     {
         return [
             'article_id'   => '文章 ID',
-            'user_id'      => 'User ID',
-            'c_key'        => 'C Key',
-            'title'        => 'Title',
-            'content'      => 'Content',
-            'introduction' => 'Introduction',
-            'keywords'     => 'Keywords',
-            'path'         => 'Path',
+            'user_id'      => '用户名',
+            'c_key'        => '文章分类',
+            'title'        => '文章标题',
+            'content'      => '文章内容',
+            'introduction' => '文章导读',
+            'keywords'     => '关键词',
+            'path'         => '文章上传路径',
+            'thumb'        => '文章缩略图',
+            'images'       => '文章图片',
             'praise'       => 'Praise',
             'forward'      => 'Forward',
             'collection'   => 'Collection',
             'share'        => 'Share',
             'attention'    => 'Attention',
-            'is_promote'   => 'Is Promote',
-            'is_hot'       => 'Is Hot',
-            'is_classic'   => 'Is Classic',
+            'is_promote'   => '是否设为推广',
+            'is_hot'       => '是否设为热门',
+            'is_classic'   => '是否设为经典',
             'is_winnow'    => 'Is Winnow',
             'is_recommend' => 'Is Recommend',
-            'is_comments'  => 'Is Comments',
-            'is_using'     => 'Is Using',
-            'created_at'   => 'Created At',
-            'updated_at'   => 'Updated At',
+            'is_comments'  => '是否可评论',
+            'is_using'     => '是否启用',
+            'created_at'   => '添加数据时间',
+            'updated_at'   => '更新数据时间',
         ];
     }
 }

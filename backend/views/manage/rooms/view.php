@@ -113,7 +113,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'Off' => '未启用',
                             ];
 
-                            return $state[ $model->is_using ];
+                            return $state[ $model->is_promote ];
                         },
                     ],
                     [
@@ -124,7 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'Off' => '未启用',
                             ];
 
-                            return $state[ $model->is_using ];
+                            return $state[ $model->is_comments ];
                         },
                     ],
                     [

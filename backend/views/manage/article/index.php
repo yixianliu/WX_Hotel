@@ -15,8 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="col-lg-12">
 
     <div class="form-group">
-        <a href='<?= Url::to( ['rooms/create'] ) ?>' class='btn btn-primary btn-lg' title='添加酒店房间'>添加房间</a>
-        <a href='<?= Url::to( ['create'] ) ?>' class='btn btn-primary btn-lg' title='添加房间分类'>添加网站配置</a>
+        <a href='<?= Url::to( ['create'] ) ?>' class='btn btn-primary btn-lg' title='添加酒店房间'>添加文章</a>
+        <a href='<?= Url::to( ['create'] ) ?>' class='btn btn-primary btn-lg' title='添加房间分类'>添加文章分类</a>
     </div>
 
     <div class="panel panel-default">
@@ -29,30 +29,39 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProvider,
                 'filterModel'  => $searchModel,
                 'columns'      => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    'article_id',
+                    [
+                        'class'   => 'yii\grid\CheckboxColumn',
+                        'name'    => 'id',
+                        'options' => [ 'width' => 40 ],
+                    ],
+                    [
+                        'class'   => 'yii\grid\SerialColumn',
+                        'options' => [ 'width' => 70 ],
+                    ],
                     'user_id',
                     'c_key',
                     'title',
-                    //'content:ntext',
-                    //'introduction',
-                    //'keywords',
-                    //'path',
-                    //'praise',
-                    //'forward',
-                    //'collection',
-                    //'share',
-                    //'attention',
-                    //'is_promote',
-                    //'is_hot',
-                    //'is_classic',
-                    //'is_winnow',
-                    //'is_recommend',
+                    'introduction',
                     'is_comments',
                     'is_using',
-                    'created_at',
-                    'updated_at',
-                    ['class' => 'yii\grid\ActionColumn'],
+                    [
+                        'attribute' => 'created_at',
+                        'value'     => function ($model) {
+                            return date( 'Y - m -d , H:i:s', $model->created_at );
+                        },
+                        'options'   => [ 'width' => 180 ],
+                    ],
+                    [
+                        'attribute' => 'updated_at',
+                        'value'     => function ($model) {
+                            return date( 'Y - m -d , H:i:s', $model->updated_at );
+                        },
+                        'options'   => [ 'width' => 180 ],
+                    ],
+                    [
+                        'class'   => 'yii\grid\ActionColumn',
+                        'options' => [ 'width' => 100 ],
+                    ],
                 ],
                 'tableOptions' => [ 'class' => 'table table-hover' ],
                 'pager'        => [
