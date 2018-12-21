@@ -52,7 +52,6 @@ class MenuModel extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id'         => 'ID',
             'm_key'      => '关键KEY',
             'sort_id'    => '排序 Id',
             'url_type'   => 'Url 类型',

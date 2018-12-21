@@ -50,7 +50,7 @@ class MenuController extends BaseController
     public function actionIndex()
     {
 
-        $dataProvider = Menu::findByAll( Yii::$app->request->get( 'id', 'E1' ), Yii::$app->session['language'] );
+        $dataProvider = Menu::findByAll( Yii::$app->request->get( 'id', Menu::$frontend_parent_id ), Yii::$app->session['language'] );
 
         return $this->render( 'index', [
             'dataProvider' => $dataProvider,

@@ -48,42 +48,10 @@ if (!empty( $dataProvider )) {
                 $html .= menuHtml( $value, 'urls' );
                 break;
 
-            // 采购
-            case 'purchase':
-                $html .= menuHtml( $value, 'purchase' );
-                break;
-
             default:
                 break;
         }
     }
-}
-
-/**
- * 采购信息
- *
- * @param $data
- *
- * @return null|string|void
- */
-function recursionPurchaseData($data)
-{
-    if (empty( $data ))
-        return;
-
-    $child = Menu::findByAll( $data['m_key'], Yii::$app->session['language'], 'Off' );
-
-    if (empty( $child ))
-        return;
-
-    // 初始化
-    $html = null;
-
-    foreach ($child as $value) {
-        $html .= menuHtml( $value, 'purchase' );
-    }
-
-    return $html;
 }
 
 /**
@@ -344,19 +312,11 @@ function menuHtml($data, $type)
             ];
             break;
 
-        // 采购平台
-        case 'purchase':
-            $array = [
-                'create' => Html::a( '添加子菜单', ['create', 'id' => $data['m_key']] ) . ' / ',
-                'update' => Html::a( '编辑菜单', ['update', 'id' => $data['m_key']] ) . ' / ',
-                'del'    => Html::a( '删除菜单', ['delete', 'id' => $data['m_key']] ),
-            ];
-            break;
     }
 
     $html = null;
     $html .= '<li class="">';
-    $html .= '    <div class="uk-nestable-item" style="padding: 5px;">&nbsp;&nbsp;▸';
+    $html .= '    <div class="uk-nestable-item" style="padding: 5px;">&nbsp;&nbsp;';
     $html .= $data['name'] . '&nbsp;&nbsp;&nbsp;&nbsp;' . $array['update'] . '&nbsp;' . $array['create'] . '&nbsp;' . $array['del'] . '&nbsp;' . (empty( $array['content'] ) ? null : $array['content']) . '&nbsp;' . (empty( $array['url'] ) ? null : $array['url']);
 
     // 根据单页面是列表的,增加录入内容链接
@@ -388,9 +348,6 @@ function menuHtml($data, $type)
             $html .= recursionJobData( $data );
             break;
 
-        case 'purchase':
-            $html .= recursionPurchaseData( $data );
-            break;
     }
 
     $html .= '    </ul>';
@@ -403,9 +360,11 @@ function menuHtml($data, $type)
 
 <div class="col-lg-12">
 
-    <?= Html::a( '创建菜单', ['create'], ['class' => 'btn btn-primary btn-lg'] ) ?>
-    <?= Html::a( '创建单页面', ['admin/pages/create'], ['class' => 'btn btn-primary btn-lg'] ) ?>
-    <?= Html::a( '创建单页面分类', ['admin/pages-cls/create'], ['class' => 'btn btn-primary btn-lg'] ) ?>
+    <div class="form-group">
+        <?= Html::a( '创建菜单', ['create'], ['class' => 'btn btn-primary btn-lg'] ) ?>
+        <?= Html::a( '创建单页面', ['admin/pages/create'], ['class' => 'btn btn-primary btn-lg'] ) ?>
+        <?= Html::a( '创建单页面分类', ['admin/pages-cls/create'], ['class' => 'btn btn-primary btn-lg'] ) ?>
+    </div>
 
     <div class="panel panel-default">
 
@@ -428,4 +387,3 @@ function menuHtml($data, $type)
         </div>
     </div>
 </div>
-

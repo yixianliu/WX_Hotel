@@ -592,12 +592,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-select2.git",
-                "reference": "2bbb9cae329bd536f1a22ae14f8e0dc890063f66"
+                "reference": "dd09e46e618cf1c67a39fac9f38d97a95184fe8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/2bbb9cae329bd536f1a22ae14f8e0dc890063f66",
-                "reference": "2bbb9cae329bd536f1a22ae14f8e0dc890063f66",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/dd09e46e618cf1c67a39fac9f38d97a95184fe8a",
+                "reference": "dd09e46e618cf1c67a39fac9f38d97a95184fe8a",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -643,7 +643,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2018-11-05T12:34:42+00:00"
+            "time": "2018-12-11T10:34:32+00:00"
         },
         {
             "name": "kucha/ueditor",

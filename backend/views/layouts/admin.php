@@ -51,7 +51,7 @@ $this->beginPage();
 
         <div class="page-sidebar page-sidebar-fixed">
 
-            <?= \common\widgets\iMenu\MenuAdmin::widget( [ 'config' => [ 'AdminManage' ] ] ); ?>
+            <?= Yii::$app->view->renderFile( '@app/views/_menu.php', ['Conf' => $Conf] ); ?>
 
         </div>
 
@@ -90,7 +90,7 @@ $this->beginPage();
 
                 <div class="mb-footer">
                     <div class="pull-right">
-                        <a href="<?= Url::to( [ 'mount/member/logout' ] ) ?>" class="btn btn-success btn-lg">是</a>
+                        <a href="<?= Url::to( ['mount/member/logout'] ) ?>" class="btn btn-success btn-lg">是</a>
                         <button class="btn btn-default btn-lg mb-control-close">否</button>
                     </div>
                 </div>

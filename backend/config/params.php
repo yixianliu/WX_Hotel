@@ -57,7 +57,7 @@ return [
         'THEME_CUSTOMIZE_PATH'  => null, // 主题自定义路径
 
         // 安装文件
-        'RD_FILE'               => 'WxMall.rd',
+        'RD_FILE'               => 'DL-Hotel-File.rd',
     ],
 
 ];

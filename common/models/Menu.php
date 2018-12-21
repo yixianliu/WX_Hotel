@@ -16,7 +16,7 @@ class Menu extends ActiveRecord
 
     static public $parent_id = 'M0';
 
-    static public $frontend_parent_id = 'E1';
+    static public $frontend_parent_id = 'H1';
 
     /**
      * @inheritdoc
@@ -140,418 +140,112 @@ class Menu extends ActiveRecord
     }
 
     /**
-     * 获取菜单数据 (Yii 版本)
+     * 获取菜单内容
      *
-     * @param      $pid
-     * @param null $type
+     * @param        $parent_id
+     * @param string $htmlStatus
+     * @param array  $styleClass
      *
-     * @return array|void
+     * @return array|bool|null|string|ActiveRecord[]
      */
-    public static function findMenuNav($pid)
+    public static function getParentMenu($parent_id, $htmlStatus = 'Off', $styleClass = [])
     {
 
-        // 初始化
-        $dataMenu = [];
+        if (empty( $parent_id ))
+            return false;
 
-        $data = static::findByAll( $pid );
+        $result = static::findByAll();
 
-        if (empty( $data ))
+        if (empty( $result ))
+            return [];
+
+        foreach ($result as $key => $value) {
+            $result[ $key ] = static::recursionMenu( $value );
+        }
+
+        if ($htmlStatus == 'On') {
+            return static::htmlLoad( $result, null, $styleClass );
+        }
+
+        return $result;
+    }
+
+    /**
+     * 递归处理菜单
+     *
+     * @param $child
+     *
+     * @return array|void|ActiveRecord[]
+     */
+    public static function recursionMenu($child)
+    {
+        if (empty( $child ) || empty( $child['m_key'] ))
             return;
 
-        foreach ($data as $value) {
+        $child = static::findByAll( $child['m_key'], Yii::$app->session['language'] );
 
-            $array = $value;
+        if (empty( $child ))
+            return;
 
-            switch ($value['menuModel']['url_key']) {
+        foreach ($child as $key => $value) {
 
-                // 下载中心
-                case 'download':
+            $result = static::recursionMenu( $value );
 
-                    if (Yii::$app->controller->id == 'job')
-                        $array['open'] = 'On';
+            if ($value['menuModel']['is_classify'] === 'On') {
 
-                    $array['url'] = ['/download/index'];
-                    $array['child'] = static::recursionJobMenu( $value, $type );
-                    break;
+                $modelName = ucwords( $value['menuModel']['url_key'] );
 
-                // 招聘
-                case 'job':
+                $child[ $key ]['child'] = $modelName::findAll( ['is_using' => 'On'] )->toArray();
 
-                    if (Yii::$app->controller->id == 'job')
-                        $array['open'] = 'On';
-
-                    $array['url'] = ['/job/index'];
-                    $array['child'] = static::recursionJobMenu( $value, $type );
-                    break;
-
-                // 产品分类模型
-                case 'product':
-
-                    if (Yii::$app->controller->id == 'product')
-                        $array['open'] = 'On';
-
-                    $array['child'] = static::recursionProductMenu( null, ProductClassify::$parent_cly_id, $type );
-                    break;
-
-                // 采购模型
-                case 'purchase':
-                    $array['child'] = static::recursionPurchaseMenu( $value, $type );
-                    break;
-
-                // 供应模型
-                case 'supply':
-
-                    $product = PsbClassify::findAll( ['is_using' => 'On', 'is_type' => 'Supply'] );
-
-                    foreach ($product as $key => $values) {
-                        $array['child'][ $key ]['url'] = ['/supply/index', 'id' => $values['c_key']];
-                        $array['child'][ $key ]['child'] = static::recursionMenu( $values, $type );
-                    }
-                    break;
-
-                // 投标模型
-                case 'bid':
-
-                    $product = PsbClassify::findAll( ['is_using' => 'On', 'parent_id' => 'C0'] );
-
-                    foreach ($product as $key => $values) {
-                        $array['child'][ $key ]['url'] = ['/bid/index', 'id' => $values['c_key']];
-                        $array['child'][ $key ]['child'] = static::recursionMenu( $values, $type );
-                    }
-                    break;
-
-                // 新闻模型
-                case 'news':
-
-                    if (Yii::$app->controller->id == 'news')
-                        $array['open'] = 'On';
-
-                    $array['child'] = static::recursionNewsMenu( null, NewsClassify::$parent_cly_id, $type );
-                    break;
-
-                // 自定义界面
-                case 'pages':
-
-                    $id = Yii::$app->request->get( 'id', null );
-
-                    $array['url'] = static::setMenuModel( $value );
-
-                    if (!empty( $array['url']['id'] ) && $array['url']['id'] == $id)
-                        $array['open'] = 'On';
-
-                    $array['child'] = static::recursionPagesMenu( $value, $type );
-                    break;
-
-                // 超链接
-                case 'urls':
-
-                    $urlActive = Yii::$app->controller->id . '/' . Yii::$app->controller->action->id;
-
-                    if (!empty( $array['url'] ) && $array['url'] == $urlActive)
-                        $array['open'] = 'On';
-
-                    $array['child'] = static::recursionUrlMenu( $value, $value['parent_id'] );
-
-                    break;
+            } else if (!empty( $result ) && (empty( $value['menuModel']['is_classify'] ) || $value['menuModel']['is_classify'] != 'On')) {
+                $child[ $key ]['child'] = $result;
             }
 
-            $dataMenu[] = $array;
-        }
-
-        return $dataMenu;
-    }
-
-    /**
-     * 递归产品分类
-     *
-     * @param      $data
-     * @param null $pid
-     * @param null $type
-     *
-     * @return array|void|\yii\db\ActiveRecord[]
-     */
-    public static function recursionProductMenu($data = null, $pid = null, $type = null)
-    {
-
-        if (empty( $pid )) {
-
-            if (empty( $data ) || empty( $data['c_key'] ))
-                return;
-
-            $pid = $data['c_key'];
-        }
-
-        $child = ProductClassify::findByAll( $pid );
-
-        if (empty( $child ))
-            return;
-
-        foreach ($child as $key => $value) {
-            $child[ $key ]['url'] = ['product/index', 'id' => $value['c_key']];
-            $child[ $key ]['child'] = static::recursionProductMenu( $value, null, $type );
         }
 
         return $child;
     }
 
     /**
-     * 新闻分类
+     * 递归处理载入Html内容
      *
-     * @param      $data
-     * @param null $type
-     *
-     * @return array|void
-     */
-    public static function recursionNewsMenu($data = null, $pid = null, $type = null)
-    {
-
-        if (empty( $pid )) {
-
-            if (empty( $data ) || empty( $data['c_key'] ))
-                return;
-
-            $pid = $data['c_key'];
-        }
-
-        $child = NewsClassify::findByAll( $pid );
-
-        if (empty( $child ))
-            return;
-
-        foreach ($child as $key => $value) {
-            $child[ $key ]['url'] = ['news/index', 'id' => $value['c_key']];
-            $child[ $key ]['child'] = static::recursionNewsMenu( $value, null, $type );
-        }
-
-        return $child;
-    }
-
-    /**
-     * 递归采购
-     *
-     * @param      $data
-     * @param null $type
-     *
-     * @return array|void
-     */
-    public static function recursionPurchaseMenu($data, $type = null)
-    {
-
-        if (empty( $data ) || empty( $data['m_key'] ))
-            return;
-
-        $child = static::findByAll( $data['m_key'], $type );
-
-        if (empty( $child ))
-            return;
-
-        foreach ($child as $key => $value) {
-            $child[ $key ]['url'] = static::setMenuModel( $value );
-            $child[ $key ]['child'] = static::recursionPurchaseMenu( $value, $type );
-        }
-
-        return $child;
-    }
-
-    /**
-     * 递归招聘
-     *
-     * @param      $data
-     * @param null $type
-     *
-     * @return array|void
-     */
-    public static function recursionJobMenu($data, $type = null)
-    {
-
-        if (empty( $data ) || empty( $data['m_key'] ))
-            return;
-
-        $child = static::findByAll( $data['m_key'], $type );
-
-        if (empty( $child ))
-            return;
-
-        foreach ($child as $key => $value) {
-            $child[ $key ]['url'] = static::setMenuModel( $value );
-            $child[ $key ]['child'] = static::recursionJobMenu( $value, $type );
-        }
-
-        return $child;
-    }
-
-    /**
-     * 递归菜单 (固定控制器使用)
-     *
-     * @param $data
-     * @param $type
-     *
-     * @return array|void
-     */
-    static public function recursionMenu($data, $type = null)
-    {
-
-        if (empty( $data ) || empty( $data['m_key'] ))
-            return;
-
-        $child = static::findByAll( $data['m_key'], $type );
-
-        if (empty( $child ))
-            return;
-
-        foreach ($child as $key => $value) {
-            $child[ $key ]['url'] = [$value['menuModel']['url_key']];
-            $child[ $key ]['child'] = static::recursionMenu( $value, $type );
-        }
-
-        return $child;
-    }
-
-    /**
-     * 递归菜单 (单页面使用)
-     *
-     * @param      $data
-     * @param null $type
-     *
-     * @return array|void
-     */
-    static public function recursionPagesMenu($data, $type = null)
-    {
-
-        if (empty( $data ))
-            return;
-
-        $urlActive = '/' . Yii::$app->controller->id . '/' . Yii::$app->controller->action->id;
-
-        // 子分类
-        $child = static::findByAll( $data['m_key'], $type );
-
-        if (empty( $child ))
-            return;
-
-        $id = Yii::$app->request->get( 'id', null );
-
-        foreach ($child as $key => $value) {
-
-            $child[ $key ]['url'] = static::setMenuModel( $value );
-
-            if (!empty( $child[ $key ]['url'][0] ) && $urlActive == $child[ $key ]['url'][0] && !empty( $child[ $key ]['url']['id'] ) && $child[ $key ]['url']['id'] == $id)
-                $child[ $key ]['active'] = 'On';
-
-            $child[ $key ]['child'] = static::recursionPagesMenu( $value, $type );
-        }
-
-        return $child;
-    }
-
-    /**
-     * 递归 Url 菜单
-     *
-     * @param      $data
-     * @param null $adminId
-     *
-     * @return array|void
-     */
-    static public function recursionUrlMenu($data, $adminId = null)
-    {
-
-        if (empty( $data ) || empty( $data['m_key'] )) {
-            return;
-        }
-
-        $urlActive = Yii::$app->controller->id . '/' . Yii::$app->controller->action->id;
-
-        $child = static::findByAll( $data['m_key'] );
-
-        if (empty( $child ))
-            return;
-
-        foreach ($child as $key => $value) {
-
-            $child[ $key ]['url'] = static::setMenuModel( $value, $adminId );
-
-            // 针对后台
-            if ($child[ $key ]['url'] == $urlActive)
-                $child[ $key ]['active'] = 'On';
-
-            $child[ $key ]['child'] = static::recursionUrlMenu( $value, $adminId );
-        }
-
-        return $child;
-    }
-
-    /**
-     * 根据菜单模型来订制链接
-     *
-     * @param      $data
-     * @param null $adminId
+     * @param       $result
+     * @param null  $html
+     * @param array $styleClass
      *
      * @return array|null|string
      */
-    static public function setMenuModel($data, $adminId = null)
+    public static function htmlLoad($result, $html = null, $styleClass = [])
     {
 
-        // 初始化
-        $urls = null;
+        if (empty( $result ))
+            return [];
 
-        if (empty( $data['menuModel']['url_key'] ))
-            return;
-
-        switch ($data['menuModel']['url_key']) {
-
-            // 采购页面
-            case 'purchase':
-                $urls = ['/purchase/' . $data['is_type']];
-                break;
-
-            // 自定义页面
-            case 'pages':
-
-                // 输出调整路径
-                if (strpos( $data['url'], ',' ) !== false) {
-                    $urlData = explode( ',', $data['url'] );
-                    $urls = [$urlData[0], 'id' => $urlData[1]];
-                    break;
-                }
-
-                $urls = empty( $data['url'] ) ? ['/pages/' . $data['is_type'], 'id' => $data['pages']['page_id']] : [$data['url']];
-
-                break;
-
-            // 在线留言
-            case 'comment':
-                $urls = ['/comment/index'];
-                break;
-
-            // 在线地图
-            case 'map':
-                $urls = ['/map/index'];
-                break;
-
-            // 招聘
-            case 'job':
-                $urls = ['/job/' . $data['is_type']];
-                break;
-
-            // 超链接
-            case 'urls':
-
-                if (!empty( $data['url'] )) {
-
-                    if (strpos( $data['url_data'], 'http' ) !== false) {
-                        return $data['url_data'];
-                    }
-
-                    $urls = $adminId == 'A3' ? 'admin/' . $data['url_data'] : $data['url_data'];
-
-                } else {
-                    $urls = $data['url_data'];
-                }
-
-                break;
+        if (empty( $styleClass )) {
+            $styleClass = [
+                'liClass' => null,
+                'aClass'  => null,
+                'ulClass' => null,
+            ];
         }
 
-        return $urls;
+        foreach ($result as $value) {
+
+            $html .= '<li class="' . $styleClass['liClass'] . '">';
+
+            $html .= '  <a href="" title="" class="' . $styleClass['aClass'] . '">' . $value['name'] . '</a>';
+
+            if (!empty( $value['child'] )) {
+                $html .= '  <ul class="' . $styleClass['ulClass'] . '">';
+                $html .= static::htmlLoad( $value['child'], $html, $styleClass );
+                $html .= '  </ul>';
+            }
+
+            $html .= '</li>';
+
+        }
+
+        return $html;
     }
 
     /**
