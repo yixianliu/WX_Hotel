@@ -13,7 +13,7 @@ $styleClass = [
     'activeClass' => 'active',
 ];
 
-$html = \common\models\Menu::getParentMenu( \common\models\Menu::$frontend_parent_id, 'On', $styleClass );
+$html = \common\models\Menu::getParentMenu( 'AdminManage', 'On', $styleClass );
 
 ?>
 

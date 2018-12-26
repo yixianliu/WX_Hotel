@@ -51,7 +51,7 @@ $this->beginPage();
 
         <div class="page-sidebar page-sidebar-fixed">
 
-            <?= Yii::$app->view->renderFile( '@app/views/_menu.php', ['Conf' => $Conf] ); ?>
+            <?= Yii::$app->view->renderFile( '@app/views/manage/_menu.php', ['Conf' => $Conf] ); ?>
 
         </div>
 

@@ -154,13 +154,13 @@ class Menu extends ActiveRecord
         if (empty( $parent_id ))
             return false;
 
-        $result = static::findByAll();
+        $result = static::findByAll( $parent_id );
 
         if (empty( $result ))
             return [];
 
-        foreach ($result as $key => $value) {
-            $result[ $key ] = static::recursionMenu( $value );
+        foreach ($result as $value) {
+            $result[] = static::recursionMenu( $value );
         }
 
         if ($htmlStatus == 'On') {
@@ -182,23 +182,29 @@ class Menu extends ActiveRecord
         if (empty( $child ) || empty( $child['m_key'] ))
             return;
 
-        $child = static::findByAll( $child['m_key'], Yii::$app->session['language'] );
+        // 子分类
+        $result = static::findByAll( $child['m_key'] );
 
-        if (empty( $child ))
+        if (empty( $result ))
             return;
 
-        foreach ($child as $key => $value) {
-
-            $result = static::recursionMenu( $value );
+        // 循环子分类
+        foreach ($result as $key => $value) {
 
             if ($value['menuModel']['is_classify'] === 'On') {
 
                 $modelName = ucwords( $value['menuModel']['url_key'] );
 
-                $child[ $key ]['child'] = $modelName::findAll( ['is_using' => 'On'] )->toArray();
+                $child['child'][] = $modelName::findAll( ['is_using' => 'On'] )->toArray();
 
-            } else if (!empty( $result ) && (empty( $value['menuModel']['is_classify'] ) || $value['menuModel']['is_classify'] != 'On')) {
-                $child[ $key ]['child'] = $result;
+            } else if (!empty( $value ) && (empty( $value['menuModel']['is_classify'] ) || $value['menuModel']['is_classify'] != 'On')) {
+
+                $parent = static::findByAll( $value['m_key'] );
+
+                if (empty( $parent ))
+                    continue;
+
+                $child['child'][] = static::recursionMenu( $parent );
             }
 
         }
@@ -219,7 +225,7 @@ class Menu extends ActiveRecord
     {
 
         if (empty( $result ))
-            return [];
+            return null;
 
         if (empty( $styleClass )) {
             $styleClass = [
@@ -229,7 +235,11 @@ class Menu extends ActiveRecord
             ];
         }
 
-        foreach ($result as $value) {
+        foreach ($result as $key => $value) {
+
+            if (empty( $value['name'] )) {
+                continue;
+            }
 
             $html .= '<li class="' . $styleClass['liClass'] . '">';
 
@@ -301,7 +311,7 @@ class Menu extends ActiveRecord
         $result = [];
         $symbol = null;
 
-        $child = static::findByAll( $data['m_key'], Yii::$app->session['language'] );
+        $child = static::findByAll( $data['m_key'] );
 
         if (empty( $child ))
             return;
