@@ -7,7 +7,8 @@
  */
 
 $styleClass = [
-    'liClass'     => 'xn-openable',
+    'liClass'     => '',
+    'openLiClass' => 'xn-openable',
     'ulClass'     => '',
     'aClass'      => '',
     'activeClass' => 'active',
@@ -28,3 +29,9 @@ $html = \common\models\Menu::getParentMenu( 'AdminManage', 'On', $styleClass );
     <?= $html; ?>
 
 </ul>
+
+<script type="text/javascript">
+
+    $('.active').parent('ul').parent('li').addClass('active');
+
+</script>

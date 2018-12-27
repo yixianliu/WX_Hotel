@@ -10,6 +10,7 @@ namespace common\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\Url;
 
 class Menu extends ActiveRecord
 {
@@ -159,15 +160,21 @@ class Menu extends ActiveRecord
         if (empty( $result ))
             return [];
 
-        foreach ($result as $value) {
-            $result[] = static::recursionMenu( $value );
+        $data = [];
+
+        foreach ($result as $key => $value) {
+
+            if (empty( $value ))
+                continue;
+
+            $data[] = static::recursionMenu( $value );
         }
 
         if ($htmlStatus == 'On') {
-            return static::htmlLoad( $result, null, $styleClass );
+            return static::htmlAdminLoad( $data, $styleClass );
         }
 
-        return $result;
+        return $data;
     }
 
     /**
@@ -180,13 +187,13 @@ class Menu extends ActiveRecord
     public static function recursionMenu($child)
     {
         if (empty( $child ) || empty( $child['m_key'] ))
-            return;
+            return false;
 
         // 子分类
         $result = static::findByAll( $child['m_key'] );
 
         if (empty( $result ))
-            return;
+            return null;
 
         // 循环子分类
         foreach ($result as $key => $value) {
@@ -195,16 +202,16 @@ class Menu extends ActiveRecord
 
                 $modelName = ucwords( $value['menuModel']['url_key'] );
 
-                $child['child'][] = $modelName::findAll( ['is_using' => 'On'] )->toArray();
+                $child['child'][ $key ] = $modelName::findAll( ['is_using' => 'On'] )->toArray();
 
             } else if (!empty( $value ) && (empty( $value['menuModel']['is_classify'] ) || $value['menuModel']['is_classify'] != 'On')) {
 
-                $parent = static::findByAll( $value['m_key'] );
-
-                if (empty( $parent ))
+                if (empty( $value ))
                     continue;
 
-                $child['child'][] = static::recursionMenu( $parent );
+                // 赋值
+                $child['child'][ $key ] = $value;
+                $child['child'][ $key ]['child'] = static::recursionMenu( $value );
             }
 
         }
@@ -221,33 +228,40 @@ class Menu extends ActiveRecord
      *
      * @return array|null|string
      */
-    public static function htmlLoad($result, $html = null, $styleClass = [])
+    public static function htmlAdminLoad($result, $styleClass = [])
     {
 
         if (empty( $result ))
-            return null;
+            return;
 
         if (empty( $styleClass )) {
-            $styleClass = [
-                'liClass' => null,
-                'aClass'  => null,
-                'ulClass' => null,
-            ];
+            $styleClass = ['liClass' => null, 'aClass' => null, 'ulClass' => null, 'openLiClass' => null];
         }
 
-        foreach ($result as $key => $value) {
+        $html = null;
+
+        foreach ($result as $value) {
 
             if (empty( $value['name'] )) {
                 continue;
             }
 
-            $html .= '<li class="' . $styleClass['liClass'] . '">';
+            $activeClass = null;
 
-            $html .= '  <a href="" title="" class="' . $styleClass['aClass'] . '">' . $value['name'] . '</a>';
+            // 是否需要展开
+            $liClass = !empty( $value['child'] ) ? $styleClass['openLiClass'] : null;
+
+            // 当前 Url
+            if (!empty( $value['url_data'] ))
+                $activeClass = Url::current() === Url::to( [$value['url_data']] ) ? $styleClass['activeClass'] : null;
+
+            $html .= '<li class="' . $liClass . ' ' . $styleClass['liClass'] . ' ' . $activeClass . '">';
+
+            $html .= '  <a href="' . Url::to( [$value['url_data']] ) . '" title="' . $value['name'] . '" class="' . $styleClass['aClass'] . '">' . $value['name'] . '</a>';
 
             if (!empty( $value['child'] )) {
                 $html .= '  <ul class="' . $styleClass['ulClass'] . '">';
-                $html .= static::htmlLoad( $value['child'], $html, $styleClass );
+                $html .= static::htmlAdminLoad( $value['child'], $styleClass );
                 $html .= '  </ul>';
             }
 
