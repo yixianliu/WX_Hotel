@@ -10,6 +10,7 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => '配置中心', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
 
     <div class="panel panel-default">

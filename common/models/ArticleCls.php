@@ -103,6 +103,69 @@ class ArticleCls extends \yii\db\ActiveRecord
             ->all();
     }
 
+    public static function getCls($htmlStatus = 'On')
+    {
+        $result = static::findByAll( static::$parentId );
+
+        if (empty( $result ))
+            return [];
+
+        $data = [];
+
+        foreach ($result as $value) {
+            $data[] = static::recursionCls( $value );
+        }
+
+        if ($htmlStatus === 'On') {
+            return static::htmlAdminLoad( $data );
+        }
+
+        return $data;
+    }
+
+    public static function recursionCls()
+    {
+
+    }
+
+    public static function HtmlShowList($child, $styleClass = [])
+    {
+
+        if (empty( $child ) || empty( $child['c_key'] )) {
+            return;
+        }
+
+        // 样式
+        if (empty( $styleClass )) {
+            $styleClass = [
+                'ulClass' => 'list-group',
+                'liClass' => 'list-group-item',
+                'aClass'  => '',
+            ];
+        }
+
+        $html = null;
+
+        foreach ($child as $value) {
+
+            $html .= '<li class="' . $styleClass['liClass'] . '">';
+
+            $html .= '  <a href="">' . $value['name'] . '</a>';
+
+            if (!empty( $value['child'] )) {
+
+                $html .= '<ul class="list-group border-bottom">';
+                $html .= static::htmlAdminLoad( $value['child'], $styleClass );
+                $html .= '</ul>';
+
+            }
+            $html .= '</li>';
+
+        }
+
+        return $html;
+    }
+
     /**
      * 获取分类(选项框)
      *

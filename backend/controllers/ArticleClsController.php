@@ -4,7 +4,6 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\ArticleCls;
-use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -44,12 +43,11 @@ class ArticleClsController extends BaseController
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider( [
-            'query' => ArticleCls::find(),
-        ] );
+
+        $result = ArticleCls::getCls('On');
 
         return $this->render( 'index', [
-            'dataProvider' => $dataProvider,
+            'result' => $result,
         ] );
     }
 

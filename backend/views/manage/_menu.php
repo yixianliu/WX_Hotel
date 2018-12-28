@@ -14,7 +14,7 @@ $styleClass = [
     'activeClass' => 'active',
 ];
 
-$html = \common\models\Menu::getParentMenu( 'AdminManage', 'On', $styleClass );
+$html = \common\models\Menu::getMenu( 'AdminManage', 'On', $styleClass );
 
 ?>
 

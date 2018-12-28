@@ -80,6 +80,7 @@ EOF;
             <?php if (!empty( $result )): ?>
 
                 <ul class="list-group border-bottom">
+
                     <?php foreach ($result as $key => $value): ?>
 
                         <li class="list-group-item">

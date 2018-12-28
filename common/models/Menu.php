@@ -149,7 +149,7 @@ class Menu extends ActiveRecord
      *
      * @return array|bool|null|string|ActiveRecord[]
      */
-    public static function getParentMenu($parent_id, $htmlStatus = 'Off', $styleClass = [])
+    public static function getMenu($parent_id, $htmlStatus = 'Off', $styleClass = [])
     {
 
         if (empty( $parent_id ))
@@ -171,7 +171,7 @@ class Menu extends ActiveRecord
         }
 
         if ($htmlStatus == 'On') {
-            return static::htmlAdminLoad( $data, $styleClass );
+            return static::HtmlAdminList( $data, $styleClass );
         }
 
         return $data;
@@ -220,15 +220,14 @@ class Menu extends ActiveRecord
     }
 
     /**
-     * 递归处理载入Html内容
+     * 递归处理载入Html内容 (后台应用于菜单列表)
      *
      * @param       $result
-     * @param null  $html
      * @param array $styleClass
      *
      * @return array|null|string
      */
-    public static function htmlAdminLoad($result, $styleClass = [])
+    public static function HtmlAdminList($result, $styleClass = [])
     {
 
         if (empty( $result ))
