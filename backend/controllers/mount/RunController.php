@@ -20,7 +20,7 @@ class RunController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->render( '../run');
+        return $this->render( '../run' );
     }
 
     /**
@@ -30,8 +30,8 @@ class RunController extends BaseController
     {
 
         if (!Yii::$app->request->isAjax) {
-            Yii::$app->getSession()->setFlash('error', '登录失败,请检查 !!');
-            return $this->redirect( ['/mount/center/view'] );
+            Yii::$app->getSession()->setFlash( 'error', '登录失败,请检查 !!' );
+            return $this->redirect( [ '/mount/center/view' ] );
         }
 
         // 批量SQL语句

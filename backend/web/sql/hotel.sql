@@ -29,11 +29,14 @@ CREATE TABLE `#DB_PREFIX#Hotels` (
     KEY `user_id` (`user_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/**
+ * 房间
+ */
 DROP TABLE IF EXISTS `#DB_PREFIX#Rooms`;
 CREATE TABLE `#DB_PREFIX#Rooms` (
     `id` INT(11) NULL AUTO_INCREMENT,
     `hotel_id` VARCHAR(85) NOT NULL COMMENT ' 酒店编号,唯一识别码',
-    `room_id` VARCHAR(85) NOT NULL COMMENT ' 房间编号,唯一识别码',
+    `rooms_id` VARCHAR(85) NOT NULL COMMENT ' 房间编号,唯一识别码',
     `user_id` VARCHAR(55) NOT NULL COMMENT '用户ID',
     `c_key` VARCHAR(55) NOT NULL COMMENT '房间分类KEY',
     `room_num` VARCHAR(55) NOT NULL COMMENT '房间号码',
@@ -58,6 +61,26 @@ CREATE TABLE `#DB_PREFIX#Rooms` (
     UNIQUE `title` (`title`),
     KEY `user_id` (`user_id`),
     KEY `c_key` (`c_key`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+ * 房间预约
+ */
+DROP TABLE IF EXISTS `#DB_PREFIX#Rooms_Appointment`;
+CREATE TABLE `#DB_PREFIX#Rooms_Appointment` (
+    `id` INT(11) NULL AUTO_INCREMENT,
+    `hotel_id` VARCHAR(55) NOT NULL COMMENT '酒店 Id',
+    `rooms_id` VARCHAR(55) NOT NULL COMMENT '房间 Id',
+    `telphone` VARCHAR(85) NULL COMMENT '手机号码',
+    `name` VARCHAR(85) NULL COMMENT '预约姓名',
+    `start_time` VARCHAR(85) NULL COMMENT '预约开始时间',
+    `end_time` VARCHAR(85) NULL COMMENT '预约结束时间',
+    `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
+    `created_at` integer NOT NULL DEFAULT '0',
+    `updated_at` integer NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`),
+    UNIQUE `name` (`name`),
+    KEY `f_key` (`f_key`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /**
@@ -169,7 +192,6 @@ CREATE TABLE `#DB_PREFIX#Order` (
     `title` VARCHAR(125) NOT NULL COMMENT '标题',
     `content` TEXT NOT NULL COMMENT '描述内容',
     `username` VARCHAR(55) NULL COMMENT '制单人',
-    `path` VARCHAR(55) NULL COMMENT '订单路径',
     `checkin_men_num` integer NOT NULL DEFAULT '0' COMMENT '入住人数',
     `checkin_men_name` integer NOT NULL DEFAULT '0' COMMENT '入住人名称',
     `checkin_men_idcard` integer NOT NULL DEFAULT '0' COMMENT '入住人身份证',

@@ -236,6 +236,7 @@ CREATE TABLE `#DB_PREFIX#Menu` (
     `description` TEXT NULL COMMENT '描述',
     `parent_id` VARCHAR(55) NOT NULL COMMENT '父类值',
     `name` VARCHAR(85) NOT NULL COMMENT '菜单名称',
+    `json_data` VARCHAR(155) NULL COMMENT 'Json 数据',
     `is_url` SET('On', 'Off') NOT NULL COMMENT '是否启用链接(不启用的话,此分类没有链接,只会获取权限)',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
     `created_at` integer NOT NULL DEFAULT 0,
@@ -257,8 +258,8 @@ CREATE TABLE `#DB_PREFIX#Menu_Model` (
     `url_type` VARCHAR(85) NULL COMMENT 'Url 类型',
     `url_key` VARCHAR(85) NULL COMMENT 'Url 模型关键KEY',
     `name` VARCHAR(85) NOT NULL COMMENT '模型名称',
-    `is_classify` SET('On', 'Off') NOT NULL COMMENT '是否启用模型分类',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
+    `is_classify` SET('On', 'Off') NOT NULL COMMENT '是否启用,启用后分类后,就自动选择指定模型进行分类',
     `created_at` integer NOT NULL DEFAULT 0,
     `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
@@ -324,4 +325,70 @@ CREATE TABLE `#DB_PREFIX#Article_Cls` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `c_key` (`c_key`),
     UNIQUE `name` (`name`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+ * + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + -
+ * 分销机制
+ * + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + -
+ */
+
+/**
+ * 用户
+ */
+DROP TABLE IF EXISTS `#DB_PREFIX#Dis_Sale_User`;
+CREATE TABLE `#DB_PREFIX#Dis_Sale_User` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `user_id` VARCHAR(85) NOT NULL COMMENT '用户 Id',
+    `wx_user_id` VARCHAR(85) NOT NULL COMMENT '微信 Id',
+    `parent_user_id` VARCHAR(85) NOT NULL COMMENT '上一级 用户 Id',
+    `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    KEY `user_id` (`user_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+ * 分销设置
+ */
+DROP TABLE IF EXISTS `#DB_PREFIX#Dis_Sale_Conf`;
+CREATE TABLE `#DB_PREFIX#Dis_Sale_Conf` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `user_id` VARCHAR(85) NOT NULL COMMENT '用户 Id',
+    `parent_user_id` VARCHAR(85) NOT NULL COMMENT '上一级 用户 Id',
+    `commission_one` FLOAT NOT NULL COMMENT '一级佣金',
+    `commission_two` FLOAT NOT NULL COMMENT '二级佣金',
+    `commission_three` FLOAT NOT NULL COMMENT '三级佣金',
+    `commission_me` FLOAT NOT NULL COMMENT '自我分佣,开启后，已成为金牌用户的客户，自己购买商品也可以分到佣金，比例总和要小于或者等于1',
+    `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    KEY `user_id` (`user_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+ * + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + -
+ * 小程序
+ * + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + -
+ */
+
+/**
+ * 小程序支付设置
+ */
+DROP TABLE IF EXISTS `#DB_PREFIX#Mini_Program_Conf`;
+CREATE TABLE `#DB_PREFIX#Mini_Program_Conf` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `weixin_id` VARCHAR(85) NOT NULL COMMENT '微信 Id',
+    `app_id` VARCHAR(85) NOT NULL COMMENT '小程序 Id',
+    `mch_id` VARCHAR(85) NOT NULL COMMENT '商户号 Id',
+    `api_psw` VARCHAR(85) NOT NULL COMMENT 'API密钥',
+    `cert_path` VARCHAR(85) NOT NULL COMMENT '证书路径',
+    `cert_psw` VARCHAR(85) NOT NULL COMMENT '证书密码',
+    `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    KEY `app_id` (`app_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

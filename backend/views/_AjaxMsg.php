@@ -46,7 +46,6 @@
 
             // 错误
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-
                 SuccessMsg.hide();
                 ErrorMsg.show().find('#ErrorFormText').text('访问网络失败 : ' + errorThrown);
                 $(this).find(':submit').attr('disabled', false);
@@ -67,7 +66,9 @@
                     html += '</ul>';
 
                     ErrorMsg.show().find('#ErrorFormText').html(html);
-                    $(this).find(':submit').attr('disabled', false);
+
+                    // $(this).find('button').removeAttr('disabled');
+
                     return false;
                 }
 

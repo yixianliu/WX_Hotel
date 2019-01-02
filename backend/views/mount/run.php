@@ -34,7 +34,7 @@ $this->title = '程序挂载操作';
 
         </div>
 
-        <?= Yii::$app->view->renderFile( '@app/views/_AjaxMsg.php', ['FormUrl' => Url::to( ['mount/run/verify'] )] ); ?>
-
     </div>
 </div>
+
+<?= Yii::$app->view->renderFile( '@app/views/_AjaxMsg.php', ['FormUrl' => Url::to( ['mount/run/verify'] )] ); ?>

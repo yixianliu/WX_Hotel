@@ -67,9 +67,9 @@ $this->beginPage();
 
     </div>
 
-    <?= Yii::$app->view->renderFile( '@app/views/_AjaxMsg.php', ['FormUrl' => \yii\helpers\Url::to(['mount/center/view'])] ); ?>
-
 </div>
+
+<?= Yii::$app->view->renderFile( '@app/views/_AjaxMsg.php', ['FormUrl' => \yii\helpers\Url::to(['mount/center/view'])] ); ?>
 
 <?php $this->endBody() ?>
 

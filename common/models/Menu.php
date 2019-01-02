@@ -19,6 +19,8 @@ class Menu extends ActiveRecord
 
     static public $frontend_parent_id = 'H1';
 
+    static public $backend_parent_id = 'AdminManage';
+
     /**
      * @inheritdoc
      */
@@ -158,7 +160,7 @@ class Menu extends ActiveRecord
         $result = static::findByAll( $parent_id );
 
         if (empty( $result ))
-            return [];
+            return;
 
         $data = [];
 
@@ -260,7 +262,7 @@ class Menu extends ActiveRecord
 
             if (!empty( $value['child'] )) {
                 $html .= '  <ul class="' . $styleClass['ulClass'] . '">';
-                $html .= static::htmlAdminLoad( $value['child'], $styleClass );
+                $html .= static::HtmlAdminList( $value['child'], $styleClass );
                 $html .= '  </ul>';
             }
 
