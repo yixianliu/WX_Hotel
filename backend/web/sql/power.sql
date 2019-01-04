@@ -121,7 +121,7 @@ CREATE TABLE `#DB_PREFIX#auth_rule` (
 INSERT INTO `#DB_PREFIX#auth_user_role`
 VALUES
 (NULL, 1, 'admin', '#TIME#', '#TIME#'),
-(NULL, 2, 'admin', '#TIME#', '#TIME#');
+(NULL, 2, 'super-admin', '#TIME#', '#TIME#');
 
 INSERT INTO `#DB_PREFIX#auth_role`
 VALUES
@@ -134,16 +134,41 @@ VALUES
 /* 权限 */
 (NULL, 'indexCenter', '管理首页', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
 (NULL, 'confCenter', '用户中心', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'updateCenter', '更新网站配置', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'createCenter', '创建网站配置', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'viewCenter', '查看网站配置', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'deleteCenter', '删除网站配置', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
 (NULL, 'image-uploadUpload', '上传文件', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
 (NULL, 'backupCenter', '备份数据库', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
 (NULL, 'infoCenter', '网站档案', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
 (NULL, 'seoCenter', '网站SEO', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
 (NULL, 'indexTpl', '模板管理', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
 (NULL, 'editTpl', '编辑模板', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+
+(NULL, 'updateConf', '更新网站配置', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'createConf', '创建网站配置', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'viewConf', '查看网站配置', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'deleteConf', '删除网站配置', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+
+(NULL, 'createRooms', '添加房间', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'updateRooms', '更新房间', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'indexRooms', '房间列表', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'viewRooms', '查看房间', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'deleteRooms', '删除房间', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+
+(NULL, 'createRooms-field', '添加房间参数', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'updateRooms-field', '更新房间参数', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'indexRooms-field', '房间参数列表', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'viewRooms-field', '查看房间参数', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'deleteRooms-field', '删除房间参数', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+
+(NULL, 'createRooms-cls', '添加房间分类', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'updateRooms-cls', '更新房间分类', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'indexRooms-cls', '房间分类列表', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'viewRooms-cls', '查看房间分类', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'deleteRooms-cls', '删除房间分类', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+
+(NULL, 'createHotel', '添加酒店', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'updateHotel', '更新酒店', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'indexHotel', '酒店列表', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'viewHotel', '查看酒店', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
+(NULL, 'deleteHotel', '删除酒店', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
 
 (NULL, 'createMsg', '发布留言', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
 (NULL, 'updateMsg', '更新留言', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
@@ -254,39 +279,9 @@ VALUES
 (NULL, 'viewDownload-cls', '查看下载内容分类', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
 (NULL, 'deleteDownload-cls', '删除下载内容分类', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
 
-(NULL, 'createPurchase', '添加采购', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'updatePurchase', '更改采购', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'indexPurchase', '采购列表', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'viewPurchase', '查看采购', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'deletePurchase', '删除采购', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-
 (NULL, 'createNav-cls', '添加导航分类', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
 (NULL, 'updateNav-cls', '更改导航分类', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
 (NULL, 'indexNav-cls', '导航分类列表', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
 (NULL, 'viewNav-cls', '查看导航分类', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'deleteNav-cls', '删除导航分类', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-
-(NULL, 'createSupply', '添加供应', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'updateSupply', '更改供应', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'indexSupply', '供应列表', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'viewSupply', '查看供应', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'deleteSupply', '删除供应', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-
-(NULL, 'createBid', '添加投标', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'updateBid', '更改投标', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'indexBid', '投标列表', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'viewBid', '查看投标', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'deleteBid', '删除投标', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-
-(NULL, 'createSp-offer', '添加价格提交', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'updateSp-offer', '更改价格', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'indexSp-offer', '价格列表', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'viewSp-offer', '查看价格', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'deleteSp-offer', '删除价格', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-
-(NULL, 'createPsb-cls', '添加相关分类', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'updatePsb-cls', '更改相关分类', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'indexPsb-cls', '相关分类列表', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'viewPsb-cls', '查看相关分类', NULL, NULL, 2, 1, '#TIME#', '#TIME#'),
-(NULL, 'deletePsb-cls', '删除相关分类', NULL, NULL, 2, 1, '#TIME#', '#TIME#');
+(NULL, 'deleteNav-cls', '删除导航分类', NULL, NULL, 2, 1, '#TIME#', '#TIME#');
 

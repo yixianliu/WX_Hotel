@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a( '删除', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data'  => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '是否删除这条记录?',
                 'method'  => 'post',
             ],
         ] ) ?>
@@ -36,18 +36,48 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= DetailView::widget( [
                 'model'      => $model,
                 'attributes' => [
-                    'id',
                     'c_key',
                     'sort_id',
                     'name',
                     'description:ntext',
                     'keywords',
-                    'json_data',
-                    'parent_id',
-                    'is_using',
-                    'created_at',
-                    'updated_at',
+                    [
+                        'attribute' => 'parent_id',
+                        'value'     => function ($model) {
+
+                            if ($model->parent_id == \common\models\ArticleCls::$parentId)
+                                return '父类级别';
+
+                            $data = \common\models\ArticleCls::findOne(['c_key' => $model->parent_id]);
+
+                            return $data->name;
+                        },
+                    ],
+                    [
+                        'attribute' => 'is_using',
+                        'value'     => function ($model) {
+                            $state = [
+                                'On'  => '开启',
+                                'Off' => '未启用',
+                            ];
+
+                            return $state[$model->is_using];
+                        },
+                    ],
+                    [
+                        'attribute' => 'created_at',
+                        'value'     => function ($model) {
+                            return date('Y - m - d , h:i', $model->created_at);
+                        },
+                    ],
+                    [
+                        'attribute' => 'updated_at',
+                        'value'     => function ($model) {
+                            return date('Y - m - d , h:i', $model->updated_at);
+                        },
+                    ],
                 ],
+                'template'   => '<tr><th width="200">{label}</th><td>{value}</td></tr>',
             ] ) ?>
 
         </div>

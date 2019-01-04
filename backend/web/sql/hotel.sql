@@ -75,12 +75,14 @@ CREATE TABLE `#DB_PREFIX#Rooms_Appointment` (
     `name` VARCHAR(85) NULL COMMENT '预约姓名',
     `start_time` VARCHAR(85) NULL COMMENT '预约开始时间',
     `end_time` VARCHAR(85) NULL COMMENT '预约结束时间',
+    `advance_charge` SET('On', 'Off') NOT NULL COMMENT '是否预付房费',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
     `created_at` integer NOT NULL DEFAULT '0',
     `updated_at` integer NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
     UNIQUE `name` (`name`),
-    KEY `f_key` (`f_key`)
+    KEY `rooms_id` (`rooms_id`),
+    KEY `hotel_id` (`hotel_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /**
@@ -283,6 +285,10 @@ CREATE TABLE `#DB_PREFIX#Credit` (
  * 财务系统
  + ------------------------------------------------------------------------------------------------------------
  */
+
+/**
+ * 余额记录
+ */
 DROP TABLE IF EXISTS `#DB_PREFIX#Finance_Detailed`;
 CREATE TABLE `#DB_PREFIX#Finance_Detailed` (
     `id` INT(11) NULL AUTO_INCREMENT,
@@ -295,6 +301,9 @@ CREATE TABLE `#DB_PREFIX#Finance_Detailed` (
     UNIQUE KEY `user_id` (`user_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='余额明细表';
 
+/**
+ * 充值记录
+ */
 DROP TABLE IF EXISTS `#DB_PREFIX#Recharge_Detailed`;
 CREATE TABLE `#DB_PREFIX#Recharge_Detailed` (
     `id` INT(11) NULL AUTO_INCREMENT,

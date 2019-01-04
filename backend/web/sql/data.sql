@@ -212,6 +212,8 @@ VALUES
   (NULL, 'AuthRoom6', 8, 'urls', '/rooms-field/create', 'R15', NULL, 'ARooms1', '添加房间参数', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthRoom7', 7, 'urls', '/rooms-tag/index', 'R15', NULL, 'ARooms1', '房间标签', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthRoom8', 8, 'urls', '/rooms-tag/create', 'R15', NULL, 'ARooms1', '添加房间标签', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom9', 9, 'urls', '/rooms-appointment/index', 'R15', NULL, 'ARooms1', '房间预约列表', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'AuthRoom10', 10, 'urls', '/rooms-appointment/create', 'R15', NULL, 'ARooms1', '添加房间预约', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'AuthCoupon1', 1, 'urls', '/coupon/index', 'R15', NULL, 'ACoupon1', '卡卷列表', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthCoupon2', 2, 'urls', '/coupon/create', 'R15', NULL, 'ACoupon1', '添加卡卷', NULL, 'On', 'On', #TIME#, #TIME#),

@@ -29,7 +29,15 @@ use phpnt\ICheck\ICheck;
                     <div class="tab-pane active" id="tab-1">
                         <div class='row' style="min-height: 800px;">
 
-                            <?= $form->field( $model, 'c_key' )->textInput( ['maxlength' => true] ) ?>
+                            <?=
+                            $form->field( $model, 'c_key' )->widget( Select2::classname(), [
+                                'data'          => $result['classify'],
+                                'options'       => ['placeholder' => '文章分类...'],
+                                'pluginOptions' => [
+                                    'allowClear' => true,
+                                ],
+                            ] );
+                            ?>
 
                             <?= $form->field( $model, 'title' )->textInput( ['maxlength' => true] ) ?>
 
@@ -49,7 +57,6 @@ use phpnt\ICheck\ICheck;
 
                             <div class="form-group">
                                 <div class="alert alert-info" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
                                     缩略图只允许上传一张，上传多张缩略图只会记录最后那张图片，此类图片的最佳尺寸为 400 x 400 像素，用于产品列表，购物车等地方展示。
                                 </div>
                             </div>
@@ -58,7 +65,6 @@ use phpnt\ICheck\ICheck;
 
                             <div class="form-group">
                                 <div class="alert alert-info" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
                                     此类图片的最佳尺寸为 750 x 464 像素，用于显示类型为【每行一条数据】的板块产品的列表显示，推荐高度仅做参考，可以自我调整，显示时宽度按屏幕100%显示，高度自动变化，保持原图宽高比不变。
                                 </div>
                             </div>
@@ -78,7 +84,7 @@ use phpnt\ICheck\ICheck;
                                 'type'    => ICheck::TYPE_RADIO_LIST,
                                 'style'   => ICheck::STYLE_SQUARE,
                                 'items'   => ['On' => '启用', 'Off' => '禁用'],
-                                'color'   => 'red',                  // цвет
+                                'color'   => 'grey',
                                 'options' => [
                                     'item' => function ($index, $label, $name, $checked, $value) {
                                         return '<input type="radio" id="is_promote' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_promote' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
@@ -91,7 +97,7 @@ use phpnt\ICheck\ICheck;
                                 'type'    => ICheck::TYPE_RADIO_LIST,
                                 'style'   => ICheck::STYLE_SQUARE,
                                 'items'   => ['On' => '启用', 'Off' => '禁用'],
-                                'color'   => 'red',                  // цвет
+                                'color'   => 'grey',
                                 'options' => [
                                     'item' => function ($index, $label, $name, $checked, $value) {
                                         return '<input type="radio" id="is_hot' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_hot' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
@@ -104,7 +110,7 @@ use phpnt\ICheck\ICheck;
                                 'type'    => ICheck::TYPE_RADIO_LIST,
                                 'style'   => ICheck::STYLE_SQUARE,
                                 'items'   => ['On' => '启用', 'Off' => '禁用'],
-                                'color'   => 'red',                  // цвет
+                                'color'   => 'grey',
                                 'options' => [
                                     'item' => function ($index, $label, $name, $checked, $value) {
                                         return '<input type="radio" id="is_classic' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_classic' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
@@ -117,7 +123,7 @@ use phpnt\ICheck\ICheck;
                                 'type'    => ICheck::TYPE_RADIO_LIST,
                                 'style'   => ICheck::STYLE_SQUARE,
                                 'items'   => ['On' => '启用', 'Off' => '禁用'],
-                                'color'   => 'red',                  // цвет
+                                'color'   => 'grey',
                                 'options' => [
                                     'item' => function ($index, $label, $name, $checked, $value) {
                                         return '<input type="radio" id="is_winnow' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_winnow' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
@@ -130,7 +136,7 @@ use phpnt\ICheck\ICheck;
                                 'type'    => ICheck::TYPE_RADIO_LIST,
                                 'style'   => ICheck::STYLE_SQUARE,
                                 'items'   => ['On' => '启用', 'Off' => '禁用'],
-                                'color'   => 'red',                  // цвет
+                                'color'   => 'grey',
                                 'options' => [
                                     'item' => function ($index, $label, $name, $checked, $value) {
                                         return '<input type="radio" id="is_recommend' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_recommend' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
@@ -143,7 +149,7 @@ use phpnt\ICheck\ICheck;
                                 'type'    => ICheck::TYPE_RADIO_LIST,
                                 'style'   => ICheck::STYLE_SQUARE,
                                 'items'   => ['On' => '启用', 'Off' => '禁用'],
-                                'color'   => 'red',                  // цвет
+                                'color'   => 'grey',
                                 'options' => [
                                     'item' => function ($index, $label, $name, $checked, $value) {
                                         return '<input type="radio" id="is_comments' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_comments' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
@@ -156,7 +162,7 @@ use phpnt\ICheck\ICheck;
                                 'type'    => ICheck::TYPE_RADIO_LIST,
                                 'style'   => ICheck::STYLE_SQUARE,
                                 'items'   => ['On' => '启用', 'Off' => '禁用'],
-                                'color'   => 'red',                  // цвет
+                                'color'   => 'grey',
                                 'options' => [
                                     'item' => function ($index, $label, $name, $checked, $value) {
                                         return '<input type="radio" id="is_using' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_using' . $index . '">' . $label . '</label>&nbsp;&nbsp;';

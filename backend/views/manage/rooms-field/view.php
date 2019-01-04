@@ -15,24 +15,24 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="panel panel-default">
 
-        <div class="panel-heading"><h3 class="panel-title"><?= Html::encode($this->title) ?></h3></div>
+        <div class="panel-heading"><h3 class="panel-title"><?= Html::encode( $this->title ) ?></h3></div>
 
         <div class="panel-body">
 
             <p>
-                <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('删除', ['delete', 'id' => $model->id], [
+                <?= Html::a( '更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary'] ) ?>
+                <?= Html::a( '删除', ['delete', 'id' => $model->id], [
                     'class' => 'btn btn-danger',
                     'data'  => [
                         'confirm' => '是否删除这条记录?',
                         'method'  => 'post',
                     ],
-                ]) ?>
-                <?= Html::a('返回列表', ['index'], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('继续添加', ['create'], ['class' => 'btn btn-success']) ?>
+                ] ) ?>
+                <?= Html::a( '返回列表', ['index'], ['class' => 'btn btn-primary'] ) ?>
+                <?= Html::a( '继续添加', ['create'], ['class' => 'btn btn-success'] ) ?>
             </p>
 
-            <?= DetailView::widget([
+            <?= DetailView::widget( [
                 'model'      => $model,
                 'attributes' => [
                     'f_key',
@@ -46,27 +46,27 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'Off' => '未启用',
                             ];
 
-                            return $state[$model->is_using];
+                            return $state[ $model->is_using ];
                         },
                         'options'   => ['width' => 120],
                     ],
                     [
                         'attribute' => 'created_at',
                         'value'     => function ($model) {
-                            return date('Y - m -d , H:i:s', $model->created_at);
+                            return date( 'Y - m -d , H:i:s', $model->created_at );
                         },
                         'options'   => ['width' => 180],
                     ],
                     [
                         'attribute' => 'updated_at',
                         'value'     => function ($model) {
-                            return date('Y - m -d , H:i:s', $model->updated_at);
+                            return date( 'Y - m -d , H:i:s', $model->updated_at );
                         },
                         'options'   => ['width' => 180],
                     ],
                 ],
                 'template'   => '<tr><th width="200">{label}</th><td>{value}</td></tr>',
-            ]) ?>
+            ] ) ?>
 
         </div>
     </div>

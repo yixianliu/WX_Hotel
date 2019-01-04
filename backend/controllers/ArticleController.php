@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\ArticleCls;
 use Yii;
 use common\models\Article;
 use backend\models\ArticleSearch;
@@ -44,6 +45,7 @@ class ArticleController extends BaseController
      */
     public function actionIndex()
     {
+
         $searchModel = new ArticleSearch();
         $dataProvider = $searchModel->search( Yii::$app->request->queryParams );
 
@@ -82,7 +84,10 @@ class ArticleController extends BaseController
         }
 
         return $this->render( 'create', [
-            'model' => $model,
+            'model'  => $model,
+            'result' => [
+                'classify' => ArticleCls::getClsSelect( 'Off' ),
+            ],
         ] );
     }
 
@@ -104,7 +109,10 @@ class ArticleController extends BaseController
         }
 
         return $this->render( 'update', [
-            'model' => $model,
+            'model'  => $model,
+            'result' => [
+                'classify' => ArticleCls::getClsSelect( 'Off' ),
+            ],
         ] );
     }
 

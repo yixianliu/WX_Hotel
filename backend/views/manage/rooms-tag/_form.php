@@ -26,19 +26,13 @@ use phpnt\ICheck\ICheck;
                 'type'    => ICheck::TYPE_RADIO_LIST,
                 'style'   => ICheck::STYLE_SQUARE,
                 'items'   => [ 'On' => '开启', 'Off' => '关闭' ],
-                'color'   => 'red',                  // цвет
+                'color'   => 'grey',
                 'options' => [
                     'item' => function ($index, $label, $name, $checked, $value) {
                         return '<input type="radio" id="is_classic' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_classic' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
                     },
                 ] ])
             ?>
-
-            <div class="alert alert-info push-down-20">
-                <span style="color: #FFF500;">解释!</span><br/>
-                房间参数就是每个房间的属性值,例如 : 含早餐 / 包含无线、宽带 / 含优惠卷 等等属性值,在发布房间信息的时候,就可以勾选对应的标签.
-                <button type="button" class="close" data-dismiss="alert">×</button>
-            </div>
 
             <div class="form-group">
 
@@ -52,4 +46,10 @@ use phpnt\ICheck\ICheck;
 
         </div>
     </div>
+
+    <div class="alert alert-info push-down-20">
+        <span style="color: #FFF500;"><h4>解释!</h4></span>
+        房间参数就是每个房间的属性值,例如 : 含早餐 / 包含无线、宽带 / 含优惠卷 等等属性值,在发布房间信息的时候,就可以勾选对应的标签.
+    </div>
+
 </div>
