@@ -5,9 +5,6 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Hotels */
-/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
@@ -105,9 +102,9 @@ use kartik\select2\Select2;
 
         </div>
 
-        <div class="panel-footer">
+        <?= $form->field( $model, 'hotel_id' )->hiddenInput()->label( false ) ?>
 
-            <?= $form->field( $model, 'hotel_id' )->hiddenInput()->label( false ) ?>
+        <div class="panel-footer">
 
             <?= Html::submitButton( $model->isNewRecord ? '添加' : '更新', ['class' => $model->isNewRecord ? 'btn btn-success btn-lg' : 'btn btn-primary btn-lg'] ) ?>
 

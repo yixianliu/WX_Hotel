@@ -111,15 +111,15 @@ VALUES
   (NULL, 'U1', 1, null, null, 'R15', NULL, 'M0', '焦点世界', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'UN2', 1, 'urls', 'center/index', 'R15', NULL, 'U1', '评测区', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'UN3', 2, 'urls', 'center/index', 'R15', NULL, 'U1', '精选大伽', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'UN3', 2, 'urls', 'center/index', 'R15', NULL, 'U1', '精选酒店', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'UN4', 3, 'urls', 'center/index', 'R15', NULL, 'U1', '淘一淘', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'UN5', 4, 'urls', 'center/index', 'R15', NULL, 'U1', '我的设置', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'UN6', 5, 'urls', 'center/index', 'R15', NULL, 'U1', '你我他的故事', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'UN6', 5, 'urls', 'center/index', 'R15', NULL, 'U1', '酒店的故事', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'UE1', 1, 'urls', 'center/index', 'R15', NULL, 'UN2', '我的评测', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'UE2', 2, 'urls', 'center/index', 'R15', NULL, 'UN2', '发布评测', NULL, 'On', 'On', #TIME#, #TIME#),
 
-  (NULL, 'UNN1', 1, 'urls', 'center/index', 'R15', NULL, 'UN6', '买卖经历', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'UNN1', 1, 'urls', 'center/index', 'R15', NULL, 'UN6', '酒店经历', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'UNN2', 2, 'urls', 'center/index', 'R15', NULL, 'UN6', '发布经历', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'UT1', 1, 'urls', 'center/index', 'R15', NULL, 'UN4', '淘抢购', NULL, 'On', 'On', #TIME#, #TIME#),
@@ -127,9 +127,9 @@ VALUES
   (NULL, 'UC1', 1, 'urls', 'center/index', 'R15', NULL, 'UN5', '个人设置', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'UC2', 2, 'urls', 'center/index', 'R15', NULL, 'UN5', '头像设置', NULL, 'On', 'On', #TIME#, #TIME#),
 
-  (NULL, 'UP1', 1, 'urls', 'center/index', 'R15', NULL, 'UN3', '集聚人气产品', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'UP2', 2, 'urls', 'center/index', 'R15', NULL, 'UN3', '人气产品榜', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'UP3', 3, 'urls', 'center/index', 'R15', NULL, 'UN3', '大神作品', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'UP1', 1, 'urls', 'center/index', 'R15', NULL, 'UN3', '集聚人气酒店', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'UP2', 2, 'urls', 'center/index', 'R15', NULL, 'UN3', '人气酒店榜', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'UP3', 3, 'urls', 'center/index', 'R15', NULL, 'UN3', '神级酒店', NULL, 'On', 'On', #TIME#, #TIME#),
 
   /*
    搜索中心 / Search
@@ -183,8 +183,8 @@ VALUES
   (NULL, 'AWeChatPay1', 17, 'urls', null, 'R15', NULL, 'AdminManage', '商户平台设置', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AWeChatProgram1', 18, 'urls', null, 'R15', NULL, 'AdminManage', '小程序设置', NULL, 'On', 'On', #TIME#, #TIME#),
 
-  (NULL, 'ADDis1', 1, 'urls', '/dis/index', 'R15', NULL, 'ADis8', '用户列表', NULL, 'On', 'On', #TIME#, #TIME#),
-  (NULL, 'ADDis2', 2, 'urls', '/dis/view', 'R15', NULL, 'ADis8', '分销设置', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'ADDis1', 1, 'urls', '/dis-sale-user/index', 'R15', NULL, 'ADis8', '用户列表', NULL, 'On', 'On', #TIME#, #TIME#),
+  (NULL, 'ADDis2', 2, 'urls', '/dis-sale-conf/index', 'R15', NULL, 'ADis8', '分销设置', NULL, 'On', 'On', #TIME#, #TIME#),
 
   (NULL, 'AuthWeChatProgram1', 1, 'urls', '/we-chat-program/index', 'R15', NULL, 'AWeChat1', '小程序设置', NULL, 'On', 'On', #TIME#, #TIME#),
   (NULL, 'AuthWeChatProgram2', 2, 'urls', '/we-chat-program/view', 'R15', NULL, 'AWeChat1', '小程序名称', NULL, 'On', 'On', #TIME#, #TIME#),

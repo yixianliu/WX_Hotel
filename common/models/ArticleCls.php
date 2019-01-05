@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "w_article_cls".
@@ -89,7 +90,7 @@ class ArticleCls extends \yii\db\ActiveRecord
      *
      * @return array|ActiveRecord[]
      */
-    public static function findByAll($status = null, $pid = null)
+    public static function findByAll($status = 'On', $pid = null)
     {
 
         // 审核状态
@@ -103,62 +104,125 @@ class ArticleCls extends \yii\db\ActiveRecord
             ->all();
     }
 
-    public static function getCls($htmlStatus = 'On')
+    /**
+     * 获取分类 (页面版本)
+     *
+     * @param string $htmlStatus
+     * @param null   $styleClass
+     *
+     * @return array|string|void|null
+     */
+    public static function getCls($htmlStatus = 'On', $styleClass = null)
     {
-        $result = static::findByAll( static::$parentId );
+
+        $result = static::findByAll( 'On', static::$parentId );
 
         if (empty( $result ))
-            return [];
+            return;
 
         $data = [];
 
-        foreach ($result as $value) {
-            $data[] = static::recursionCls( $value );
+        foreach ($result as $key => $value) {
+
+            $data[ $key ] = $value;
+
+            // 赋值
+            $childValue = static::recursionCls( $value );
+
+            if (empty($childValue))
+                continue;
+
+            $data[ $key ]['child'][] = $childValue;
         }
 
         if ($htmlStatus === 'On') {
-            return static::htmlAdminLoad( $data );
+
+            // 样式
+            if (empty( $styleClass )) {
+                $styleClass = [
+                    'ulClass' => '',
+                    'liClass' => '',
+                    'aClass'  => '',
+                ];
+            }
+
+            return static::HtmlShowList( $data, $styleClass );
         }
 
         return $data;
     }
 
-    public static function recursionCls()
+    /**
+     * 递归处理
+     *
+     * @param null $child
+     *
+     * @return bool|null
+     */
+    public static function recursionCls($child = null)
     {
+        if (empty( $child ) || empty( $child['c_key'] ))
+            return false;
 
+        // 子分类
+        $result = static::findByAll( 'On', $child['c_key'] );
+
+        if (empty( $result ))
+            return ;
+
+        // 循环子分类
+        foreach ($result as $key => $value) {
+
+            if (empty( $value ))
+                continue;
+
+            // 赋值
+            $childValue = static::recursionCls( $value );
+
+            if (empty($childValue))
+                continue;
+
+            $child['child'][] = $childValue;
+
+        }
+
+        return $child;
     }
 
+    /**
+     * 分类Html模式展示
+     *
+     * @param       $child
+     * @param array $styleClass
+     *
+     * @return string|void|null
+     */
     public static function HtmlShowList($child, $styleClass = [])
     {
 
-        if (empty( $child ) || empty( $child['c_key'] )) {
+        if (empty( $child )) {
             return;
-        }
-
-        // 样式
-        if (empty( $styleClass )) {
-            $styleClass = [
-                'ulClass' => 'list-group',
-                'liClass' => 'list-group-item',
-                'aClass'  => '',
-            ];
         }
 
         $html = null;
 
         foreach ($child as $value) {
 
+            if (empty( $value ) || empty( $value['name'] ))
+                continue;
+
             $html .= '<li class="' . $styleClass['liClass'] . '">';
 
-            $html .= '  <a href="">' . $value['name'] . '</a>';
+            $html .= Html::a( $value['name'], [''], ['class' => $styleClass['aClass']] ) . ' / ' . Html::a( '编辑', ['edit', 'id' => $value['id']] );
 
             if (!empty( $value['child'] )) {
 
-                $html .= '<ul class="list-group border-bottom">';
-                $html .= static::htmlAdminLoad( $value['child'], $styleClass );
+                $html .= '<ul class="' . $styleClass['ulClass'] . ' border-bottom">';
+                $html .= static::HtmlShowList( $value['child'], $styleClass );
                 $html .= '</ul>';
 
             }
+
             $html .= '</li>';
 
         }

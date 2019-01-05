@@ -44,7 +44,7 @@ class ArticleClsController extends BaseController
     public function actionIndex()
     {
 
-        $result = ArticleCls::getCls('On');
+        $result = ArticleCls::getCls( 'On' );
 
         return $this->render( 'index', [
             'result' => $result,

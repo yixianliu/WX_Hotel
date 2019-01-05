@@ -3,35 +3,25 @@
 namespace backend\controllers;
 
 use Yii;
+use common\models\DisSaleConf;
 use common\models\User;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 
 /**
- * UserController implements the CRUD actions for User model.
+ * DisSaleConfController implements the CRUD actions for DisSaleConf model.
  */
-class UserController extends BaseController
+class DisSaleConfController extends BaseController
 {
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {
         return [
-
-            'access' => [
-                'class' => \yii\filters\AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-
             'verbs' => [
-                'class'   => \yii\filters\VerbFilter::className(),
+                'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -40,13 +30,13 @@ class UserController extends BaseController
     }
 
     /**
-     * Lists all User models.
+     * Lists all DisSaleConf models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => User::find(),
+            'query' => DisSaleConf::find(),
         ]);
 
         return $this->render('index', [
@@ -55,7 +45,7 @@ class UserController extends BaseController
     }
 
     /**
-     * Displays a single User model.
+     * Displays a single DisSaleConf model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -68,17 +58,19 @@ class UserController extends BaseController
     }
 
     /**
-     * Creates a new User model.
+     * Creates a new DisSaleConf model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new User();
+        $model = new DisSaleConf();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
+        $model->user_id = User::$UserDefName;
 
         return $this->render('create', [
             'model' => $model,
@@ -86,7 +78,7 @@ class UserController extends BaseController
     }
 
     /**
-     * Updates an existing User model.
+     * Updates an existing DisSaleConf model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -106,7 +98,7 @@ class UserController extends BaseController
     }
 
     /**
-     * Deletes an existing User model.
+     * Deletes an existing DisSaleConf model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -120,15 +112,15 @@ class UserController extends BaseController
     }
 
     /**
-     * Finds the User model based on its primary key value.
+     * Finds the DisSaleConf model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return User the loaded model
+     * @return DisSaleConf the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne($id)) !== null) {
+        if (($model = DisSaleConf::findOne($id)) !== null) {
             return $model;
         }
 

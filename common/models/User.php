@@ -15,6 +15,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public $auth_key;
 
+    public static $UserDefName = '管理员';
+
     /**
      * @abstract 数据库表名
      */

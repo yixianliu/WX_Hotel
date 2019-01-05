@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\ArticleCls;
+use common\models\User;
 use Yii;
 use common\models\Article;
 use backend\models\ArticleSearch;
@@ -77,11 +78,14 @@ class ArticleController extends BaseController
      */
     public function actionCreate()
     {
+
         $model = new Article();
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
             return $this->redirect( ['view', 'id' => $model->id] );
         }
+
+        $model->user_id = User::$UserDefName;
 
         return $this->render( 'create', [
             'model'  => $model,

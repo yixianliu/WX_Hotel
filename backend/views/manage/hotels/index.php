@@ -14,23 +14,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <style>
     /*设置表格文字左右和上下居中对齐*/
-    #w0 td {vertical-align: middle;}
+    #w0 td {
+        vertical-align: middle;
+    }
 </style>
 
 <div class="col-lg-12">
 
     <div class="form-group">
-        <a href='<?= Url::to(['create']) ?>' class='btn btn-primary btn-lg' title='添加酒店'>添加酒店</a>
-        <a href='<?= Url::to(['rooms/create']) ?>' class='btn btn-primary btn-lg' title='添加房间'>添加房间</a>
+        <a href='<?= Url::to( ['create'] ) ?>' class='btn btn-primary btn-lg' title='添加酒店'>添加酒店</a>
+        <a href='<?= Url::to( ['rooms/create'] ) ?>' class='btn btn-primary btn-lg' title='添加房间'>添加房间</a>
     </div>
 
     <div class="panel panel-default">
 
-        <div class="panel-heading"><h3 class="panel-title"><?= Html::encode($this->title) ?></h3></div>
+        <div class="panel-heading"><h3 class="panel-title"><?= Html::encode( $this->title ) ?></h3></div>
 
         <div class="panel-body">
 
-            <?= GridView::widget([
+            <?= GridView::widget( [
                 'dataProvider' => $dataProvider,
                 'filterModel'  => $searchModel,
                 'columns'      => [
@@ -53,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             return '<img width="280" height="150" src="' . $images . '" alt="' . $model->name . '" />';
                         },
-                        'options'   => [ 'width' => 180 ],
+                        'options'   => ['width' => 180],
                     ],
                     'user_id',
                     'name',
@@ -67,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'updated_at',
                         'value'     => function ($model) {
-                            return date('Y - m -d , H:i:s', $model->updated_at);
+                            return date( 'Y - m -d , H:i:s', $model->updated_at );
                         },
                         'options'   => ['width' => 180],
                     ],
@@ -80,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'pager'        => [
                     'options' => ['class' => 'pagination'],
                 ],
-            ]); ?>
+            ] ); ?>
 
         </div>
     </div>
