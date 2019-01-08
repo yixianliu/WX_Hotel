@@ -5,9 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\Assist;
 use yii\data\ActiveDataProvider;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * AssistController implements the CRUD actions for Assist model.
@@ -15,15 +13,26 @@ use yii\filters\VerbFilter;
 class AssistController extends BaseController
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function behaviors()
     {
         return [
+
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+
             'verbs' => [
-                'class'   => VerbFilter::className(),
+                'class'   => \yii\filters\VerbFilter::className(),
                 'actions' => [
-                    'delete' => [ 'POST' ],
+                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -70,7 +79,7 @@ class AssistController extends BaseController
         $model = new Assist();
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
-            return $this->redirect( [ 'view', 'id' => $model->id ] );
+            return $this->redirect( ['view', 'id' => $model->id] );
         }
 
         return $this->render( 'create', [
@@ -92,7 +101,7 @@ class AssistController extends BaseController
         $model = $this->findModel( $id );
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
-            return $this->redirect( [ 'view', 'id' => $model->id ] );
+            return $this->redirect( ['view', 'id' => $model->id] );
         }
 
         return $this->render( 'update', [
@@ -113,7 +122,7 @@ class AssistController extends BaseController
     {
         $this->findModel( $id )->delete();
 
-        return $this->redirect( [ 'index' ] );
+        return $this->redirect( ['index'] );
     }
 
     /**

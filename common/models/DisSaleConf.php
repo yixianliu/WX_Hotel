@@ -45,11 +45,14 @@ class DisSaleConf extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'parent_user_id', 'commission_one', 'commission_two', 'commission_three', 'commission_me', 'is_using'], 'required'],
+            [['user_id', 'commission_one', 'commission_two', 'commission_three', 'commission_me'], 'required'],
             [['commission_one', 'commission_two', 'commission_three', 'commission_me'], 'number'],
             [['is_using'], 'string'],
             [['created_at', 'updated_at'], 'integer'],
-            [['user_id', 'parent_user_id'], 'string', 'max' => 85],
+            [['commission_one', 'commission_two', 'commission_three', 'commission_me'], 'double'],
+            [['user_id'], 'string', 'max' => 85],
+
+            [['is_using', 'is_commission_me'], 'default', 'value' => 'On']
         ];
     }
 

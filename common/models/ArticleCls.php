@@ -112,7 +112,7 @@ class ArticleCls extends \yii\db\ActiveRecord
      *
      * @return array|string|void|null
      */
-    public static function getCls($htmlStatus = 'On', $styleClass = null)
+    public static function getCls($htmlStatus = 'On', $styleClass = [])
     {
 
         $result = static::findByAll( 'On', static::$parentId );
@@ -129,7 +129,7 @@ class ArticleCls extends \yii\db\ActiveRecord
             // 赋值
             $childValue = static::recursionCls( $value );
 
-            if (empty($childValue))
+            if (empty( $childValue['child'] ))
                 continue;
 
             $data[ $key ]['child'][] = $childValue;
@@ -138,13 +138,11 @@ class ArticleCls extends \yii\db\ActiveRecord
         if ($htmlStatus === 'On') {
 
             // 样式
-            if (empty( $styleClass )) {
-                $styleClass = [
-                    'ulClass' => '',
-                    'liClass' => '',
-                    'aClass'  => '',
-                ];
-            }
+            $styleClass = [
+                'ulClass' => empty( $styleClass['ulClass'] ) ? null : $styleClass['ulClass'],
+                'liClass' => empty( $styleClass['liClass'] ) ? null : $styleClass['liClass'],
+                'aClass'  => empty( $styleClass['aClass'] ) ? null : $styleClass['aClass'],
+            ];
 
             return static::HtmlShowList( $data, $styleClass );
         }
@@ -167,8 +165,9 @@ class ArticleCls extends \yii\db\ActiveRecord
         // 子分类
         $result = static::findByAll( 'On', $child['c_key'] );
 
-        if (empty( $result ))
-            return ;
+        if (empty( $result )) {
+            return $child;
+        }
 
         // 循环子分类
         foreach ($result as $key => $value) {
@@ -179,7 +178,7 @@ class ArticleCls extends \yii\db\ActiveRecord
             // 赋值
             $childValue = static::recursionCls( $value );
 
-            if (empty($childValue))
+            if (empty( $childValue ))
                 continue;
 
             $child['child'][] = $childValue;
@@ -213,11 +212,16 @@ class ArticleCls extends \yii\db\ActiveRecord
 
             $html .= '<li class="' . $styleClass['liClass'] . '">';
 
-            $html .= Html::a( $value['name'], [''], ['class' => $styleClass['aClass']] ) . ' / ' . Html::a( '编辑', ['edit', 'id' => $value['id']] );
+            $html .= '<span>';
+            $html .= Html::a( $value['name'], [''], ['class' => $styleClass['aClass']] );
+            $html .= '</span>';
+
+            $html .= ' / ' . Html::a( '编辑', ['edit', 'id' => $value['id']] );
+            $html .= ' / ' . Html::a( '添加子类', ['edit', 'id' => $value['id']] );
 
             if (!empty( $value['child'] )) {
 
-                $html .= '<ul class="' . $styleClass['ulClass'] . ' border-bottom">';
+                $html .= '<ul class="' . $styleClass['ulClass'] . '">';
                 $html .= static::HtmlShowList( $value['child'], $styleClass );
                 $html .= '</ul>';
 

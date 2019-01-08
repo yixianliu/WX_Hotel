@@ -184,7 +184,7 @@ class Menu extends ActiveRecord
      *
      * @param $child
      *
-     * @return array|void|ActiveRecord[]
+     * @return bool|null
      */
     public static function recursionMenu($child)
     {

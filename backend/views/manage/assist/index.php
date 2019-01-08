@@ -7,14 +7,14 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '网站配置';
+$this->title = '网站参数';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="col-lg-12">
 
     <div class="form-group">
-        <a href='<?= Url::to( [ 'rooms/create' ] ) ?>' class='btn btn-primary btn-lg' title='添加酒店房间'>添加房间</a>
-        <a href='<?= Url::to( [ 'create' ] ) ?>' class='btn btn-primary btn-lg' title='添加房间分类'>添加网站配置</a>
+        <a href='<?= Url::to( [ 'create' ] ) ?>' class='btn btn-primary btn-lg' title='添加酒店房间'>添加网站参数</a>
+        <a href='<?= Url::to( [ 'conf/create' ] ) ?>' class='btn btn-primary btn-lg' title='添加房间分类'>添加网站配置</a>
     </div>
 
     <div class="panel panel-default">

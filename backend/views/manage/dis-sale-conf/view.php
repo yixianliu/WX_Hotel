@@ -11,19 +11,24 @@ $this->params['breadcrumbs'][] = ['label' => '分销设置中心', 'url' => ['in
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="dis-sale-conf-view">
+<div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="panel panel-default">
+
+        <div class="panel-heading"><h3 class="panel-title"><?= Html::encode( $this->title ) ?></h3></div>
+
+        <div class="panel-body">
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('删除', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a('返回列表', ['index'], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -40,6 +45,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at',
             'updated_at',
         ],
+        'template'   => '<tr><th width="200">{label}</th><td>{value}</td></tr>',
     ]) ?>
 
+        </div>
+    </div>
 </div>
+
+
