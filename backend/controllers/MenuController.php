@@ -49,12 +49,7 @@ class MenuController extends BaseController
      */
     public function actionIndex()
     {
-
-        $dataProvider = Menu::findByAll( Yii::$app->request->get( 'id', Menu::$frontend_parent_id ), Yii::$app->session['language'] );
-
-        return $this->render( 'index', [
-            'dataProvider' => $dataProvider,
-        ] );
+        return $this->render( 'index');
     }
 
     /**
@@ -88,28 +83,36 @@ class MenuController extends BaseController
 
         $model->m_key = self::getRandomString();
 
-        $data = Yii::$app->request->post();
+        // Post 提交
+        if (Yii::$app->request->isPost) {
 
-        // 创建单页面
-        if (!empty( $data )) {
+            $data = Yii::$app->request->post();
 
-            // 生成自定义页面
-            if ($data['Menu']['model_key'] == 'UC1') {
-                $Cls = new Pages();
-                $Cls->saveData( $model->m_key, self::getRandomString() );
+            // 创建单页面
+            if (!empty( $data )) {
+
+                // 生成自定义页面
+                if ($data['Menu']['model_key'] == 'UC1') {
+                    $Cls = new Pages();
+                    $Cls->saveData( $model->m_key, self::getRandomString() );
+                }
             }
-        }
 
-        if ($model->load( $data ) && $model->save()) {
+            if (!$model->load( $data ) || !$model->save()) {
+                Yii::$app->getSession()->setFlash( 'error', '保存数据出错 !!' );
+                return $this->redirect( ['create', 'id' => $parent_id] );
+            }
+
             return $this->redirect( ['view', 'id' => $model->m_key] );
+
         } else {
 
             return $this->render( 'create', [
                 'model'  => $model,
                 'result' => [
-                    'parent'     => Menu::getSelectMenu( 'E1' ),
-                    'menu_model' => $this->getModel(),
-                    'role'       => $this->getRole(),
+                    'parent'     => Menu::getSelectMenu(),
+                    'menu_model' => MenuModel::getModel(),
+                    'role'       => Role::getRoleSelect(),
                 ],
             ] );
         }
@@ -213,45 +216,6 @@ class MenuController extends BaseController
         } else {
             throw new NotFoundHttpException( 'The requested page does not exist.' );
         }
-    }
-
-    /**
-     * 获取菜单模型
-     *
-     * @return array
-     */
-    public function getModel()
-    {
-
-        // 初始化
-        $data = [];
-
-        $result = MenuModel::findAll( ['is_using' => 'On'] );
-
-        foreach ($result as $value) {
-            $data[ $value['model_key'] ] = $value['name'];
-        }
-
-        return $data;
-    }
-
-    /**
-     * 获取角色
-     *
-     * @return array
-     */
-    public function getRole()
-    {
-        // 初始化
-        $data = [];
-
-        $result = Role::findAll( ['type' => 1] );
-
-        foreach ($result as $value) {
-            $data[ $value['name'] ] = $value['description'];
-        }
-
-        return $data;
     }
 
 }

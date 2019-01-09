@@ -62,4 +62,28 @@ class MenuModel extends \yii\db\ActiveRecord
             'updated_at' => '更新数据时间',
         ];
     }
+
+    /**
+     * 获取菜单模型
+     *
+     * @return array
+     */
+    public static function getModel()
+    {
+
+        // 初始化
+        $data = [];
+
+        $result = static::findAll( ['is_using' => 'On', 'url_type' => 'model'] );
+
+        foreach ($result as $value) {
+
+            if (empty( $value->m_key ))
+                continue;
+
+            $data[ $value->m_key ] = $value->name;
+        }
+
+        return $data;
+    }
 }

@@ -10,6 +10,7 @@ namespace common\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 class Menu extends ActiveRecord
@@ -46,16 +47,17 @@ class Menu extends ActiveRecord
     {
         return [
             [['m_key', 'name', 'parent_id', 'model_key'], 'required'],
-            [['is_using', 'rp_key'], 'string'],
+            [['is_using', 'r_key'], 'string'],
             [['sort_id',], 'integer'],
             [['m_key', 'parent_id'], 'string', 'max' => 55],
-            [['rp_key', 'model_key', 'name'], 'string', 'max' => 85],
+            [['r_key', 'model_key', 'name'], 'string', 'max' => 85],
             [['m_key'], 'unique'],
 
             // 默认
-            [['custom_key', 'url', 'rp_key', 'is_type',], 'default', 'value' => null],
-            [['is_using',], 'default', 'value' => 'On'],
-            [['rp_key',], 'default', 'value' => 'guest'],
+            [['url_data', 'r_key'], 'default', 'value' => null],
+            [['is_using'], 'default', 'value' => 'On'],
+            [['is_url'], 'default', 'value' => 'Off'],
+            [['r_key',], 'default', 'value' => 'guest'],
             [['sort_id',], 'default', 'value' => 1],
         ];
     }
@@ -70,10 +72,11 @@ class Menu extends ActiveRecord
             'is_type'    => '菜单类型',
             'sort_id'    => '菜单排序',
             'parent_id'  => '父类菜单',
-            'rp_key'     => '角色关键KEY',
+            'r_key'      => '角色关键KEY',
             'model_key'  => '菜单模型',
             'name'       => '菜单名称',
-            'url'        => '菜单外部链接',
+            'url_data'   => '菜单外部链接',
+            'is_url'     => '是否启用 Url',
             'is_using'   => '是否启用',
             'custom_key' => '自定义页面分类KEY',
             'created_at' => '添加数据时间',
@@ -98,7 +101,8 @@ class Menu extends ActiveRecord
             return static::find()->where( ['is_using' => 'On', 'parent_id' => $parent] )->asArray()->all();
 
         return static::find()->where( [self::tableName() . '.is_using' => 'On', self::tableName() . '.parent_id' => $parent] )
-            ->orderBy( 'sort_id', 'ASC' )
+            ->orderBy( self::tableName() . '.sort_id', 'ASC' )
+            ->orderBy( self::tableName() . '.id', 'DESC' )
             ->joinWith( 'role' )
             ->joinWith( 'menuModel' )
             ->asArray()
@@ -133,7 +137,7 @@ class Menu extends ActiveRecord
     // 菜单模型
     public function getMenuModel()
     {
-        return $this->hasOne( MenuModel::className(), ['url_key' => 'model_key'] );
+        return $this->hasOne( MenuModel::className(), ['m_key' => 'model_key'] );
     }
 
     // 角色
@@ -143,7 +147,7 @@ class Menu extends ActiveRecord
     }
 
     /**
-     * 获取菜单内容
+     * 获取菜单内容(数组版本)
      *
      * @param        $parent_id
      * @param string $htmlStatus
@@ -166,10 +170,18 @@ class Menu extends ActiveRecord
 
         foreach ($result as $key => $value) {
 
-            if (empty( $value ))
+            if (empty( $value )) {
                 continue;
+            }
 
-            $data[] = static::recursionMenu( $value );
+            $childArray = static::recursionMenu( $value );
+
+            if (empty( $childArray )) {
+                $data[] = $value;
+                continue;
+            }
+
+            $data[] = $childArray;
         }
 
         if ($htmlStatus == 'On') {
@@ -180,7 +192,7 @@ class Menu extends ActiveRecord
     }
 
     /**
-     * 递归处理菜单
+     * 递归处理菜单(数组版本)
      *
      * @param $child
      *
@@ -274,6 +286,48 @@ class Menu extends ActiveRecord
     }
 
     /**
+     * 输出Html列表
+     *
+     * @param $data
+     *
+     * @return string|void|null
+     */
+    public static function HtmlMenuListAdmin($data)
+    {
+        if (empty( $data ))
+            return;
+
+        $html = null;
+
+        foreach ($data as $value) {
+
+            if (empty( $value['name'] ))
+                continue;
+
+            $html .= '<li>';
+
+            $html .= '<span>';
+            $html .= Html::a( $value['sort_id'] . ' - ' . $value['name'], [''] );
+            $html .= '</span>';
+
+            $html .= ' / ' . Html::a( $value['menuModel']['name'], [''] );
+            $html .= ' / ' . Html::a( '编辑', ['edit', 'id' => $value['id']] );
+            $html .= ' / ' . Html::a( '添加子菜单', ['create', 'id' => $value['id']] );
+
+            if (!empty( $value['child'] )) {
+                $html .= '<ul>';
+                $html .= static::HtmlMenuListAdmin( $value['child'] );
+                $html .= '</ul>';
+            }
+
+            $html .= '</li>';
+
+        }
+
+        return $html;
+    }
+
+    /**
      * 菜单 (选项框使用)
      *
      * @param null $parent_id
@@ -283,7 +337,7 @@ class Menu extends ActiveRecord
     public static function getSelectMenu($parent_id = null)
     {
 
-        $parent_id = empty( $parent_id ) ? static::$parent_id : $parent_id;
+        $parent_id = empty( $parent_id ) ? static::$frontend_parent_id : $parent_id;
 
         // 产品分类
         $dataClassify = static::findByAll( $parent_id, Yii::$app->session['language'] );
@@ -291,7 +345,7 @@ class Menu extends ActiveRecord
         // 初始化
         $result = [];
 
-        $result['E1'] = '一级菜单';
+        $result[ static::$frontend_parent_id ] = '一级菜单';
 
         foreach ($dataClassify as $key => $value) {
 

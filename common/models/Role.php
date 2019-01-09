@@ -135,4 +135,23 @@ class Role extends ActiveRecord
 
     }
 
+    /**
+     * 获取角色(选项卡版本)
+     *
+     * @return array
+     */
+    public static function getRoleSelect()
+    {
+        // 初始化
+        $data = [];
+
+        $result = static::findByAll();
+
+        foreach ($result as $value) {
+            $data[ $value['r_key'] ] = $value['name'];
+        }
+
+        return $data;
+    }
+
 }
