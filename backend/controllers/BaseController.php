@@ -7,6 +7,7 @@
 
 namespace backend\controllers;
 
+use common\models\Language;
 use Yii;
 use yii\web\Controller;
 
@@ -38,6 +39,10 @@ class BaseController extends Controller
         }
 
         static::$assist = \common\models\Assist::findByData();
+
+        $lang = Language::findOne(['is_default' => 'On']);
+
+        Yii::$app->session->set('lang_key', $lang->lang_key);
 
         return true;
     }

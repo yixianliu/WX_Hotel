@@ -4,14 +4,14 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = '网站参数';
+$this->title = '招聘管理';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="col-lg-12">
 
     <div class="form-group">
-        <a href='<?= Url::to( [ 'create' ] ) ?>' class='btn btn-primary btn-lg' title='添加酒店房间'>添加网站参数</a>
-        <a href='<?= Url::to( [ 'conf/create' ] ) ?>' class='btn btn-primary btn-lg' title='添加房间分类'>添加网站配置</a>
+        <a href='<?= Url::to( ['create'] ) ?>' class='btn btn-primary btn-lg' title='添加招聘'>添加招聘</a>
     </div>
 
     <div class="panel panel-default">
@@ -23,19 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= GridView::widget( [
                 'dataProvider' => $dataProvider,
                 'columns'      => [
-                    [
-                        'class'   => 'yii\grid\CheckboxColumn',
-                        'name'    => 'id',
-                        'options' => [ 'width' => 40 ],
-                    ],
-                    [
-                        'class'   => 'yii\grid\SerialColumn',
-                        'options' => [ 'width' => 70 ],
-                    ],
-                    'a_key',
-                    'name',
-                    'content',
-                    'description:ntext',
+                    ['class' => 'yii\grid\SerialColumn'],
+                    'job_id',
+                    'user_id',
+                    'title',
+                    'is_language',
                     'is_using',
                     [
                         'attribute' => 'created_at',

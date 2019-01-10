@@ -47,9 +47,9 @@ $this->beginPage();
 
     <?php $this->beginBody() ?>
 
-    <div class="page-container">
+    <div class="page-container page-navigation-top-fixed">
 
-        <div class="page-sidebar page-sidebar-fixed">
+        <div class="page-sidebar page-sidebar-fixed scroll">
 
             <?= Yii::$app->view->renderFile( '@app/views/manage/_menu.php', ['Conf' => $Conf] ); ?>
 
@@ -61,6 +61,10 @@ $this->beginPage();
 
                 <li class="xn-icon-button pull-right">
                     <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>
+                </li>
+
+                <li class="xn-icon-button pull-right">
+                    <a href="#" class="mb-control">中文</a>
                 </li>
 
             </ul>

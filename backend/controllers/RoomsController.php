@@ -130,7 +130,7 @@ class RoomsController extends BaseController
 
         }
 
-        $model->room_id = self::getRandomString();
+        $model->rooms_id = self::getRandomString();
 
         $result['classify'] = RoomsClassify::getClsSelect( 'Off' );
 

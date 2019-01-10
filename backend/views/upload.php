@@ -193,14 +193,6 @@ $imgPath = Url::to('@web/../../frontend/web/temp/') . $imgPathArray[ 0 ];
 
         </script>
 
-    <?php else: ?>
-
-        <div class="row">
-            <div class="col-md-12"><h3>暂无任何上传的内容 !!</h3></div>
-        </div>
-
     <?php endif ?>
-
-    <hr/>
 
 </div>

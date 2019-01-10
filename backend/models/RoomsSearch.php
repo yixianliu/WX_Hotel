@@ -19,7 +19,7 @@ class RoomsSearch extends Rooms
     {
         return [
             [ [ 'num', 'check_in_num', 'price', 'discount', 'created_at', 'updated_at' ], 'integer' ],
-            [ [ 'hotel_id', 'room_id', 'user_id', 'c_key', 'room_num', 'title', 'content', 'introduction', 'keywords', 'path', 'thumb', 'images', 'is_promote', 'is_using', 'is_comments' ], 'safe' ],
+            [ [ 'hotel_id', 'rooms_id', 'user_id', 'c_key', 'room_num', 'title', 'content', 'introduction', 'keywords', 'path', 'thumb', 'images', 'is_promote', 'is_using', 'is_comments' ], 'safe' ],
         ];
     }
 
@@ -62,7 +62,6 @@ class RoomsSearch extends Rooms
 
         // grid filtering conditions
         $query->andFilterWhere( [
-            'id'           => $this->id,
             'num'          => $this->num,
             'check_in_num' => $this->check_in_num,
             'price'        => $this->price,
@@ -72,7 +71,7 @@ class RoomsSearch extends Rooms
         ] );
 
         $query->andFilterWhere( [ 'like', 'hotel_id', $this->hotel_id ] )
-            ->andFilterWhere( [ 'like', 'room_id', $this->room_id ] )
+            ->andFilterWhere( [ 'like', 'rooms_id', $this->rooms_id ] )
             ->andFilterWhere( [ 'like', 'user_id', $this->user_id ] )
             ->andFilterWhere( [ 'like', 'c_key', $this->c_key ] )
             ->andFilterWhere( [ 'like', 'room_num', $this->room_num ] )

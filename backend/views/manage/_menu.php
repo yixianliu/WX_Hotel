@@ -18,7 +18,6 @@ $html = \common\models\Menu::getMenu( \common\models\Menu::$backend_parent_id, '
 
 ?>
 
-
 <ul class="x-navigation" title='<?= $Conf['name'] ?>'>
 
     <li class="xn-logo">

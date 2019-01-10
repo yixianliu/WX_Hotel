@@ -29,64 +29,63 @@ use phpnt\ICheck\ICheck;
 
                     <div class="tab-pane active" id="tab-1">
 
-                        <?=
-                        $form->field( $model, 'hotel_id' )->widget( Select2::classname(), [
-                            'data'          => $result['hotel'],
-                            'options'       => ['placeholder' => '酒店'],
-                            'pluginOptions' => [
-                                'allowClear' => true,
-                            ],
-                        ] );
-                        ?>
+                        <div class='row' style="min-height: 1200px;">
+                            <?=
+                            $form->field( $model, 'hotel_id' )->widget( Select2::classname(), [
+                                'data'          => $result['hotel'],
+                                'options'       => ['placeholder' => '酒店'],
+                                'pluginOptions' => [
+                                    'allowClear' => true,
+                                ],
+                            ] );
+                            ?>
 
-                        <?=
-                        $form->field( $model, 'c_key' )->widget( Select2::classname(), [
-                            'data'          => $result['classify'],
-                            'options'       => ['placeholder' => '分类'],
-                            'pluginOptions' => [
-                                'allowClear' => true,
-                            ],
-                        ] );
-                        ?>
+                            <?=
+                            $form->field( $model, 'c_key' )->widget( Select2::classname(), [
+                                'data'          => $result['classify'],
+                                'options'       => ['placeholder' => '分类'],
+                                'pluginOptions' => [
+                                    'allowClear' => true,
+                                ],
+                            ] );
+                            ?>
 
-                        <?= $form->field( $model, 'title' )->textInput( ['maxlength' => true] ) ?>
+                            <?= $form->field( $model, 'title' )->textInput( ['maxlength' => true] ) ?>
 
-                        <?=
-                        $form->field( $model, 'content' )->widget( 'kucha\ueditor\UEditor', [
-                            'clientOptions' => [
-                                //编辑区域大小
-                                'lang'               => 'zh-cn',
-                                'initialFrameHeight' => '500',
-                                'elementPathEnabled' => false,
-                                'wordCount'          => false,
-                            ],
-                        ] );
-                        ?>
+                            <?=
+                            $form->field( $model, 'content' )->widget( 'kucha\ueditor\UEditor', [
+                                'clientOptions' => [
+                                    //编辑区域大小
+                                    'lang'               => 'zh-cn',
+                                    'initialFrameHeight' => '500',
+                                    'elementPathEnabled' => false,
+                                    'wordCount'          => false,
+                                ],
+                            ] );
+                            ?>
 
-                        <?= $form->field( $model, 'num' )->textInput( ['maxlength' => true] ) ?>
+                            <?= $form->field( $model, 'num' )->textInput( ['maxlength' => true] ) ?>
 
-                        <?= $form->field( $model, 'price' )->textInput( ['maxlength' => true] ) ?>
+                            <?= $form->field( $model, 'price' )->textInput( ['maxlength' => true] ) ?>
 
-                        <?= Yii::$app->view->renderFile( '@app/views/upload.php', ['model' => $model, 'id' => $model->room_id, 'num' => 1, 'attribute' => 'thumb', 'text' => '上传缩略图', 'form' => $form] ); ?>
+                            <?= Yii::$app->view->renderFile( '@app/views/upload.php', ['model' => $model, 'id' => $model->rooms_id, 'num' => 1, 'attribute' => 'thumb', 'text' => '上传缩略图', 'form' => $form] ); ?>
 
-                        <div class="form-group">
-                            <div class="alert alert-info" role="alert">
-                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                缩略图只允许上传一张，上传多张缩略图只会记录最后那张图片，此类图片的最佳尺寸为 400 x 400 像素，用于产品列表，购物车等地方展示。
+                            <div class="form-group">
+                                <div class="alert alert-info" role="alert">
+                                    缩略图只允许上传一张，上传多张缩略图只会记录最后那张图片，此类图片的最佳尺寸为 400 x 400 像素，用于产品列表，购物车等地方展示。
+                                </div>
                             </div>
-                        </div>
 
-                        <?= Yii::$app->view->renderFile( '@app/views/upload.php', ['model' => $model, 'id' => $model->room_id, 'text' => '上传图片', 'attribute' => 'images', 'form' => $form] ); ?>
+                            <?= Yii::$app->view->renderFile( '@app/views/upload.php', ['model' => $model, 'id' => $model->rooms_id, 'text' => '上传图片', 'attribute' => 'images', 'form' => $form] ); ?>
 
-                        <div class="form-group">
-                            <div class="alert alert-info" role="alert">
-                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                此类图片的最佳尺寸为 750 x 464 像素，用于显示类型为【每行一条数据】的板块产品的列表显示，推荐高度仅做参考，可以自我调整，显示时宽度按屏幕100%显示，高度自动变化，保持原图宽高比不变。
+                            <div class="form-group">
+                                <div class="alert alert-info" role="alert">
+                                    此类图片的最佳尺寸为 750 x 464 像素，用于显示类型为【每行一条数据】的板块产品的列表显示，推荐高度仅做参考，可以自我调整，显示时宽度按屏幕100%显示，高度自动变化，保持原图宽高比不变。
+                                </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
-
 
                     <div class="tab-pane" id="tab-2">
                         <div class='row' style="min-height: 800px;">
@@ -187,7 +186,7 @@ use phpnt\ICheck\ICheck;
 
                 </div>
 
-                <?= $form->field( $model, 'room_id' )->hiddenInput()->label( false ) ?>
+                <?= $form->field( $model, 'rooms_id' )->hiddenInput()->label( false ) ?>
 
                 <div class="panel-footer">
 

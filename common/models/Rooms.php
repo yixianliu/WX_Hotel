@@ -61,7 +61,7 @@ class Rooms extends \yii\db\ActiveRecord
             [['content', 'is_promote', 'is_using', 'is_comments'], 'string'],
             [['discount'], 'double'],
             [['num', 'check_in_num', 'price', 'created_at', 'updated_at'], 'integer'],
-            [['hotel_id', 'room_id', 'thumb',], 'string', 'max' => 85],
+            [['hotel_id', 'rooms_id', 'thumb',], 'string', 'max' => 85],
             [['images'], 'string', 'max' => 1000],
             [['user_id', 'c_key', 'room_num'], 'string', 'max' => 55],
             [['title'], 'string', 'max' => 125],
@@ -82,7 +82,7 @@ class Rooms extends \yii\db\ActiveRecord
     {
         return [
             'hotel_id'     => '所属酒店',
-            'room_id'      => '房间 ID',
+            'rooms_id'      => '房间 ID',
             'user_id'      => '用户 ID',
             'c_key'        => '房间分类',
             'room_num'     => '房间号码',

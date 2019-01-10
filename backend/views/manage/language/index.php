@@ -4,14 +4,16 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = '网站参数';
+/* @var $this yii\web\View */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = '语言管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="col-lg-12">
 
     <div class="form-group">
-        <a href='<?= Url::to( [ 'create' ] ) ?>' class='btn btn-primary btn-lg' title='添加酒店房间'>添加网站参数</a>
-        <a href='<?= Url::to( [ 'conf/create' ] ) ?>' class='btn btn-primary btn-lg' title='添加房间分类'>添加网站配置</a>
+        <a href='<?= Url::to( ['create'] ) ?>' class='btn btn-primary btn-lg' title='添加语言类别'>添加语言类别</a>
     </div>
 
     <div class="panel panel-default">
@@ -23,20 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= GridView::widget( [
                 'dataProvider' => $dataProvider,
                 'columns'      => [
-                    [
-                        'class'   => 'yii\grid\CheckboxColumn',
-                        'name'    => 'id',
-                        'options' => [ 'width' => 40 ],
-                    ],
-                    [
-                        'class'   => 'yii\grid\SerialColumn',
-                        'options' => [ 'width' => 70 ],
-                    ],
-                    'a_key',
+                    ['class' => 'yii\grid\SerialColumn'],
+                    'lang_key',
                     'name',
                     'content',
-                    'description:ntext',
                     'is_using',
+                    'is_default',
                     [
                         'attribute' => 'created_at',
                         'value'     => function ($model) {
@@ -65,3 +59,4 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+

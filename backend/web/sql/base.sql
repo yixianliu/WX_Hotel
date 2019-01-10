@@ -48,6 +48,7 @@ CREATE TABLE `#DB_PREFIX#Language` (
     `name` VARCHAR(85) NOT NULL COMMENT '字段名',
     `content` VARCHAR(135) NOT NULL COMMENT '国家缩写',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
+    `is_default` SET('On', 'Off') NOT NULL COMMENT '是否设定为默认',
     `created_at` integer NOT NULL DEFAULT 0,
     `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
@@ -392,4 +393,61 @@ CREATE TABLE `#DB_PREFIX#Mini_Program_Conf` (
     `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     KEY `app_id` (`app_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+ * + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + -
+ * 招聘管理
+ * + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + - + -
+ */
+DROP TABLE IF EXISTS `#DB_PREFIX#Job`;
+CREATE TABLE `#DB_PREFIX#Job` (
+    `id` INT(11) NULL AUTO_INCREMENT,
+    `job_id` VARCHAR(85) NOT NULL COMMENT '招聘编号,唯一识别码',
+    `user_id` VARCHAR(55) NOT NULL COMMENT '发布用户ID',
+    `title` VARCHAR(125) NOT NULL COMMENT '标题',
+    `content` TEXT NOT NULL COMMENT '内容',
+    `keywords` VARCHAR(120) NULL COMMENT '关键字',
+    `images` VARCHAR(255) NULL COMMENT '招聘图片',
+    `is_language` VARCHAR(25) NOT NULL DEFAULT 'cn' COMMENT '语言类别',
+    `is_using` SET('On', 'Off', 'Out', 'Not') NOT NULL COMMENT '审核',
+    `created_at` integer NOT NULL DEFAULT '0',
+    `updated_at` integer NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `job_id` (`job_id`),
+    UNIQUE `title` (`title`),
+    KEY `user_id` (`user_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+ * 用户应聘
+ */
+DROP TABLE IF EXISTS `#DB_PREFIX#Job_Apply_For`;
+CREATE TABLE `#DB_PREFIX#Job_Apply_For` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `user_id` VARCHAR(85) NOT NULL COMMENT '用户ID',
+    `job_id` VARCHAR(85) NOT NULL COMMENT '招聘ID',
+    `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
+    `created_at` integer NOT NULL DEFAULT '0',
+    `updated_at` integer NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`),
+    KEY `user_id` (`user_id`),
+    UNIQUE `job_id` (`job_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+ * 用户简历
+ */
+DROP TABLE IF EXISTS `#DB_PREFIX#Resume`;
+CREATE TABLE `#DB_PREFIX#Resume` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `user_id` VARCHAR(85) NOT NULL COMMENT '用户ID',
+    `title` VARCHAR(125) NOT NULL COMMENT '简历标题',
+    `content` TEXT NOT NULL COMMENT '简历内容',
+    `path` VARCHAR(125) NULL COMMENT '上传简历路径',
+    `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
+    `created_at` integer NOT NULL DEFAULT '0',
+    `updated_at` integer NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `user_id` (`user_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
