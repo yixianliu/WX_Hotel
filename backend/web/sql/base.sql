@@ -194,8 +194,8 @@ CREATE TABLE `#DB_PREFIX#User_Config` (
 DROP TABLE IF EXISTS `#DB_PREFIX#User_Level`;
 CREATE TABLE `#DB_PREFIX#User_Level` (
     `id` INT(11) NULL AUTO_INCREMENT,
-	`l_key` VARCHAR(55) NOT NULL COMMENT '等级关键KEY',
-	`name` VARCHAR(85) NOT NULL COMMENT '用户等级',
+	  `l_key` VARCHAR(55) NOT NULL COMMENT '等级关键KEY',
+	  `name` VARCHAR(85) NOT NULL COMMENT '用户等级',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否开启',
     `created_at` integer NOT NULL DEFAULT 0,
     `updated_at` integer NOT NULL DEFAULT 0,
@@ -228,8 +228,8 @@ CREATE TABLE `#DB_PREFIX#Menu` (
     `id` INT(11) NULL AUTO_INCREMENT,
     `m_key` VARCHAR(55) NOT NULL COMMENT '菜单值',
     `sort_id` INT(11) UNSIGNED NOT NULL COMMENT '排序ID',
-    `model_key` VARCHAR(55) NULL COMMENT '菜单模型的关键KEY',
-    `url_data` VARCHAR(155) NULL COMMENT '菜单数据',
+    `menu_model` VARCHAR(55) NULL COMMENT '菜单模型的关键KEY',
+    `menu_data` VARCHAR(155) NULL COMMENT '菜单数据',
     `r_key` VARCHAR(55) NULL COMMENT '角色关键KEY',
     `description` TEXT NULL COMMENT '描述',
     `parent_id` VARCHAR(55) NOT NULL COMMENT '父类值',
@@ -251,18 +251,18 @@ CREATE TABLE `#DB_PREFIX#Menu` (
 DROP TABLE IF EXISTS `#DB_PREFIX#Menu_Model`;
 CREATE TABLE `#DB_PREFIX#Menu_Model` (
     `id` INT(11) NULL AUTO_INCREMENT,
-    `m_key` VARCHAR(55) NOT NULL COMMENT '菜单模型',
+    `model_key` VARCHAR(55) NOT NULL COMMENT '菜单模型',
     `sort_id` INT(11) UNSIGNED NOT NULL COMMENT '排序ID',
-    `url_type` VARCHAR(85) NULL COMMENT 'Url 类型',
-    `url_key` VARCHAR(85) NULL COMMENT 'Url 模型关键KEY',
+    `menu_type` VARCHAR(85) NULL COMMENT 'Url 类型',
+    `menu_key` VARCHAR(85) NULL COMMENT 'Url 模型关键KEY',
     `name` VARCHAR(85) NOT NULL COMMENT '模型名称',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
     `is_classify` SET('On', 'Off') NOT NULL COMMENT '是否启用,启用后分类后,就自动选择指定模型进行分类',
     `created_at` integer NOT NULL DEFAULT 0,
     `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
-    UNIQUE KEY `m_key` (`m_key`),
-    UNIQUE KEY `url_key` (`url_key`)
+    UNIQUE KEY `model_key` (`model_key`),
+    UNIQUE KEY `menu_key` (`menu_key`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单模型表';
 
 /**

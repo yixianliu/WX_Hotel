@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             if (!file_exists( $filenameReal )) {
                                 $filename = Yii::getAlias( '@web/../../frontend/web/img/' ) . 'not.jpg';
                             } else {
-                                $filename =  Yii::getAlias( '@web/../../frontend/web/temp/hotels/' ) . $model->thumb;
+                                $filename = Yii::getAlias( '@web/../../frontend/web/temp/hotels/' ) . $model->thumb;
                             }
 
                             return '<img width="280" height="150" src="' . $filename . '" alt="' . $model->name . '" />';

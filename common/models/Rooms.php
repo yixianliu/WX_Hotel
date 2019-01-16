@@ -171,4 +171,77 @@ class Rooms extends \yii\db\ActiveRecord
         return $this->hasOne( RoomsClassify::className(), ['c_key' => 'c_key'] );
     }
 
+    /**
+     * 录入参数和标签数据
+     *
+     * @param        $model
+     * @param        $post
+     * @param string $delete
+     *
+     * @return bool
+     */
+    public static function CreateData($model, $post, $delete = 'Off')
+    {
+
+        if (empty( $model ) || empty( $post )) {
+            return false;
+        }
+
+        // 房间参数
+        if (!empty( $post['Rooms']['f_key'] ) && is_array( $post['Rooms']['f_key'] )) {
+
+            if ($delete == 'On') {
+                if (!RelevanceRoomsField::deleteAll( ['rooms_id' => $model->room_id] )) {
+                    return false;
+                }
+            }
+
+            foreach ($post['Rooms']['f_key'] as $key => $value) {
+
+                if (empty( $value )) {
+                    continue;
+                }
+
+                $modelField = new RelevanceRoomsField();
+
+                $modelField->f_key = $key;
+                $modelField->rooms_id = $model->room_id;
+                $modelField->content = $value;
+
+                if (!$modelField->save( false )) {
+                    return false;
+                }
+
+            }
+        }
+
+        // 房间标签
+        if (!empty( $post['Rooms']['t_key'] )) {
+
+            if ($delete == 'On') {
+                if (!RelevanceRoomsTag::deleteAll( ['rooms_id' => $model->room_id] )) {
+                    return false;
+                }
+            }
+
+            foreach ($post['Rooms']['t_key'] as $key => $value) {
+
+                if (empty( $value )) {
+                    continue;
+                }
+
+                $modelTag = new RelevanceRoomsTag();
+
+                $modelTag->t_key = $key;
+                $modelTag->rooms_id = $model->room_id;
+
+                if (!$modelTag->save( false )) {
+                    return false;
+                }
+            }
+
+        }
+
+        return true;
+    }
 }

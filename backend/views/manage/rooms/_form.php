@@ -148,7 +148,7 @@ use phpnt\ICheck\ICheck;
                                 'type'    => ICheck::TYPE_RADIO_LIST,
                                 'style'   => ICheck::STYLE_SQUARE,
                                 'items'   => ['On' => '启用', 'Off' => '禁用'],
-                                'color'   => 'red',                  // цвет
+                                'color'   => 'grey',
                                 'options' => [
                                     'item' => function ($index, $label, $name, $checked, $value) {
                                         return '<input type="radio" id="is_using' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_using' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
@@ -160,7 +160,7 @@ use phpnt\ICheck\ICheck;
                                 'type'    => ICheck::TYPE_RADIO_LIST,
                                 'style'   => ICheck::STYLE_SQUARE,
                                 'items'   => ['On' => '启用', 'Off' => '禁用'],
-                                'color'   => 'red',                  // цвет
+                                'color'   => 'grey',
                                 'options' => [
                                     'item' => function ($index, $label, $name, $checked, $value) {
                                         return '<input type="radio" id="is_promote' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_promote' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
@@ -173,7 +173,7 @@ use phpnt\ICheck\ICheck;
                                 'type'    => ICheck::TYPE_RADIO_LIST,
                                 'style'   => ICheck::STYLE_SQUARE,
                                 'items'   => ['On' => '启用', 'Off' => '禁用'],
-                                'color'   => 'red',                  // цвет
+                                'color'   => 'grey',
                                 'options' => [
                                     'item' => function ($index, $label, $name, $checked, $value) {
                                         return '<input type="radio" id="is_comments' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_comments' . $index . '">' . $label . '</label>&nbsp;&nbsp;';

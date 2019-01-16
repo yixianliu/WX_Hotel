@@ -63,8 +63,8 @@ class RoomsAppointment extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'hotel_id'       => '酒店 Id',
-            'rooms_id'       => '房间 Id',
+            'hotel_id'       => '酒店',
+            'rooms_id'       => '房间',
             'telphone'       => '手机号码',
             'name'           => '预约姓名',
             'start_time'     => '预约开始时间',
