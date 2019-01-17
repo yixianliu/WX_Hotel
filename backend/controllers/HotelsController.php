@@ -25,7 +25,7 @@ class HotelsController extends BaseController
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => [ '@' ],
+                        'roles' => ['@'],
                     ],
                 ],
             ],
@@ -33,7 +33,7 @@ class HotelsController extends BaseController
             'verbs' => [
                 'class'   => \yii\filters\VerbFilter::className(),
                 'actions' => [
-                    'delete' => [ 'POST' ],
+                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -82,7 +82,7 @@ class HotelsController extends BaseController
         $model->user_id = Yii::$app->user->identity->username;
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
-            return $this->redirect( [ 'view', 'id' => $model->id ] );
+            return $this->redirect( ['view', 'id' => $model->id] );
         }
 
         $model->hotel_id = self::getRandomString();
@@ -106,7 +106,7 @@ class HotelsController extends BaseController
         $model = $this->findModel( $id );
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
-            return $this->redirect( [ 'view', 'id' => $model->id ] );
+            return $this->redirect( ['view', 'id' => $model->id] );
         }
 
         return $this->render( 'update', [
@@ -127,7 +127,7 @@ class HotelsController extends BaseController
     {
         $this->findModel( $id )->delete();
 
-        return $this->redirect( [ 'index' ] );
+        return $this->redirect( ['index'] );
     }
 
     /**

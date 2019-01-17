@@ -3,9 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Hotels */
-
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => '酒店管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;

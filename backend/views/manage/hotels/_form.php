@@ -4,6 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
+use phpnt\ICheck\ICheck;
 
 ?>
 
@@ -18,7 +19,7 @@ use kartik\select2\Select2;
 
         <?php $form = ActiveForm::begin(); ?>
 
-        <div class="panel-body tab-content">
+        <div class="panel-body tab-content" style="min-height: 800px;">
 
             <div class="tab-pane active" id="tab-1">
 
@@ -66,34 +67,40 @@ use kartik\select2\Select2;
 
                     <?= $form->field( $model, 'keywords' )->textInput( ['maxlength' => true, 'class' => 'tagsinput'] ) ?>
 
-                    <?=
-                    $form->field( $model, 'is_promote' )->widget( Select2::classname(), [
-                        'data'          => ['1' => '启用', '2' => '禁用'],
-                        'options'       => ['placeholder' => '推广状态...'],
-                        'pluginOptions' => [
-                            'allowClear' => true,
-                        ],
-                    ] );
+                    <?= $form->field( $model, 'is_promote' )->widget( ICheck::className(), [
+                        'type'    => ICheck::TYPE_RADIO_LIST,
+                        'style'   => ICheck::STYLE_SQUARE,
+                        'items'   => ['On' => '启用', 'Off' => '禁用'],
+                        'color'   => 'grey',
+                        'options' => [
+                            'item' => function ($index, $label, $name, $checked, $value) {
+                                return '<input type="radio" id="is_promote' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_promote' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
+                            },
+                        ]] )
                     ?>
 
-                    <?=
-                    $form->field( $model, 'is_using' )->widget( Select2::classname(), [
-                        'data'          => ['1' => '启用', '2' => '禁用'],
-                        'options'       => ['placeholder' => '审核状态...'],
-                        'pluginOptions' => [
-                            'allowClear' => true,
-                        ],
-                    ] );
+                    <?= $form->field( $model, 'is_using' )->widget( ICheck::className(), [
+                        'type'    => ICheck::TYPE_RADIO_LIST,
+                        'style'   => ICheck::STYLE_SQUARE,
+                        'items'   => ['On' => '启用', 'Off' => '禁用'],
+                        'color'   => 'grey',
+                        'options' => [
+                            'item' => function ($index, $label, $name, $checked, $value) {
+                                return '<input type="radio" id="is_using' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_using' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
+                            },
+                        ]] )
                     ?>
 
-                    <?=
-                    $form->field( $model, 'is_comments' )->widget( Select2::classname(), [
-                        'data'          => ['1' => '启用', '2' => '禁用'],
-                        'options'       => ['placeholder' => '评论状态...'],
-                        'pluginOptions' => [
-                            'allowClear' => true,
-                        ],
-                    ] );
+                    <?= $form->field( $model, 'is_comments' )->widget( ICheck::className(), [
+                        'type'    => ICheck::TYPE_RADIO_LIST,
+                        'style'   => ICheck::STYLE_SQUARE,
+                        'items'   => ['On' => '启用', 'Off' => '禁用'],
+                        'color'   => 'grey',
+                        'options' => [
+                            'item' => function ($index, $label, $name, $checked, $value) {
+                                return '<input type="radio" id="is_comments' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_comments' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
+                            },
+                        ]] )
                     ?>
 
                 </div>
