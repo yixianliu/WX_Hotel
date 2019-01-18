@@ -109,7 +109,7 @@ CREATE TABLE `#DB_PREFIX#Relevance_Rooms_Field` (
     `id` INT(11) NULL AUTO_INCREMENT,
     `f_key` VARCHAR(55) NOT NULL COMMENT '房间参数关键KEY',
     `content` VARCHAR(125) NULL COMMENT '字段值',
-    `hotel_id` VARCHAR(55) NOT NULL COMMENT '房间关键KEY',
+    `rooms_id` VARCHAR(55) NOT NULL COMMENT '房间关键KEY',
     `created_at` integer NOT NULL DEFAULT '0',
     `updated_at` integer NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`)

@@ -18,8 +18,8 @@ class RoomsSearch extends Rooms
     public function rules()
     {
         return [
-            [ [ 'num', 'check_in_num', 'price', 'discount', 'created_at', 'updated_at' ], 'integer' ],
-            [ [ 'hotel_id', 'rooms_id', 'user_id', 'c_key', 'room_num', 'title', 'content', 'introduction', 'keywords', 'path', 'thumb', 'images', 'is_promote', 'is_using', 'is_comments' ], 'safe' ],
+            [['num', 'check_in_num', 'price', 'discount', 'created_at', 'updated_at'], 'integer'],
+            [['hotel_id', 'rooms_id', 'user_id', 'c_key', 'room_num', 'title', 'content', 'introduction', 'keywords', 'path', 'thumb', 'images', 'is_promote', 'is_using', 'is_comments'], 'safe'],
         ];
     }
 
@@ -42,8 +42,8 @@ class RoomsSearch extends Rooms
     public function search($params)
     {
         $query = Rooms::find()->orderBy( [
-            'id'      => SORT_DESC,
-            'room_id' => SORT_DESC,
+            'id'       => SORT_DESC,
+            'rooms_id' => SORT_DESC,
         ] );
 
         // add conditions that should always apply here
@@ -70,21 +70,21 @@ class RoomsSearch extends Rooms
             'updated_at'   => $this->updated_at,
         ] );
 
-        $query->andFilterWhere( [ 'like', 'hotel_id', $this->hotel_id ] )
-            ->andFilterWhere( [ 'like', 'rooms_id', $this->rooms_id ] )
-            ->andFilterWhere( [ 'like', 'user_id', $this->user_id ] )
-            ->andFilterWhere( [ 'like', 'c_key', $this->c_key ] )
-            ->andFilterWhere( [ 'like', 'room_num', $this->room_num ] )
-            ->andFilterWhere( [ 'like', 'title', $this->title ] )
-            ->andFilterWhere( [ 'like', 'content', $this->content ] )
-            ->andFilterWhere( [ 'like', 'introduction', $this->introduction ] )
-            ->andFilterWhere( [ 'like', 'keywords', $this->keywords ] )
-            ->andFilterWhere( [ 'like', 'path', $this->path ] )
-            ->andFilterWhere( [ 'like', 'thumb', $this->thumb ] )
-            ->andFilterWhere( [ 'like', 'images', $this->images ] )
-            ->andFilterWhere( [ 'like', 'is_promote', $this->is_promote ] )
-            ->andFilterWhere( [ 'like', 'is_using', $this->is_using ] )
-            ->andFilterWhere( [ 'like', 'is_comments', $this->is_comments ] );
+        $query->andFilterWhere( ['like', 'hotel_id', $this->hotel_id] )
+            ->andFilterWhere( ['like', 'rooms_id', $this->rooms_id] )
+            ->andFilterWhere( ['like', 'user_id', $this->user_id] )
+            ->andFilterWhere( ['like', 'c_key', $this->c_key] )
+            ->andFilterWhere( ['like', 'room_num', $this->room_num] )
+            ->andFilterWhere( ['like', 'title', $this->title] )
+            ->andFilterWhere( ['like', 'content', $this->content] )
+            ->andFilterWhere( ['like', 'introduction', $this->introduction] )
+            ->andFilterWhere( ['like', 'keywords', $this->keywords] )
+            ->andFilterWhere( ['like', 'path', $this->path] )
+            ->andFilterWhere( ['like', 'thumb', $this->thumb] )
+            ->andFilterWhere( ['like', 'images', $this->images] )
+            ->andFilterWhere( ['like', 'is_promote', $this->is_promote] )
+            ->andFilterWhere( ['like', 'is_using', $this->is_using] )
+            ->andFilterWhere( ['like', 'is_comments', $this->is_comments] );
 
         return $dataProvider;
     }

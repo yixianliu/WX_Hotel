@@ -77,11 +77,11 @@ class RoomsController extends BaseController
         $model = $this->findModel( $id );
 
         $dataFieldProvider = new ActiveDataProvider( [
-            'query' => RelevanceRoomsField::find()->where( ['rooms_id' => $model->room_id] ),
+            'query' => RelevanceRoomsField::find()->where( ['rooms_id' => $model->rooms_id] ),
         ] );
 
         $dataTagProvider = new ActiveDataProvider( [
-            'query' => RelevanceRoomsTag::find()->where( ['rooms_id' => $model->room_id] ),
+            'query' => RelevanceRoomsTag::find()->where( ['rooms_id' => $model->rooms_id] ),
         ] );
 
         return $this->render( 'view', [

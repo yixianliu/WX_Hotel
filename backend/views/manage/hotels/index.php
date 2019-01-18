@@ -49,9 +49,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'thumb',
                         'format'    => 'html',
                         'value'     => function ($model) {
-                            $images = (!is_file( Yii::getAlias( '@webroot/../../frontend/web/temp/coupon/' ) . $model->thumb )) ?
+
+                            $images = (!is_file( Yii::getAlias( '@webroot/../../frontend/web/temp/hotels/' ) . $model->thumb )) ?
                                 Yii::getAlias( '@web/../../frontend/web/img/not.jpg' ) :
-                                Yii::getAlias( '@web/../../frontend/web/temp/coupon/' ) . $model->thumb;
+                                Yii::getAlias( '@web/../../frontend/web/temp/hotels/' ) . $model->thumb;
 
                             return '<img width="280" height="150" src="' . $images . '" alt="' . $model->name . '" />';
                         },

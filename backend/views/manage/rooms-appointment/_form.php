@@ -8,7 +8,6 @@ use phpnt\ICheck\ICheck;
 
 ?>
 
-
 <?php $form = ActiveForm::begin(); ?>
 
 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
@@ -21,9 +20,25 @@ use phpnt\ICheck\ICheck;
 
             <div class='row'>
 
-                <?= $form->field( $model, 'hotel_id' )->textInput( ['maxlength' => true] ) ?>
+                <?=
+                $form->field( $model, 'hotel_id' )->widget( Select2::classname(), [
+                    'data'          => $result['hotel'],
+                    'options'       => ['placeholder' => '选择酒店...'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                    ],
+                ] );
+                ?>
 
-                <?= $form->field( $model, 'rooms_id' )->textInput( ['maxlength' => true] ) ?>
+                <?=
+                $form->field( $model, 'rooms_id' )->widget( Select2::classname(), [
+                    'data'          => [],
+                    'options'       => ['placeholder' => '选择酒店后,再选择房间...'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                    ],
+                ] );
+                ?>
 
                 <?= $form->field( $model, 'telphone' )->textInput( ['maxlength' => true] ) ?>
 
@@ -75,7 +90,49 @@ use phpnt\ICheck\ICheck;
             <a href='<?= Url::to( ['index'] ) ?>' class='btn btn-primary btn-lg' title='返回列表'>返回列表</a>
 
         </div>
-
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?= Yii::$app->view->renderFile( '@app/views/formMsg.php' ); ?>
+
+</div>
+
+<?php ActiveForm::end(); ?>
+
+<script type="text/javascript">
+
+    $('#roomsappointment-hotel_id').change(function () {
+
+        var RoomsId = $('#roomsappointment-rooms_id');
+
+        RoomsId.empty();
+
+        $.ajax({
+
+            type: "GET",
+            url: "<?= Url::to( ['rooms-appointment/index'] ) ?>?hotel_id=" + $(this).val(),
+            dataType: "json",
+
+            success: function (data) {
+
+                if (data.status == true) {
+
+                    $.each(data.msg, function (index, value) {
+                        RoomsId.append("<option value='" + index + "'>" + value + "</option>");
+                    });
+
+                    return false;
+                }
+
+                alert(data['msg']);
+                return false;
+            },
+
+            error: function (data) {
+
+            }
+
+        });
+
+    });
+
+</script>

@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Hotels;
+use common\models\Rooms;
 use Yii;
 use common\models\RoomsAppointment;
 use yii\data\ActiveDataProvider;
@@ -48,6 +49,22 @@ class RoomsAppointmentController extends BaseController
         $dataProvider = new ActiveDataProvider( [
             'query' => RoomsAppointment::find(),
         ] );
+
+        // 获取房间
+        if (Yii::$app->request->isAjax) {
+
+            $id = Yii::$app->request->get( 'hotel_id', null );
+
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+            if (empty( $id )) {
+                return ['msg' => '请选择酒店!', 'status' => false];
+            }
+
+            $date = Rooms::getSelect( 'On', $id );
+
+            return ['msg' => $date, 'status' => true];
+        }
 
         return $this->render( 'index', [
             'dataProvider' => $dataProvider,

@@ -74,58 +74,58 @@ use kartik\select2\Select2;
     </div>
 </div>
 
-    <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        var ModelKey = $('#menu-model_key').val();
+    var ModelKey = $('#menu-model_key').val();
 
-        $('.field-menu-url').hide();
-        $('.field-menu-is_type').hide();
+    $('.field-menu-url').hide();
+    $('.field-menu-is_type').hide();
 
-        // 超链接
-        if (ModelKey == 'UU1') {
-            $('.field-menu-url').show();
-        }
+    // 超链接
+    if (ModelKey == 'UU1') {
+        $('.field-menu-url').show();
+    }
 
-        // 显示类型
-        if (ModelKey != 'UU1' && ModelKey != '') {
+    // 显示类型
+    if (ModelKey != 'UU1' && ModelKey != '') {
+        $('.field-menu-is_type').show();
+    }
+
+    $('#menu-model_key').on('change', function () {
+
+        var selectVal = $(this).val();
+
+        // 栏目类型
+        if (selectVal != 'UU1' && (selectVal == 'UC1' || selectVal == 'UP2')) {
+
             $('.field-menu-is_type').show();
+
+            // 链接
+            $('.field-menu-url').hide();
+            $('#menu-url').val('');
         }
 
-        $('#menu-model_key').on('change', function () {
+        if (selectVal == 'UU1') {
+            $('.field-menu-url').show();
+            $('.field-menu-is_type').hide();
+        }
 
-            var selectVal = $(this).val();
+        if ((selectVal != 'UC1' && selectVal != 'UP2') && selectVal != 'UU1') {
 
-            // 栏目类型
-            if (selectVal != 'UU1' && (selectVal == 'UC1' || selectVal == 'UP2')) {
+            $('.field-menu-url').hide();
+            $('.field-menu-is_type').hide();
 
-                $('.field-menu-is_type').show();
+            // 单页面
+            $('.field-menu-custom_key').hide();
+            $('#menu-custom_key').attr("checked", "");
 
-                // 链接
-                $('.field-menu-url').hide();
-                $('#menu-url').val('');
-            }
+            // 链接
+            $('#menu-url').val('');
+        }
 
-            if (selectVal == 'UU1') {
-                $('.field-menu-url').show();
-                $('.field-menu-is_type').hide();
-            }
+        return true;
+    });
 
-            if ((selectVal != 'UC1' && selectVal != 'UP2') && selectVal != 'UU1') {
-
-                $('.field-menu-url').hide();
-                $('.field-menu-is_type').hide();
-
-                // 单页面
-                $('.field-menu-custom_key').hide();
-                $('#menu-custom_key').attr("checked", "");
-
-                // 链接
-                $('#menu-url').val('');
-            }
-
-            return true;
-        });
-
-    </script>
+</script>

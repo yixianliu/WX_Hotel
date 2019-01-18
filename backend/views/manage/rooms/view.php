@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $data->name;
                         },
                     ],
-                    'room_id',
+                    'rooms_id',
                     'user_id',
                     [
                         'attribute' => 'c_key',
@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             $filenameReal = Yii::getAlias( '@webroot/../../frontend/web/temp/rooms/' ) . $model->thumb;
 
-                            if (!file_exists( $filenameReal ) || !is_file( $filenameReal )) {
+                            if (!is_file( $filenameReal ) || !is_file( $filenameReal )) {
                                 $filename = Yii::getAlias( '@web/../../frontend/web/img/' ) . 'not.jpg';
                             } else {
                                 $filename = Yii::getAlias( '@web/../../frontend/web/temp/rooms/' ) . $model->thumb;
@@ -176,7 +176,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'rooms_id',
                         'value'     => function ($model) {
-                            $data = \common\models\Rooms::findOne( ['room_id' => $model->rooms_id] );
+                            $data = \common\models\Rooms::findOne( ['rooms_id' => $model->rooms_id] );
                             return $data->title;
                         },
                     ],
@@ -222,7 +222,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'rooms_id',
                         'value'     => function ($model) {
-                            $data = \common\models\Rooms::findOne( ['room_id' => $model->rooms_id] );
+                            $data = \common\models\Rooms::findOne( ['rooms_id' => $model->rooms_id] );
                             return $data->title;
                         },
                     ],

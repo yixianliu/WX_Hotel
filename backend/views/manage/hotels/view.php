@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             $filenameReal = Yii::getAlias( '@webroot/../../frontend/web/temp/hotels/' ) . $model->thumb;
 
-                            if (!file_exists( $filenameReal )) {
+                            if (!is_file( $filenameReal )) {
                                 $filename = Yii::getAlias( '@web/../../frontend/web/img/' ) . 'not.jpg';
                             } else {
                                 $filename = Yii::getAlias( '@web/../../frontend/web/temp/hotels/' ) . $model->thumb;
@@ -56,7 +56,33 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'options'   => ['width' => 180],
                     ],
-                    'images',
+                    [
+                        'attribute' => 'images',
+                        'format'    => 'html',
+                        'value'     => function ($model) {
+
+                            if (empty( $model->images )) {
+                                return '<img width="280" height="150" src="' . Yii::getAlias( '@web/../../frontend/web/img/' ) . 'not.jpg' . '" alt="' . $model->name . '" />';
+                            }
+
+                            $imagesData = explode( ',', $model->images );
+
+                            $html = '<div class="row">';
+                            foreach ($imagesData as $value) {
+
+                                if (empty( $value ))
+                                    continue;
+
+                                $html .= '<div class="col-md-3">';
+                                $html .= '<img width="340" height="220" src="' . Yii::getAlias( '@web/../../frontend/web/temp/hotels/' ) . $value . '" alt="' . $model->name . '" />';
+                                $html .= '</div>';
+                            }
+                            $html .= '</div>';
+
+                            return $html;
+                        },
+                        'options'   => ['width' => 180],
+                    ],
                     [
                         'attribute' => 'is_promote',
                         'value'     => function ($model) {

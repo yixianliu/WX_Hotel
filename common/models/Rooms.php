@@ -9,25 +9,25 @@ use yii\behaviors\TimestampBehavior;
  * This is the model class for table "w_rooms".
  *
  * @property int    $id
- * @property string $hotel_id     酒店编号,唯一识别码
- * @property string $room_id      房间编号,唯一识别码
- * @property string $user_id      用户ID
- * @property string $c_key        房间分类KEY
- * @property string $room_num     房间号码
- * @property string $title        产品标题
- * @property string $content      产品内容
- * @property string $num          房间数量
- * @property string $check_in_num 入住房间数量
- * @property string $price        一口价
- * @property string $discount     折扣价
- * @property string $introduction 导读,获取房间介绍第一段.
- * @property string $keywords     关键字
- * @property string $path         房间文件路径
- * @property string $thumb        房间缩略图
- * @property string $images       房间图片
- * @property string $is_promote   推广
- * @property string $is_using     审核
- * @property string $is_comments  是否启用评论
+ * @property string $hotel_id      酒店编号,唯一识别码
+ * @property string $rooms_id      房间编号,唯一识别码
+ * @property string $user_id       用户ID
+ * @property string $c_key         房间分类KEY
+ * @property string $room_num      房间号码
+ * @property string $title         产品标题
+ * @property string $content       产品内容
+ * @property string $num           房间数量
+ * @property string $check_in_num  入住房间数量
+ * @property string $price         一口价
+ * @property string $discount      折扣价
+ * @property string $introduction  导读,获取房间介绍第一段.
+ * @property string $keywords      关键字
+ * @property string $path          房间文件路径
+ * @property string $thumb         房间缩略图
+ * @property string $images        房间图片
+ * @property string $is_promote    推广
+ * @property string $is_using      审核
+ * @property string $is_comments   是否启用评论
  * @property int    $created_at
  * @property int    $updated_at
  */
@@ -71,7 +71,7 @@ class Rooms extends \yii\db\ActiveRecord
 
             [['is_promote', 'is_using', 'is_comments'], 'default', 'value' => 'On'],
             [['check_in_num'], 'default', 'value' => 0],
-            [['room_num'], 'default', 'value' => rand(00000, 99999)],
+            [['room_num'], 'default', 'value' => rand( 00000, 99999 )],
         ];
     }
 
@@ -82,7 +82,7 @@ class Rooms extends \yii\db\ActiveRecord
     {
         return [
             'hotel_id'     => '所属酒店',
-            'rooms_id'      => '房间 ID',
+            'rooms_id'     => '房间 ID',
             'user_id'      => '用户 ID',
             'c_key'        => '房间分类',
             'room_num'     => '房间号码',
@@ -134,20 +134,29 @@ class Rooms extends \yii\db\ActiveRecord
      * 获取房间(选项框)
      *
      * @param string $is_using
+     * @param null   $hotel_id
      *
      * @return array
      */
-    public static function getSelect($is_using = 'On')
+    public static function getSelect($is_using = 'On', $hotel_id = null)
     {
 
         // 初始化
         $result = [];
 
         // 产品分类
-        $dataClassify = static::findByAll($is_using);
+        if (empty( $hotel_id )) {
+
+            $dataClassify = static::findByAll( $is_using );
+
+        } else {
+
+            $dataClassify = static::findAll( ['is_using' => $is_using, 'hotel_id' => $hotel_id] );
+
+        }
 
         foreach ($dataClassify as $key => $value) {
-            $result[$value['room_id']] = $value['title'];
+            $result[ $value['rooms_id'] ] = $value['title'];
         }
 
         return $result;
@@ -191,7 +200,7 @@ class Rooms extends \yii\db\ActiveRecord
         if (!empty( $post['Rooms']['f_key'] ) && is_array( $post['Rooms']['f_key'] )) {
 
             if ($delete == 'On') {
-                if (!RelevanceRoomsField::deleteAll( ['rooms_id' => $model->room_id] )) {
+                if (!RelevanceRoomsField::deleteAll( ['rooms_id' => $model->rooms_id] )) {
                     return false;
                 }
             }
@@ -205,7 +214,7 @@ class Rooms extends \yii\db\ActiveRecord
                 $modelField = new RelevanceRoomsField();
 
                 $modelField->f_key = $key;
-                $modelField->rooms_id = $model->room_id;
+                $modelField->rooms_id = $model->rooms_id;
                 $modelField->content = $value;
 
                 if (!$modelField->save( false )) {
@@ -219,7 +228,7 @@ class Rooms extends \yii\db\ActiveRecord
         if (!empty( $post['Rooms']['t_key'] )) {
 
             if ($delete == 'On') {
-                if (!RelevanceRoomsTag::deleteAll( ['rooms_id' => $model->room_id] )) {
+                if (!RelevanceRoomsTag::deleteAll( ['rooms_id' => $model->rooms_id] )) {
                     return false;
                 }
             }
@@ -233,7 +242,7 @@ class Rooms extends \yii\db\ActiveRecord
                 $modelTag = new RelevanceRoomsTag();
 
                 $modelTag->t_key = $key;
-                $modelTag->rooms_id = $model->room_id;
+                $modelTag->rooms_id = $model->rooms_id;
 
                 if (!$modelTag->save( false )) {
                     return false;

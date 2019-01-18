@@ -143,4 +143,10 @@ class OrderController extends BaseController
 
         throw new NotFoundHttpException( 'The requested page does not exist.' );
     }
+
+    public function actionStatistics()
+    {
+        return $this->render('statistics');
+    }
+
 }

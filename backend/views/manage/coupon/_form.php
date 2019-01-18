@@ -5,9 +5,6 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use phpnt\ICheck\ICheck;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Coupon */
-/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <?php $form = ActiveForm::begin(); ?>
