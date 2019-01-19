@@ -6,9 +6,6 @@ use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use phpnt\ICheck\ICheck;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\RoomsClassify */
-/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <?php $form = ActiveForm::begin(); ?>
@@ -21,23 +18,13 @@ use phpnt\ICheck\ICheck;
 
         <div class="panel-body">
 
-            <?=
-            $form->field( $model, 'parent_id' )->widget( Select2::classname(), [
-                'data'          => $result['classify'],
-                'options'       => ['placeholder' => '父级类目...'],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                ],
-            ] );
-            ?>
+            <?= $form->field( $model, 'name' )->textInput( ['maxlength' => true] ) ?>
 
             <?= $form->field( $model, 'sort_id' )->textInput( ['maxlength' => true] ) ?>
 
-            <?= $form->field( $model, 'name' )->textInput( ['maxlength' => true] ) ?>
+            <?= $form->field( $model, 'exp' )->textInput( ['maxlength' => true] ) ?>
 
             <?= $form->field( $model, 'description' )->textarea( ['rows' => 6] ) ?>
-
-            <?= $form->field( $model, 'keywords' )->textInput( ['maxlength' => true] ) ?>
 
             <?= $form->field( $model, 'is_using' )->widget( ICheck::className(), [
                 'type'    => ICheck::TYPE_RADIO_LIST,
@@ -64,3 +51,5 @@ use phpnt\ICheck\ICheck;
 </div>
 
 <?php ActiveForm::end(); ?>
+
+

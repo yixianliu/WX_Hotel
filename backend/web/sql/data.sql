@@ -77,12 +77,8 @@ VALUES
 (NULL, 'UJob1', 3, 'model', 'job', '招聘中心', 'On', 'On', '#TIME#', '#TIME#'),
 (NULL, 'UPages1', 4, 'model', 'pages', '自定义页面', 'On', 'On', '#TIME#', '#TIME#'),
 (NULL, 'UU1', 5, 'model', 'urls', '外部链接', 'On', 'Off', '#TIME#', '#TIME#'),
-(NULL, 'UP2', 6, 'model', 'purchase', '采购中心', 'On', 'On', '#TIME#', '#TIME#'),
-(NULL, 'US1', 7, 'model', 'supply', '供应中心', 'On', 'On', '#TIME#', '#TIME#'),
-(NULL, 'UB1', 8, 'model', 'bid', '投标中心', 'On', 'On', '#TIME#', '#TIME#'),
 (NULL, 'UM1', 9, 'model', 'maps', '地图页面', 'On', 'Off', '#TIME#', '#TIME#'),
 (NULL, 'UC2', 10, 'model', 'comment', '留言页面', 'On', 'Off', '#TIME#', '#TIME#'),
-(NULL, 'UDownload2', 11, 'model', 'download', '下载中心', 'On', 'On', '#TIME#', '#TIME#'),
 (NULL, 'USearch2', 12, 'model', 'search', '搜索中心', 'On', 'Off', '#TIME#', '#TIME#'),
 (NULL, 'UEvaluating2', 13, 'model', 'evaluating', '评测中心', 'On', 'On', '#TIME#', '#TIME#');
 
@@ -95,6 +91,8 @@ VALUES
 
 (NULL, 'HN1', 1, 'urls', 'center/index', 'R15', NULL, 'H1', '首页', NULL, 'On', 'On', #TIME#, #TIME#),
 (NULL, 'HN2', 2, 'urls', null, 'R15', NULL, 'H1', '酒店中心', NULL, 'On', 'On', #TIME#, #TIME#),
+(NULL, 'HN3', 3, 'urls', null, 'R15', NULL, 'H1', '超值酒店', NULL, 'On', 'On', #TIME#, #TIME#),
+(NULL, 'HN4', 4, 'urls', null, 'R15', NULL, 'H1', '超值酒店', NULL, 'On', 'On', #TIME#, #TIME#),
 
 (NULL, 'HSV1', 1, 'urls', 'hotel/index', 'R15', NULL, 'HN2', '房间分类', NULL, 'On', 'On', #TIME#, #TIME#),
 (NULL, 'HSI2', 2, 'urls', 'hotel/index', 'R15', NULL, 'HN2', '海景房', NULL, 'On', 'On', #TIME#, #TIME#),
@@ -149,7 +147,8 @@ VALUES
 (NULL, 'SupperAdmin', 1, null, null, 'R15', NULL, 'M0', '终极管理', NULL, 'On', 'On', #TIME#, #TIME#),
 
 (NULL, 'SCenter2', 1, 'urls', null, 'R15', NULL, 'SupperAdmin', '管理中心', NULL, 'On', 'On', #TIME#, #TIME#),
-(NULL, 'SPower1', 8, 'urls', null, 'R15', NULL, 'SupperAdmin', '权限管理', NULL, 'On', 'On', #TIME#, #TIME#),
+(NULL, 'SPower1', 2, 'urls', null, 'R15', NULL, 'SupperAdmin', '权限管理', NULL, 'On', 'On', #TIME#, #TIME#),
+(NULL, 'SMenuModel1', 3, 'urls', null, 'R15', NULL, 'SupperAdmin', '菜单模型管理', NULL, 'On', 'On', #TIME#, #TIME#),
 
 (NULL, 'SCCCenter4', 4, 'urls', '/backup/index', 'R15', NULL, 'SCenter2', '备份数据', NULL, 'On', 'On', #TIME#, #TIME#),
 (NULL, 'SCCCenter5', 5, 'urls', '/assist/index', 'R15', NULL, 'SCenter2', '辅助参数', NULL, 'On', 'On', #TIME#, #TIME#),
@@ -169,7 +168,6 @@ VALUES
 (NULL, 'AM1', 4, 'urls', null, 'R15', NULL, 'AdminManage', '菜单管理', NULL, 'On', 'On', #TIME#, #TIME#),
 (NULL, 'AU1', 5, 'urls', null, 'R15', NULL, 'AdminManage', '用户管理', NULL, 'On', 'On', #TIME#, #TIME#),
 (NULL, 'AArticle1', 5, 'urls', null, 'R15', NULL, 'AdminManage', '文章管理', NULL, 'On', 'On', #TIME#, #TIME#),
-(NULL, 'ADownload1', 5, 'urls', null, 'R15', NULL, 'AdminManage', '下载管理', NULL, 'On', 'On', #TIME#, #TIME#),
 (NULL, 'ALanguage1', 5, 'urls', null, 'R15', NULL, 'AdminManage', '语言管理', NULL, 'On', 'On', #TIME#, #TIME#),
 (NULL, 'AJob1', 6, 'urls', null, 'R15', NULL, 'AdminManage', '招聘管理', NULL, 'On', 'On', #TIME#, #TIME#),
 (NULL, 'AR1', 7, 'urls', null, 'R15', NULL, 'AdminManage', '角色管理', NULL, 'On', 'On', #TIME#, #TIME#),
@@ -184,9 +182,6 @@ VALUES
 
 (NULL, 'ALLanguage1', 1, 'urls', '/language/index', 'R15', NULL, 'ALanguage1', '语言类别', NULL, 'On', 'On', #TIME#, #TIME#),
 (NULL, 'ALLanguage2', 2, 'urls', '/language/create', 'R15', NULL, 'ALanguage1', '添加语言类别', NULL, 'On', 'On', #TIME#, #TIME#),
-
-(NULL, 'ADDownload1', 1, 'urls', '/download/index', 'R15', NULL, 'ADownload1', '下载管理', NULL, 'On', 'On', #TIME#, #TIME#),
-(NULL, 'ADDownload2', 2, 'urls', '/download/create', 'R15', NULL, 'ADownload1', '添加文件', NULL, 'On', 'On', #TIME#, #TIME#),
 
 (NULL, 'ADDis1', 1, 'urls', '/dis-sale-user/index', 'R15', NULL, 'ADis8', '用户列表', NULL, 'On', 'On', #TIME#, #TIME#),
 (NULL, 'ADDis2', 2, 'urls', '/dis-sale-conf/index', 'R15', NULL, 'ADis8', '分销设置', NULL, 'On', 'On', #TIME#, #TIME#),

@@ -36,7 +36,7 @@ class UploadController extends BaseController
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => [ '@' ],
+                        'roles' => ['@'],
                     ],
                 ],
             ],
@@ -44,7 +44,7 @@ class UploadController extends BaseController
             'verbs' => [
                 'class'   => \yii\filters\VerbFilter::className(),
                 'actions' => [
-                    'delete' => [ 'POST' ],
+                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -66,7 +66,7 @@ class UploadController extends BaseController
         $attribute = Yii::$app->request->get( 'attribute', 'images' );
 
         if (empty( $type ) || empty( $ext ) || !Yii::$app->request->isAjax)
-            return Json::encode( [ 'error' => '参数错误!' ] );
+            return Json::encode( ['error' => '参数错误!'] );
 
         switch ($type) {
 
@@ -101,16 +101,16 @@ class UploadController extends BaseController
                 break;
 
             default:
-                return Json::encode( [ 'error' => '没有此模型!' ] );
+                return Json::encode( ['error' => '没有此模型!'] );
         }
 
         // 上传组件对应model
         if (!($imageFile = UploadedFile::getInstance( $model, $attribute )))
-            return Json::encode( [ 'error' => '上传组件文件异常!' ] );
+            return Json::encode( ['error' => '上传组件文件异常!'] );
 
         // 验证后缀名
         if (!static::UploadExt( $ext, $imageFile->extension ))
-            return Json::encode( [ 'error' => '上传格式有问题!' ] );
+            return Json::encode( ['error' => '上传格式有问题!'] );
 
         // 上传路径
         $directory = Yii::getAlias( '@backend/../frontend/web/temp' ) . DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR;
@@ -139,7 +139,7 @@ class UploadController extends BaseController
             ] );
         }
 
-        return Json::encode( [ 'error' => '上传失败!' ] );
+        return Json::encode( ['error' => '上传失败!'] );
     }
 
     /**
@@ -197,7 +197,7 @@ class UploadController extends BaseController
     {
 
         if (empty( $name ) || empty( $type )) {
-            return Json::encode( [ 'message' => '参数有误 !!' ] );
+            return Json::encode( ['message' => '参数有误 !!'] );
         }
 
         $directory = Yii::getAlias( '@frontend/web/temp/' ) . DIRECTORY_SEPARATOR . $type;
@@ -220,7 +220,7 @@ class UploadController extends BaseController
                 'size'         => filesize( $file ),
                 'url'          => $path,
                 'thumbnailUrl' => $path,
-                'deleteUrl'    => Url::to( [ 'upload/image-delete', 'name' => $fileName, 'type' => $type ] ),
+                'deleteUrl'    => Url::to( ['upload/image-delete', 'name' => $fileName, 'type' => $type] ),
                 'deleteType'   => 'GET',
             ];
         }
