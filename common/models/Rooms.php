@@ -33,6 +33,9 @@ use yii\behaviors\TimestampBehavior;
  */
 class Rooms extends \yii\db\ActiveRecord
 {
+
+    public static $defaultRole = 'R15';
+
     /**
      * {@inheritdoc}
      */

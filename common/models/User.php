@@ -33,15 +33,20 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
         return [
 
-            [['username', 'r_key',], 'required'],
-            [['r_key', 'nickname',], 'string'],
+            [['username', 'r_key', 'password', 'l_key', 'nickname'], 'required'],
+
+            [['username', 'nickname'], 'string', 'max' => 30],
+            [['r_key', 'birthday', 'user_id', 'password'], 'string', 'max' => 85],
+            [['signature', 'address'], 'string', 'max' => 255],
+            [['credit'], 'integer'],
 
             // 默认
-            [['nickname',], 'default', 'value' => null],
-            [['is_microhurt', 'is_head',], 'default', 'value' => 'Off'],
+            [['birthday', 'signature', 'address'], 'default', 'value' => null],
+            [['is_security', 'is_head',], 'default', 'value' => 'Off'],
             [['is_display',], 'default', 'value' => 'On'],
             [['is_using',], 'default', 'value' => 'Not'],
-            [['r_key',], 'default', 'value' => 'R15'],
+            [['r_key',], 'default', 'value' => Rooms::$defaultRole],
+
         ];
     }
 
@@ -51,14 +56,26 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function attributeLabels()
     {
         return [
-            'user_id'    => '用户',
-            'username'   => '用户名称',
-            'r_key'      => '角色',
-            'reg_time'   => '注册时间',
-            'is_using'   => '审核状态',
-            'nickname'   => '昵称',
-            'rePassword' => '二次密码',
-            'birthday'   => '出生年月日',
+            'user_id'         => '用户 ID',
+            'username'        => '用户名',
+            'password'        => '密码',
+            'credit'          => '积分',
+            'signature'       => '个性签名',
+            'address'         => '通讯地址',
+            'r_key'           => '角色',
+            'l_key'           => '等级',
+            'nickname'        => '昵称',
+            'sex'             => '性别',
+            'telphone'        => '手机号码',
+            'rePassword'      => '二次密码',
+            'birthday'        => '出生年月日',
+            'login_ip'        => '登录 IP 地址',
+            'is_display'      => '是否显示信息',
+            'is_head'         => '是否上传头像',
+            'is_security'     => '是否安全设置',
+            'is_using'        => '是否可用',
+            'last_login_time' => '最后登陆时间',
+            'reg_time'        => '注册时间',
         ];
     }
 
@@ -71,9 +88,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findById($id)
     {
-        return static::find()->select(Role::tableName() . ".name as rname, " . self::tableName() . ".*, ")
-            ->joinWith('role')
-            ->where([self::tableName() . '.id' => $id])
+        return static::find()->select( Role::tableName() . ".name as rname, " . self::tableName() . ".*, " )
+            ->joinWith( 'role' )
+            ->where( [self::tableName() . '.id' => $id] )
             ->one();
     }
 
@@ -86,7 +103,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::find()->where(['username' => $username]);
+        return static::find()->where( ['username' => $username] );
     }
 
     /**
@@ -94,7 +111,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id]);
+        return static::findOne( ['id' => $id] );
         // return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
     }
 
@@ -103,7 +120,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        throw new NotSupportedException( '"findIdentityByAccessToken" is not implemented.' );
     }
 
     /**
@@ -137,7 +154,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function setPassword($password)
     {
-        $this->password = Yii::$app->security->generatePasswordHash($password);
+        $this->password = Yii::$app->security->generatePasswordHash( $password );
     }
 
     /**
@@ -175,11 +192,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
 
         // 审核状态
-        $array = !empty($status) ? [self::tableName() . '.is_using' => $status] : ['!=', self::tableName() . '.is_using', 'null'];
+        $array = !empty( $status ) ? [self::tableName() . '.is_using' => $status] : ['!=', self::tableName() . '.is_using', 'null'];
 
-        return static::find()->where($array)
-            ->joinWith('role')
-            ->orderBy(self::tableName() . '.user_id')
+        return static::find()->where( $array )
+            ->joinWith( 'role' )
+            ->orderBy( self::tableName() . '.user_id' )
             ->all();
     }
 
@@ -188,7 +205,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function getRole()
     {
-        return $this->hasOne(Role::className(), ['r_key' => 'r_key']);
+        return $this->hasOne( Role::className(), ['r_key' => 'r_key'] );
     }
 
 }

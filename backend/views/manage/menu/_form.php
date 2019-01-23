@@ -4,6 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
+use phpnt\ICheck\ICheck;
 
 ?>
 
@@ -31,37 +32,44 @@ use kartik\select2\Select2;
 
             <?= $form->field( $model, 'sort_id' )->textInput( ['maxlength' => true] ) ?>
 
-            <?=
-            $form->field( $model, 'r_key' )->widget( Select2::classname(), [
-                'data'          => $result['role'],
-                'options'       => ['placeholder' => '选择角色...'],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                ],
-            ] );
+            <?= $form->field( $model, 'r_key' )->widget( ICheck::className(), [
+                'type'    => ICheck::TYPE_RADIO_LIST,
+                'style'   => ICheck::STYLE_SQUARE,
+                'items'   => $result['role'],
+                'color'   => 'grey',
+                'options' => [
+                    'item' => function ($index, $label, $name, $checked, $value) {
+                        return '<input type="radio" id="r_key' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="r_key' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
+                    },
+                ]] )
             ?>
 
-            <?=
-            $form->field( $model, 'model_key' )->widget( Select2::classname(), [
-                'data'          => $result['menu_model'],
-                'options'       => ['placeholder' => '选择菜单模型...'],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                ],
-            ] );
+            <?= $form->field( $model, 'model_key' )->widget( ICheck::className(), [
+                'type'    => ICheck::TYPE_RADIO_LIST,
+                'style'   => ICheck::STYLE_SQUARE,
+                'items'   => $result['menu_model'],
+                'color'   => 'grey',
+                'options' => [
+                    'item' => function ($index, $label, $name, $checked, $value) {
+                        return '<input type="radio" id="model_key' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="model_key' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
+                    },
+                ]] )
             ?>
 
             <?= $form->field( $model, 'url_data' )->textInput( ['maxlength' => true] ) ?>
 
-            <?=
-            $form->field( $model, 'is_using' )->widget( Select2::classname(), [
-                'data'          => ['On' => '启用', 'Off' => '未启用'],
-                'options'       => ['placeholder' => '选择...'],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                ],
-            ] );
+            <?= $form->field( $model, 'is_using' )->widget( ICheck::className(), [
+                'type'    => ICheck::TYPE_RADIO_LIST,
+                'style'   => ICheck::STYLE_SQUARE,
+                'items'   => ['On' => '启用', 'Off' => '禁用'],
+                'color'   => 'grey',
+                'options' => [
+                    'item' => function ($index, $label, $name, $checked, $value) {
+                        return '<input type="radio" id="is_using' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_using' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
+                    },
+                ]] )
             ?>
+
         </div>
 
         <div class="panel-footer">

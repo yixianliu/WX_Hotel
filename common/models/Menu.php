@@ -307,7 +307,7 @@ class Menu extends ActiveRecord
             $html .= '<li>';
 
             $html .= '<span>';
-            $html .= Html::a( $value['sort_id'] . ' - ' . $value['name'], [''] );
+            $html .= $value['sort_id'] . ' - ' . $value['name'];
             $html .= '</span>';
 
             $html .= ' / ' . Html::a( $value['menuModel']['name'], [''] );

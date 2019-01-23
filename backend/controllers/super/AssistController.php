@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\controllers;
+namespace backend\controllers\super;
 
 use Yii;
-use common\models\Language;
+use common\models\Assist;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
 /**
- * LanguageController implements the CRUD actions for Language model.
+ * AssistController implements the CRUD actions for Assist model.
  */
-class LanguageController extends BaseController
+class AssistController extends BaseController
 {
     /**
      * @inheritdoc
@@ -39,98 +39,107 @@ class LanguageController extends BaseController
     }
 
     /**
-     * Lists all Language models.
+     * Lists all Assist models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Language::find(),
-        ]);
 
-        return $this->render('index', [
+        $dataProvider = new ActiveDataProvider( [
+            'query' => Assist::find(),
+        ] );
+
+        return $this->render( 'index', [
             'dataProvider' => $dataProvider,
-        ]);
+        ] );
     }
 
     /**
-     * Displays a single Language model.
+     * Displays a single Assist model.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return $this->render( 'view', [
+            'model' => $this->findModel( $id ),
+        ] );
     }
 
     /**
-     * Creates a new Language model.
+     * Creates a new Assist model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Language();
+        $model = new Assist();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load( Yii::$app->request->post() ) && $model->save()) {
+            return $this->redirect( ['view', 'id' => $model->id] );
         }
 
-        return $this->render('create', [
+        return $this->render( 'create', [
             'model' => $model,
-        ]);
+        ] );
     }
 
     /**
-     * Updates an existing Language model.
+     * Updates an existing Assist model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel( $id );
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load( Yii::$app->request->post() ) && $model->save()) {
+            return $this->redirect( ['view', 'id' => $model->id] );
         }
 
-        return $this->render('update', [
+        return $this->render( 'update', [
             'model' => $model,
-        ]);
+        ] );
     }
 
     /**
-     * Deletes an existing Language model.
+     * Deletes an existing Assist model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel( $id )->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect( ['index'] );
     }
 
     /**
-     * Finds the Language model based on its primary key value.
+     * Finds the Assist model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
-     * @return Language the loaded model
+     *
+     * @return Assist the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Language::findOne($id)) !== null) {
+        if (($model = Assist::findOne( $id )) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException( 'The requested page does not exist.' );
     }
 }

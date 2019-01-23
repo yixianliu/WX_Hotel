@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\controllers;
+namespace backend\controllers\super;
 
 use Yii;
 use common\models\MenuModel;

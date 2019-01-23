@@ -157,7 +157,7 @@ CREATE TABLE `#DB_PREFIX#User` (
     `reg_time` INT(11) UNSIGNED NOT NULL COMMENT '注册时间',
     `last_login_time` INT(11) UNSIGNED NOT NULL COMMENT '最后登陆时间',
     `login_ip` VARCHAR(55) NULL DEFAULT 0 COMMENT '登陆IP',
-    `sex` SET('Male' , 'Female') NOT NULL DEFAULT 'Female' COMMENT '性别',
+    `sex` SET('Male', 'Female') NOT NULL DEFAULT 'Female' COMMENT '性别',
     `is_display` SET('On', 'Off') NOT NULL DEFAULT 'Off' COMMENT '显示信息',
     `is_head` SET('On', 'Off') NOT NULL DEFAULT 'Off' COMMENT '上传头像',
     `is_security` SET('On', 'Off') NOT NULL DEFAULT 'Off' COMMENT '安全设置',

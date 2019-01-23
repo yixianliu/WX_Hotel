@@ -43,14 +43,16 @@ use kartik\select2\Select2;
                     </div>
                 </div>
 
-                <?=
-                $form->field( $model, 'is_using' )->widget( Select2::classname(), [
-                    'data'          => ['On' => '启用', 'Off' => '禁用'],
-                    'options'       => ['placeholder' => '是否启用...'],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                    ],
-                ] );
+                <?= $form->field( $model, 'is_using' )->widget( ICheck::className(), [
+                    'type'    => ICheck::TYPE_RADIO_LIST,
+                    'style'   => ICheck::STYLE_SQUARE,
+                    'items'   => ['On' => '启用', 'Off' => '禁用'],
+                    'color'   => 'grey',
+                    'options' => [
+                        'item' => function ($index, $label, $name, $checked, $value) {
+                            return '<input type="radio" id="is_using' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_using' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
+                        },
+                    ]] )
                 ?>
 
             </div>
