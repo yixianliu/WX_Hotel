@@ -145,7 +145,6 @@ CREATE TABLE `#DB_PREFIX#User` (
     `username` VARCHAR(55) NOT NULL COMMENT '邮箱 / 用户名',
     `password` VARCHAR(255) NOT NULL COMMENT '密码',
     `r_key` VARCHAR(55) NOT NULL COMMENT '角色关键KEY',
-    `l_key` VARCHAR(55) NOT NULL COMMENT '等级关键KEY',
     `credit` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '积分',
     `nickname` VARCHAR(85) NULL DEFAULT NULL COMMENT '昵称',
     `signature` TEXT NULL DEFAULT NULL COMMENT '个性签名',

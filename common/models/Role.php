@@ -14,6 +14,8 @@ use yii\behaviors\TimestampBehavior;
 class Role extends ActiveRecord
 {
 
+    public $p_key;
+
     public static $defaultRole = 'R11';
 
     /**

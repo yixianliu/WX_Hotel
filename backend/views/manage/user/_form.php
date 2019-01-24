@@ -33,8 +33,6 @@ use phpnt\ICheck\ICheck;
 
             <?= $form->field( $model, 'password' )->textInput( ['maxlength' => true] ) ?>
 
-            <?= $form->field( $model, 'l_key' )->textInput( ['maxlength' => true] ) ?>
-
             <?= $form->field( $model, 'nickname' )->textInput( ['maxlength' => true] ) ?>
 
             <?= $form->field( $model, 'credit' )->textInput( ['maxlength' => true] ) ?>

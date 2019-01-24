@@ -80,9 +80,9 @@ class Power extends ActiveRecord
     public static function findByAll($status = null)
     {
 
-        $array = !empty($status) ? ['is_using' => $status] : ['!=', 'is_using', 'null'];
+        $array = !empty( $status ) ? ['is_using' => $status] : ['!=', 'is_using', 'null'];
 
-        return static::find()->where($array)->orderBy(['id' => SORT_DESC])->all();
+        return static::find()->where( $array )->orderBy( ['id' => SORT_DESC] )->all();
     }
 
     /**
@@ -94,7 +94,7 @@ class Power extends ActiveRecord
      */
     public static function findWherePower($id)
     {
-        return static::find()->where(['p_key' => $id])->one();
+        return static::find()->where( ['p_key' => $id] )->one();
     }
 
 }

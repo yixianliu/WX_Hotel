@@ -28,11 +28,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns'      => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'user_id',
+                    'name',
                     'commission_one',
                     'commission_two',
                     'commission_three',
                     'commission_me',
-                    'is_using',
+                    [
+                        'attribute' => 'is_using',
+                        'value'     => function ($model) {
+                            $state = [
+                                'On'  => '已开启',
+                                'Off' => '未启用',
+                            ];
+
+                            return $state[ $model->is_using ];
+                        },
+                    ],
                     [
                         'attribute' => 'created_at',
                         'value'     => function ($model) {

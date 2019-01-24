@@ -86,8 +86,8 @@ class ProductLevel extends \yii\db\ActiveRecord
     public static function findByAll($status = 'On')
     {
 
-        return static::find()->where(['is_using' => $status])
-            ->orderBy(['sort_id' => SORT_DESC])
+        return static::find()->where( ['is_using' => $status] )
+            ->orderBy( ['sort_id' => SORT_DESC] )
             ->asArray()
             ->all();
     }
@@ -104,10 +104,10 @@ class ProductLevel extends \yii\db\ActiveRecord
         $result = [];
 
         // 产品分类
-        $data = static::findByAll('On');
+        $data = static::findByAll( 'On' );
 
         foreach ($data as $key => $value) {
-            $result[$value['l_key']] = $value['name'];
+            $result[ $value['l_key'] ] = $value['name'];
         }
 
         return $result;

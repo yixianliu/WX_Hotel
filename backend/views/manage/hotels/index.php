@@ -4,10 +4,6 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-/* @var $this yii\web\View */
-/* @var $searchModel common\models\HotelsSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
 $this->title = '酒店管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>

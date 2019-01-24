@@ -6,7 +6,6 @@ use Yii;
 use common\models\DisSaleUser;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * DisSaleUserController implements the CRUD actions for DisSaleUser model.

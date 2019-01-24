@@ -3,7 +3,6 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\select2\Select2;
 use phpnt\ICheck\ICheck;
 
 ?>
@@ -25,6 +24,18 @@ use phpnt\ICheck\ICheck;
             <?= $form->field( $model, 'exp' )->textInput( ['maxlength' => true] ) ?>
 
             <?= $form->field( $model, 'description' )->textarea( ['rows' => 6] ) ?>
+
+            <?= $form->field( $model, 'p_key' )->widget( ICheck::className(), [
+                'type'    => ICheck::TYPE_CHECBOX_LIST,
+                'style'   => ICheck::STYLE_SQUARE,
+                'items'   => $result['power'],
+                'color'   => 'grey',
+                'options' => [
+                    'item' => function ($index, $label, $name, $checked, $value) {
+                        return '<input type="checkbox" id="p_key' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="p_key' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
+                    },
+                ]] )
+            ?>
 
             <?= $form->field( $model, 'is_using' )->widget( ICheck::className(), [
                 'type'    => ICheck::TYPE_RADIO_LIST,

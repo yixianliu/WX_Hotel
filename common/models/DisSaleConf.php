@@ -45,14 +45,15 @@ class DisSaleConf extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'commission_one', 'commission_two', 'commission_three', 'commission_me'], 'required'],
+            [['user_id', 'commission_one', 'commission_two', 'commission_three', 'name'], 'required'],
             [['commission_one', 'commission_two', 'commission_three', 'commission_me'], 'number'],
             [['is_using'], 'string'],
             [['created_at', 'updated_at'], 'integer'],
             [['commission_one', 'commission_two', 'commission_three', 'commission_me'], 'double'],
             [['user_id'], 'string', 'max' => 85],
 
-            [['is_using', 'is_commission_me'], 'default', 'value' => 'On']
+            [['is_using', 'is_commission_me'], 'default', 'value' => 'On'],
+            [['commission_me'], 'default', 'value' => 0],
         ];
     }
 
@@ -63,11 +64,12 @@ class DisSaleConf extends \yii\db\ActiveRecord
     {
         return [
             'user_id'          => '用户 Id',
-            'parent_user_id'   => '上一级 用户 Id',
-            'commission_one'   => '一级佣金',
-            'commission_two'   => '二级佣金',
-            'commission_three' => '三级佣金',
-            'commission_me'    => '自我分佣',
+            'name'             => '方案名称',
+            'commission_one'   => '一级佣金比例',
+            'commission_two'   => '二级佣金比例',
+            'commission_three' => '三级佣金比例',
+            'commission_me'    => '自我分佣比例',
+            'is_commission_me' => '是否开启自我分佣',
             'is_using'         => '是否启用',
             'created_at'       => '添加数据时间',
             'updated_at'       => '更新数据时间',

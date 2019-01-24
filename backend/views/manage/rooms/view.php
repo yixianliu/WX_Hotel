@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'hotel_id',
                         'value'     => function ($model) {
-                            $data = \common\models\Hotels::findOne(['hotel_id' => $model->hotel_id]);
+                            $data = \common\models\Hotels::findOne( ['hotel_id' => $model->hotel_id] );
                             return $data->name;
                         },
                     ],
@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'c_key',
                         'value'     => function ($model) {
-                            $data = \common\models\RoomsClassify::findOne(['c_key' => $model->c_key]);
+                            $data = \common\models\RoomsClassify::findOne( ['c_key' => $model->c_key] );
                             return $data->name;
                         },
                     ],
@@ -120,7 +120,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'is_comments',
                         'value'     => function ($model) {
                             $state = [
-                                'On'  => '开启',
+                                'On'  => '已开启',
                                 'Off' => '未启用',
                             ];
 

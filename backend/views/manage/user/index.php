@@ -4,7 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = '用户中心';
+$this->title = '用户管理';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -34,10 +34,26 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'user_id',
                     'username',
-                    'r_key',
-                    'l_key',
+                    [
+                        'attribute' => 'r_key',
+                        'value'     => function ($model) {
+                            $data = \common\models\Role::findOne(['r_key' => $model->r_key]);
+                            return $data->name;
+                        },
+                    ],
                     'login_ip',
-                    'is_using',
+                    [
+                        'attribute' => 'is_using',
+                        'value'     => function ($model) {
+                            $state = [
+                                'On'  => '已开启',
+                                'Off' => '未启用',
+                                'Not' => '未审核',
+                            ];
+
+                            return $state[ $model->is_using ];
+                        },
+                    ],
                     [
                         'attribute' => 'last_login_time',
                         'value'     => function ($model) {

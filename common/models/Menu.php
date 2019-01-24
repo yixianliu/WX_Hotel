@@ -137,7 +137,7 @@ class Menu extends ActiveRecord
     // 菜单模型
     public function getMenuModel()
     {
-        return $this->hasOne( MenuModel::className(), ['m_key' => 'model_key'] );
+        return $this->hasOne( MenuModel::className(), ['model_key' => 'menu_model'] );
     }
 
     // 角色
@@ -214,7 +214,7 @@ class Menu extends ActiveRecord
 
             if ($value['menuModel']['is_classify'] === 'On') {
 
-                $modelName = ucwords( $value['menuModel']['url_key'] );
+                $modelName = ucwords( $value['menuModel']['menu_key'] );
 
                 $child['child'][ $key ] = $modelName::findAll( ['is_using' => 'On'] )->toArray();
 
@@ -265,12 +265,12 @@ class Menu extends ActiveRecord
             $liClass = !empty( $value['child'] ) ? $styleClass['openLiClass'] : null;
 
             // 当前 Url
-            if (!empty( $value['url_data'] ))
-                $activeClass = Url::current() === Url::to( [$value['url_data']] ) ? $styleClass['activeClass'] : null;
+            if (!empty( $value['menu_data'] ))
+                $activeClass = Url::current() === Url::to( [$value['menu_data']] ) ? $styleClass['activeClass'] : null;
 
             $html .= '<li class="' . $liClass . ' ' . $styleClass['liClass'] . ' ' . $activeClass . '">';
 
-            $html .= '  <a href="' . Url::to( [$value['url_data']] ) . '" title="' . $value['name'] . '" class="' . $styleClass['aClass'] . '">' . $value['name'] . '</a>';
+            $html .= '  <a href="' . Url::to( [$value['menu_data']] ) . '" title="' . $value['name'] . '" class="' . $styleClass['aClass'] . '">' . $value['name'] . '</a>';
 
             if (!empty( $value['child'] )) {
                 $html .= '  <ul class="' . $styleClass['ulClass'] . '">';

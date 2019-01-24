@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\DisSaleConf */
 
-$this->title = $model->id;
+$this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => '分销设置中心', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -34,16 +34,48 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'user_id',
-            'parent_user_id',
+            'name',
             'commission_one',
             'commission_two',
             'commission_three',
             'commission_me',
-            'is_using',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'is_commission_me',
+                'value'     => function ($model) {
+                    $state = [
+                        'On'  => '已开启',
+                        'Off' => '未启用',
+                    ];
+
+                    return $state[ $model->is_commission_me ];
+                },
+            ],
+            [
+                'attribute' => 'is_using',
+                'value'     => function ($model) {
+                    $state = [
+                        'On'  => '已开启',
+                        'Off' => '未启用',
+                    ];
+
+                    return $state[ $model->is_using ];
+                },
+            ],
+            [
+                'attribute' => 'created_at',
+                'value'     => function ($model) {
+                    return date( 'Y - m -d , H:i:s', $model->created_at );
+                },
+                'options'   => ['width' => 180],
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value'     => function ($model) {
+                    return date( 'Y - m -d , H:i:s', $model->updated_at );
+                },
+                'options'   => ['width' => 180],
+            ],
         ],
         'template'   => '<tr><th width="200">{label}</th><td>{value}</td></tr>',
     ]) ?>

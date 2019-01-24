@@ -49,10 +49,10 @@ class MemberController extends Controller
                     return $this->redirect( ['center/index'] );
                 }
 
-                Yii::$app->getSession()->setFlash( 'error', '登录失败,请检查 !!' );
+                Yii::$app->getSession()->setFlash( 'error', '登录失败,请检查!' );
             }
 
-            Yii::$app->getSession()->setFlash( 'error', '帐号密码有误 !!' );
+            Yii::$app->getSession()->setFlash( 'error', '帐号密码有误!' );
         }
 
         return $this->render( '/center/login', ['model' => $model, 'result' => $result] );

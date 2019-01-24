@@ -67,13 +67,13 @@ class AuthRole extends \yii\db\ActiveRecord
     /**
      * 所有 权限/角色
      *
-     * @param null $status
+     * @param null $type
      *
-     * @return array|ActiveRecord[]
+     * @return array|AuthRole[]|Power[]|ProductClassify[]|ProductLevel[]|\yii\db\ActiveRecord[]
      */
-    public static function findByAll($status = null)
+    public static function findByAll($type = null)
     {
-        return static::find()->where((!empty($status) ? ['type' => $status] : ['!=', 'type', 'null']))->all();
+        return static::find()->where( (!empty( $type ) ? ['type' => $type] : ['!=', 'type', 'null']) )->all();
     }
 
     /**
@@ -85,7 +85,21 @@ class AuthRole extends \yii\db\ActiveRecord
      */
     public static function findByOne($id = 1)
     {
-        return static::find()->where(['id' => $id])->one();
+        return static::find()->where( ['id' => $id] )->one();
     }
 
+    public static function getSelect()
+    {
+        // 初始化
+        $result = [];
+
+        // 产品分类
+        $data = static::findByAll( 2 );
+
+        foreach ($data as $key => $value) {
+            $result[ $value['name'] ] = $value['description'];
+        }
+
+        return $result;
+    }
 }

@@ -80,7 +80,21 @@ class UserController extends BaseController
 
         $model = new User();
 
-        if ($model->load( Yii::$app->request->post() ) && $model->save()) {
+        if ($model->load( Yii::$app->request->post() )) {
+
+            $model->password = Yii::$app->security->generatePasswordHash( $model->password );
+
+            $model->login_ip = Yii::$app->request->userIP;
+
+            $model->reg_time = time();
+
+            $model->last_login_time = time();
+
+            if (!$model->save()) {
+                Yii::$app->getSession()->setFlash( 'error', '数据保存失败!' );
+                return $this->redirect( ['create'] );
+            }
+
             return $this->redirect( ['view', 'id' => $model->id] );
         }
 

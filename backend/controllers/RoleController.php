@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\AuthRole;
 use Yii;
 use common\models\Role;
 use yii\data\ActiveDataProvider;
@@ -84,7 +85,10 @@ class RoleController extends BaseController
         }
 
         return $this->render( 'create', [
-            'model' => $model,
+            'model'  => $model,
+            'result' => [
+                'power' => AuthRole::getSelect(),
+            ],
         ] );
     }
 

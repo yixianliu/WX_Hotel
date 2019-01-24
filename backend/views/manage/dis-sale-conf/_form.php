@@ -21,13 +21,17 @@ use phpnt\ICheck\ICheck;
 
             <div class="tab-pane active" id="tab-1">
 
+                <?= $form->field( $model, 'name' )->textInput() ?>
+
                 <?= $form->field( $model, 'commission_one' )->textInput() ?>
 
                 <?= $form->field( $model, 'commission_two' )->textInput() ?>
 
                 <?= $form->field( $model, 'commission_three' )->textInput() ?>
 
-                <?= $form->field( $model, 'commission_me' )->widget( ICheck::className(), [
+                <?= $form->field( $model, 'commission_me' )->textInput() ?>
+
+                <?= $form->field( $model, 'is_commission_me' )->widget( ICheck::className(), [
                     'type'    => ICheck::TYPE_RADIO_LIST,
                     'style'   => ICheck::STYLE_SQUARE,
                     'items'   => ['On' => '启用', 'Off' => '禁用'],

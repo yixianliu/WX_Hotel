@@ -15,7 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group">
         <a href='<?= Url::to( ['create'] ) ?>' class='btn btn-primary' title='添加角色'>添加角色</a>
-        <a href='<?= Url::to( ['power/create'] ) ?>' class='btn btn-primary' title='添加权限'>添加权限</a>
     </div>
 
     <div class="panel panel-default">
@@ -40,7 +39,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     'name',
                     'sort_id',
                     'exp',
-                    'is_using',
+                    [
+                        'attribute' => 'is_using',
+                        'value'     => function ($model) {
+                            $state = [
+                                'On'  => '已开启',
+                                'Off' => '未启用',
+                            ];
+
+                            return $state[ $model->is_using ];
+                        },
+                    ],
                     [
                         'attribute' => 'created_at',
                         'value'     => function ($model) {

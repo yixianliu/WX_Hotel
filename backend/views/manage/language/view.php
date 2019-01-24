@@ -29,10 +29,32 @@ $this->params['breadcrumbs'][] = $this->title;
             'lang_key',
             'name',
             'content',
-            'is_using',
+            [
+                'attribute' => 'is_using',
+                'value'     => function ($model) {
+                    $state = [
+                        'On'  => '已开启',
+                        'Off' => '未启用',
+                    ];
+
+                    return $state[ $model->is_using ];
+                },
+            ],
             'is_default',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'created_at',
+                'value'     => function ($model) {
+                    return date( 'Y - m -d , H:i:s', $model->created_at );
+                },
+                'options'   => ['width' => 180],
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value'     => function ($model) {
+                    return date( 'Y - m -d , H:i:s', $model->updated_at );
+                },
+                'options'   => ['width' => 180],
+            ],
         ],
     ]) ?>
 
