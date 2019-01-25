@@ -51,7 +51,7 @@ $this->beginPage();
 
         <div class="page-sidebar page-sidebar-fixed scroll">
 
-            <?= Yii::$app->view->renderFile( '@app/views/manage/_menu.php', ['Conf' => $Conf] ); ?>
+            <?= Yii::$app->view->renderFile( '@app/views/_Menu.php', ['Conf' => $Conf] ); ?>
 
         </div>
 
@@ -69,10 +69,16 @@ $this->beginPage();
 
             </ul>
 
-            <ul class="breadcrumb">
-                <li><a href="#"></a></li>
-                <li class="active"><?= $this->title ?></li>
-            </ul>
+            <?= \yii\widgets\Breadcrumbs::widget( [
+                'tag'                => 'h4',
+                'homeLink'           => [
+                    'label' => '管理后台',
+                    'url'   => ['center/index'],
+                ],
+                'itemTemplate'       => "<span>{link}</span> \ ",
+                'activeItemTemplate' => "<span>{link}</span>",
+                'links'              => isset( $this->params['breadcrumbs'] ) ? $this->params['breadcrumbs'] : [],
+            ] ) ?>
 
             <div class="page-content-wrap">
                 <?= $content; ?>

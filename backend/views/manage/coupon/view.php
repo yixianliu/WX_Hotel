@@ -78,10 +78,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value'     => function ($model) {
 
                             $images = (!is_file( Yii::getAlias( '@webroot/../../frontend/web/temp/coupon/' ) . $model->images )) ?
-                                Yii::getAlias( '@web/../../frontend/web/img/not.gif' ) :
+                                Yii::getAlias( '@web/../../frontend/web/img/not.jpg' ) :
                                 Yii::getAlias( '@web/../../frontend/web/temp/coupon/' ) . $model->images;
 
-                            return '<img width="520" height="350" src="' . $images . '" alt="' . $model->title . '" />';
+                            return '<img width="280" height="150" src="' . $images . '" alt="' . $model->title . '" />';
                         },
                         'options'   => ['width' => 180],
                     ],

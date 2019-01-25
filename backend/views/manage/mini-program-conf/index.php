@@ -4,14 +4,14 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = '招聘管理';
+$this->title = '小程序设置管理';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="col-lg-12">
 
     <div class="form-group">
-        <a href='<?= Url::to( ['create'] ) ?>' class='btn btn-primary btn-lg' title='添加招聘'>添加招聘</a>
+        <a href='<?= Url::to( ['create'] ) ?>' class='btn btn-primary btn-lg' title='添加设置'>添加设置</a>
     </div>
 
     <div class="panel panel-default">
@@ -23,17 +23,20 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= GridView::widget( [
                 'dataProvider' => $dataProvider,
                 'columns'      => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    'job_id',
-                    'user_id',
-                    'title',
                     [
-                        'attribute' => 'is_language',
-                        'value'     => function ($model) {
-                            $data = \common\models\Language::findOne( ['lang_key' => $model->is_language] );
-                            return $data['name'];
-                        },
+                        'class'   => 'yii\grid\CheckboxColumn',
+                        'name'    => 'id',
+                        'options' => ['width' => 40],
                     ],
+                    [
+                        'class'   => 'yii\grid\SerialColumn',
+                        'options' => ['width' => 70],
+                    ],
+                    'weixin_id',
+                    'app_id',
+                    'mch_id',
+                    'api_psw',
+                    'cert_psw',
                     [
                         'attribute' => 'is_using',
                         'value'     => function ($model) {

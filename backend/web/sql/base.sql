@@ -234,6 +234,7 @@ CREATE TABLE `#DB_PREFIX#Menu` (
     `parent_id` VARCHAR(55) NOT NULL COMMENT '父类值',
     `name` VARCHAR(85) NOT NULL COMMENT '菜单名称',
     `json_data` VARCHAR(155) NULL COMMENT 'Json 数据',
+    `is_language` VARCHAR(55) NOT NULL COMMENT '语言类别',
     `is_url` SET('On', 'Off') NOT NULL COMMENT '是否启用链接(不启用的话,此分类没有链接,只会获取权限)',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
     `created_at` integer NOT NULL DEFAULT 0,
@@ -287,6 +288,7 @@ CREATE TABLE `#DB_PREFIX#Article` (
     `collection` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '收藏',
     `share` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '分享',
     `attention` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '关注',
+    `is_language` VARCHAR(55) NOT NULL COMMENT '语言类别',
     `is_promote` SET('On', 'Off') NOT NULL COMMENT '推广',
     `is_hot` SET('On', 'Off') NOT NULL COMMENT '热门',
     `is_classic` SET('On', 'Off') NOT NULL COMMENT '经典',
@@ -378,6 +380,7 @@ CREATE TABLE `#DB_PREFIX#Dis_Sale_Conf` (
 DROP TABLE IF EXISTS `#DB_PREFIX#Mini_Program_Conf`;
 CREATE TABLE `#DB_PREFIX#Mini_Program_Conf` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `conf_id` VARCHAR(85) NOT NULL COMMENT '设置关键 Key',
     `weixin_id` VARCHAR(85) NOT NULL COMMENT '微信 Id',
     `app_id` VARCHAR(85) NOT NULL COMMENT '小程序 Id',
     `mch_id` VARCHAR(85) NOT NULL COMMENT '商户号 Id',
@@ -388,7 +391,8 @@ CREATE TABLE `#DB_PREFIX#Mini_Program_Conf` (
     `created_at` integer NOT NULL DEFAULT 0,
     `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
-    KEY `app_id` (`app_id`)
+    KEY `app_id` (`app_id`),
+    UNIQUE KEY `conf_id` (`conf_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /**
@@ -405,7 +409,7 @@ CREATE TABLE `#DB_PREFIX#Job` (
     `content` TEXT NOT NULL COMMENT '内容',
     `keywords` VARCHAR(120) NULL COMMENT '关键字',
     `images` VARCHAR(255) NULL COMMENT '招聘图片',
-    `is_language` VARCHAR(25) NOT NULL DEFAULT 'cn' COMMENT '语言类别',
+    `is_language` VARCHAR(55) NOT NULL COMMENT '语言类别',
     `is_using` SET('On', 'Off', 'Out', 'Not') NOT NULL COMMENT '审核',
     `created_at` integer NOT NULL DEFAULT '0',
     `updated_at` integer NOT NULL DEFAULT '0',

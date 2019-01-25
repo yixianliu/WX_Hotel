@@ -38,7 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'user_id',
                     'c_key',
                     'title',
-                    'content:ntext',
                     'introduction',
                     'keywords',
                     'path',
@@ -47,8 +46,28 @@ $this->params['breadcrumbs'][] = $this->title;
                     'collection',
                     'share',
                     'attention',
-                    'is_promote',
-                    'is_hot',
+                    [
+                        'attribute' => 'is_promote',
+                        'value'     => function ($model) {
+                            $state = [
+                                'On'  => '开启',
+                                'Off' => '未启用',
+                            ];
+
+                            return $state[ $model->is_promote ];
+                        },
+                    ],
+                    [
+                        'attribute' => 'is_hot',
+                        'value'     => function ($model) {
+                            $state = [
+                                'On'  => '开启',
+                                'Off' => '未启用',
+                            ];
+
+                            return $state[ $model->is_hot ];
+                        },
+                    ],
                     'is_classic',
                     'is_winnow',
                     'is_recommend',

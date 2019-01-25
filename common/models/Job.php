@@ -46,8 +46,8 @@ class Job extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['job_id', 'user_id', 'title', 'content', 'is_using'], 'required'],
-            [['content', 'is_using'], 'string'],
+            [['title', 'content'], 'required'],
+            [['job_id', 'user_id', 'content', 'is_using'], 'string'],
             [['created_at', 'updated_at'], 'integer'],
             [['job_id'], 'string', 'max' => 85],
             [['user_id'], 'string', 'max' => 55],
@@ -57,6 +57,8 @@ class Job extends \yii\db\ActiveRecord
             [['is_language'], 'string', 'max' => 25],
             [['job_id'], 'unique'],
             [['title'], 'unique'],
+
+            [['is_using'], 'default', 'value' => 'On'],
         ];
     }
 
@@ -67,7 +69,7 @@ class Job extends \yii\db\ActiveRecord
     {
         return [
             'job_id'      => '招聘编号',
-            'user_id'     => '发布用户ID',
+            'user_id'     => '发布用户 ID',
             'title'       => '标题',
             'content'     => '内容',
             'keywords'    => '关键字',

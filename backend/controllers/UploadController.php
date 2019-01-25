@@ -65,43 +65,15 @@ class UploadController extends BaseController
 
         $attribute = Yii::$app->request->get( 'attribute', 'images' );
 
-        if (empty( $type ) || empty( $ext ) || !Yii::$app->request->isAjax)
+        if (empty( $type ) || empty( $ext ) || !Yii::$app->request->isAjax) {
             return Json::encode( ['error' => '参数错误!'] );
+        }
 
-        switch ($type) {
-
-            // 配置
-            case 'conf':
-                $model = new Conf();
-                break;
-
-            // 文章
-            case 'article':
-                $model = new \common\models\Article();
-                break;
-
-            // 酒店
-            case 'hotels':
-                $model = new \common\models\Hotels();
-                break;
-
-            // 幻灯片
-            case 'slide':
-                $model = new \common\models\Slide();
-                break;
-
-            // 房间
-            case 'rooms':
-                $model = new \common\models\Rooms();
-                break;
-
-            // 房间
-            case 'coupon':
-                $model = new \common\models\Coupon();
-                break;
-
-            default:
-                return Json::encode( ['error' => '没有此模型!'] );
+        if ($type === 'conf') {
+            $model = new Conf();
+        } else {
+            $typeClass = '\common\models\\' . ucfirst( $type );
+            $model = new $typeClass;
         }
 
         // 上传组件对应model
@@ -148,7 +120,7 @@ class UploadController extends BaseController
      * @param $ext
      * @param $fileExt
      *
-     * @return array
+     * @return bool
      */
     public static function UploadExt($ext, $fileExt)
     {
@@ -186,7 +158,7 @@ class UploadController extends BaseController
     }
 
     /**
-     * 删除
+     * 删除(针对上传组件 2amigos/yii2-file-upload-widget)
      *
      * @param $name
      * @param $type
@@ -228,4 +200,27 @@ class UploadController extends BaseController
         return Json::encode( $output );
     }
 
+    /**
+     * 单个文件上传 (自己开发版本)
+     *
+     * @return string|void
+     */
+    public function actionUploadSingle()
+    {
+
+        $model = new UploadForm();
+
+        if (Yii::$app->request->isPost) {
+
+            $model->imageFile = UploadedFile::getInstance( $model, 'imageFile' );
+
+            if ($model->upload()) {
+
+                // 文件上传成功
+                return;
+            }
+        }
+
+        return $this->render( 'upload', ['model' => $model] );
+    }
 }

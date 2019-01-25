@@ -3,14 +3,14 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\MiniProgramConf;
+use common\models\Resume;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
 /**
- * WeChatPayController implements the CRUD actions for MiniProgramConf model.
+ * ResumeController implements the CRUD actions for Resume model.
  */
-class WeChatPayController extends BaseController
+class ResumeController extends BaseController
 {
     /**
      * @inheritdoc
@@ -39,13 +39,13 @@ class WeChatPayController extends BaseController
     }
 
     /**
-     * Lists all MiniProgramConf models.
+     * Lists all Resume models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider( [
-            'query' => MiniProgramConf::find(),
+            'query' => Resume::find(),
         ] );
 
         return $this->render( 'index', [
@@ -54,7 +54,7 @@ class WeChatPayController extends BaseController
     }
 
     /**
-     * Displays a single MiniProgramConf model.
+     * Displays a single Resume model.
      *
      * @param integer $id
      *
@@ -69,13 +69,13 @@ class WeChatPayController extends BaseController
     }
 
     /**
-     * Creates a new MiniProgramConf model.
+     * Creates a new Resume model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new MiniProgramConf();
+        $model = new Resume();
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
             return $this->redirect( ['view', 'id' => $model->id] );
@@ -87,7 +87,7 @@ class WeChatPayController extends BaseController
     }
 
     /**
-     * Updates an existing MiniProgramConf model.
+     * Updates an existing Resume model.
      * If update is successful, the browser will be redirected to the 'view' page.
      *
      * @param integer $id
@@ -109,7 +109,7 @@ class WeChatPayController extends BaseController
     }
 
     /**
-     * Deletes an existing MiniProgramConf model.
+     * Deletes an existing Resume model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      *
      * @param integer $id
@@ -125,17 +125,17 @@ class WeChatPayController extends BaseController
     }
 
     /**
-     * Finds the MiniProgramConf model based on its primary key value.
+     * Finds the Resume model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      *
      * @param integer $id
      *
-     * @return MiniProgramConf the loaded model
+     * @return Resume the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = MiniProgramConf::findOne( $id )) !== null) {
+        if (($model = Resume::findOne( $id )) !== null) {
             return $model;
         }
 

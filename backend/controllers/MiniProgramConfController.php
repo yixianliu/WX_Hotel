@@ -8,9 +8,9 @@ use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
 /**
- * WeChatPayController implements the CRUD actions for MiniProgramConf model.
+ * MiniProgramConfController implements the CRUD actions for MiniProgramConf model.
  */
-class WeChatPayController extends BaseController
+class MiniProgramConfController extends BaseController
 {
     /**
      * @inheritdoc
@@ -44,28 +44,26 @@ class WeChatPayController extends BaseController
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider( [
+        $dataProvider = new ActiveDataProvider([
             'query' => MiniProgramConf::find(),
-        ] );
+        ]);
 
-        return $this->render( 'index', [
+        return $this->render('index', [
             'dataProvider' => $dataProvider,
-        ] );
+        ]);
     }
 
     /**
      * Displays a single MiniProgramConf model.
-     *
      * @param integer $id
-     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        return $this->render( 'view', [
-            'model' => $this->findModel( $id ),
-        ] );
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
     }
 
     /**
@@ -77,68 +75,64 @@ class WeChatPayController extends BaseController
     {
         $model = new MiniProgramConf();
 
-        if ($model->load( Yii::$app->request->post() ) && $model->save()) {
-            return $this->redirect( ['view', 'id' => $model->id] );
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render( 'create', [
+        $model->conf_id = self::getRandomString();
+
+        return $this->render('create', [
             'model' => $model,
-        ] );
+        ]);
     }
 
     /**
      * Updates an existing MiniProgramConf model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     *
      * @param integer $id
-     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel( $id );
+        $model = $this->findModel($id);
 
-        if ($model->load( Yii::$app->request->post() ) && $model->save()) {
-            return $this->redirect( ['view', 'id' => $model->id] );
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render( 'update', [
+        return $this->render('update', [
             'model' => $model,
-        ] );
+        ]);
     }
 
     /**
      * Deletes an existing MiniProgramConf model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     *
      * @param integer $id
-     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
-        $this->findModel( $id )->delete();
+        $this->findModel($id)->delete();
 
-        return $this->redirect( ['index'] );
+        return $this->redirect(['index']);
     }
 
     /**
      * Finds the MiniProgramConf model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     *
      * @param integer $id
-     *
      * @return MiniProgramConf the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = MiniProgramConf::findOne( $id )) !== null) {
+        if (($model = MiniProgramConf::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException( 'The requested page does not exist.' );
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

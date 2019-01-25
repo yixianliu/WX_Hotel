@@ -6,7 +6,6 @@ use Yii;
 use common\models\Job;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
-use yii\web\Session;
 
 /**
  * JobController implements the CRUD actions for Job model.
@@ -77,6 +76,8 @@ class JobController extends BaseController
     public function actionCreate()
     {
         $model = new Job();
+
+        $model->user_id = Yii::$app->user->identity->username;
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
             return $this->redirect( ['view', 'id' => $model->id] );

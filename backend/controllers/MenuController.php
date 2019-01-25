@@ -15,8 +15,6 @@ use yii\web\NotFoundHttpException;
 class MenuController extends BaseController
 {
 
-    public $parent_id = 'M0';
-
     /**
      * @inheritdoc
      */
@@ -122,9 +120,10 @@ class MenuController extends BaseController
      * Updates an existing Menu model.
      * If update is successful, the browser will be redirected to the 'view' page.
      *
-     * @param integer $id
+     * @param $id
      *
-     * @return mixed
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($id)
     {
@@ -133,18 +132,17 @@ class MenuController extends BaseController
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
             return $this->redirect( ['view', 'id' => $model->m_key] );
-        } else {
-
-            return $this->render( 'update', [
-                'model'  => $model,
-                'result' => [
-                    'parent'     => Menu::getSelectMenu( 'E1' ),
-                    'menu_model' => $this->getModel(),
-                    'role'       => $this->getRole(),
-                    'data'       => Menu::findByOne( $id ),
-                ],
-            ] );
         }
+
+        return $this->render( 'update', [
+            'model'  => $model,
+            'result' => [
+                'parent'     => Menu::getSelectMenu( 'E1' ),
+                'menu_model' => $this->getModel(),
+                'role'       => $this->getRole(),
+                'data'       => Menu::findByOne( $id ),
+            ],
+        ] );
     }
 
     /**
