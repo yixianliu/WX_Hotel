@@ -11,13 +11,32 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 
-if ( empty($model) || empty($form) || Yii::$app->user->isGuest ) {
-    exit(false);
+if (empty( $model ) || empty( $form ) || Yii::$app->user->isGuest) {
+    exit( false );
 }
 
+$attribute = empty( $attribute ) ? 'thumb' : $attribute;
 
 ?>
 
+<div class="form-group">
+    <?= $form->field( $model, $attribute )->fileInput( ['id' => 'FileSimple'] ) ?>
+</div>
 
-<?= $form->field($model, 'imageFile')->fileInput() ?>
+<script type="text/javascript" src="<?= Yii::getAlias( '@web' ) ?>/themes/js/plugins/fileinput/fileinput.min.js"></script>
 
+<script type="text/javascript">
+
+    $(function () {
+
+        $('#FileSimple').fileinput({
+            language: 'zh', // 设置语言
+            showUpload: false,
+            showCaption: false,
+            browseClass: "btn btn-danger",
+            fileType: "image"
+        });
+
+    });
+
+</script>

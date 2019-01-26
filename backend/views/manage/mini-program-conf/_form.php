@@ -7,7 +7,7 @@ use phpnt\ICheck\ICheck;
 
 ?>
 
-<?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin( ['options' => ['enctype' => 'multipart/form-data']] ); ?>
 
 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
 

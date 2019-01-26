@@ -66,7 +66,7 @@ $this->beginPage();
 
         </div>
 
-        <?= Yii::$app->view->renderFile( '@app/views/formMsg.php' ); ?>
+        <?= Yii::$app->view->renderFile( '@app/views/_FormMsg.php' ); ?>
 
         <div class="login-footer">
             <div class="pull-left">
