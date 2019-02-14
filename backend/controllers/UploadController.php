@@ -208,7 +208,7 @@ class UploadController extends BaseController
     public function actionUploadSingle()
     {
 
-        $model = new UploadForm();
+        $model = new UploadSingleForm();
 
         if (Yii::$app->request->isPost) {
 

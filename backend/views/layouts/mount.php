@@ -65,8 +65,8 @@ $this->beginPage();
                     <a href="#" class="x-navigation-control"></a>
                 </li>
                 <li><a href="<?= Url::to(['mount/center/view']); ?>" title="了解挂载操作"><span class="xn-text">控制面板</span></a></li>
-                <li><a href="<?= Url::to(['mount/run/index']); ?>"><span class="xn-text">挂载操作</span></a></li>
-                <li><a href="<?= Url::to(['mount/run/verify']); ?>"><span class="xn-text">验证文件</span></a></li>
+                <li><a href="<?= Url::to(['mount/run/index']); ?>"><span class="xn-text">文件挂载操作</span></a></li>
+                <li><a href="<?= Url::to(['mount/run/verify']); ?>"><span class="xn-text">验证文件及生成权限</span></a></li>
                 <li><a href="<?= Url::to(['mount/run/dbfile']); ?>"><span class="xn-text">数据文件</span></a></li>
 
             </ul>

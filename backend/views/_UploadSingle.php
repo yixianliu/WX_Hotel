@@ -29,14 +29,21 @@ $attribute = empty( $attribute ) ? 'thumb' : $attribute;
 
     $(function () {
 
-        $('#FileSimple').fileinput({
-            language: 'zh', // 设置语言
-            showUpload: false,
-            showCaption: false,
-            browseClass: "btn btn-danger",
-            fileType: "image"
+        $('#UploadSingle').on('beforeSubmit', function (e) {
+
+            var $form = $(this);
+
+            $.ajax({
+                url: $form.attr('action'),
+                type: 'post',
+                data: $form.serialize(),
+                success: function (data) {
+                    // do something
+                }
+            });
+        }).on('submit', function (e) {
+            e.preventDefault();
         });
 
     });
-
 </script>

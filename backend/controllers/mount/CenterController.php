@@ -2,7 +2,7 @@
 
 /**
  * @abstract 安装首页控制器
- * @author Yxl <zccem@163.com>
+ * @author   Yxl <zccem@163.com>
  */
 
 namespace backend\controllers\mount;
@@ -20,7 +20,7 @@ class CenterController extends BaseController
 
         $this->isLogin();
 
-        return $this->render('../view');
+        return $this->render( '../view' );
     }
 
     /**
@@ -31,7 +31,7 @@ class CenterController extends BaseController
 
         $this->isLogin();
 
-        return $this->render('../about');
+        return $this->render( '../about' );
     }
 
     /**
@@ -42,7 +42,7 @@ class CenterController extends BaseController
 
         $this->isLogin();
 
-        return $this->render('../product');
+        return $this->render( '../product' );
     }
 
     /**
@@ -53,7 +53,7 @@ class CenterController extends BaseController
 
         $this->isLogin();
 
-        return $this->render('../support');
+        return $this->render( '../support' );
     }
 
 }

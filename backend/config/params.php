@@ -14,7 +14,7 @@ return [
         'DESCRIPTION'           => '方便、易用、极具价值的网络个人表达和用户交流分享生活的产品,分享周边地摊产品的平台.',
         'DEVELOPERS'            => '鼎联网络科技, 竭诚为您服务',
         'PHONE'                 => '+8613400000043',
-        'COPYRIGHT'             => 'Dl Hotel',
+        'COPYRIGHT'             => 'DL Hotel',
         'EMAIL'                 => 'Admin_Fc@Yxlcms.com', // 管理员邮箱
         'FIXPHONE'              => '+861340000000043', // 传真
 
