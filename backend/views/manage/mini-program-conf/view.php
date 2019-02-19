@@ -3,9 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\MiniProgramConf */
-
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => '小程序设置管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;

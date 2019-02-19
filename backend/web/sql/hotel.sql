@@ -72,6 +72,7 @@ CREATE TABLE `#DB_PREFIX#Rooms_Appointment` (
     `id` INT(11) NULL AUTO_INCREMENT,
     `hotel_id` VARCHAR(55) NOT NULL COMMENT '酒店 Id',
     `rooms_id` VARCHAR(55) NOT NULL COMMENT '房间 Id',
+    `user_id` VARCHAR(55) NOT NULL COMMENT '用户 Id',
     `telphone` VARCHAR(85) NULL COMMENT '手机号码',
     `name` VARCHAR(85) NULL COMMENT '预约姓名',
     `start_time` VARCHAR(85) NULL COMMENT '预约开始时间',
@@ -83,6 +84,7 @@ CREATE TABLE `#DB_PREFIX#Rooms_Appointment` (
     PRIMARY KEY (`id`),
     UNIQUE `name` (`name`),
     KEY `rooms_id` (`rooms_id`),
+    KEY `user_id` (`user_id`),
     KEY `hotel_id` (`hotel_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
