@@ -7,9 +7,8 @@ use yii\widgets\DetailView;
 /* @var $model common\models\RoomsAppointment */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Rooms Appointments', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '房间预约管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register( $this );
 
 ?>
 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">

@@ -39,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'name',
                     'introduction',
                     'keywords',
+                    'address',
                     [
                         'attribute' => 'thumb',
                         'format'    => 'html',

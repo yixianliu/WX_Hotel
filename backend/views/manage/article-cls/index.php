@@ -126,4 +126,7 @@ $html = \common\models\ArticleCls::getCls( 'On' );
 
         </div>
     </div>
+
+    <?= Yii::$app->view->renderFile( '@app/views/_FormMsg.php' ); ?>
+
 </div>

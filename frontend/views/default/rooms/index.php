@@ -3,9 +3,6 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-/* @var $this yii\web\View */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
 $this->title = '房间列表';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -23,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'hotel_id',
-            'room_id',
+            'rooms_id',
             'user_id',
             'c_key',
             //'room_num',
@@ -36,8 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
             //'introduction',
             //'keywords',
             //'path',
-            //'thumb',
-            //'images',
+            'thumb',
+            'images',
             //'is_promote',
             //'is_using',
             //'is_comments',

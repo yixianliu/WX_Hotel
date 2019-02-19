@@ -187,9 +187,10 @@ VALUES
 DROP TABLE IF EXISTS `#DB_PREFIX#Order`;
 CREATE TABLE `#DB_PREFIX#Order` (
     `id` INT(11) NULL AUTO_INCREMENT,
-    `hotel_id` VARCHAR(55) NOT NULL COMMENT '酒店编号',
-    `room_id` VARCHAR(55) NOT NULL COMMENT '房间编号',
-    `user_id` VARCHAR(55) NOT NULL COMMENT '用户ID',
+    `order_id` VARCHAR(85) NOT NULL COMMENT '订单编号',
+    `hotel_id` VARCHAR(85) NOT NULL COMMENT '酒店编号',
+    `room_id` VARCHAR(85) NOT NULL COMMENT '房间编号',
+    `user_id` VARCHAR(85) NOT NULL COMMENT '用户ID',
     `coupon_key` VARCHAR(55) NOT NULL COMMENT '优惠卷KEY',
     `price` INT(11) UNSIGNED NOT NULL COMMENT '价格',
     `title` VARCHAR(125) NOT NULL COMMENT '标题',
@@ -209,6 +210,7 @@ CREATE TABLE `#DB_PREFIX#Order` (
     `created_at` integer NOT NULL DEFAULT '0',
     `updated_at` integer NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
+    UNIQUE KEY `order_id` (`order_id`),
     KEY `hotel_id` (`hotel_id`),
     KEY `user_id` (`user_id`),
     KEY `room_id` (`room_id`),

@@ -36,7 +36,7 @@ use phpnt\ICheck\ICheck;
                 ] );
                 ?>
 
-                <?= $this->render( '../../upload', ['model' => $model, 'id' => $model->hotel_id, 'attribute' => 'thumb', 'num' => 1, 'text' => '上传缩略图', 'form' => $form] ); ?>
+                <?= Yii::$app->view->renderFile( '@app/views/_Upload.php', ['model' => $model, 'id' => $model->hotel_id, 'attribute' => 'thumb', 'num' => 1, 'text' => '上传缩略图', 'form' => $form] ); ?>
 
                 <div class="form-group">
                     <div class="alert alert-info" role="alert">
@@ -45,7 +45,7 @@ use phpnt\ICheck\ICheck;
                     </div>
                 </div>
 
-                <?= $this->render( '../../upload', ['model' => $model, 'id' => $model->hotel_id, 'attribute' => 'images', 'text' => '上传图片', 'form' => $form] ); ?>
+                <?= Yii::$app->view->renderFile( '@app/views/_Upload.php', ['model' => $model, 'id' => $model->hotel_id, 'attribute' => 'images', 'text' => '上传图片', 'form' => $form] ); ?>
 
                 <div class="form-group">
                     <div class="alert alert-info" role="alert">

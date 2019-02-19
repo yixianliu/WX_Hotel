@@ -4,10 +4,6 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-/* @var $this yii\web\View */
-/* @var $searchModel backend\models\RoomsSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
 $this->title = '房间列表';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -98,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <?= $this->render('../../formMsg'); ?>
+    <?= Yii::$app->view->renderFile( '@app/views/_FormMsg.php' ); ?>
 
 </div>
 

@@ -56,7 +56,7 @@ class Order extends \yii\db\ActiveRecord
             [['pay_type', 'check_in', 'check_out', 'checkin_men_name', 'checkin_men_idcard'], 'required'],
             [['price', 'num', 'place_order', 'pay_order', 'checkin_men_num'], 'integer'],
             [['hotel_id', 'order_id', 'room_id', 'user_id', 'content', 'pay_type', 'c_key', 'check_in', 'check_out', 'is_using', 'checkin_men_name', 'checkin_men_idcard'], 'string'],
-            [['hotel_id', 'room_id', 'user_id', 'c_key', 'check_in', 'check_out', 'username'], 'string', 'max' => 85],
+            [['hotel_id', 'room_id', 'order_id', 'user_id', 'c_key', 'check_in', 'check_out', 'username'], 'string', 'max' => 85],
             [['checkin_men_name'], 'string', 'max' => 10],
             [['checkin_men_idcard'], 'string', 'max' => 32],
             [['path'], 'string', 'max' => 255],

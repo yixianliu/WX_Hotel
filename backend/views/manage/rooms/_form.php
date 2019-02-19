@@ -6,9 +6,6 @@ use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use phpnt\ICheck\ICheck;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Rooms */
-/* @var $form yii\widgets\ActiveForm */
 ?>
 
     <div class="row">

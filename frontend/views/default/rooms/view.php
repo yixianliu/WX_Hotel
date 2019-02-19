@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model'      => $model,
         'attributes' => [
             'hotel_id',
-            'room_id',
+            'rooms_id',
             'user_id',
             'c_key',
             'room_num',
@@ -52,6 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'updated_at',
             'content:html',
         ],
+        'template'   => '<tr><th width="200">{label}</th><td>{value}</td></tr>',
     ]);
     ?>
 

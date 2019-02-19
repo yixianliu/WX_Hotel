@@ -76,6 +76,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <?= $this->render( '../../formMsg' ); ?>
+    <?= Yii::$app->view->renderFile( '@app/views/_FormMsg.php' ); ?>
 
 </div>

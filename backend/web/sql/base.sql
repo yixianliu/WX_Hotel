@@ -381,12 +381,28 @@ DROP TABLE IF EXISTS `#DB_PREFIX#Mini_Program_Conf`;
 CREATE TABLE `#DB_PREFIX#Mini_Program_Conf` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `conf_id` VARCHAR(85) NOT NULL COMMENT '设置关键 Key',
-    `weixin_id` VARCHAR(85) NOT NULL COMMENT '微信 Id',
+    `wx_id` VARCHAR(85) NOT NULL COMMENT '微信 Id',
     `app_id` VARCHAR(85) NOT NULL COMMENT '小程序 Id',
     `mch_id` VARCHAR(85) NOT NULL COMMENT '商户号 Id',
     `api_psw` VARCHAR(85) NOT NULL COMMENT 'API密钥',
     `cert_path` VARCHAR(85) NOT NULL COMMENT '证书路径',
     `cert_psw` VARCHAR(85) NOT NULL COMMENT '证书密码',
+    `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
+    `created_at` integer NOT NULL DEFAULT 0,
+    `updated_at` integer NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    KEY `app_id` (`app_id`),
+    UNIQUE KEY `conf_id` (`conf_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+ * 公众号设置
+ */
+DROP TABLE IF EXISTS `#DB_PREFIX#We_Chat_Conf`;
+CREATE TABLE `#DB_PREFIX#We_Chat_Conf` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `conf_id` VARCHAR(85) NOT NULL COMMENT '设置关键 Key',
+    `wx_id` VARCHAR(85) NOT NULL COMMENT '微信 Id',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
     `created_at` integer NOT NULL DEFAULT 0,
     `updated_at` integer NOT NULL DEFAULT 0,
