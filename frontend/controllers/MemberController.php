@@ -45,7 +45,7 @@ class MemberController extends Controller
                 ],
             ],
 
-            'verbs'  => [
+            'verbs' => [
                 'class'   => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
@@ -129,6 +129,8 @@ class MemberController extends Controller
             }
 
         }
+
+        $model->user_id = BaseController::getRandomString();
 
         return $this->render( '../center/reg', [
             'model' => $model,

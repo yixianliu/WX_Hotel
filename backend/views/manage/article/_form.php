@@ -53,7 +53,13 @@ use phpnt\ICheck\ICheck;
                             ] );
                             ?>
 
-                            <?= Yii::$app->view->renderFile( '@app/views/upload.php', ['model' => $model, 'id' => $model->article_id, 'num' => 1, 'attribute' => 'thumb', 'text' => '上传缩略图', 'form' => $form] ); ?>
+                            <?= Yii::$app->view->renderFile( '@app/views/_UploadSingle.php', [
+                                    'model'     => $model,
+                                    'id'        => $model->article_id,
+                                    'attribute' => 'thumb',
+                                    'text'      => '上传缩略图',
+                                    'form'      => $form]
+                            ); ?>
 
                             <div class="form-group">
                                 <div class="alert alert-info" role="alert">

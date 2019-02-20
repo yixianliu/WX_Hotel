@@ -27,7 +27,12 @@ use phpnt\ICheck\ICheck;
 
                 <?= $form->field( $model, 'api_psw' )->textInput( ['maxlength' => true] ) ?>
 
-                <?= Yii::$app->view->renderFile( '@app/views/_UploadSingle.php', ['model' => $model, 'id' => $model->conf_id, 'text' => '上传图片', 'attribute' => 'cert_path', 'form' => $form] ); ?>
+                <?= Yii::$app->view->renderFile( '@app/views/_UploadSingle.php', [
+                        'model'     => $model,
+                        'text'      => '上传证书文件',
+                        'attribute' => 'cert_path',
+                        'form'      => $form]
+                ); ?>
 
                 <div class="form-group">
                     <div class="alert alert-info" role="alert">

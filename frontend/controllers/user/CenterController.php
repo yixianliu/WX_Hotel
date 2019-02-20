@@ -9,12 +9,28 @@
 namespace frontend\controllers\user;
 
 use Yii;
+use yii\filters\VerbFilter;
 
 /**
  * OrderController implements the CRUD actions for Order model.
  */
 class CenterController extends BaseController
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
 
     public function actionIndex()
     {

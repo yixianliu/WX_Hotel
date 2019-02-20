@@ -11,6 +11,7 @@
 
 namespace backend\controllers;
 
+use backend\models\UploadSingleForm;
 use Yii;
 use yii\web\UploadedFile;
 use yii\helpers\FileHelper;
@@ -212,7 +213,7 @@ class UploadController extends BaseController
 
         if (Yii::$app->request->isPost) {
 
-            $model->imageFile = UploadedFile::getInstance( $model, 'imageFile' );
+            $model->ImageFiles = UploadedFile::getInstance( $model, 'UploadFileSimple' );
 
             if ($model->upload()) {
 
@@ -221,6 +222,6 @@ class UploadController extends BaseController
             }
         }
 
-        return $this->render( 'upload', ['model' => $model] );
+        return Json::encode( ['msg' => '参数有误 !!'] );
     }
 }

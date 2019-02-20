@@ -53,6 +53,7 @@ AppAsset::register($this);
             )
             . Html::endForm()
             . '</li>';
+        $menuItems[] = ['label' => '会员中心', 'url' => ['/user/center/index']];
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],

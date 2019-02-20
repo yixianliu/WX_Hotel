@@ -192,7 +192,7 @@ CREATE TABLE `#DB_PREFIX#Order` (
     `order_id` VARCHAR(85) NOT NULL COMMENT '订单编号',
     `hotel_id` VARCHAR(85) NOT NULL COMMENT '酒店编号',
     `room_id` VARCHAR(85) NOT NULL COMMENT '房间编号',
-    `user_id` VARCHAR(85) NOT NULL COMMENT '用户ID',
+    `user_id` VARCHAR(85) NOT NULL COMMENT '用户 ID',
     `coupon_key` VARCHAR(55) NOT NULL COMMENT '优惠卷KEY',
     `price` INT(11) UNSIGNED NOT NULL COMMENT '价格',
     `title` VARCHAR(125) NOT NULL COMMENT '标题',
@@ -276,7 +276,8 @@ CREATE TABLE `#DB_PREFIX#Relevance_Rooms_Coupon` (
 DROP TABLE IF EXISTS `#DB_PREFIX#Credit`;
 CREATE TABLE `#DB_PREFIX#Credit` (
     `id` INT(11) NULL AUTO_INCREMENT,
-    `user_id` VARCHAR(55) NOT NULL COMMENT '用户编号ID',
+    `user_id` VARCHAR(55) NOT NULL COMMENT '用户 ID',
+    `credit` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '积分',
     `credit_change` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '积分变化',
     `remarks` VARCHAR(125) NULL COMMENT '备注',
     `created_at` integer NOT NULL DEFAULT '0',
@@ -284,41 +285,3 @@ CREATE TABLE `#DB_PREFIX#Credit` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `user_id` (`user_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/**
- + ------------------------------------------------------------------------------------------------------------
- * 财务系统
- + ------------------------------------------------------------------------------------------------------------
- */
-
-/**
- * 余额记录
- */
-DROP TABLE IF EXISTS `#DB_PREFIX#Finance_Detailed`;
-CREATE TABLE `#DB_PREFIX#Finance_Detailed` (
-    `id` INT(11) NULL AUTO_INCREMENT,
-    `user_id` VARCHAR(55) NOT NULL COMMENT '用户编号ID',
-    `money_change` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '余额变化',
-    `remarks` VARCHAR(125) NULL COMMENT '备注',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `user_id` (`user_id`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='余额明细表';
-
-/**
- * 充值记录
- */
-DROP TABLE IF EXISTS `#DB_PREFIX#Recharge_Detailed`;
-CREATE TABLE `#DB_PREFIX#Recharge_Detailed` (
-    `id` INT(11) NULL AUTO_INCREMENT,
-    `user_id` VARCHAR(55) NOT NULL COMMENT '用户编号ID',
-    `money` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '充值记录',
-    `remarks` VARCHAR(125) NULL COMMENT '备注',
-    `pay_type` SET('wechat', 'alipay', 'cash') NOT NULL COMMENT '支付方式',
-    `status_type` SET('On', 'Off', 'Not', 'Out') NOT NULL COMMENT '状态',
-    `created_at` integer NOT NULL DEFAULT '0',
-    `updated_at` integer NOT NULL DEFAULT '0',
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `user_id` (`user_id`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='充值记录表';

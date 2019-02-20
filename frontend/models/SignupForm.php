@@ -4,7 +4,6 @@ namespace frontend\models;
 
 
 use Yii;
-use frontend\controllers\BaseController;
 use yii\base\Model;
 use common\models\User;
 use common\models\Role;
@@ -14,6 +13,7 @@ use common\models\Role;
  */
 class SignupForm extends Model
 {
+    public $user_id;
     public $username;
     public $telphone;
     public $password;
@@ -26,7 +26,7 @@ class SignupForm extends Model
     {
         return [
             ['username', 'trim'],
-            [['username', 'telphone'], 'required'],
+            [['username', 'telphone', 'user_id'], 'required'],
 
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => '用户名已被占用.'],
             ['telphone', 'unique', 'targetClass' => '\common\models\User', 'message' => '手机已被占用.'],
@@ -67,7 +67,7 @@ class SignupForm extends Model
 
         $user = new User();
 
-        $user->user_id = BaseController::getRandomString();
+        $user->user_id = $this->user_id;
         $user->username = $this->username;
         $user->telphone = $this->telphone;
         $user->r_key = Role::$defaultRole;

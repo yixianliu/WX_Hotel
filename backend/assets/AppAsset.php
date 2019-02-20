@@ -23,7 +23,6 @@ class AppAsset extends AssetBundle
         'themes/js/plugins/bootstrap/bootstrap.min.js',
 
         // 导航条
-        'themes/js/plugins/icheck/icheck.min.js',
         'themes/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js',
         'themes/js/plugins.js',
         'themes/js/actions.js',

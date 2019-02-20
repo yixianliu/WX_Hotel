@@ -30,6 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 're_password')->passwordInput() ?>
 
+            <?= $form->field($model, 'user_id')->hiddenInput()->label(false) ?>
+
             <div class="form-group">
                 <?= Html::submitButton('注册', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
             </div>
