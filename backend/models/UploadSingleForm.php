@@ -19,4 +19,11 @@ class UploadSingleForm extends Model
      */
     public $ImageFiles;
 
+    public function rules()
+    {
+        return [
+            [['UploadFileSimple'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+        ];
+    }
+
 }

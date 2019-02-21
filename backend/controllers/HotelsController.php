@@ -77,6 +77,7 @@ class HotelsController extends BaseController
      */
     public function actionCreate()
     {
+
         $model = new Hotels();
 
         $model->user_id = Yii::$app->user->identity->username;

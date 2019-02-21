@@ -180,7 +180,6 @@ VALUES
 (NULL, 'ADis8', 8, 'UU1', null, 'R15', NULL, 'AdminManage', '分销机制', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
 (NULL, 'AOrder7', 15, 'UU1', null, 'R15', NULL, 'AdminManage', '订单中心', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
 (NULL, 'AWeChat1', 16, 'UU1', null, 'R15', NULL, 'AdminManage', '公众号设置', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
-(NULL, 'AWeChatPay1', 17, 'UU1', null, 'R15', NULL, 'AdminManage', '商户平台设置', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
 (NULL, 'AMiniProgram11', 18, 'UU1', null, 'R15', NULL, 'AdminManage', '小程序设置', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
 
 (NULL, 'AJJob1', 1, 'UU1', '/job/index', 'R15', NULL, 'AJob1', '招聘列表', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
@@ -191,13 +190,10 @@ VALUES
 (NULL, 'ADDis1', 1, 'UU1', '/dis-sale-user/index', 'R15', NULL, 'ADis8', '用户列表', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
 (NULL, 'ADDis2', 2, 'UU1', '/dis-sale-conf/index', 'R15', NULL, 'ADis8', '分销设置', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
 
-(NULL, 'AMMiniProgram1', 1, 'UU1', '/mini-program-conf/index', 'R15', NULL, 'AMiniProgram11', '小程序设置', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
+(NULL, 'AMMiniProgram1', 1, 'UU1', '/mini-program-conf/index', 'R15', NULL, 'AMiniProgram11', '小程序支付设置', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
 
 (NULL, 'AuthWeChat1', 1, 'UU1', '/we-chat/index', 'R15', NULL, 'AWeChat1', '公众号设置', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
 (NULL, 'AuthWeChat2', 2, 'UU1', '/we-chat/menu', 'R15', NULL, 'AWeChat1', '公众号菜单', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
-
-(NULL, 'AuthWeChatPay1', 1, 'UU1', '/we-chat-pay/index', 'R15', NULL, 'AWeChatPay1', '商户平台设置', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
-(NULL, 'AuthWeChatPay2', 2, 'UU1', '/we-chat-pay/view', 'R15', NULL, 'AWeChatPay1', '商户平台测试', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
 
 (NULL, 'AAArticle1', 1, 'UU1', '/article/index', 'R15', NULL, 'AArticle1', '文章列表', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
 (NULL, 'AAArticle2', 2, 'UU1', '/article/create', 'R15', NULL, 'AArticle1', '添加文章', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),

@@ -29,6 +29,8 @@ use phpnt\ICheck\ICheck;
 
                 <?= Yii::$app->view->renderFile( '@app/views/_UploadSingle.php', [
                         'model'     => $model,
+                        'type'      => 'mini-program',
+                        'id'        => $model->conf_id,
                         'text'      => '上传证书文件',
                         'attribute' => 'cert_path',
                         'form'      => $form]
@@ -36,7 +38,7 @@ use phpnt\ICheck\ICheck;
 
                 <div class="form-group">
                     <div class="alert alert-info" role="alert">
-                        上传为证书文件。
+                        上传为证书文件,默认为上传文件最后的一个.
                     </div>
                 </div>
 

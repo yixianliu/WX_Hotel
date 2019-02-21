@@ -204,24 +204,39 @@ class UploadController extends BaseController
     /**
      * 单个文件上传 (自己开发版本)
      *
+     * @param $type
+     * @param $id
+     *
      * @return string|void
+     * @throws \yii\base\Exception
      */
-    public function actionUploadSingle()
+    public function actionUploadSingle($type, $id)
     {
 
-        $model = new UploadSingleForm();
-
-        if (Yii::$app->request->isPost) {
-
-            $model->ImageFiles = UploadedFile::getInstance( $model, 'UploadFileSimple' );
-
-            if ($model->upload()) {
-
-                // 文件上传成功
-                return;
-            }
+        if (empty( $type ) || empty( $id )) {
+            return Json::encode( ['msg' => '提交参数有误!'] );
         }
 
-        return Json::encode( ['msg' => '参数有误 !!'] );
+        if (!Yii::$app->request->isPost) {
+            return Json::encode( ['msg' => '提交方式有误!'] );
+        }
+
+        $ImageFiles = UploadedFile::getInstanceByName( 'UploadFileSimple' );
+
+        // 上传路径
+        $directory = Yii::getAlias( '@backend/../frontend/web/temp' ) . DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR . $id;
+
+        if (!is_dir( $directory ))
+            FileHelper::createDirectory( $directory );
+
+        $fileNewName = self::getRandomString() . '.' . $ImageFiles->extension;
+
+        $filePath = $directory . DIRECTORY_SEPARATOR . $fileNewName;
+
+        if ($ImageFiles->saveAs( $filePath )) {
+            return Json::encode( ['msg' => '上传成功!', 'status' => true, 'path' => $fileNewName] );
+        }
+
+        return Json::encode( ['msg' => '参数有误!'] );
     }
 }

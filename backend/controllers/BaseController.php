@@ -30,19 +30,20 @@ class BaseController extends Controller
 
         // 跳转
         if (!file_exists( Yii::getAlias( '@common' ) . '/' . Yii::$app->params['WebInfo']['RD_FILE'] )) {
-            return $this->redirect( [ '/mount/member/login' ] );
+            return $this->redirect( ['/mount/member/login'] );
         }
 
         // Session
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect( [ '/member/login' ] );
+        if (\Yii::$app->user->isGuest) {
+            exit(false);
+//            return $this->redirect( ['/member/login'] );
         }
 
         static::$assist = \common\models\Assist::findByData();
 
-        $lang = Language::findOne(['is_default' => 'On']);
+        $lang = Language::findOne( ['is_default' => 'On'] );
 
-        Yii::$app->session->set('lang_key', $lang->lang_key);
+        Yii::$app->session->set( 'lang_key', $lang->lang_key );
 
         return true;
     }
