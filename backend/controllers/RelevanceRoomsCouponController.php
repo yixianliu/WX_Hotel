@@ -68,7 +68,7 @@ class RelevanceRoomsCouponController extends BaseController
     public function actionView($id)
     {
         return $this->render( 'view', [
-            'model' => Coupon::findOne(['id' => $id]),
+            'model' => Coupon::findOne( ['id' => $id] ),
         ] );
     }
 
@@ -91,7 +91,7 @@ class RelevanceRoomsCouponController extends BaseController
 
         $result['rooms'] = Rooms::getSelect();
 
-        $result['hotel'] = Hotels::getSelect();
+        $result['hotel'] = Hotels::getHotelSelect();
 
         return $this->render( 'create', [
             'model'  => $model,

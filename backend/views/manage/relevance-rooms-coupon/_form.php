@@ -30,28 +30,24 @@ use phpnt\ICheck\ICheck;
             ?>
 
             <div class="alert alert-info" role="alert">
-                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                <strong>请注意!</strong> This alert needs your attention, but it's not super important.
+                <strong>请注意!</strong> 派送类别
             </div>
 
-            <div class="" id="Apply_Rang_Hotel">
+            <div class="form-group">
 
                 <?=
-                $form->field( $model, 'hotel_id' )->widget( ICheck::className(), [
-                    'type'    => ICheck::TYPE_CHECBOX_LIST,
-                    'style'   => ICheck::STYLE_SQUARE,
-                    'items'   => $result['hotel'],
-                    'color'   => 'red',                  // цвет
-                    'options' => [
-                        'item' => function ($index, $label, $name, $checked, $value) {
-                            return '<input type="checkbox" id="hotel_id' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="hotel_id' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
-                        },
-                    ] ] )
+                $form->field( $model, 'hotel_id' )->widget( Select2::classname(), [
+                    'data'          => $result['hotel'],
+                    'options'       => ['placeholder' => '选择房间'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                    ],
+                ] );
                 ?>
 
             </div>
 
-            <div class="" id="Apply_Rang_Room">
+            <div class="form-group" id="RoomsId" style="display: none;">
 
                 <?=
                 $form->field( $model, 'room_id' )->widget( ICheck::className(), [
@@ -63,7 +59,7 @@ use phpnt\ICheck\ICheck;
                         'item' => function ($index, $label, $name, $checked, $value) {
                             return '<input type="checkbox" id="room_id' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="room_id' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
                         },
-                    ] ] )
+                    ] ] );
                 ?>
 
             </div>
@@ -85,5 +81,11 @@ use phpnt\ICheck\ICheck;
 <?php ActiveForm::end(); ?>
 
 <script type="text/javascript">
+
+    $('#relevanceroomscoupon-hotel_id').on('change', function () {
+
+        $('#RoomsId').show();
+
+    });
 
 </script>

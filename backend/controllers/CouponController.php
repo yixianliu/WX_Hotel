@@ -81,11 +81,11 @@ class CouponController extends BaseController
     {
         $model = new Coupon();
 
-        $model->coupon_key = self::getRandomString();
-
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
             return $this->redirect( [ 'view', 'id' => $model->id ] );
         }
+
+        $model->coupon_key = self::getRandomString();
 
         return $this->render( 'create', [ 'model' => $model, ] );
     }

@@ -54,7 +54,7 @@ $this->registerCssFile( '@web/plugins/bootstrap-fileinput/css/fileinput.css', ['
 
     }).on("fileuploaded", function (event, data) {
 
-        alert(data.response.msg);
+        console.log(data.response.msg);
 
         $('#UploadFileSimple_Hidden').val(data.response.path);
 

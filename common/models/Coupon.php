@@ -47,8 +47,9 @@ class Coupon extends \yii\db\ActiveRecord
         return [
             [['title', 'validity', 'denomination', 'quota', 'coupon_type', 'pay_type'], 'required'],
             [['denomination', 'quota', 'num'], 'integer'],
-            [['coupon_type', 'images',], 'string'],
-            [['coupon_key', 'validity', 'title', 'remarks'], 'string', 'max' => 125],
+            [['coupon_type', 'images'], 'string'],
+            [['validity', 'title', 'remarks'], 'string', 'max' => 125],
+            [['coupon_key'], 'string', 'max' => 85],
             [['coupon_key'], 'unique'],
 
             [['is_using'], 'default', 'value' => 'On'],

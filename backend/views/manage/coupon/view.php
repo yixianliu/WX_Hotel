@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ] ) ?>
                 <?= Html::a( '返回列表', ['index'], ['class' => 'btn btn-primary'] ) ?>
+                <?= Html::a( '继续添加', ['create'], ['class' => 'btn btn-primary'] ) ?>
             </p>
 
             <?= DetailView::widget( [
@@ -77,9 +78,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format'    => 'html',
                         'value'     => function ($model) {
 
-                            $images = (!is_file( Yii::getAlias( '@webroot/../../frontend/web/temp/coupon/' ) . $model->images )) ?
+                            $images = (!is_file( Yii::getAlias( '@webroot/../../frontend/web/temp/coupon/' ) . $model->coupon_key . '/' . $model->images )) ?
                                 Yii::getAlias( '@web/../../frontend/web/img/not.jpg' ) :
-                                Yii::getAlias( '@web/../../frontend/web/temp/coupon/' ) . $model->images;
+                                Yii::getAlias( '@web/../../frontend/web/temp/coupon/' ) . $model->coupon_key . '/' . $model->images;
 
                             return '<img width="280" height="150" src="' . $images . '" alt="' . $model->title . '" />';
                         },

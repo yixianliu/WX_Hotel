@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?=
                 $form->field( $model, 'coupon_key' )->widget( \kartik\select2\Select2::classname(), [
                     'data'          => $result['coupon'],
-                    'options'       => ['placeholder' => '酒店'],
+                    'options'       => ['placeholder' => '请选择对应的优惠卷'],
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],
