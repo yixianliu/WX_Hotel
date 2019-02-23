@@ -85,11 +85,13 @@ class RelevanceRoomsCouponController extends BaseController
             return $this->redirect( ['view', 'id' => $model->id] );
         }
 
+        if (Yii::$app->request->isAjax) {
+
+        }
+
         $result = [];
 
         $result['coupon'] = Coupon::getSelect();
-
-        $result['rooms'] = Rooms::getSelect();
 
         $result['hotel'] = Hotels::getHotelSelect();
 
