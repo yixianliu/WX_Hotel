@@ -4,11 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
-use phpnt\ICheck\ICheck;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\RelevanceRoomsCoupon */
-/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <?php $form = ActiveForm::begin(); ?>
@@ -49,9 +45,11 @@ use phpnt\ICheck\ICheck;
 
         <div class="form-group" id="RoomsId" style="display: none;"></div>
 
-        <?= $form->field( $model, 'content' )->textarea( ['maxlength' => true] ) ?>
+        <?= $form->field( $model, 'content' )->textarea( ['maxlength' => true, 'rows' => 8] ) ?>
 
     </div>
+
+    <?= $form->field( $model, 'user_id' )->hiddenInput()->label( false ) ?>
 
     <div class="panel-footer">
 
@@ -67,19 +65,40 @@ use phpnt\ICheck\ICheck;
 
 <script type="text/javascript">
 
-    $('#relevanceroomscoupon-hotel_id').on('change', function () {
+    $('#relevanceroomscoupon-hotel_id').change(function () {
 
         $('#RoomsId').show();
 
-        $.ajaxPost("/worklicense/worklicenseBanli/selectDeptHead",{"code":"SGZ_SLD"},function(data){
+        var selectId = $(this).val();
 
+        $.ajax({
+
+            type: "GET",
+            url: '<?= Url::to( ['rooms/ajax-res'] ) ?>?id=' + selectId,
+            dataType: "json",
+            success: function (data) {
+
+                $('#RoomsId').empty();
+
+                $('#RoomsId').append('<label class="control-label" for="">旗下酒店</label><br/>');
+
+                if (data.result.length == 0) {
+                    $('#RoomsId').append('<h3>没有找到相关的房间!</h3>');
+                    return false;
+                }
+
+                for (var i = 0; i < data.result.length; i++) { // 几个人有几个checkbox
+                    $('#RoomsId').append("<input type='checkbox' class='icheckbox_minimal-grey' value='" + data.result[i].rooms_id + "' id='" + data.result[i].rooms_id + "' name='RelevanceRoomsCoupon[room_id][]'/>");
+                    $('#RoomsId').append("&nbsp;&nbsp;<label for=" + data.result[i].rooms_id + ">" + data.result[i].title + "</label>");
+                }
+
+                return true;
+            },
+
+            error: function (jqXHR) {
+                console.log("Error: " + jqXHR.status);
+            }
         });
-
-        for(var i=0 ;i<data.length;i++){ //几个人有几个checkbox
-            $("#headId").append("<input type='checkbox' value='"+data[i].id+"' name='header'/>"+data[i].name);
-        }
-
-        $("#RoomsId").append("<input type='checkbox' value='"+data[i].id+"' name='header'/>"+data[i].name);
 
     });
 

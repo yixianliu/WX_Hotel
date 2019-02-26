@@ -257,7 +257,6 @@ CREATE TABLE `#DB_PREFIX#Relevance_Rooms_Coupon` (
     `coupon_key` VARCHAR(55) NOT NULL COMMENT '优惠卷关键KEY',
     `hotel_id` VARCHAR(55) NULL COMMENT '酒店关键KEY',
     `room_id` VARCHAR(55) NOT NULL COMMENT '房间关键KEY',
-    `room_cls_id` VARCHAR(55) NOT NULL COMMENT '房间分类关键KEY',
     `use_up` integer NOT NULL COMMENT '消耗了几张优惠卷',
     `content` TEXT NULL COMMENT '描述内容',
     `apply_range` SET('hotel', 'room', 'classify', 'all') NOT NULL COMMENT '派送类别,开启为On,就是代表所有房间均可使用该劵',

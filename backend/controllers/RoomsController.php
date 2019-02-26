@@ -234,4 +234,19 @@ class RoomsController extends BaseController
         throw new NotFoundHttpException( 'The requested page does not exist.' );
     }
 
+    public function actionAjaxRes()
+    {
+
+        if (!Yii::$app->request->isAjax) {
+            return $this->redirect( ['index'] );
+        }
+
+        $id = Yii::$app->request->get( 'id', null );
+
+        $result = Rooms::findAll( ['hotel_id' => $id] );
+
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        return ['result' => $result, 'status' => true];
+    }
 }

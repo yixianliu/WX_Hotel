@@ -103,17 +103,16 @@ class MenuController extends BaseController
 
             return $this->redirect( ['view', 'id' => $model->m_key] );
 
-        } else {
-
-            return $this->render( 'create', [
-                'model'  => $model,
-                'result' => [
-                    'parent'     => Menu::getSelectMenu(),
-                    'menu_model' => MenuModel::getModel(),
-                    'role'       => Role::getRoleSelect(),
-                ],
-            ] );
         }
+
+        return $this->render( 'create', [
+            'model'  => $model,
+            'result' => [
+                'parent'     => Menu::getSelectMenu(),
+                'menu_model' => MenuModel::getModel(),
+                'role'       => Role::getRoleSelect(),
+            ],
+        ] );
     }
 
     /**

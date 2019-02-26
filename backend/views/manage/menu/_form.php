@@ -44,19 +44,19 @@ use phpnt\ICheck\ICheck;
                 ]] )
             ?>
 
-            <?= $form->field( $model, 'model_key' )->widget( ICheck::className(), [
+            <?= $form->field( $model, 'menu_model' )->widget( ICheck::className(), [
                 'type'    => ICheck::TYPE_RADIO_LIST,
                 'style'   => ICheck::STYLE_SQUARE,
                 'items'   => $result['menu_model'],
                 'color'   => 'grey',
                 'options' => [
                     'item' => function ($index, $label, $name, $checked, $value) {
-                        return '<input type="radio" id="model_key' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="model_key' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
+                        return '<input type="radio" id="menu_model' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="menu_model' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
                     },
                 ]] )
             ?>
 
-            <?= $form->field( $model, 'url_data' )->textInput( ['maxlength' => true] ) ?>
+            <?= $form->field( $model, 'menu_data' )->textarea( ['maxlength' => true, 'rows' => 8] ) ?>
 
             <?= $form->field( $model, 'is_using' )->widget( ICheck::className(), [
                 'type'    => ICheck::TYPE_RADIO_LIST,

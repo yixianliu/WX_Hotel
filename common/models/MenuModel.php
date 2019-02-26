@@ -74,14 +74,14 @@ class MenuModel extends \yii\db\ActiveRecord
         // 初始化
         $data = [];
 
-        $result = static::findAll( ['is_using' => 'On', 'url_type' => 'model'] );
+        $result = static::findAll( ['is_using' => 'On', 'menu_type' => 'model'] );
 
         foreach ($result as $value) {
 
-            if (empty( $value->m_key ))
+            if (empty( $value->menu_key ))
                 continue;
 
-            $data[ $value->m_key ] = $value->name;
+            $data[ $value->menu_key ] = $value->name;
         }
 
         return $data;

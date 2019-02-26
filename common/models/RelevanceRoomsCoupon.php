@@ -39,7 +39,8 @@ class RelevanceRoomsCoupon extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'room_id', 'coupon_key'], 'required'],
+            [['user_id', 'room_id', 'coupon_key', 'hotel_id', 'apply_range'], 'required'],
+            [['content'], 'string', 'max' => 2000],
         ];
     }
 
@@ -49,6 +50,7 @@ class RelevanceRoomsCoupon extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'user_id'     => '发布用户',
             'room_id'     => '所选房间',
             'hotel_id'    => '所选酒店',
             'coupon_key'  => '优惠卷',

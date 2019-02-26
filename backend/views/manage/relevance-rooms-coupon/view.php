@@ -3,10 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\RelevanceRoomsCoupon */
-
-$this->title = $model->title;
+$this->title = $model->coupon_key;
 $this->params['breadcrumbs'][] = ['label' => '派送设置', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -20,70 +17,24 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-body">
 
             <p>
-                <?= Html::a( 'Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary'] ) ?>
-                <?= Html::a( 'Delete', ['delete', 'id' => $model->id], [
+                <?= Html::a( '更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary'] ) ?>
+                <?= Html::a( '删除', ['delete', 'id' => $model->id], [
                     'class' => 'btn btn-danger',
                     'data'  => [
                         'confirm' => '是否删除这条记录?',
                         'method'  => 'post',
                     ],
                 ] ) ?>
+                <?= Html::a( '返回列表', ['index'], ['class' => 'btn btn-primary'] ) ?>
+                <?= Html::a( '继续添加', ['create'], ['class' => 'btn btn-primary'] ) ?>
             </p>
 
             <?= DetailView::widget( [
                 'model'      => $model,
                 'attributes' => [
-                    'title',
+                    'hotel_id',
+                    'room_id',
                     'coupon_key',
-                    'validity',
-                    'num',
-                    'denomination',
-                    'quota',
-                    [
-                        'attribute' => 'coupon_type',
-                        'value'     => function ($model) {
-
-                            $state = ['discount' => '折扣劵', 'coupon' => '优惠卷'];
-
-                            return $state[ $model->coupon_type ];
-                        },
-                    ],
-                    [
-                        'attribute' => 'pay_type',
-                        'value'     => function ($model) {
-                            $state = [
-                                'before' => '消费后送优惠卷',
-                                'after'  => '消费前送优惠卷',
-                                'wechat' => '关注公众号',
-                            ];
-
-                            return $state[ $model->pay_type ];
-                        },
-                    ],
-                    [
-                        'attribute' => 'is_using',
-                        'value'     => function ($model) {
-                            $state = [
-                                'On'  => '开启',
-                                'Off' => '未启用',
-                            ];
-
-                            return $state[ $model->is_using ];
-                        },
-                    ],
-                    [
-                        'attribute' => 'images',
-                        'format'    => 'html',
-                        'value'     => function ($model) {
-
-                            $images = (!is_file( Yii::getAlias( '@webroot/../../frontend/web/temp/coupon/' ) . $model->images )) ?
-                                Yii::getAlias( '@web/../../frontend/web/img/not.gif' ) :
-                                Yii::getAlias( '@web/../../frontend/web/temp/coupon/' ) . $model->images;
-
-                            return '<img width="520" height="350" src="' . $images . '" alt="' . $model->title . '" />';
-                        },
-                        'options'   => ['width' => 180],
-                    ],
                     [
                         'attribute' => 'created_at',
                         'value'     => function ($model) {
@@ -96,7 +47,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             return date( 'Y - m -d , h:i', $model->updated_at );
                         },
                     ],
-                    'remarks',
                 ],
                 'template'   => '<tr><th width="200">{label}</th><td>{value}</td></tr>',
             ] ) ?>

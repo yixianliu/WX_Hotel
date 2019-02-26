@@ -5,7 +5,6 @@ namespace backend\controllers;
 use Yii;
 use common\models\Coupon;
 use common\models\Hotels;
-use common\models\Rooms;
 use common\models\RelevanceRoomsCoupon;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
@@ -68,7 +67,7 @@ class RelevanceRoomsCouponController extends BaseController
     public function actionView($id)
     {
         return $this->render( 'view', [
-            'model' => Coupon::findOne( ['id' => $id] ),
+            'model' => RelevanceRoomsCoupon::findOne( ['id' => $id] ),
         ] );
     }
 
@@ -81,12 +80,26 @@ class RelevanceRoomsCouponController extends BaseController
     {
         $model = new RelevanceRoomsCoupon();
 
-        if ($model->load( Yii::$app->request->post() ) && $model->save()) {
+        $model->user_id = Yii::$app->user->identity->username;
+
+        if ($model->load( Yii::$app->request->post() )) {
+
+            $post = Yii::$app->request->post();
+
+            $model->room_id = null;
+
+            foreach ($post['RelevanceRoomsCoupon']['room_id'] as $value) {
+                $model->room_id .= $value . ',';
+            }
+
+            if (!$model->save()) {
+                Yii::$app->getSession()->setFlash( 'success', '派送添加成功!' );
+                return $this->redirect( ['create'] );
+            }
+
+            Yii::$app->getSession()->setFlash( 'success', '派送添加成功!' );
+
             return $this->redirect( ['view', 'id' => $model->id] );
-        }
-
-        if (Yii::$app->request->isAjax) {
-
         }
 
         $result = [];
