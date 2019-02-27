@@ -32,12 +32,14 @@ class Resume extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'title', 'content', 'is_using'], 'required'],
+            [['user_id', 'title', 'content'], 'required'],
             [['content', 'is_using'], 'string'],
             [['created_at', 'updated_at'], 'integer'],
             [['user_id'], 'string', 'max' => 85],
             [['title', 'path'], 'string', 'max' => 125],
             [['user_id'], 'unique'],
+
+            [['is_using'], 'default', 'value' => 'On'],
         ];
     }
 

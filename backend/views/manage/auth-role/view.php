@@ -3,12 +3,30 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => '角色管理', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+/* @var $this yii\web\View */
+/* @var $model common\models\AuthRole */
 
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Auth Roles', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
+\yii\web\YiiAsset::register( $this );
 ?>
 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+
+    <h1><?= Html::encode( $this->title ) ?></h1>
+
+    <p>
+        <?= Html::a( '更改', ['update', 'id' => $model->id], ['class' => 'btn btn-primary'] ) ?>
+        <?= Html::a( '删除', ['delete', 'id' => $model->id], [
+            'class' => 'btn btn-danger',
+            'data'  => [
+                'confirm' => '是否删除这条记录?',
+                'method'  => 'post',
+            ],
+        ] ) ?>
+        <?= Html::a( ' 继续添加', ['create'], ['class' => 'btn btn-primary'] ) ?>
+        <?= Html::a( ' 返回列表', ['index'], ['class' => 'btn btn-primary'] ) ?>
+    </p>
 
     <div class="panel panel-default">
 
@@ -16,35 +34,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="panel-body">
 
-            <p>
-                <?= Html::a( '更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary'] ) ?>
-                <?= Html::a( '删除', ['delete', 'id' => $model->id], [
-                    'class' => 'btn btn-danger',
-                    'data'  => [
-                        'confirm' => '是否删除这条记录?',
-                        'method'  => 'post',
-                    ],
-                ] ) ?>
-                <?= Html::a( '返回列表', ['index'], ['class' => 'btn btn-primary'] ) ?>
-                <?= Html::a( '继续添加', ['create'], ['class' => 'btn btn-success'] ) ?>
-            </p>
-
             <?= DetailView::widget( [
                 'model'      => $model,
                 'attributes' => [
                     'name',
-                    'sort_id',
-                    'r_key',
-                    'exp',
+                    'description',
+                    'rule_name',
+                    'data',
                     [
-                        'attribute' => 'is_using',
+                        'attribute' => 'type',
                         'value'     => function ($model) {
-                            $state = [
-                                'On'  => '开启',
-                                'Off' => '未启用',
-                            ];
-
-                            return $state[ $model->is_using ];
+                            return $model->type == 1 ? '认证角色' : '认证权限';
+                        },
+                    ],
+                    [
+                        'attribute' => 'status',
+                        'value'     => function ($model) {
+                            return $model->status == 1 ? '已启用' : '已关闭';
                         },
                     ],
                     [
@@ -59,7 +65,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             return date( 'Y - m - d , h:i', $model->updated_at );
                         },
                     ],
-                    'description:html',
                 ],
                 'template'   => '<tr><th width="200">{label}</th><td>{value}</td></tr>',
             ] ) ?>
@@ -67,4 +72,3 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-

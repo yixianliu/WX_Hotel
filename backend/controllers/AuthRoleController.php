@@ -46,8 +46,10 @@ class AuthRoleController extends BaseController
      */
     public function actionIndex()
     {
+        $id = Yii::$app->request->get('id', 1);
+
         $dataProvider = new ActiveDataProvider([
-            'query' => AuthRole::find(),
+            'query' => AuthRole::find()->where(['type' => $id]),
         ]);
 
         return $this->render('index', [

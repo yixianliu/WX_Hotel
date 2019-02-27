@@ -22,7 +22,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method'  => 'post',
             ],
         ] ) ?>
-
         <?= Html::a( ' 继续添加', ['create'], ['class' => 'btn btn-primary'] ) ?>
         <?= Html::a( ' 返回列表', ['index'], ['class' => 'btn btn-primary'] ) ?>
     </p>
@@ -48,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             if ($model->parent_id == \common\models\ArticleCls::$parentId)
                                 return '父类级别';
 
-                            $data = \common\models\ArticleCls::findOne(['c_key' => $model->parent_id]);
+                            $data = \common\models\ArticleCls::findOne( ['c_key' => $model->parent_id] );
 
                             return $data->name;
                         },
@@ -61,19 +60,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'Off' => '未启用',
                             ];
 
-                            return $state[$model->is_using];
+                            return $state[ $model->is_using ];
                         },
                     ],
                     [
                         'attribute' => 'created_at',
                         'value'     => function ($model) {
-                            return date('Y - m - d , h:i', $model->created_at);
+                            return date( 'Y - m - d , h:i', $model->created_at );
                         },
                     ],
                     [
                         'attribute' => 'updated_at',
                         'value'     => function ($model) {
-                            return date('Y - m - d , h:i', $model->updated_at);
+                            return date( 'Y - m - d , h:i', $model->updated_at );
                         },
                     ],
                 ],

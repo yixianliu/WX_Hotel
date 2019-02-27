@@ -2,7 +2,6 @@
 
 namespace backend\controllers;
 
-use common\models\AuthRole;
 use Yii;
 use common\models\Role;
 use yii\data\ActiveDataProvider;
@@ -46,7 +45,7 @@ class RoleController extends BaseController
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider( [
-            'query' => Role::find(),
+            'query' => Role::find()->orderBy( ['sort_id' => SORT_ASC, 'exp' => SORT_DESC] ),
         ] );
 
         return $this->render( 'index', [
@@ -86,9 +85,6 @@ class RoleController extends BaseController
 
         return $this->render( 'create', [
             'model'  => $model,
-            'result' => [
-                'power' => AuthRole::getSelect(),
-            ],
         ] );
     }
 

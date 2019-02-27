@@ -15,8 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="col-lg-12">
 
     <div class="form-group">
-        <a href='<?= Url::to( ['create'] ) ?>' class='btn btn-primary btn-lg' title='添加酒店房间'>添加文章</a>
-        <a href='<?= Url::to( ['create'] ) ?>' class='btn btn-primary btn-lg' title='添加房间分类'>添加文章分类</a>
+        <a href='<?= Url::to( ['create'] ) ?>' class='btn btn-primary btn-lg' title='添加文章'>添加文章</a>
+        <a href='<?= Url::to( ['article-cls/create'] ) ?>' class='btn btn-primary btn-lg' title='添加文章分类'>添加文章分类</a>
     </div>
 
     <div class="panel panel-default">
@@ -43,7 +43,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     'title',
                     'introduction',
                     'is_comments',
-                    'is_using',
+                    [
+                        'attribute' => 'is_using',
+                        'value'     => function ($model) {
+                            $state = [
+                                'On'  => '已启用',
+                                'Off' => '未启用',
+                            ];
+
+                            return $state[ $model->is_using ];
+                        },
+                    ],
                     [
                         'attribute' => 'created_at',
                         'value'     => function ($model) {

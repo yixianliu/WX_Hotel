@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "w_auth_role".
@@ -33,10 +34,20 @@ class AuthRole extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
-            [['type', 'status', 'name'], 'required'],
+            [['type', 'status', 'description', 'name'], 'required'],
             [['type', 'status',], 'integer'],
             [['name', 'description', 'rule_name', 'data'], 'string', 'max' => 80],
             [['name'], 'unique'],

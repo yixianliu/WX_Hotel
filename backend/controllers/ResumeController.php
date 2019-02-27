@@ -81,6 +81,8 @@ class ResumeController extends BaseController
             return $this->redirect( ['view', 'id' => $model->id] );
         }
 
+        $model->user_id = Yii::$app->user->identity->username;
+
         return $this->render( 'create', [
             'model' => $model,
         ] );

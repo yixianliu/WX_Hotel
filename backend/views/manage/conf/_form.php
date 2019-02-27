@@ -4,9 +4,6 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Conf */
-/* @var $form yii\widgets\ActiveForm */
 ?>
 
 

@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'is_using',
                         'value'     => function ($model) {
                             $state = [
-                                'On'  => '已开启',
+                                'On'  => '已启用',
                                 'Off' => '未启用',
                             ];
 

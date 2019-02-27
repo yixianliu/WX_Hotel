@@ -7,29 +7,29 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Resume */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Resumes', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '简历管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+
 ?>
 <div class="resume-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode( $this->title ) ?></h1>
 
     <p>
-        <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('删除', ['delete', 'id' => $model->id], [
+        <?= Html::a( '更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary'] ) ?>
+        <?= Html::a( '删除', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
-            'data' => [
+            'data'  => [
                 'confirm' => '是否删除这条记录?',
-                'method' => 'post',
+                'method'  => 'post',
             ],
-        ]) ?>
-        <?= Html::a('返回列表', ['index'], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('继续添加', ['create'], ['class' => 'btn btn-success']) ?>
+        ] ) ?>
+        <?= Html::a( '返回列表', ['index'], ['class' => 'btn btn-primary'] ) ?>
+        <?= Html::a( '继续添加', ['create'], ['class' => 'btn btn-success'] ) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
+    <?= DetailView::widget( [
+        'model'      => $model,
         'attributes' => [
             'id',
             'user_id',
@@ -40,6 +40,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at',
             'updated_at',
         ],
-    ]) ?>
+    ] ) ?>
 
 </div>
