@@ -9,7 +9,7 @@ namespace backend\controllers\mount;
 
 use Yii;
 
-class CenterController extends BaseController
+class CenterController extends MountController
 {
 
     /**

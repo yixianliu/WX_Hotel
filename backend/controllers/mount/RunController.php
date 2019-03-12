@@ -12,7 +12,7 @@ use yii\helpers\Json;
 use backend\models\MountForm;
 use backend\models\MountFileForm;
 
-class RunController extends BaseController
+class RunController extends MountController
 {
 
     /**
@@ -31,7 +31,7 @@ class RunController extends BaseController
 
         if (!Yii::$app->request->isAjax) {
             Yii::$app->getSession()->setFlash( 'error', '登录失败,请检查 !!' );
-            return $this->redirect( [ '/mount/center/view' ] );
+            return $this->redirect( ['/mount/center/view'] );
         }
 
         // 批量SQL语句
@@ -53,8 +53,8 @@ class RunController extends BaseController
         $Sql_Data = str_ireplace( '#PHONE#', Yii::$app->params['WebInfo']['PHONE'], $Sql_Data );
         $Sql_Data = str_ireplace( '#COPYRIGHT#', Yii::$app->params['WebInfo']['COPYRIGHT'], $Sql_Data );
 
-        $Sql_Data = str_ireplace( '#USERNAME#', Yii::getAlias( '@Username' ), $Sql_Data );
-        $Sql_Data = str_ireplace( '#PASSWORD#', Yii::getAlias( '@Password' ), $Sql_Data );
+        $Sql_Data = str_ireplace( '#USERNAME#', Yii::$app->params['WebInfo']['UserName'], $Sql_Data );
+        $Sql_Data = str_ireplace( '#PASSWORD#', Yii::$app->params['WebInfo']['PassWord'], $Sql_Data );
         $Sql_Data = str_ireplace( '#TIME#', time(), $Sql_Data );
 
         $arraySql = explode( ';', $Sql_Data );
@@ -69,7 +69,7 @@ class RunController extends BaseController
             Yii::$app->db->createCommand( $value )->execute();
         }
 
-        return Json::encode( [ 'msg' => '数据库生成完毕 !!', 'status' => true ] );
+        return Json::encode( ['msg' => '数据库生成完毕 !!', 'status' => true] );
     }
 
     /**
@@ -90,12 +90,12 @@ class RunController extends BaseController
             $session->close();
             $session->destroy();
 
-            return Json::encode( [ 'msg' => '挂载成功 !!', 'status' => true ] );
+            return Json::encode( ['msg' => '挂载成功 !!', 'status' => true] );
         }
 
         $model = new MountForm();
 
-        return $this->render( '../verify', [ 'model' => $model ] );
+        return $this->render( '../verify', ['model' => $model] );
     }
 
     /**
@@ -110,7 +110,7 @@ class RunController extends BaseController
         $data = [];
 
         // 函数
-        $fun = [ 'session_start', 'mysqli_connect', 'file_get_contents', 'file_put_contents', 'gd_info' ];
+        $fun = ['session_start', 'mysqli_connect', 'file_get_contents', 'file_put_contents', 'gd_info'];
 
         $num = count( $fun );
 
@@ -127,7 +127,7 @@ class RunController extends BaseController
 
         }
 
-        return $this->render( '../env', [ 'data' => $data ] );
+        return $this->render( '../env', ['data' => $data] );
     }
 
     /**
@@ -143,9 +143,9 @@ class RunController extends BaseController
         $request = Yii::$app->request;
 
         if ($request->isAjax) {
-            return Json::encode( [ 'msg' => '非法提交!' ] );
+            return Json::encode( ['msg' => '非法提交!'] );
         }
 
-        return $this->render( '../dbfile', [ 'model' => $model ] );
+        return $this->render( '../dbfile', ['model' => $model] );
     }
 }

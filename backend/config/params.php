@@ -58,6 +58,9 @@ return [
 
         // 安装文件
         'RD_FILE'               => 'DL-Hotel-File.rd',
+
+        'UserName' => 'yixianliu',
+        'PassWord' => 'yixianliu',
     ],
 
 ];

@@ -2,7 +2,7 @@
 
 /**
  * @abstract 安装模型
- * @author Yxl <zccem@163.com>
+ * @author   Yxl <zccem@163.com>
  */
 
 namespace backend\models;
@@ -69,7 +69,9 @@ class MountForm extends Model
     public function mLogin()
     {
 
-        if ($this->username != Yii::getAlias('@Username') || !Yii::$app->security->validatePassword($this->password, Yii::getAlias('@Password'))) {
+        $password = Yii::$app->security->generatePasswordHash( Yii::$app->params['WebInfo']['PassWord'] );
+
+        if ($this->username != Yii::$app->params['WebInfo']['UserName'] || !Yii::$app->security->validatePassword( $this->password, $password )) {
             return false;
         }
 

@@ -8,13 +8,14 @@
 namespace backend\controllers\mount;
 
 use Yii;
+use yii\web\Controller;
 use backend\models\MountForm;
 use yii\helpers\Json;
 
-class MemberController extends BaseController
+class MemberController extends Controller
 {
 
-    public $layout = false;
+    public $layout = false; // 不使用布局
 
     /**
      * @abstract 登录
@@ -24,8 +25,9 @@ class MemberController extends BaseController
 
         $data = Yii::$app->session->get( 'MountAdmin' );
 
-        if (!empty( $data['username'] ) && ($data['username'] == Yii::getAlias( '@Username' )))
+        if (!empty( $data['username'] ) && ($data['username'] == Yii::$app->params['WebInfo']['UserName'])) {
             $this->redirect( ['/mount/center/view'] );
+        }
 
         $model = new MountForm();
 
