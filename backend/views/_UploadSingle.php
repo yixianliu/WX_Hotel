@@ -12,7 +12,7 @@ if (empty( $model ) || empty( $form )) {
     exit( false );
 }
 
-$type = empty($type) ? 'null' : $type;
+$type = empty( $type ) ? 'null' : $type;
 
 $text = empty( $text ) ? '上传缩略图' : $text;
 
@@ -40,7 +40,7 @@ $this->registerCssFile( '@web/plugins/bootstrap-fileinput/css/fileinput.css', ['
 
 </div>
 
-<?php $this->beginBlock('UploadFileInput') ?>
+<?php $this->beginBlock( 'UploadFileInput' ); ?>
 
     $('#<?= $divId ?>').fileinput({
 
@@ -63,4 +63,4 @@ $this->registerCssFile( '@web/plugins/bootstrap-fileinput/css/fileinput.css', ['
 
 <?php $this->endBlock() ?>
 
-<?php $this->registerJs($this->blocks['UploadFileInput'], \yii\web\View::POS_END); ?>
+<?php $this->registerJs( $this->blocks['UploadFileInput'], \yii\web\View::POS_END ); ?>

@@ -15,12 +15,12 @@ class CenterController extends MountController
     /**
      * @abstract 首页
      */
-    public function actionView()
+    public function actionIndex()
     {
 
         $this->isLogin();
 
-        return $this->render( '../view' );
+        return $this->render( '../index' );
     }
 
     /**

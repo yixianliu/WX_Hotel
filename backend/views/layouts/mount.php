@@ -2,7 +2,7 @@
 
 /**
  * @abstract 安装全局文件
- * @author Yxl <zccem@163.com>
+ * @author   Yxl <zccem@163.com>
  */
 
 use yii\helpers\Url;
@@ -10,16 +10,16 @@ use yii\helpers\Html;
 use backend\assets\AppAsset;
 
 // 跳转安装
-if (file_exists(Yii::getAlias('@common') . '/' . Yii::$app->params['WebInfo']['RD_FILE'])) {
+if (file_exists( Yii::getAlias( '@common' ) . '/' . Yii::$app->params['WebInfo']['RD_FILE'] )) {
     return;
 }
 
-AppAsset::register($this);  // $this 代表视图对象
+AppAsset::register( $this );  // $this 代表视图对象
 
 $session = Yii::$app->session;
 
 // 判断是否登录
-if (empty($session['MountAdmin']['username'])) {
+if (empty( $session['MountAdmin']['username'] )) {
     return false;
 }
 
@@ -33,7 +33,7 @@ $this->beginPage();
 
         <meta charset="<?= Yii::$app->charset ?>">
 
-        <title><?= Html::encode($this->title) ?> - <?= Yii::$app->params['WebInfo']['TITLE']; ?> - <?= Yii::$app->params['WebInfo']['NAME']; ?></title>
+        <title><?= Html::encode( $this->title ) ?> - <?= Yii::$app->params['WebInfo']['TITLE']; ?> - <?= Yii::$app->params['WebInfo']['NAME']; ?></title>
 
         <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'/>
         <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
@@ -41,7 +41,7 @@ $this->beginPage();
         <meta name='description' content="<?= Yii::$app->params['WebInfo']['DESCRIPTION']; ?>"/>
         <meta name='author' content="<?= Yii::$app->params['WebInfo']['DEVELOPERS']; ?>"/>
 
-        <link rel="shortcut icon" href="<?= Yii::getAlias('@web') ?>/favicon.ico" type="image/x-icon"/>
+        <link rel="shortcut icon" href="<?= Yii::getAlias( '@web' ) ?>/favicon.ico" type="image/x-icon"/>
 
         <?= Html::csrfMetaTags() ?>
 
@@ -64,10 +64,10 @@ $this->beginPage();
                     <a href="#" title="<?= Yii::$app->params['WebInfo']['TITLE']; ?> - <?= Yii::$app->params['WebInfo']['NAME']; ?>"></a>
                     <a href="#" class="x-navigation-control"></a>
                 </li>
-                <li><a href="<?= Url::to(['mount/center/view']); ?>" title="了解挂载操作"><span class="xn-text">控制面板</span></a></li>
-                <li><a href="<?= Url::to(['mount/run/index']); ?>"><span class="xn-text">文件挂载操作</span></a></li>
-                <li><a href="<?= Url::to(['mount/run/verify']); ?>"><span class="xn-text">验证文件及生成权限</span></a></li>
-                <li><a href="<?= Url::to(['mount/run/dbfile']); ?>"><span class="xn-text">数据文件</span></a></li>
+                <li><a href="<?= Url::to( ['mount/center/view'] ); ?>" title="了解挂载操作"><span class="xn-text">控制面板</span></a></li>
+                <li><a href="<?= Url::to( ['mount/run/index'] ); ?>"><span class="xn-text">文件挂载操作</span></a></li>
+                <li><a href="<?= Url::to( ['mount/run/verify'] ); ?>"><span class="xn-text">验证文件及生成权限</span></a></li>
+                <li><a href="<?= Url::to( ['mount/run/dbfile'] ); ?>"><span class="xn-text">数据文件</span></a></li>
 
             </ul>
 
@@ -76,7 +76,7 @@ $this->beginPage();
         <div class="page-content">
 
             <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
-			
+
                 <li class="xn-icon-button pull-right">
                     <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>
                 </li>
@@ -89,7 +89,7 @@ $this->beginPage();
             </ul>
 
             <div class="page-title">
-                <h2><span class="fa fa-arrow-circle-o-left"></span> <?= Html::encode($this->title) ?></h2>
+                <h2><span class="fa fa-arrow-circle-o-left"></span> <?= Html::encode( $this->title ) ?></h2>
             </div>
 
             <div class="page-content-wrap">
@@ -112,7 +112,7 @@ $this->beginPage();
 
                 <div class="mb-footer">
                     <div class="pull-right">
-                        <a href="<?= Url::to(['mount/member/logout']) ?>" class="btn btn-success btn-lg">是</a>
+                        <a href="<?= Url::to( ['mount/member/logout'] ) ?>" class="btn btn-success btn-lg">是</a>
                         <button class="btn btn-default btn-lg mb-control-close">否</button>
                     </div>
                 </div>

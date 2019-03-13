@@ -1,9 +1,9 @@
 <?php
 
-use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
-$this->title = '程序挂载操作';
+$this->title = '数据库文件生成操作';
+
 ?>
 
 <div class="row">
@@ -14,7 +14,7 @@ $this->title = '程序挂载操作';
 
             <div class="panel-body">
 
-                <h3>微酒店 - 安装</h3>
+                <h3><?= Yii::$app->params['WebInfo']['NAME'] ?> - 安装</h3>
 
                 <p>全渠道新零售解决方案，以数据化运营为核心的一体化系统，将‘线上商城’与‘线下门店’销售运营完美融合。</p>
 
@@ -34,7 +34,7 @@ $this->title = '程序挂载操作';
 
         </div>
 
+        <?= Yii::$app->view->renderFile( '@app/views/_FormMsg.php' ); ?>
+
     </div>
 </div>
-
-<?= Yii::$app->view->renderFile( '@app/views/_AjaxMsg.php', ['FormUrl' => Url::to( ['mount/run/verify'] )] ); ?>

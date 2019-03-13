@@ -5,7 +5,7 @@
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Hotels`;
 CREATE TABLE `#DB_PREFIX#Hotels` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `hotel_id` VARCHAR(85) NOT NULL COMMENT '酒店编号,唯一识别码',
     `lang_key` VARCHAR(85) NULL COMMENT '语言类别',
     `user_id` VARCHAR(55) NOT NULL COMMENT '用户ID',
@@ -35,7 +35,7 @@ CREATE TABLE `#DB_PREFIX#Hotels` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Rooms`;
 CREATE TABLE `#DB_PREFIX#Rooms` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `hotel_id` VARCHAR(85) NOT NULL COMMENT ' 酒店编号,唯一识别码',
     `rooms_id` VARCHAR(85) NOT NULL COMMENT ' 房间编号,唯一识别码',
     `user_id` VARCHAR(55) NOT NULL COMMENT '用户ID',
@@ -69,7 +69,7 @@ CREATE TABLE `#DB_PREFIX#Rooms` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Rooms_Appointment`;
 CREATE TABLE `#DB_PREFIX#Rooms_Appointment` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `hotel_id` VARCHAR(55) NOT NULL COMMENT '酒店 Id',
     `rooms_id` VARCHAR(55) NOT NULL COMMENT '房间 Id',
     `user_id` VARCHAR(55) NOT NULL COMMENT '用户 Id',
@@ -93,7 +93,7 @@ CREATE TABLE `#DB_PREFIX#Rooms_Appointment` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Rooms_Field`;
 CREATE TABLE `#DB_PREFIX#Rooms_Field` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `f_key` VARCHAR(55) NOT NULL COMMENT '参数关键KEY',
     `name` VARCHAR(85) NULL COMMENT '字段名',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
@@ -109,7 +109,7 @@ CREATE TABLE `#DB_PREFIX#Rooms_Field` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Relevance_Rooms_Field`;
 CREATE TABLE `#DB_PREFIX#Relevance_Rooms_Field` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `f_key` VARCHAR(55) NOT NULL COMMENT '房间参数关键KEY',
     `content` VARCHAR(125) NULL COMMENT '字段值',
     `rooms_id` VARCHAR(55) NOT NULL COMMENT '房间关键KEY',
@@ -123,7 +123,7 @@ CREATE TABLE `#DB_PREFIX#Relevance_Rooms_Field` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Rooms_Tag`;
 CREATE TABLE `#DB_PREFIX#Rooms_Tag` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `t_key` VARCHAR(55) NOT NULL COMMENT '参数关键KEY',
     `name` VARCHAR(85) NULL COMMENT '字段名',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否启用',
@@ -139,7 +139,7 @@ CREATE TABLE `#DB_PREFIX#Rooms_Tag` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Relevance_Rooms_Tag`;
 CREATE TABLE `#DB_PREFIX#Relevance_Rooms_Tag` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `t_key` VARCHAR(55) NOT NULL COMMENT '房间参数关键KEY',
     `rooms_id` VARCHAR(55) NOT NULL COMMENT '房间关键KEY',
     `created_at` integer NOT NULL DEFAULT '0',
@@ -188,7 +188,7 @@ VALUES
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Order`;
 CREATE TABLE `#DB_PREFIX#Order` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `order_id` VARCHAR(85) NOT NULL COMMENT '订单编号',
     `hotel_id` VARCHAR(85) NOT NULL COMMENT '酒店编号',
     `room_id` VARCHAR(85) NOT NULL COMMENT '房间编号',
@@ -230,7 +230,7 @@ CREATE TABLE `#DB_PREFIX#Order` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Coupon`;
 CREATE TABLE `#DB_PREFIX#Coupon` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `coupon_key` VARCHAR(125) NULL DEFAULT NULL COMMENT '优惠券识别KEY',
     `validity` VARCHAR(125) NOT NULL COMMENT '优惠券有效日期',
     `title` VARCHAR(125) NULL COMMENT '优惠券标题',
@@ -253,7 +253,7 @@ CREATE TABLE `#DB_PREFIX#Coupon` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Relevance_Rooms_Coupon`;
 CREATE TABLE `#DB_PREFIX#Relevance_Rooms_Coupon` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `coupon_key` VARCHAR(55) NOT NULL COMMENT '优惠卷关键KEY',
     `hotel_id` VARCHAR(55) NULL COMMENT '酒店关键KEY',
     `room_id` VARCHAR(55) NOT NULL COMMENT '房间关键KEY',
@@ -274,7 +274,7 @@ CREATE TABLE `#DB_PREFIX#Relevance_Rooms_Coupon` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Credit`;
 CREATE TABLE `#DB_PREFIX#Credit` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `user_id` VARCHAR(55) NOT NULL COMMENT '用户 ID',
     `credit` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '积分',
     `credit_change` INT(11) UNSIGNED NULL DEFAULT 0 COMMENT '积分变化',

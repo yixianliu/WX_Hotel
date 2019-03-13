@@ -19,7 +19,7 @@ use phpnt\ICheck\ICheck;
 
             <div class='row'>
 
-                <?= $form->field( $model, 'weixin_id' )->textInput( ['maxlength' => true] ) ?>
+                <?= $form->field( $model, 'wx_id' )->textInput( ['maxlength' => true] ) ?>
 
                 <?= $form->field( $model, 'app_id' )->textInput( ['maxlength' => true] ) ?>
 
@@ -33,6 +33,7 @@ use phpnt\ICheck\ICheck;
                         'id'        => $model->conf_id,
                         'text'      => '上传证书文件',
                         'attribute' => 'cert_path',
+                        'ext'       => '["cer"]',
                         'form'      => $form]
                 ); ?>
 

@@ -60,7 +60,7 @@ CREATE TABLE `#DB_PREFIX#Language` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Adv`;
 CREATE TABLE `#DB_PREFIX#Adv` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `sort_id` INT(11) UNSIGNED NOT NULL COMMENT '排序ID',
     `weight` INT(6) UNSIGNED NOT NULL COMMENT '权重',
     `size` VARCHAR(55) NOT NULL COMMENT '广告形状大小',
@@ -78,7 +78,7 @@ CREATE TABLE `#DB_PREFIX#Adv` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Friend_Link`;
 CREATE TABLE `#DB_PREFIX#Friend_Link` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(85) NULL COMMENT '标题',
     `content` VARCHAR(255) NULL COMMENT '介绍',
     `author` VARCHAR(55) NULL COMMENT '联系人',
@@ -114,7 +114,7 @@ CREATE TABLE `#DB_PREFIX#Announce` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Management`;
 CREATE TABLE `#DB_PREFIX#Management` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(85) NOT NULL COMMENT '账号',
     `password` VARCHAR(255) NOT NULL COMMENT '密码',
     `area` VARCHAR(125) NULL COMMENT '地区',
@@ -140,7 +140,7 @@ CREATE TABLE `#DB_PREFIX#Management` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#User`;
 CREATE TABLE `#DB_PREFIX#User` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `user_id` VARCHAR(55) NOT NULL COMMENT '用户编号ID',
     `username` VARCHAR(55) NOT NULL COMMENT '邮箱 / 用户名',
     `password` VARCHAR(255) NOT NULL COMMENT '密码',
@@ -173,7 +173,7 @@ CREATE TABLE `#DB_PREFIX#User` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#User_Config`;
 CREATE TABLE `#DB_PREFIX#User_Config` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `user_id` VARCHAR(55) NOT NULL COMMENT '用户ID',
     `get_praise` SET('On', 'Off') NOT NULL COMMENT '接收 / 赞提醒',
     `get_comment` SET('On', 'Off') NOT NULL COMMENT '接收 / 评论提醒',
@@ -192,7 +192,7 @@ CREATE TABLE `#DB_PREFIX#User_Config` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#User_Level`;
 CREATE TABLE `#DB_PREFIX#User_Level` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
 	  `l_key` VARCHAR(55) NOT NULL COMMENT '等级关键KEY',
 	  `name` VARCHAR(85) NOT NULL COMMENT '用户等级',
     `is_using` SET('On', 'Off') NOT NULL COMMENT '是否开启',
@@ -207,7 +207,7 @@ CREATE TABLE `#DB_PREFIX#User_Level` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#User_Problems`;
 CREATE TABLE `#DB_PREFIX#User_Problems` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `security_key` VARCHAR(20) NOT NULL COMMENT '安全问题KEY',
     `name` VARCHAR(55) NOT NULL COMMENT '问题',
     `is_using` SET('On', 'Off') NULL DEFAULT 'On' COMMENT '是否启用',
@@ -224,7 +224,7 @@ CREATE TABLE `#DB_PREFIX#User_Problems` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Menu`;
 CREATE TABLE `#DB_PREFIX#Menu` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `m_key` VARCHAR(55) NOT NULL COMMENT '菜单值',
     `sort_id` INT(11) UNSIGNED NOT NULL COMMENT '排序ID',
     `menu_model` VARCHAR(55) NULL COMMENT '菜单模型的关键KEY',
@@ -250,7 +250,7 @@ CREATE TABLE `#DB_PREFIX#Menu` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Menu_Model`;
 CREATE TABLE `#DB_PREFIX#Menu_Model` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `model_key` VARCHAR(55) NOT NULL COMMENT '菜单模型',
     `sort_id` INT(11) UNSIGNED NOT NULL COMMENT '排序ID',
     `menu_type` VARCHAR(85) NULL COMMENT 'Url 类型',
@@ -272,7 +272,7 @@ CREATE TABLE `#DB_PREFIX#Menu_Model` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Article`;
 CREATE TABLE `#DB_PREFIX#Article` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `article_id` VARCHAR(85) NOT NULL COMMENT '文章关键KEY',
     `user_id` VARCHAR(55) NOT NULL COMMENT '用户ID',
     `c_key` VARCHAR(55) NOT NULL COMMENT '分类ID',
@@ -407,7 +407,7 @@ CREATE TABLE `#DB_PREFIX#We_Chat_Conf` (
     `created_at` integer NOT NULL DEFAULT 0,
     `updated_at` integer NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
-    KEY `app_id` (`app_id`),
+    KEY `wx_id` (`wx_id`),
     UNIQUE KEY `conf_id` (`conf_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -418,7 +418,7 @@ CREATE TABLE `#DB_PREFIX#We_Chat_Conf` (
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Job`;
 CREATE TABLE `#DB_PREFIX#Job` (
-    `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `job_id` VARCHAR(85) NOT NULL COMMENT '招聘编号,唯一识别码',
     `user_id` VARCHAR(55) NOT NULL COMMENT '发布用户ID',
     `title` VARCHAR(125) NOT NULL COMMENT '标题',

@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "w_mini_program_conf".
  *
  * @property int    $id
- * @property string $weixin_id 微信 Id
+ * @property string $wx_id     微信 Id
  * @property string $app_id    小程序 Id
  * @property string $mch_id    商户号 Id
  * @property string $api_psw   API密钥
@@ -34,10 +34,10 @@ class MiniProgramConf extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['weixin_id', 'app_id', 'mch_id', 'api_psw', 'cert_path', 'cert_psw'], 'required'],
+            [['wx_id', 'app_id', 'mch_id', 'api_psw', 'cert_path', 'cert_psw'], 'required'],
             [['is_using', 'conf_id'], 'string'],
             [['created_at', 'updated_at'], 'integer'],
-            [['weixin_id', 'app_id', 'mch_id', 'api_psw', 'cert_psw'], 'string', 'max' => 85],
+            [['wx_id', 'app_id', 'mch_id', 'api_psw', 'cert_psw'], 'string', 'max' => 85],
             [['cert_path'], 'string', 'max' => 255],
 
             [['is_using'], 'default', 'value' => 'On'],
@@ -51,7 +51,7 @@ class MiniProgramConf extends \yii\db\ActiveRecord
     {
         return [
             'conf_id'    => '配置关键 Key',
-            'weixin_id'  => '微信 Id',
+            'wx_id'      => '微信 Id',
             'app_id'     => '小程序 Id',
             'mch_id'     => '商户号 Id',
             'api_psw'    => 'API密钥',

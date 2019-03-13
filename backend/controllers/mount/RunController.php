@@ -10,7 +10,7 @@ namespace backend\controllers\mount;
 use Yii;
 use yii\helpers\Json;
 use backend\models\MountForm;
-use backend\models\MountFileForm;
+use yii\base\ErrorException;
 
 class RunController extends MountController
 {
@@ -29,8 +29,8 @@ class RunController extends MountController
     public function actionInstall()
     {
 
-        if (!Yii::$app->request->isAjax) {
-            Yii::$app->getSession()->setFlash( 'error', '登录失败,请检查 !!' );
+        if (!Yii::$app->request->isPost) {
+            Yii::$app->getSession()->setFlash( 'error', '提交方式出错!' );
             return $this->redirect( ['/mount/center/view'] );
         }
 
@@ -54,22 +54,33 @@ class RunController extends MountController
         $Sql_Data = str_ireplace( '#COPYRIGHT#', Yii::$app->params['WebInfo']['COPYRIGHT'], $Sql_Data );
 
         $Sql_Data = str_ireplace( '#USERNAME#', Yii::$app->params['WebInfo']['UserName'], $Sql_Data );
-        $Sql_Data = str_ireplace( '#PASSWORD#', Yii::$app->params['WebInfo']['PassWord'], $Sql_Data );
+        $Sql_Data = str_ireplace( '#PASSWORD#', Yii::$app->security->generatePasswordHash( Yii::$app->params['WebInfo']['PassWord'] ), $Sql_Data );
         $Sql_Data = str_ireplace( '#TIME#', time(), $Sql_Data );
 
         $arraySql = explode( ';', $Sql_Data );
 
-        // 执行 SQL
-        foreach ($arraySql as $value) {
+        try {
 
-            if (!isset( $value ) || empty( $value ))
-                continue;
+            // 执行 SQL
+            foreach ($arraySql as $value) {
 
-            // 执行 Sql
-            Yii::$app->db->createCommand( $value )->execute();
+                if (!isset( $value ) || empty( $value ))
+                    continue;
+
+                // 执行 Sql
+                Yii::$app->db->createCommand( $value )->execute();
+            }
+
+        } catch (ErrorException $e) {
+
+            Yii::$app->getSession()->setFlash( 'error', $e->getMessage() );
+            return $this->redirect( ['/mount/run/index'] );
+
         }
 
-        return Json::encode( ['msg' => '数据库生成完毕 !!', 'status' => true] );
+        Yii::$app->getSession()->setFlash( 'success', '数据库创建成功!' );
+
+        return $this->redirect( ['/mount/run/index'] );
     }
 
     /**
@@ -80,7 +91,7 @@ class RunController extends MountController
     public function actionVerify()
     {
 
-        if (Yii::$app->request->isAjax) {
+        if (Yii::$app->request->isPost) {
 
             // 生成安装文件
             file_put_contents( Yii::getAlias( '@common' ) . '/' . Yii::$app->params['WebInfo']['RD_FILE'], date( 'Y年m月d日 H时i分s秒' ) . "\r\n" . Yii::$app->params['WebInfo']['NAME'] . "\r\n" . Yii::$app->params['WebInfo']['TITLE'] . "\r\n" . Yii::$app->params['WebInfo']['DESCRIPTION'] );
@@ -90,7 +101,9 @@ class RunController extends MountController
             $session->close();
             $session->destroy();
 
-            return Json::encode( ['msg' => '挂载成功 !!', 'status' => true] );
+            Yii::$app->getSession()->setFlash( 'success', '网站验证成功!' );
+
+            return $this->redirect( ['/mount/center/index'] );
         }
 
         $model = new MountForm();
@@ -103,7 +116,8 @@ class RunController extends MountController
      *
      * @return string
      */
-    public function actionEnv()
+    public
+    function actionEnv()
     {
 
         // 初始化
@@ -135,7 +149,8 @@ class RunController extends MountController
      *
      * @return string
      */
-    public function actionEditFile()
+    public
+    function actionEditFile()
     {
 
         $model = new MountFileForm();

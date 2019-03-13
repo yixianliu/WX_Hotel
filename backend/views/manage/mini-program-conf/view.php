@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-$this->title = $model->weixin_id;
+$this->title = $model->wx_id;
 $this->params['breadcrumbs'][] = ['label' => '小程序设置管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model'      => $model,
                 'attributes' => [
                     'conf_id',
-                    'weixin_id',
+                    'wx_id',
                     'app_id',
                     'mch_id',
                     'api_psw',

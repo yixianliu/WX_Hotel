@@ -26,7 +26,7 @@ class MemberController extends Controller
         $data = Yii::$app->session->get( 'MountAdmin' );
 
         if (!empty( $data['username'] ) && ($data['username'] == Yii::$app->params['WebInfo']['UserName'])) {
-            $this->redirect( ['/mount/center/view'] );
+            $this->redirect( ['/mount/center/index'] );
         }
 
         $model = new MountForm();
@@ -43,7 +43,7 @@ class MemberController extends Controller
         $request = Yii::$app->request;
 
         if (!$request->isAjax) {
-            return $this->redirect( ['/mount/center/view'] );
+            return $this->redirect( ['/mount/center/index'] );
         }
 
         $model = new MountForm();
