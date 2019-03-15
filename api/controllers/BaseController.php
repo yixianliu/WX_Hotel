@@ -6,7 +6,7 @@
  * Time: 16:20
  */
 
-namespace frontend\controllers;
+namespace api\controllers;
 
 use Yii;
 
