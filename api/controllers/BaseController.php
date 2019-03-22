@@ -16,4 +16,8 @@ use Yii;
 class BaseController extends Controller
 {
 
+    public function init()
+    {
+
+    }
 }

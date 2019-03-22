@@ -128,9 +128,29 @@ class Rooms extends \yii\db\ActiveRecord
             ->all();
     }
 
-    public static function findByOne($id)
+    /**
+     * 查找某一个房间
+     *
+     * @param        $id
+     * @param string $status
+     *
+     * @return array|Rooms[]|\yii\db\ActiveRecord[]
+     */
+    public static function findByOne($id, $status = 'On')
     {
 
+        if (empty( $id )) {
+            return false;
+        }
+
+        // 审核状态
+        $array = !empty( $status ) ? [self::tableName() . '.is_using' => $status] : ['!=', self::tableName() . '.is_using', null];
+
+        return static::find()->select( Hotels::tableName() . ".name, " . self::tableName() . ".*" )
+            ->joinWith( 'hotels' )
+            ->where( $array )
+            ->where( ['rooms_id' => $id] )
+            ->one();
     }
 
     /**

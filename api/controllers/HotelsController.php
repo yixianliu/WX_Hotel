@@ -3,15 +3,16 @@
 namespace api\controllers;
 
 use Yii;
-use common\models\Rooms;
+use common\Models\Hotels;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * RoomsController implements the CRUD actions for Rooms model.
+ * HotelsController implements the CRUD actions for Hotels model.
  */
-class RoomsController extends Controller
+class HotelsController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -20,7 +21,7 @@ class RoomsController extends Controller
     {
         return [
             'verbs' => [
-                'class'   => VerbFilter::className(),
+                'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -29,113 +30,98 @@ class RoomsController extends Controller
     }
 
     /**
-     * Lists all Rooms models.
+     * Lists all Hotels models.
      * @return mixed
      */
     public function actionIndex()
     {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Hotels::find(),
+        ]);
 
-        $response = Yii::$app->response;
-
-        $response->format = \yii\web\Response::FORMAT_JSON;
-
-        if (!Yii::$app->request->isAjax) {
-            return ['msg' => '提交方式有误!', 'status' => false];
-        }
-
-        $result['rooms'] = Rooms::findByAll();
-
-        $response->data = $result;
-
-        $response->send();
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
-     * Displays a single Rooms model.
-     *
+     * Displays a single Hotels model.
      * @param integer $id
-     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        return $this->render( 'view', [
-            'model' => $this->findModel( $id ),
-        ] );
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
     }
 
     /**
-     * Creates a new Rooms model.
+     * Creates a new Hotels model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Rooms();
+        $model = new Hotels();
 
-        if ($model->load( Yii::$app->request->post() ) && $model->save()) {
-            return $this->redirect( ['view', 'id' => $model->id] );
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render( 'create', [
+        return $this->render('create', [
             'model' => $model,
-        ] );
+        ]);
     }
 
     /**
-     * Updates an existing Rooms model.
+     * Updates an existing Hotels model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     *
      * @param integer $id
-     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel( $id );
+        $model = $this->findModel($id);
 
-        if ($model->load( Yii::$app->request->post() ) && $model->save()) {
-            return $this->redirect( ['view', 'id' => $model->id] );
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render( 'update', [
+        return $this->render('update', [
             'model' => $model,
-        ] );
+        ]);
     }
 
     /**
-     * Deletes an existing Rooms model.
+     * Deletes an existing Hotels model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     *
      * @param integer $id
-     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
-        $this->findModel( $id )->delete();
+        $this->findModel($id)->delete();
 
-        return $this->redirect( ['index'] );
+        return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Rooms model based on its primary key value.
+     * Finds the Hotels model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     *
      * @param integer $id
-     *
-     * @return Rooms the loaded model
+     * @return Hotels the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Rooms::findOne( $id )) !== null) {
+        if (($model = Hotels::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException( 'The requested page does not exist.' );
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
