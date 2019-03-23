@@ -79,6 +79,7 @@ class CouponController extends BaseController
      */
     public function actionCreate()
     {
+
         $model = new Coupon();
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
