@@ -33,7 +33,7 @@ use phpnt\ICheck\ICheck;
                         'id'        => $model->conf_id,
                         'text'      => '上传证书文件',
                         'attribute' => 'cert_path',
-                        'ext'       => '["cer"]',
+                        'ext'       => '["pfx"]',
                         'form'      => $form]
                 ); ?>
 
@@ -54,7 +54,7 @@ use phpnt\ICheck\ICheck;
                         'item' => function ($index, $label, $name, $checked, $value) {
                             return '<input type="radio" id="is_using' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_using' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
                         },
-                    ]] )
+                    ]] );
                 ?>
 
             </div>
