@@ -75,6 +75,7 @@ class MiniProgramConfController extends BaseController
      */
     public function actionCreate()
     {
+
         $model = new MiniProgramConf();
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {

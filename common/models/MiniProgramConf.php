@@ -34,11 +34,11 @@ class MiniProgramConf extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['wx_id', 'app_id', 'mch_id', 'api_psw', 'cert_path', 'cert_psw'], 'required'],
+            [['name', 'app_id', 'mch_id', 'api_psw', 'cert_path', 'key_path', 'cert_psw'], 'required'],
             [['is_using', 'conf_id'], 'string'],
             [['created_at', 'updated_at'], 'integer'],
-            [['wx_id', 'app_id', 'mch_id', 'api_psw', 'cert_psw'], 'string', 'max' => 85],
-            [['cert_path'], 'string', 'max' => 255],
+            [['name', 'app_id', 'mch_id', 'api_psw', 'cert_psw'], 'string', 'max' => 85],
+            [['cert_path', 'key_path'], 'string', 'max' => 300],
 
             [['is_using'], 'default', 'value' => 'On'],
         ];
@@ -51,11 +51,12 @@ class MiniProgramConf extends \yii\db\ActiveRecord
     {
         return [
             'conf_id'    => '配置关键 Key',
-            'wx_id'      => '微信 Id',
+            'name'       => '配置名称',
             'app_id'     => '小程序 Id',
             'mch_id'     => '商户号 Id',
             'api_psw'    => 'API密钥',
-            'cert_path'  => '证书路径',
+            'cert_path'  => 'CERT 证书路径',
+            'key_path'   => 'KEY 证书路径',
             'cert_psw'   => '证书密码',
             'is_using'   => '是否启用',
             'created_at' => '添加数据时间',

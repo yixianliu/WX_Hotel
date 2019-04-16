@@ -36,7 +36,7 @@ $this->registerCssFile( '@web/plugins/bootstrap-fileinput/css/fileinput.css', ['
 
     <input type="file" id="<?= $divId ?>" class="file" name="UploadFileSimple"/>
 
-    <?= $form->field( $model, $attribute )->hiddenInput( ['id' => 'UploadFileSimple_Hidden'] )->label( false ) ?>
+    <?= $form->field( $model, $attribute )->hiddenInput( ['id' => 'UploadFileSimple_' . $attribute] )->label( false ) ?>
 
 </div>
 
@@ -56,7 +56,7 @@ $this->registerCssFile( '@web/plugins/bootstrap-fileinput/css/fileinput.css', ['
 
         console.log(data.response.msg);
 
-        $('#UploadFileSimple_Hidden').val(data.response.path);
+        $('#UploadFileSimple_<?= $attribute ?>').val(data.response.path);
 
         return true;
     });

@@ -25,7 +25,7 @@ class CouponController extends BaseController
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => [ '@' ],
+                        'roles' => ['@'],
                     ],
                 ],
             ],
@@ -33,7 +33,7 @@ class CouponController extends BaseController
             'verbs' => [
                 'class'   => \yii\filters\VerbFilter::className(),
                 'actions' => [
-                    'delete' => [ 'POST' ],
+                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -83,12 +83,12 @@ class CouponController extends BaseController
         $model = new Coupon();
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
-            return $this->redirect( [ 'view', 'id' => $model->id ] );
+            return $this->redirect( ['view', 'id' => $model->id] );
         }
 
         $model->coupon_key = self::getRandomString();
 
-        return $this->render( 'create', [ 'model' => $model, ] );
+        return $this->render( 'create', ['model' => $model,] );
     }
 
     /**
@@ -106,10 +106,10 @@ class CouponController extends BaseController
         $model = $this->findModel( $id );
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
-            return $this->redirect( [ 'view', 'id' => $model->id ] );
+            return $this->redirect( ['view', 'id' => $model->id] );
         }
 
-        return $this->render( 'update', [ 'model' => $model, ] );
+        return $this->render( 'update', ['model' => $model,] );
     }
 
     /**
@@ -125,7 +125,7 @@ class CouponController extends BaseController
     {
         $this->findModel( $id )->delete();
 
-        return $this->redirect( [ 'index' ] );
+        return $this->redirect( ['index'] );
     }
 
     /**
@@ -144,5 +144,13 @@ class CouponController extends BaseController
         }
 
         throw new NotFoundHttpException( 'The requested page does not exist.' );
+    }
+
+    public function actionGenerate($id)
+    {
+
+        $result = [];
+
+        return $this->render( 'generate', ['result' => $result] );
     }
 }

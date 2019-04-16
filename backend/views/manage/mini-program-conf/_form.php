@@ -19,7 +19,7 @@ use phpnt\ICheck\ICheck;
 
             <div class='row'>
 
-                <?= $form->field( $model, 'wx_id' )->textInput( ['maxlength' => true] ) ?>
+                <?= $form->field( $model, 'name' )->textInput( ['maxlength' => true] ) ?>
 
                 <?= $form->field( $model, 'app_id' )->textInput( ['maxlength' => true] ) ?>
 
@@ -31,9 +31,25 @@ use phpnt\ICheck\ICheck;
                         'model'     => $model,
                         'type'      => 'mini-program',
                         'id'        => $model->conf_id,
-                        'text'      => '上传证书文件',
+                        'text'      => '上传证书文件 - apiclient_cert.pem',
                         'attribute' => 'cert_path',
-                        'ext'       => '["pfx"]',
+                        'ext'       => '["pem"]',
+                        'form'      => $form]
+                ); ?>
+
+                <div class="form-group">
+                    <div class="alert alert-info" role="alert">
+                        上传为证书文件,默认为上传文件最后的一个.
+                    </div>
+                </div>
+
+                <?= Yii::$app->view->renderFile( '@app/views/_UploadSingle.php', [
+                        'model'     => $model,
+                        'type'      => 'mini-program',
+                        'id'        => $model->conf_id,
+                        'text'      => '上传证书文件 - apiclient_key.pem',
+                        'attribute' => 'key_path',
+                        'ext'       => '["pem"]',
                         'form'      => $form]
                 ); ?>
 

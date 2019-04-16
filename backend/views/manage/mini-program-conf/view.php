@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-$this->title = $model->wx_id;
+$this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => '小程序设置管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -33,11 +33,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model'      => $model,
                 'attributes' => [
                     'conf_id',
-                    'wx_id',
+                    'name',
                     'app_id',
                     'mch_id',
                     'api_psw',
                     'cert_path',
+                    'key_path',
                     'cert_psw',
                     [
                         'attribute' => 'is_using',
