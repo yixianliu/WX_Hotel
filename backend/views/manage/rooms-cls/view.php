@@ -3,9 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\RoomsClassify */
-
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => '房间分类管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;

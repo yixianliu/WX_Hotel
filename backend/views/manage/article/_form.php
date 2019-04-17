@@ -31,7 +31,7 @@ use phpnt\ICheck\ICheck;
                         <?=
                         $form->field( $model, 'c_key' )->widget( Select2::classname(), [
                             'data'          => $result['classify'],
-                            'options'       => ['placeholder' => '文章分类...'],
+                            'options'       => ['placeholder' => '文章分类'],
                             'pluginOptions' => [
                                 'allowClear' => true,
                             ],
@@ -66,7 +66,13 @@ use phpnt\ICheck\ICheck;
                             </div>
                         </div>
 
-                        <?= Yii::$app->view->renderFile( '@app/views/upload.php', ['model' => $model, 'id' => $model->article_id, 'text' => '上传图片', 'attribute' => 'images', 'form' => $form] ); ?>
+                        <?= Yii::$app->view->renderFile( '@app/views/_Upload.php', [
+                                'model'     => $model,
+                                'id'        => $model->article_id,
+                                'text'      => '上传图片',
+                                'attribute' => 'images',
+                                'form'      => $form]
+                        ); ?>
 
                         <div class="form-group">
                             <div class="alert alert-info" role="alert">
@@ -82,7 +88,7 @@ use phpnt\ICheck\ICheck;
 
                         <?= $form->field( $model, 'introduction' )->textarea( ['maxlength' => true, 'rows' => 6] ) ?>
 
-                        <?= $form->field( $model, 'keywords' )->textInput( ['maxlength' => true] ) ?>
+                        <?= $form->field( $model, 'keywords' )->textInput( ['maxlength' => true, 'class' => 'tagsinput'] ) ?>
 
                         <?=
                         $form->field( $model, 'is_promote' )->widget( ICheck::className(), [

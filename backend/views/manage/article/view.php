@@ -19,8 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-body">
 
             <p>
-                <?= Html::a( '更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary'] ) ?>
-                <?= Html::a( '删除', ['delete', 'id' => $model->id], [
+                <?= Html::a( '更新', ['更新', 'id' => $model->id], ['class' => 'btn btn-primary'] ) ?>
+                <?= Html::a( '删除', ['删除', 'id' => $model->id], [
                     'class' => 'btn btn-danger',
                     'data'  => [
                         'confirm' => '是否删除这条记录?',

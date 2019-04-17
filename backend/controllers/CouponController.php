@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\CouponGenerateForm;
 use Yii;
 use common\models\Coupon;
 use yii\data\ActiveDataProvider;
@@ -82,6 +83,8 @@ class CouponController extends BaseController
 
         $model = new Coupon();
 
+        $model->num = 999;
+
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
             return $this->redirect( ['view', 'id' => $model->id] );
         }
@@ -139,6 +142,7 @@ class CouponController extends BaseController
      */
     protected function findModel($id)
     {
+
         if (($model = Coupon::findOne( $id )) !== null) {
             return $model;
         }
@@ -146,11 +150,4 @@ class CouponController extends BaseController
         throw new NotFoundHttpException( 'The requested page does not exist.' );
     }
 
-    public function actionGenerate($id)
-    {
-
-        $result = [];
-
-        return $this->render( 'generate', ['result' => $result] );
-    }
 }

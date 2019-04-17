@@ -27,7 +27,7 @@
     "kartik-v/yii2-widget-select2": "@dev",
     "kucha/ueditor": "*",
     "kartik-v/yii2-date-range": "*",
-    "phpnt/yii2-icheck": "^0.0.2",
+    "phpnt/yii2-icheck": "*",
     "linslin/yii2-curl": "*"
   },
   "require-dev": {

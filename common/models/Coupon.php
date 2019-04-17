@@ -109,7 +109,7 @@ class Coupon extends \yii\db\ActiveRecord
         $data = static::findByAll( 'On' );
 
         if (empty( $data )) {
-            return false;
+            return [];
         }
 
         $result = [];

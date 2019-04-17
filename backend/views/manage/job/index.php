@@ -8,6 +8,7 @@ $this->title = '招聘管理';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
+
 <div class="col-lg-12">
 
     <div class="form-group">

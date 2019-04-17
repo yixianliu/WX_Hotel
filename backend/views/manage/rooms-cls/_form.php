@@ -6,9 +6,6 @@ use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use phpnt\ICheck\ICheck;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\RoomsClassify */
-/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <?php $form = ActiveForm::begin(); ?>
@@ -37,18 +34,17 @@ use phpnt\ICheck\ICheck;
 
             <?= $form->field( $model, 'description' )->textarea( ['rows' => 6] ) ?>
 
-            <?= $form->field( $model, 'keywords' )->textInput( ['maxlength' => true] ) ?>
+            <?= $form->field( $model, 'keywords' )->textInput( ['maxlength' => true, 'class' => 'tagsinput'] ) ?>
 
             <?= $form->field( $model, 'is_using' )->widget( ICheck::className(), [
                 'type'    => ICheck::TYPE_RADIO_LIST,
-                'style'   => ICheck::STYLE_SQUARE,
+                'style'   => ICheck::STYLE_FLAT,
                 'items'   => ['On' => '启用', 'Off' => '禁用'],
-                'color'   => 'grey',
                 'options' => [
                     'item' => function ($index, $label, $name, $checked, $value) {
                         return '<input type="radio" id="is_using' . $index . '" name="' . $name . '" value="' . $value . '" ' . ($checked ? 'checked' : false) . '> <label for="is_using' . $index . '">' . $label . '</label>&nbsp;&nbsp;';
                     },
-                ]] )
+                ]] );
             ?>
 
             <div class="form-group">
@@ -64,3 +60,5 @@ use phpnt\ICheck\ICheck;
 </div>
 
 <?php ActiveForm::end(); ?>
+
+<?php $this->registerJsFile( '../themes/js/plugins/tagsinput/jquery.tagsinput.min.js' ); ?>
