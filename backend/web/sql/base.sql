@@ -387,7 +387,7 @@ CREATE TABLE `#DB_PREFIX#Dis_Sale_Conf`
 (
     `id`               INT(11)           NOT NULL AUTO_INCREMENT,
     `user_id`          VARCHAR(85)       NOT NULL COMMENT '用户 Id',
-    `name`             VARCHAR(85)       NOT NULL COMMENT '方案名称',
+    `name`             VARCHAR(125)      NOT NULL COMMENT '方案名称',
     `commission_one`   FLOAT             NOT NULL COMMENT '一级佣金',
     `commission_two`   FLOAT             NOT NULL COMMENT '二级佣金',
     `commission_three` FLOAT             NOT NULL COMMENT '三级佣金',
@@ -408,6 +408,27 @@ CREATE TABLE `#DB_PREFIX#Dis_Sale_Conf`
  */
 
 /**
+ * 公众号设置
+ */
+DROP TABLE IF EXISTS `#DB_PREFIX#Mp_Conf`;
+CREATE TABLE `#DB_PREFIX#Mp_Conf`
+(
+    `id`         INT(11)           NOT NULL AUTO_INCREMENT,
+    `conf_id`    VARCHAR(85)       NOT NULL COMMENT '设置关键 Key',
+    `name`       VARCHAR(85)       NOT NULL COMMENT '配置名称',
+    `app_id`     VARCHAR(85)       NOT NULL COMMENT '公众号 appid',
+    `app_secret` VARCHAR(125)      NOT NULL COMMENT '公众号 app_secret',
+    `is_using`   SET ('On', 'Off') NOT NULL COMMENT '是否启用',
+    `is_working` SET ('On', 'Off') NOT NULL COMMENT '是否使用该公众号为工作项',
+    `created_at` integer           NOT NULL DEFAULT 0,
+    `updated_at` integer           NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    UNIQUE `name` (`name`),
+    UNIQUE KEY `conf_id` (`conf_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+/**
  * 小程序支付设置
  */
 DROP TABLE IF EXISTS `#DB_PREFIX#Mini_Program_Conf`;
@@ -423,11 +444,32 @@ CREATE TABLE `#DB_PREFIX#Mini_Program_Conf`
     `key_path`   VARCHAR(300)      NOT NULL COMMENT '证书路径, apiclient_key.pem',
     `cert_psw`   VARCHAR(85)       NOT NULL COMMENT '证书密码',
     `is_using`   SET ('On', 'Off') NOT NULL COMMENT '是否启用',
+    `is_working` SET ('On', 'Off') NOT NULL COMMENT '是否使用该小程序为工作项',
     `created_at` integer           NOT NULL DEFAULT 0,
     `updated_at` integer           NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     UNIQUE `name` (`name`),
     UNIQUE KEY `conf_id` (`conf_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+/**
+ * 公众号和小程序关联
+ */
+DROP TABLE IF EXISTS `#DB_PREFIX#MiniPro_Mp_Related`;
+CREATE TABLE `#DB_PREFIX#MiniPro_Mp_Related`
+(
+    `id`               INT(11)           NOT NULL AUTO_INCREMENT,
+    `name`             VARCHAR(85)       NOT NULL COMMENT '关联名称',
+    `mini_pro_conf_id` VARCHAR(85)       NOT NULL COMMENT '小程序配置关键 KEY',
+    `mp_conf_id`       VARCHAR(85)       NOT NULL COMMENT '公众号配置关键 KEY',
+    `is_using`         SET ('On', 'Off') NOT NULL COMMENT '是否启用',
+    `created_at`       integer           NOT NULL DEFAULT 0,
+    `updated_at`       integer           NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    UNIQUE `name` (`name`),
+    UNIQUE KEY `mini_pro_conf_id` (`mini_pro_conf_id`),
+    UNIQUE KEY `mp_conf_id` (`mp_conf_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 

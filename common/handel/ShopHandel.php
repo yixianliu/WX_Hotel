@@ -1,8 +1,8 @@
 <?php
 /**
- * 
+ *
  * 产品 Handel
- * 
+ *
  * Created by Yxl.
  * User: <zccem@163.com>.
  * Date: 2018/11/27
@@ -24,7 +24,7 @@ class ShopHandel extends Model
     {
 
         if (empty( $token )) {
-            return [ 'status' => false, 'msg' => 'Token 不存在!' ];
+            return ['status' => false, 'msg' => 'Token 不存在!'];
         }
 
         if (empty( $post['business_name'] ) ||
@@ -38,7 +38,7 @@ class ShopHandel extends Model
             empty( $post['longitude'] ) ||
             empty( $post['latitude'] )
         ) {
-            return [ 'status' => false, 'msg' => '内容不齐全' ];
+            return ['status' => false, 'msg' => '内容不齐全'];
         }
 
         $data = [
@@ -86,8 +86,8 @@ class ShopHandel extends Model
             $data['business']['base_info']['update_status'] = $post['update_status'];
         }
 
-        exit(json_decode('{"province":"\u5e7f\u4e1c\u7701"}'));
-        exit(json_encode( $data ));
+        exit( json_decode( '{"province":"\u5e7f\u4e1c\u7701"}' ) );
+        exit( json_encode( $data ) );
 
         $curl = new Curl();
         $curl->setOption( CURLOPT_SSL_VERIFYPEER, false );

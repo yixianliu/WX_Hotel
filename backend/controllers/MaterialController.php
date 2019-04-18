@@ -8,9 +8,10 @@
 
 namespace backend\controllers;
 
+use common\handel\WxConnHandel;
+use common\models\MpConf;
 use Yii;
-use common\models\Job;
-use yii\data\ActiveDataProvider;
+use common\handel\WxMaterialHandel;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -47,7 +48,18 @@ class MaterialController extends BaseController
 
     public function actionIndex()
     {
-        return $this->render( 'index' );
+
+        $wxResult = MpConf::findOne( ['is_working' => 'On'] );
+
+        print_r($wxResult);
+
+        $token = WxConnHandel::getAccessToken( $wxResult->app_id, $wxResult->app_secret );
+
+        $result = WxMaterialHandel::GetWxList( $token );
+
+        exit($result);
+
+        return $this->render( 'index', ['result' => $result] );
     }
 
 }

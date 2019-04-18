@@ -1,26 +1,36 @@
 <?php
 
-namespace api\controllers;
+namespace backend\controllers;
 
 use Yii;
-use common\models\Rooms;
-use yii\web\Controller;
+use common\models\MpConf;
+use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
- * RoomsController implements the CRUD actions for Rooms model.
+ * MpConfController implements the CRUD actions for MpConf model.
  */
-class RoomsController extends Controller
+class MpConfController extends BaseController
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function behaviors()
     {
         return [
+
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+
             'verbs' => [
-                'class'   => VerbFilter::className(),
+                'class'   => \yii\filters\VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -29,29 +39,22 @@ class RoomsController extends Controller
     }
 
     /**
-     * Lists all Rooms models.
+     * Lists all MpConf models.
      * @return mixed
      */
     public function actionIndex()
     {
+        $dataProvider = new ActiveDataProvider( [
+            'query' => MpConf::find(),
+        ] );
 
-        $response = Yii::$app->response;
-
-        $response->format = \yii\web\Response::FORMAT_JSON;
-
-        if (!Yii::$app->request->isAjax) {
-            return ['msg' => '提交方式有误!', 'status' => false];
-        }
-
-        $result['rooms'] = Rooms::findByAll();
-
-        $response->data = $result;
-
-        $response->send();
+        return $this->render( 'index', [
+            'dataProvider' => $dataProvider,
+        ] );
     }
 
     /**
-     * Displays a single Rooms model.
+     * Displays a single MpConf model.
      *
      * @param integer $id
      *
@@ -66,13 +69,15 @@ class RoomsController extends Controller
     }
 
     /**
-     * Creates a new Rooms model.
+     * Creates a new MpConf model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Rooms();
+        $model = new MpConf();
+
+        $model->conf_id = self::getRandomString();
 
         if ($model->load( Yii::$app->request->post() ) && $model->save()) {
             return $this->redirect( ['view', 'id' => $model->id] );
@@ -84,7 +89,7 @@ class RoomsController extends Controller
     }
 
     /**
-     * Updates an existing Rooms model.
+     * Updates an existing MpConf model.
      * If update is successful, the browser will be redirected to the 'view' page.
      *
      * @param integer $id
@@ -106,7 +111,7 @@ class RoomsController extends Controller
     }
 
     /**
-     * Deletes an existing Rooms model.
+     * Deletes an existing MpConf model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      *
      * @param integer $id
@@ -122,17 +127,17 @@ class RoomsController extends Controller
     }
 
     /**
-     * Finds the Rooms model based on its primary key value.
+     * Finds the MpConf model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      *
      * @param integer $id
      *
-     * @return Rooms the loaded model
+     * @return MpConf the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Rooms::findOne( $id )) !== null) {
+        if (($model = MpConf::findOne( $id )) !== null) {
             return $model;
         }
 

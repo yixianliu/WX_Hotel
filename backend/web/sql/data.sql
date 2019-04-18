@@ -185,8 +185,10 @@ VALUES
 
     (NULL, 'AMMiniProgram1', 1, 'UU1', '/mini-program-conf/index', 'R15', NULL, 'AMiniProgram11', '小程序设置', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
 
-    (NULL, 'AuthWeChat1', 1, 'UU1', '/we-chat/index', 'R15', NULL, 'AWeChat1', '公众号设置', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
-    (NULL, 'AuthWeChat2', 2, 'UU1', '/we-chat/menu', 'R15', NULL, 'AWeChat1', '公众号菜单', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
+    (NULL, 'AuthWeChat1', 1, 'UU1', '/mp-conf/index', 'R15', NULL, 'AWeChat1', '公众号设置', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
+    (NULL, 'AuthWeChat2', 2, 'UU1', '/mp-conf/menu', 'R15', NULL, 'AWeChat1', '公众号菜单', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
+    (NULL, 'AuthWeChat3', 3, 'UU1', '/material/index', 'R15', NULL, 'AWeChat1', '素材列表', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
+    (NULL, 'AuthWeChat4', 4, 'UU1', '/material/create', 'R15', NULL, 'AWeChat1', '上传素材', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
 
     (NULL, 'AAArticle1', 1, 'UU1', '/article/index', 'R15', NULL, 'AArticle1', '文章列表', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),
     (NULL, 'AAArticle2', 2, 'UU1', '/article/create', 'R15', NULL, 'AArticle1', '添加文章', NULL, 'CN', 'On', 'On', #TIME#, #TIME#),

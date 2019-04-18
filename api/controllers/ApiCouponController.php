@@ -10,9 +10,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * HotelsController implements the CRUD actions for Hotels model.
+ * CouponController implements the CRUD actions for Hotels model.
  */
-class HotelsController extends Controller
+class ApiCouponController extends Controller
 {
     /**
      * {@inheritdoc}

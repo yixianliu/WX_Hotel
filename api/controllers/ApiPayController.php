@@ -8,7 +8,7 @@ use yii\web\Controller;
 /**
  * HotelsController implements the CRUD actions for Hotels model.
  */
-class PayController extends Controller
+class ApiPayController extends Controller
 {
 
     public function actionIndex()

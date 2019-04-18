@@ -32,22 +32,18 @@ class WxMaterialHandel extends Model
     /**
      * 获取微信素材列表
      *
+     * @param $token
+     *
      * @return bool|string
      */
-    public static function GetWxList()
+    public static function GetWxList($token)
     {
 
-        $session = Yii::$app->session;
-
-        if (!$session->isActive) {
-            $session->open();// 打开操作，默认是打开的
-        }
-
-        if (!$session->has( 'WeChatConf_Token' )) {
+        if (empty( $token )) {
             return false;
         }
 
-        $urls = static::$ListTempUrl . $session->get( 'WeChatConf_Token', null );
+        $urls = static::$ListTempUrl . $token;
 
         $dataJson = '{"type":"image", "offset":"0", "count":"100"}';
 
