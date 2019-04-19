@@ -40,10 +40,6 @@ class ApiRoomsController extends Controller
 
         $response->format = \yii\web\Response::FORMAT_JSON;
 
-        if (!Yii::$app->request->isAjax) {
-            return ['msg' => '提交方式有误!', 'status' => false];
-        }
-
         $result['rooms'] = Rooms::findByAll();
 
         $result['classify'] = RoomsClassify::findByAll();
