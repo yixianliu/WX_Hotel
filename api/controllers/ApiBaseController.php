@@ -14,13 +14,18 @@ namespace api\controllers;
 use Yii;
 use yii\web\Controller;
 use common\models\MiniProgramConf;
+use common\models\MpConf;
 
 class ApiBaseController extends Controller
 {
 
     static public $defaultMiniProgram = '';
 
+    public static $defaultMp = '';
+
     static public $MiniProgramConnData = [];
+
+    static public $MpConnData = [];
 
     /**
      * 获取小程序配置
@@ -32,12 +37,29 @@ class ApiBaseController extends Controller
     public static function GetMiniProgram($id = null)
     {
 
-        if (empty($id))
+        if (empty( $id ))
             $id = static::$defaultMiniProgram;
 
         static::$MiniProgramConnData = MiniProgramConf::findOne( ['conf_id' => $id] )->toArray();
 
+
         return true;
+    }
+
+    /**
+     * 获取公众号配置
+     *
+     * @param null $id
+     *
+     * @return array
+     */
+    public static function GetMp($id = null)
+    {
+
+        if (empty( $id ))
+            $id = static::$defaultMp;
+
+        static::$MpConnData = MpConf::findOne( ['conf_id' => $id] )->toArray();
     }
 
     /**

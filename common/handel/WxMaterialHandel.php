@@ -62,24 +62,31 @@ class WxMaterialHandel extends Model
      * @return array|mixed
      * @throws Exception
      */
-    public static function ConnData($post, $token, $type = 'image')
+    public static function UploadMaterial($post, $token, $type = 'image')
     {
 
         if (empty( $post ) || empty( $token )) {
-            return ['status' => false, 'msg' => '内容不可为空!'];
+            return false;
         }
 
         $WxMsg = [];
 
         foreach ($post as $value) {
-            if (!file_exists( Yii::getAlias( '@webroot/' ) . $value )) {
-                return ['status' => false, 'msg' => $value . ' - 文件地址不存在!'];
+
+            if (empty($value))
+                continue;
+
+            if (!file_exists( Yii::getAlias( '@webroot/../../frontend/web/temp/material/' ) . '/' . $value )) {
+                return false;
             }
         }
 
         foreach ($post as $value) {
 
-            $file_data = Yii::getAlias( '@webroot/' ) . $value;
+            if (empty($value))
+                continue;
+
+            $file_data = Yii::getAlias( '@webroot/../../frontend/web/temp/material/' ) . '/' . $value;
 
             $response = static::HttpUploadCurl( $file_data, $token, $type );
 
@@ -88,7 +95,6 @@ class WxMaterialHandel extends Model
             }
 
             $WxMsg[] = $response;
-
         }
 
         return $WxMsg;
@@ -197,7 +203,7 @@ class WxMaterialHandel extends Model
         $curl->setOption( CURLOPT_SSL_VERIFYPEER, false );
         $curl->setOption( CURLOPT_POSTFIELDS, $data );
 
-        $response = $curl->post( static::$TempUrl . $token . "&type=" . $type );
+        $response = $curl->post( static::$UploadTempUrl . $token . "&type=" . $type );
 
         $response = json_decode( $response, true );
 

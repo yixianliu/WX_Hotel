@@ -11,6 +11,7 @@
 
 namespace backend\controllers;
 
+use backend\models\UploadMaterialForm;
 use backend\models\UploadSingleForm;
 use Yii;
 use yii\web\UploadedFile;
@@ -72,6 +73,10 @@ class UploadController extends BaseController
 
         if ($type === 'conf') {
             $model = new Conf();
+
+        } else if ($type === 'material') {
+            $model = new UploadMaterialForm();
+
         } else {
             $typeClass = '\common\models\\' . ucfirst( $type );
             $model = new $typeClass;

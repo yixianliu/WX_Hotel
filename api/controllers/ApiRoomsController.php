@@ -2,6 +2,7 @@
 
 namespace api\controllers;
 
+use common\models\RoomsClassify;
 use Yii;
 use common\models\Rooms;
 use yii\web\Controller;
@@ -44,6 +45,8 @@ class ApiRoomsController extends Controller
         }
 
         $result['rooms'] = Rooms::findByAll();
+
+        $result['classify'] = RoomsClassify::findByAll();
 
         $response->data = $result;
 

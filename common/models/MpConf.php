@@ -20,6 +20,7 @@ use yii\behaviors\TimestampBehavior;
  */
 class MpConf extends \yii\db\ActiveRecord
 {
+
     /**
      * {@inheritdoc}
      */
