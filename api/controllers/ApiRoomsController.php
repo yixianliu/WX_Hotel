@@ -59,9 +59,14 @@ class ApiRoomsController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render( 'view', [
-            'model' => $this->findModel( $id ),
-        ] );
+
+        $response = Yii::$app->response;
+
+        $response->format = \yii\web\Response::FORMAT_JSON;
+
+        $response->data['result'] = $this->findModel( $id )->toArray();
+
+        $response->send();
     }
 
     /**
