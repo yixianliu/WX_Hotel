@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Language;
 use Yii;
 use common\models\Hotels;
 use backend\models\HotelsSearch;
@@ -88,8 +89,11 @@ class HotelsController extends BaseController
 
         $model->hotel_id = self::getRandomString();
 
+        $result['lang'] = Language::getLangSelect();
+
         return $this->render( 'create', [
-            'model' => $model,
+            'model'  => $model,
+            'result' => $result,
         ] );
     }
 

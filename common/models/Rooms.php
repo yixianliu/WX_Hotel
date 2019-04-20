@@ -60,12 +60,12 @@ class Rooms extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['hotel_id', 'c_key', 'title', 'content', 'num', 'price'], 'required'],
+            [['hotel_id', 'c_key', 'title', 'content'], 'required'],
             [['content', 'is_promote', 'is_using', 'is_comments'], 'string'],
             [['discount'], 'double'],
             [['num', 'check_in_num', 'price', 'created_at', 'updated_at'], 'integer'],
-            [['hotel_id', 'rooms_id', 'thumb',], 'string', 'max' => 85],
-            [['images'], 'string', 'max' => 1000],
+            [['hotel_id', 'rooms_id'], 'string', 'max' => 85],
+            [['images', 'thumb'], 'string', 'max' => 3000],
             [['user_id', 'c_key', 'room_num'], 'string', 'max' => 55],
             [['title'], 'string', 'max' => 125],
             [['introduction', 'path'], 'string', 'max' => 255],
@@ -75,6 +75,8 @@ class Rooms extends \yii\db\ActiveRecord
             [['is_promote', 'is_using', 'is_comments'], 'default', 'value' => 'On'],
             [['check_in_num'], 'default', 'value' => 0],
             [['room_num'], 'default', 'value' => rand( 00000, 99999 )],
+            [['num'], 'default', 'value' => 10],
+            [['price'], 'default', 'value' => 120],
         ];
     }
 

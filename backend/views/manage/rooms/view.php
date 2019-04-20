@@ -67,12 +67,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format'    => 'html',
                         'value'     => function ($model) {
 
-                            $filenameReal = Yii::getAlias( '@webroot/../../frontend/web/temp/rooms/' ) . $model->thumb;
+                            $filenameReal = Yii::getAlias( '@webroot/../../frontend/web/temp/rooms/' . $model->rooms_id ) . '/' . $model->thumb;
 
                             if (!is_file( $filenameReal ) || !is_file( $filenameReal )) {
                                 $filename = Yii::getAlias( '@web/../../frontend/web/img/' ) . 'not.jpg';
                             } else {
-                                $filename = Yii::getAlias( '@web/../../frontend/web/temp/rooms/' ) . $model->thumb;
+                                $filename = Yii::getAlias( '@web/../../frontend/web/temp/rooms/' . $model->rooms_id ) . '/' . $model->thumb;
                             }
 
                             return '<img width="280" height="150" src="' . $filename . '" alt="' . $model->title . '" />';

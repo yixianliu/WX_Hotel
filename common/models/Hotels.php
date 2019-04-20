@@ -57,7 +57,7 @@ class Hotels extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'content'], 'required'],
-            [['content', 'is_promote', 'is_using', 'is_comments', 'address'], 'string'],
+            [['content', 'is_promote', 'is_using', 'is_comments', 'address', 'password', 'lang_key'], 'string'],
             [['created_at', 'updated_at'], 'integer'],
             [['hotel_id'], 'string', 'max' => 85],
             [['thumb', 'images'], 'string', 'max' => 800],
@@ -69,6 +69,7 @@ class Hotels extends \yii\db\ActiveRecord
             [['name'], 'unique'],
 
             [['is_promote', 'is_using', 'is_comments'], 'default', 'value' => 'On'],
+            [['password'], 'default', 'value' => '123456789'],
         ];
     }
 
@@ -80,6 +81,7 @@ class Hotels extends \yii\db\ActiveRecord
         return [
             'hotel_id'     => '酒店关键KEY',
             'user_id'      => '发布用户',
+            'lang_key'     => '所属语言',
             'name'         => '酒店名称',
             'content'      => '酒店描述',
             'introduction' => '酒店简介',
@@ -87,6 +89,7 @@ class Hotels extends \yii\db\ActiveRecord
             'address'      => '酒店地址',
             'thumb'        => '缩略图',
             'images'       => '酒店图片',
+            'password'     => '酒店密码',
             'is_promote'   => '是否推广',
             'is_using'     => '是否启用',
             'is_comments'  => '是否开启评论',
