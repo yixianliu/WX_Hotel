@@ -5,6 +5,7 @@ namespace api\controllers;
 use common\models\RoomsClassify;
 use Yii;
 use common\models\Rooms;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -41,6 +42,23 @@ class ApiRoomsController extends Controller
         $response->format = \yii\web\Response::FORMAT_JSON;
 
         $result['rooms'] = Rooms::findByAll();
+
+        if (!empty($result['rooms'])) {
+
+            // 缩略图
+            foreach ($result['rooms'] as $value) {
+
+                $filename = Yii::getAlias('@webroot/../../frontend/web/temp/rooms/') . '/' . $value['rooms_id'] . '/' . $value['thumb'];
+
+                if (empty($value['thumb']) || !is_file($filename)){
+                    $value['thumb'] = '/img/not.jpg';
+                }else {
+                    $value['thumb'] = '/temp/rooms/' . $value['rooms_id'] . '/' . $value['thumb'];
+                }
+
+            }
+
+        }
 
         $result['classify'] = RoomsClassify::findByAll();
 
