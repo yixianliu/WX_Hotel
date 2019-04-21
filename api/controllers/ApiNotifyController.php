@@ -13,7 +13,7 @@ namespace api\controllers;
 use Yii;
 use yii\web\Controller;
 
-class ApiNotifyController extends Controller
+class ApiNotifyController extends ApiBaseController
 {
 
     public function actionIndex()

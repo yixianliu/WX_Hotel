@@ -15,7 +15,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\Response;
 
-class ApiConnController extends Controller
+class ApiConnController extends ApiBaseController
 {
 
     public $enableCsrfValidation = false;
@@ -30,14 +30,9 @@ class ApiConnController extends Controller
 
         Yii::$app->response->format = Response::FORMAT_JSON;
 
-        $session = Yii::$app->session;
-
         if (!Yii::$app->request->isAjax) {
             return ['msg' => '状态异常!' . Yii::$app->request->post( 'appid', null ), 'status' => false];
         }
-
-        // SESSION 状态已连接
-        $session['conn']['status'] = true;
 
         return ['msg' => '连接成功!', 'status' => true];
     }
@@ -56,15 +51,8 @@ class ApiConnController extends Controller
 
         $code = Yii::$app->request->get( 'code', null );
 
-        $session = Yii::$app->session;
-
-        // 检查session是否开启
-        if (!$session->isActive) {
-            return false;
-        }
-
         // Api接口
-        $ApiUrl = "https://api.weixin.qq.com/sns/jscode2session?appid={$session['conn']['appid']}&secret={$session['conn']['appscret']}&js_code={$code}&grant_type=authorization_code";
+        $ApiUrl = "https://api.weixin.qq.com/sns/jscode2session?appid=" . static::$MpConnData['appid'] . "&secret=" . static::$MpConnData['appscret'] . "&js_code={$code}&grant_type=authorization_code";
 
         $curl = curl_init();
 
@@ -77,14 +65,11 @@ class ApiConnController extends Controller
         /*
          *  "openid": "OPENID",
          *  "session_key": "SESSIONKEY",
-         *  "unionid": "UNIONID"
+         *  "unionid": "UNIONID",
          */
         $data = curl_exec( $curl );
 
         curl_close( $curl );
-
-        // WX状态已连接
-        $session['conn']['status'] = true;
 
         Yii::$app->response->format = Response::FORMAT_JSON;
 

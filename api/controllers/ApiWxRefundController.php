@@ -17,7 +17,7 @@ use common\handel\MicHandel;
 use common\handel\SignHandel;
 use common\handel\XmlHandle;
 
-class ApiWxRefundController extends Controller
+class ApiWxRefundController extends ApiBaseController
 {
 
     public function actionIndex()

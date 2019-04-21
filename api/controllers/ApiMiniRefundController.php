@@ -18,7 +18,7 @@ use common\handel\MicHandel;
 use common\handel\SignHandel;
 use common\handel\XmlHandle;
 
-class ApiMiniRefundController extends Controller
+class ApiMiniRefundController extends ApiBaseController
 {
 
 }
