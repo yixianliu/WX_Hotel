@@ -19,13 +19,23 @@ use common\models\MpConf;
 class ApiBaseController extends Controller
 {
 
-    static public $defaultMiniProgram = '';
+    static public $defaultMiniProgram = 'ZBTY_1555992015_8693';
 
-    public static $defaultMp = '';
+    public static $defaultMp = 'BOHI_1555577880_1240';
 
     static public $MiniProgramConnData = [];
 
     static public $MpConnData = [];
+
+    public function init()
+    {
+
+        static::GetMiniProgram();
+
+        static::GetMp();
+
+        return true;
+    }
 
     /**
      * 获取小程序配置

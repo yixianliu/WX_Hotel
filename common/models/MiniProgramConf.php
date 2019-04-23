@@ -41,6 +41,7 @@ class MiniProgramConf extends \yii\db\ActiveRecord
             [['cert_path', 'key_path'], 'string', 'max' => 300],
 
             [['is_using'], 'default', 'value' => 'On'],
+            [['is_working'], 'default', 'value' => 'Off'],
         ];
     }
 

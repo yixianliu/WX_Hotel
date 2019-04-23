@@ -45,22 +45,20 @@ class ApiConnController extends ApiBaseController
     public function actionWxUser()
     {
 
-        if (!Yii::$app->request->isAjax) {
+        if (!Yii::$app->request->isGet) {
             return false;
         }
 
-        $code = Yii::$app->request->get( 'code', null );
-
         // Api接口
-        $ApiUrl = "https://api.weixin.qq.com/sns/jscode2session?appid=" . static::$MpConnData['appid'] . "&secret=" . static::$MpConnData['appscret'] . "&js_code={$code}&grant_type=authorization_code";
+        $ApiUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . static::$MpConnData['app_id'] . "&secret=" . static::$MpConnData['app_secret'] . "&code=" . $_GET['code'] . "&grant_type=authorization_code";
 
         $curl = curl_init();
 
+        curl_setopt( $curl, CURLOPT_URL, $ApiUrl );
         curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
         curl_setopt( $curl, CURLOPT_TIMEOUT, 500 );
-        curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, true );
-        curl_setopt( $curl, CURLOPT_SSL_VERIFYHOST, true );
-        curl_setopt( $curl, CURLOPT_URL, $ApiUrl );
+        curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false );
+        curl_setopt( $curl, CURLOPT_SSL_VERIFYHOST, false );
 
         /*
          *  "openid": "OPENID",
@@ -73,7 +71,7 @@ class ApiConnController extends ApiBaseController
 
         Yii::$app->response->format = Response::FORMAT_JSON;
 
-        return ['msg' => 'ok', 'data' => $data, 'status' => true];
+        return ['data' => $data, 'status' => true];
     }
 
     /**

@@ -13,7 +13,7 @@ use yii\filters\VerbFilter;
 /**
  * RoomsController implements the CRUD actions for Rooms model.
  */
-class ApiRoomsController extends Controller
+class ApiRoomsController extends ApiBaseController
 {
     /**
      * {@inheritdoc}

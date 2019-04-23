@@ -37,27 +37,23 @@ class ApiMiniPayController extends ApiBaseController
 
         $openid = Yii::$app->request->get( 'openid', null );
 
-        $contents = file_get_contents('php://input');
-
-        $data = json_decode($contents,true);
-
-        if (empty($data['total_fee']) || empty($data['body'])) {
+        if (empty( $_POST['total_fee'] ) || empty( $_POST['body'] )) {
             return ['msg' => '金额和产品内容为空,请查看!', 'status' => false];
         }
 
-        $post['appid'] = self::$MiniProgramConnData['appid'];
-        $post['body'] = $data['body'];
+        $post['appid'] = self::$MiniProgramConnData['app_id'];
+        $post['body'] = $_POST['body'];
         $post['mch_id'] = self::$MiniProgramConnData['mch_id'];
         $post['nonce_str'] = MicHandel::getNonceStr(); // 随机字符串
         $post['notify_url'] = Url::to( 'api-notify/index' );
         $post['openid'] = $openid;
         $post['out_trade_no'] = self::getRandomString();
         $post['spbill_create_ip'] = Yii::$app->request->getUserIP();// 终端 IP
-        $post['total_fee'] = $data['total_fee']; // 总金额 
+        $post['total_fee'] = $_POST['total_fee']; // 总金额 
         $post['trade_type'] = 'JSAPI';
 
         // 签名
-        if (!($post['sign'] = SignHandel::SetSign( $post, self::$apiMchPsd ))) {
+        if (!($post['sign'] = SignHandel::SetSign( $post, self::$MiniProgramConnData['api_psw'] ))) {
             return ['msg' => '签名失败!', 'status' => false];
         }
 
@@ -69,7 +65,7 @@ class ApiMiniPayController extends ApiBaseController
         $response = XmlHandle::postXmlCurl( $xml, static::$url, false, 30 );
 
         // 上报请求花费时间
-        if ($response['return_code'] == 'SUCCESS') {
+        if (!empty( $response['return_code'] ) && $response['return_code'] == 'SUCCESS') {
             MicHandel::reportCostTime( static::$url, $startTimeStamp, $response );
         }
 
