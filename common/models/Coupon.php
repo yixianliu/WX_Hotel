@@ -45,10 +45,10 @@ class Coupon extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'validity', 'denomination', 'quota', 'coupon_type', 'pay_type'], 'required'],
-            [['denomination', 'quota', 'num'], 'integer'],
+            [['title', 'validity', 'denomination', 'quota', 'coupon_type', 'pay_type', 'description'], 'required'],
+            [['denomination', 'quota', 'quantity'], 'integer'],
             [['coupon_type', 'images'], 'string'],
-            [['validity', 'title', 'remarks'], 'string', 'max' => 125],
+            [['validity', 'title'], 'string', 'max' => 125],
             [['coupon_key'], 'string', 'max' => 85],
             [['coupon_key'], 'unique'],
 
@@ -68,8 +68,8 @@ class Coupon extends \yii\db\ActiveRecord
             'title'        => '优惠券标题',
             'denomination' => '优惠券面额',
             'quota'        => '优惠券使用限额',
-            'remarks'      => '优惠券备注',
-            'num'          => '优惠券数量',
+            'description'  => '卡券使用说明',
+            'quantity'     => '卡券库存的数量，上限为100000000。',
             'images'       => '图片',
             'coupon_type'  => '卡卷类型',
             'pay_type'     => '赠送卡卷类型',

@@ -3,6 +3,9 @@
 namespace backend\controllers;
 
 use backend\models\CouponGenerateForm;
+use common\handel\WxConnHandel;
+use common\handel\WxCouponHandel;
+use common\models\MpConf;
 use Yii;
 use common\models\Coupon;
 use yii\data\ActiveDataProvider;
@@ -85,7 +88,48 @@ class CouponController extends BaseController
 
         $model->num = 999;
 
-        if ($model->load( Yii::$app->request->post() ) && $model->save()) {
+        if ($model->load( Yii::$app->request->post() )) {
+
+            $transaction = Yii::app()->db->beginTransaction();
+
+            if (!$model->save()) {
+                Yii::$app->getSession()->setFlash( 'error', '保存卡券失败!' );
+                $transaction->rollBack();
+                return $this->redirect( ['create'] );
+            }
+
+            $result = [];
+
+            // 获取公众号
+            $result['mp'] = MpConf::findOne( ['is_working' => 'On'] );
+
+            if (empty( $result['mp'] ) || empty( $result['mp']->app_id ) || empty( $result['mp']->app_secret )) {
+                Yii::$app->getSession()->setFlash( 'error', '无法获取公众号内容!' );
+                $transaction->rollBack();
+                return $this->redirect( ['create'] );
+            }
+
+            $token = WxConnHandel::getAccessToken( $result['mp']->app_id, $result['mp']->app_secret );
+
+            $array = [
+                'title'       => $model->title,
+                'color'       => 'Color010',
+                'code_type'   => 'CODE_TYPE_TEXT',
+                'notice'      => '使用时向服务员出示此券',
+                'logo_url'    => '',
+                'brand_name'  => '', // 商户名字,字数上限为12个汉字。
+                'sku'  => '', // 商品信息。
+                'description' => $model->remarks,
+                'quantity'    => $model->num,
+                'deal_detail' => '以下锅底2选1（有菌王锅、麻辣锅、大骨锅、番茄锅、清补 凉锅、酸菜鱼锅可选）：\n大锅1份 12元\n小锅2份 16元 ',
+            ];
+
+            if (!($response = WxCouponHandel::ConnData( $array, $token['access_token'] ))) {
+                Yii::$app->getSession()->setFlash( 'error', '创建卡券失败!' );
+                $transaction->rollBack();
+                return $this->redirect( ['create'] );
+            }
+
             return $this->redirect( ['view', 'id' => $model->id] );
         }
 

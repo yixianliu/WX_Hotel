@@ -18,16 +18,16 @@ VALUES (NULL, 'CN', '中文', 'zh-CN', 'On', 'On', #TIME#, #TIME#),
  * 网站辅助配置参数
  */
 INSERT INTO `#DB_PREFIX#Assist`
-VALUES (NULL, 'C1', 'FILE_UPLOAD_TYPE', 'zip,gz,rar,iso,doc,xsl,ppt,wps', '上传文件格式', 'On', #TIME#, #TIME#),
-       (NULL, 'C2', 'IMAGE_UPLOAD_TYPE', 'jpg,gif,png', '上传图片格式', 'On', #TIME#, #TIME#),
-       (NULL, 'C3', 'FILE_UPLOAD_SIZE', 500000, '上传文件大小', 'On', #TIME#, #TIME#),
-       (NULL, 'C4', 'IMAGE_UPLOAD_SIZE', 500000, '上传图片大小', 'On', #TIME#, #TIME#),
-       (NULL, 'C5', 'CODE_STATUS', 'On', '是否启用验证码', 'On', #TIME#, #TIME#),
-       (NULL, 'C6', 'REG_STATUS', 'On', '是否启用注册', 'On', #TIME#, #TIME#),
-       (NULL, 'C7', 'WEB_STATUS', 'On', '是否启用网站状态', 'On', #TIME#, #TIME#),
-       (NULL, 'C8', 'LOGIN_STATUS', 'On', '是否启用登陆', 'On', #TIME#, #TIME#),
-       (NULL, 'C9', 'VIEW_NUM', 15, '显示列表页码', 'On', #TIME#, #TIME#),
-       (NULL, 'C10', 'COMMENT_NUM', 30, '评论列表页码', 'On', #TIME#, #TIME#);
+VALUES (NULL, 'C1', 'FILE_UPLOAD_TYPE', 'zip,gz,rar,iso,doc,xsl,ppt,wps', '上传文件格式', 'system', 'On', #TIME#, #TIME#),
+       (NULL, 'C2', 'IMAGE_UPLOAD_TYPE', 'jpg,gif,png', '上传图片格式', 'system', 'On', #TIME#, #TIME#),
+       (NULL, 'C3', 'FILE_UPLOAD_SIZE', 500000, '上传文件大小', 'system', 'On', #TIME#, #TIME#),
+       (NULL, 'C4', 'IMAGE_UPLOAD_SIZE', 500000, '上传图片大小', 'system', 'On', #TIME#, #TIME#),
+       (NULL, 'C5', 'CODE_STATUS', 'On', '是否启用验证码', 'system', 'On', #TIME#, #TIME#),
+       (NULL, 'C6', 'REG_STATUS', 'On', '是否启用注册', 'system', 'On', #TIME#, #TIME#),
+       (NULL, 'C7', 'WEB_STATUS', 'On', '是否启用网站状态', 'system', 'On', #TIME#, #TIME#),
+       (NULL, 'C8', 'LOGIN_STATUS', 'On', '是否启用登陆', 'system', 'On', #TIME#, #TIME#),
+       (NULL, 'C9', 'VIEW_NUM', 15, '显示列表页码', 'system', 'On', #TIME#, #TIME#),
+       (NULL, 'C10', 'COMMENT_NUM', 30, '评论列表页码', 'system', 'On', #TIME#, #TIME#);
 
 /**
  * 友情链接

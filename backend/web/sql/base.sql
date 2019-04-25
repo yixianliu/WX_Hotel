@@ -29,16 +29,17 @@ CREATE TABLE `#DB_PREFIX#Conf`
 DROP TABLE IF EXISTS `#DB_PREFIX#Assist`;
 CREATE TABLE `#DB_PREFIX#Assist`
 (
-    `id`          INT(11)           NOT NULL AUTO_INCREMENT,
-    `a_key`       VARCHAR(55)       NOT NULL COMMENT '网站设置关键KEY',
-    `name`        VARCHAR(85)       NOT NULL COMMENT '字段名',
-    `content`     VARCHAR(135)      NOT NULL COMMENT '字段值',
-    `description` TEXT              NULL COMMENT '网站配置描述',
-    `is_using`    SET ('On', 'Off') NOT NULL COMMENT '是否启用',
-    `created_at`  integer           NOT NULL DEFAULT 0,
-    `updated_at`  integer           NOT NULL DEFAULT 0,
+    `id`          INT(11)                         NOT NULL AUTO_INCREMENT,
+    `assist_key`  VARCHAR(85)                     NOT NULL COMMENT '网站设置关键KEY',
+    `name`        VARCHAR(85)                     NOT NULL COMMENT '字段名',
+    `content`     VARCHAR(500)                    NOT NULL COMMENT '字段值',
+    `description` TEXT                            NULL COMMENT '网站配置描述',
+    `is_type`     SET ('system', 'image', 'file') NOT NULL COMMENT '网站配置类型',
+    `is_using`    SET ('On', 'Off')               NOT NULL COMMENT '是否启用',
+    `created_at`  integer                         NOT NULL DEFAULT 0,
+    `updated_at`  integer                         NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
-    UNIQUE KEY `a_key` (`a_key`)
+    UNIQUE KEY `assist_key` (`assist_key`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
@@ -49,9 +50,9 @@ DROP TABLE IF EXISTS `#DB_PREFIX#Language`;
 CREATE TABLE `#DB_PREFIX#Language`
 (
     `id`         INT(11)           NOT NULL AUTO_INCREMENT,
-    `lang_key`   VARCHAR(55)       NOT NULL COMMENT '网站设置关键KEY',
+    `lang_key`   VARCHAR(85)       NOT NULL COMMENT '网站设置关键KEY',
     `name`       VARCHAR(85)       NOT NULL COMMENT '字段名',
-    `content`    VARCHAR(135)      NOT NULL COMMENT '国家缩写',
+    `content`    VARCHAR(150)      NOT NULL COMMENT '国家缩写',
     `is_using`   SET ('On', 'Off') NOT NULL COMMENT '是否启用',
     `is_default` SET ('On', 'Off') NOT NULL COMMENT '是否设定为默认',
     `created_at` integer           NOT NULL DEFAULT 0,
@@ -157,14 +158,14 @@ CREATE TABLE `#DB_PREFIX#User`
 (
     `id`              INT(11)                  NOT NULL AUTO_INCREMENT,
     `user_id`         VARCHAR(85)              NOT NULL COMMENT '用户编号ID',
-    `username`        VARCHAR(55)              NOT NULL COMMENT '邮箱 / 用户名',
+    `username`        VARCHAR(85)              NOT NULL COMMENT '邮箱 / 用户名',
     `password`        VARCHAR(255)             NOT NULL COMMENT '密码',
-    `r_key`           VARCHAR(55)              NOT NULL COMMENT '角色关键KEY',
+    `r_key`           VARCHAR(85)              NOT NULL COMMENT '角色关键KEY',
     `credit`          INT(11) UNSIGNED         NULL     DEFAULT 0 COMMENT '积分',
     `nickname`        VARCHAR(85)              NULL     DEFAULT NULL COMMENT '昵称',
     `signature`       TEXT                     NULL     DEFAULT NULL COMMENT '个性签名',
     `address`         VARCHAR(125)             NULL     DEFAULT NULL COMMENT '通讯地址',
-    `telphone`        VARCHAR(55)              NULL     DEFAULT NULL COMMENT '手机号码',
+    `tel_phone`       VARCHAR(55)              NULL     DEFAULT NULL COMMENT '手机号码',
     `birthday`        VARCHAR(125)             NULL     DEFAULT 0 COMMENT '出生年月日',
     `answer`          VARCHAR(125)             NULL     DEFAULT NULL COMMENT '用户答案',
     `problems_key`    VARCHAR(55)              NULL COMMENT '用户问题',
@@ -191,7 +192,7 @@ DROP TABLE IF EXISTS `#DB_PREFIX#User_Config`;
 CREATE TABLE `#DB_PREFIX#User_Config`
 (
     `id`              INT(11)           NOT NULL AUTO_INCREMENT,
-    `user_id`         VARCHAR(55)       NOT NULL COMMENT '用户ID',
+    `user_id`         VARCHAR(85)       NOT NULL COMMENT '用户ID',
     `get_praise`      SET ('On', 'Off') NOT NULL COMMENT '接收 / 赞提醒',
     `get_comment`     SET ('On', 'Off') NOT NULL COMMENT '接收 / 评论提醒',
     `is_access`       SET ('On', 'Off') NOT NULL COMMENT '是否开启访问',

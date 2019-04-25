@@ -12,11 +12,11 @@
 
 namespace common\handel;
 
-use linslin\yii2\curl\Curl;
 use Yii;
 use yii\base\Model;
+use linslin\yii2\curl\Curl;
 
-class WxCardHandel extends Model
+class WxCouponHandel extends Model
 {
 
     public static $AccessTokenUrl = 'https://api.weixin.qq.com/card/create?access_token=';
@@ -65,7 +65,7 @@ class WxCardHandel extends Model
     {
 
         if (empty( $post ) || !is_array( $post ) || empty( $token )) {
-            return ['status' => false, 'msg' => '提交 Post 内容为空!'];
+            return false;
         }
 
         if (empty( $post['card_type'] )) {
@@ -106,13 +106,14 @@ class WxCardHandel extends Model
      */
     public static function BaseArray($post)
     {
+
         if (empty( $post['title'] ) ||
             empty( $post['color'] ) ||
             empty( $post['type'] ) ||
             empty( $post['notice'] ) ||
             empty( $post['deal_detail'] ) ||
             empty( $post['description'] ) ||
-            empty( $post['quantity'] ) ||
+            empty( $post['quantity'] ) || // 卡券库存的数量
             empty( $post['code_type'] ) ||
             empty( $post['logo_url'] )
         ) {

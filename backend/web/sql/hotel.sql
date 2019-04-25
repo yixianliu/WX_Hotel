@@ -247,20 +247,21 @@ CREATE TABLE `#DB_PREFIX#Order`
 DROP TABLE IF EXISTS `#DB_PREFIX#Coupon`;
 CREATE TABLE `#DB_PREFIX#Coupon`
 (
-    `id`           INT(11)                           NOT NULL AUTO_INCREMENT,
-    `coupon_key`   VARCHAR(125)                      NULL     DEFAULT NULL COMMENT '优惠券识别KEY',
-    `validity`     VARCHAR(125)                      NOT NULL COMMENT '优惠券有效日期',
-    `title`        VARCHAR(125)                      NULL COMMENT '优惠券标题',
-    `num`          integer                           NOT NULL DEFAULT '0' COMMENT '卡卷数量',
-    `denomination` INT(6) UNSIGNED                   NOT NULL COMMENT '优惠券面额',
-    `quota`        INT(6) UNSIGNED                   NOT NULL COMMENT '优惠券使用限额',
-    `remarks`      VARCHAR(125)                      NULL COMMENT '优惠券备注',
-    `images`       VARCHAR(255)                      NULL COMMENT '优惠券图片',
-    `coupon_type`  SET ('discount', 'coupon')        NOT NULL COMMENT '卡卷类型：折扣劵 / 优惠卷',
+    `id`           INT(11)                        NOT NULL AUTO_INCREMENT,
+    `coupon_key`   VARCHAR(125)                   NULL     DEFAULT NULL COMMENT '优惠券识别KEY',
+    `validity`     VARCHAR(125)                   NOT NULL COMMENT '优惠券有效日期',
+    `title`        VARCHAR(125)                   NULL COMMENT '优惠券标题',
+    `quantity`     integer                        NOT NULL DEFAULT '0' COMMENT '卡券库存的数量，上限为100000000。',
+    `denomination` INT(6) UNSIGNED                NOT NULL COMMENT '优惠券面额',
+    `quota`        INT(6) UNSIGNED                NOT NULL COMMENT '优惠券使用限额',
+    `description`  VARCHAR(125)                   NULL COMMENT '卡券使用说明',
+    `deal_detail`  VARCHAR(200)                   NULL COMMENT '团购券专用，团购详情。',
+    `images`       VARCHAR(255)                   NULL COMMENT '优惠券图片',
+    `coupon_type`  SET ('discount', 'coupon')     NOT NULL COMMENT '卡卷类型：折扣劵 / 优惠卷',
     `pay_type`     SET ('before', 'after', 'new') NOT NULL COMMENT '消费方式：消费后送,消费前送,新人领取',
-    `is_using`     SET ('On', 'Off')                 NOT NULL COMMENT '是否启用',
-    `created_at`   integer                           NOT NULL DEFAULT '0',
-    `updated_at`   integer                           NOT NULL DEFAULT '0',
+    `is_using`     SET ('On', 'Off')              NOT NULL COMMENT '是否启用',
+    `created_at`   integer                        NOT NULL DEFAULT '0',
+    `updated_at`   integer                        NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
     UNIQUE KEY `coupon_key` (`coupon_key`)
 ) ENGINE = InnoDB
@@ -296,7 +297,7 @@ DROP TABLE IF EXISTS `#DB_PREFIX#Credit`;
 CREATE TABLE `#DB_PREFIX#Credit`
 (
     `id`            INT(11)          NOT NULL AUTO_INCREMENT,
-    `user_id`       VARCHAR(55)      NOT NULL COMMENT '用户 ID',
+    `user_id`       VARCHAR(85)      NOT NULL COMMENT '用户 ID',
     `credit`        INT(11) UNSIGNED NULL     DEFAULT 0 COMMENT '积分',
     `credit_change` INT(11) UNSIGNED NULL     DEFAULT 0 COMMENT '积分变化',
     `remarks`       VARCHAR(125)     NULL COMMENT '备注',

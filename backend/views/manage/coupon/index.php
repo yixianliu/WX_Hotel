@@ -24,6 +24,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <a href='<?= Url::to( ['hotels/create'] ) ?>' class='btn btn-primary btn-lg' title='添加酒店'>添加酒店</a>
     </div>
 
+    <div class="form-group">
+        <div class="alert alert-info" role="alert">
+            创建卡券,必须先对接好公众号和小程序,要不卡券无法进行创建!
+        </div>
+    </div>
+
     <div class="panel panel-default">
 
         <div class="panel-heading"><h3 class="panel-title"><?= Html::encode( $this->title ) ?></h3></div>

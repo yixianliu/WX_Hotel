@@ -54,7 +54,7 @@ class MpConf extends \yii\db\ActiveRecord
             [['conf_id'], 'unique'],
 
             [['is_using'], 'default', 'value' => 'On'],
-            [['is_working'], 'default', 'value' => 'Off']
+            [['is_working'], 'default', 'value' => 'Off'],
         ];
     }
 
