@@ -21,27 +21,6 @@ class WxCouponHandel extends Model
 
     public static $AccessTokenUrl = 'https://api.weixin.qq.com/card/create?access_token=';
 
-    // 卡券类型
-    public static $CARD_TYPE = [
-        "GENERAL_COUPON",
-        "GROUPON",
-        "DISCOUNT", // 折扣券
-        "GIFT",
-        "CASH", // 代金券
-        "MEMBER_CARD",
-        "SCENIC_TICKET",
-        "MOVIE_TICKET",
-    ];
-
-    public static $CODE_TYPE = [
-        "CODE_TYPE_TEXT", // 文本
-        "CODE_TYPE_BARCODE", // 一维码
-        "CODE_TYPE_QRCODE", // 二维码
-        "CODE_TYPE_ONLY_QRCODE", // 二维码无code显示
-        "CODE_TYPE_ONLY_BARCODE", // 一维码无code显示；
-        "CODE_TYPE_NONE", // 不显示code和条形码类型
-    ];
-
     // 颜色
     public static $CARD_COLOR = [
         'Color010' => '#63b359',
@@ -113,15 +92,14 @@ class WxCouponHandel extends Model
             empty( $post['notice'] ) ||
             empty( $post['deal_detail'] ) ||
             empty( $post['description'] ) ||
-            empty( $post['quantity'] ) || // 卡券库存的数量
-            empty( $post['code_type'] ) ||
+            empty( $post['quantity'] ) || // 卡券库存的数量，上限为100000000
             empty( $post['logo_url'] )
         ) {
-            return ['status' => false, 'msg' => '内容不齐全!'];
+            return false;
         }
 
         if (!is_int( $post['quantity'] )) {
-            return ['status' => false, 'msg' => '卡券库存的数量必须为数字!'];
+            return false;
         }
 
         // 数组
@@ -134,10 +112,11 @@ class WxCouponHandel extends Model
             'color'       => $post['color'],
             'notice'      => $post['notice'],
             'description' => $post['description'],
+            'code_type'   => (empty( $post['code_type'] ) ? "CODE_TYPE_TEXT" : $post['code_type']),
 
             // 商品信息
             'sku'         => [
-                'quantity' => $post['quantity'],
+                'quantity' => $post['quantity'], // 卡券库存的数量，上限为100000000
             ],
 
             'date_info' => [

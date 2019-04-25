@@ -86,7 +86,7 @@ class CouponController extends BaseController
 
         $model = new Coupon();
 
-        $model->num = 999;
+        $model->quantity = 999;
 
         if ($model->load( Yii::$app->request->post() )) {
 
@@ -112,16 +112,16 @@ class CouponController extends BaseController
             $token = WxConnHandel::getAccessToken( $result['mp']->app_id, $result['mp']->app_secret );
 
             $array = [
-                'title'       => $model->title,
-                'color'       => 'Color010',
-                'code_type'   => 'CODE_TYPE_TEXT',
-                'notice'      => '使用时向服务员出示此券',
-                'logo_url'    => '',
-                'brand_name'  => '', // 商户名字,字数上限为12个汉字。
-                'sku'  => '', // 商品信息。
-                'description' => $model->remarks,
-                'quantity'    => $model->num,
-                'deal_detail' => '以下锅底2选1（有菌王锅、麻辣锅、大骨锅、番茄锅、清补 凉锅、酸菜鱼锅可选）：\n大锅1份 12元\n小锅2份 16元 ',
+                'title'         => $model->title,
+                'color'         => 'Color010',
+                'code_type'     => $model->code_type,
+                'notice'        => '使用时向服务员出示此券',
+                'logo_url'      => '',
+                'brand_name'    => '', // 商户名字,字数上限为12个汉字。
+                'service_phone' => '', // 客服电话。
+                'description'   => $model->description,
+                'deal_detail'   => $model->deal_detail,
+                'quantity'      => $model->quantity, // 卡券库存的数量，上限为100000000
             ];
 
             if (!($response = WxCouponHandel::ConnData( $array, $token['access_token'] ))) {

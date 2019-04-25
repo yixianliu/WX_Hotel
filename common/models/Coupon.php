@@ -45,15 +45,17 @@ class Coupon extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'validity', 'denomination', 'quota', 'coupon_type', 'pay_type', 'description'], 'required'],
+            [['title', 'deal_detail', 'denomination', 'quota', 'coupon_type', 'pay_type', 'description', 'code_type'], 'required'],
             [['denomination', 'quota', 'quantity'], 'integer'],
-            [['coupon_type', 'images'], 'string'],
-            [['validity', 'title'], 'string', 'max' => 125],
+            [['coupon_type', 'images', 'service_phone', 'code_type'], 'string'],
+            [['title'], 'string', 'max' => 125],
+            [['description', 'begin_time_stamp', 'end_time_stamp',], 'string', 'max' => 500],
             [['coupon_key'], 'string', 'max' => 85],
             [['coupon_key'], 'unique'],
 
             [['is_using'], 'default', 'value' => 'On'],
             [['num'], 'default', 'value' => 10],
+            [['service_phone'], 'default', 'value' => '40012234'],
         ];
     }
 
@@ -63,19 +65,22 @@ class Coupon extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'coupon_key'   => '优惠券识别KEY',
-            'validity'     => '优惠券有效日期',
-            'title'        => '优惠券标题',
-            'denomination' => '优惠券面额',
-            'quota'        => '优惠券使用限额',
-            'description'  => '卡券使用说明',
-            'quantity'     => '卡券库存的数量，上限为100000000。',
-            'images'       => '图片',
-            'coupon_type'  => '卡卷类型',
-            'pay_type'     => '赠送卡卷类型',
-            'is_using'     => '卡卷状态',
-            'created_at'   => '添加数据时间',
-            'updated_at'   => '更新数据时间',
+            'coupon_key'       => '优惠券识别KEY',
+            'validity'         => '优惠券有效日期',
+            'title'            => '优惠券标题',
+            'denomination'     => '优惠券面额',
+            'quota'            => '优惠券使用限额',
+            'description'      => '卡券使用说明',
+            'quantity'         => '卡券库存的数量，上限为100000000。',
+            'images'           => '图片',
+            'card_type'        => '卡卷类型',
+            'pay_type'         => '赠送卡卷类型',
+            'code_type'        => '二维码展示类型',
+            'begin_time_stamp' => '起用时间',
+            'end_time_stamp'   => '结束时间',
+            'is_using'         => '卡卷状态',
+            'created_at'       => '添加数据时间',
+            'updated_at'       => '更新数据时间',
         ];
     }
 

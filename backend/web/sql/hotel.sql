@@ -237,7 +237,7 @@ CREATE TABLE `#DB_PREFIX#Order`
 
 /**
  + ------------------------------------------------------------------------------------------------------------
- * 酒店卡卷
+ * 卡卷 / 公众号
  + ------------------------------------------------------------------------------------------------------------
  */
 
@@ -247,21 +247,38 @@ CREATE TABLE `#DB_PREFIX#Order`
 DROP TABLE IF EXISTS `#DB_PREFIX#Coupon`;
 CREATE TABLE `#DB_PREFIX#Coupon`
 (
-    `id`           INT(11)                        NOT NULL AUTO_INCREMENT,
-    `coupon_key`   VARCHAR(125)                   NULL     DEFAULT NULL COMMENT '优惠券识别KEY',
-    `validity`     VARCHAR(125)                   NOT NULL COMMENT '优惠券有效日期',
-    `title`        VARCHAR(125)                   NULL COMMENT '优惠券标题',
-    `quantity`     integer                        NOT NULL DEFAULT '0' COMMENT '卡券库存的数量，上限为100000000。',
-    `denomination` INT(6) UNSIGNED                NOT NULL COMMENT '优惠券面额',
-    `quota`        INT(6) UNSIGNED                NOT NULL COMMENT '优惠券使用限额',
-    `description`  VARCHAR(125)                   NULL COMMENT '卡券使用说明',
-    `deal_detail`  VARCHAR(200)                   NULL COMMENT '团购券专用，团购详情。',
-    `images`       VARCHAR(255)                   NULL COMMENT '优惠券图片',
-    `coupon_type`  SET ('discount', 'coupon')     NOT NULL COMMENT '卡卷类型：折扣劵 / 优惠卷',
-    `pay_type`     SET ('before', 'after', 'new') NOT NULL COMMENT '消费方式：消费后送,消费前送,新人领取',
-    `is_using`     SET ('On', 'Off')              NOT NULL COMMENT '是否启用',
-    `created_at`   integer                        NOT NULL DEFAULT '0',
-    `updated_at`   integer                        NOT NULL DEFAULT '0',
+    `id`               INT(11)                        NOT NULL AUTO_INCREMENT,
+    `coupon_key`       VARCHAR(125)                   NULL     DEFAULT NULL COMMENT '优惠券识别KEY',
+    `validity`         VARCHAR(125)                   NOT NULL COMMENT '优惠券有效日期',
+    `title`            VARCHAR(125)                   NULL COMMENT '优惠券标题',
+    `quantity`         integer                        NOT NULL DEFAULT '0' COMMENT '卡券库存的数量，上限为100000000。',
+    `denomination`     INT(6) UNSIGNED                NOT NULL COMMENT '优惠券面额',
+    `quota`            INT(6) UNSIGNED                NOT NULL COMMENT '优惠券使用限额',
+    `description`      VARCHAR(500)                   NULL COMMENT '卡券使用说明',
+    `deal_detail`      VARCHAR(200)                   NULL COMMENT '团购券专用，团购详情。',
+    `images`           VARCHAR(255)                   NULL COMMENT '优惠券图片',
+    `service_phone`    VARCHAR(80)                    NULL COMMENT '客服电话',
+    `begin_time_stamp` VARCHAR(255)                   NULL COMMENT '表示起用时间。从1970年1月1日00:00:00至起用时间的秒数，最终需转换为字符串形态传入。',
+    `end_time_stamp`   VARCHAR(255)                   NULL COMMENT '表示结束时间 ， 建议设置为截止日期的23:59:59过期 。 （ 东八区时间,UTC+8，单位为秒 ）',
+    `code_type`        SET (
+        'CODE_TYPE_TEXT', /*文本*/
+        'CODE_TYPE_BARCODE',/*一维码*/
+        'CODE_TYPE_QRCODE',/*二维码*/
+        'CODE_TYPE_ONLY_QRCODE',/*二维码无code显示*/
+        'CODE_TYPE_ONLY_BARCODE',/*一维码无code显示*/
+        'CODE_TYPE_NONE'/*不显示code和条形码类型*/
+        )                                             NOT NULL COMMENT '码型',
+    `card_type`        SET (
+        'GROUPON', /*团购券类型*/
+        'CASH',/*代金券类型*/
+        'DISCOUNT',/*折扣券类型*/
+        'GIFT',/*兑换券类型*/
+        'GENERAL_COUPON'/*优惠券类型*/
+        )                                             NOT NULL COMMENT '卡卷类型',
+    `pay_type`         SET ('before', 'after', 'new') NOT NULL COMMENT '消费方式：消费后送,消费前送,新人领取',
+    `is_using`         SET ('On', 'Off')              NOT NULL COMMENT '是否启用',
+    `created_at`       integer                        NOT NULL DEFAULT '0',
+    `updated_at`       integer                        NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
     UNIQUE KEY `coupon_key` (`coupon_key`)
 ) ENGINE = InnoDB
