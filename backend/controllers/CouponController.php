@@ -2,12 +2,13 @@
 
 namespace backend\controllers;
 
+use Yii;
 use backend\models\CouponGenerateForm;
+use common\models\Coupon;
 use common\handel\WxConnHandel;
 use common\handel\WxCouponHandel;
+use common\models\Hotels;
 use common\models\MpConf;
-use Yii;
-use common\models\Coupon;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
@@ -90,13 +91,18 @@ class CouponController extends BaseController
 
         if ($model->load( Yii::$app->request->post() )) {
 
-            $transaction = Yii::app()->db->beginTransaction();
+            // 事务回滚
+            $transaction = Yii::$app->db->beginTransaction();
 
-            if (!$model->save()) {
-                Yii::$app->getSession()->setFlash( 'error', '保存卡券失败!' );
-                $transaction->rollBack();
-                return $this->redirect( ['create'] );
-            }
+            $model->begin_time_stamp = strtotime( $model->begin_time_stamp );
+
+            $model->end_time_stamp = strtotime( $model->end_time_stamp );
+
+            // 对应酒店名字
+            $hotel = Hotels::findOne( ['hotel_id' => $model->brand_name] );
+
+            $model->brand_name = $hotel->name;
+
 
             $result = [];
 
@@ -113,29 +119,54 @@ class CouponController extends BaseController
 
             $array = [
                 'title'         => $model->title,
+                'card_type'     => $model->card_type,
                 'color'         => 'Color010',
                 'code_type'     => $model->code_type,
                 'notice'        => '使用时向服务员出示此券',
-                'logo_url'      => '',
-                'brand_name'    => '', // 商户名字,字数上限为12个汉字。
-                'service_phone' => '', // 客服电话。
+                'logo_url'      => 'http://mmbiz.qpic.cn/mmbiz/iaL1LJM1mF9aRKPZJkmG8xXhiaHqkKSVMMWeN3hLut7X7hicFNjakmxibMLGWpXrEXB33367o7zHN0CwngnQY7zb7g/0',
+                'brand_name'    => $model->brand_name, // 商户名字,字数上限为12个汉字。
+                'service_phone' => $model->service_phone, // 客服电话。
                 'description'   => $model->description,
                 'deal_detail'   => $model->deal_detail,
                 'quantity'      => $model->quantity, // 卡券库存的数量，上限为100000000
             ];
 
-            if (!($response = WxCouponHandel::ConnData( $array, $token['access_token'] ))) {
+            $tokenArray = json_decode( $token, true );
+
+            if (!($response = WxCouponHandel::CreateCardData( $array, $tokenArray['access_token'] ))) {
                 Yii::$app->getSession()->setFlash( 'error', '创建卡券失败!' );
                 $transaction->rollBack();
                 return $this->redirect( ['create'] );
             }
+
+            if (empty( $response['errcode'] ) && empty( $response['errmsg'] ) && $response['errmsg'] != 'ok') {
+                Yii::$app->getSession()->setFlash( 'error', $response['errmsg'] );
+                $transaction->rollBack();
+                return $this->redirect( ['create'] );
+            }
+
+            $responseArray = json_decode($response, true);
+
+            $model->card_id = $responseArray['card_id'];
+
+            if (!$model->save()) {
+                Yii::$app->getSession()->setFlash( 'error', '保存卡券失败!' );
+                $transaction->rollBack();
+                return $this->redirect( ['create'] );
+            }
+
+            Yii::$app->getSession()->setFlash( 'success', '创建卡券成功!' );
+
+            $transaction->commit();
 
             return $this->redirect( ['view', 'id' => $model->id] );
         }
 
         $model->coupon_key = self::getRandomString();
 
-        return $this->render( 'create', ['model' => $model,] );
+        $result['hotel'] = Hotels::getHotelSelect();
+
+        return $this->render( 'create', ['model' => $model, 'result' => $result] );
     }
 
     /**

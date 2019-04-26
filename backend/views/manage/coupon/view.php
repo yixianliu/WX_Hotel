@@ -37,17 +37,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attributes' => [
                     'title',
                     'coupon_key',
-                    'validity',
-                    'num',
+                    'brand_name',
+                    'quantity',
                     'denomination',
                     'quota',
                     [
-                        'attribute' => 'coupon_type',
+                        'attribute' => 'card_type',
                         'value'     => function ($model) {
 
-                            $state = ['discount' => '折扣劵', 'coupon' => '优惠卷'];
+                            $state = [
+                                'GROUPON'        => '团购券类型',
+                                'CASH'           => '代金券类型',
+                                'DISCOUNT'       => '折扣券类型',
+                                'GIFT'           => '兑换券类型',
+                                'GENERAL_COUPON' => '优惠券类型',
+                            ];
 
-                            return $state[ $model->coupon_type ];
+                            return $state[ $model->card_type ];
                         },
                     ],
                     [
@@ -98,9 +104,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             return date( 'Y - m -d , h:i', $model->updated_at );
                         },
                     ],
-                    'remarks',
+                    'description',
                 ],
-                'template'   => '<tr><th width="200">{label}</th><td>{value}</td></tr>',
+                'template'   => '<tr><th width="230">{label}</th><td>{value}</td></tr>',
             ] ) ?>
 
         </div>

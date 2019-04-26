@@ -191,31 +191,31 @@ class XmlHandle extends Model
     public static function postCurl($url, $data = null)
     {
 
-        $httpHeader = [
-            'Host'            => 't.xx.com',
-            'Connection'      => 'keep-alive',
-            'Cookie'          => '_hc.v=d846d370-b934-97da-2584-df1d51be8040.1476003831; aburl=1; cy=2; cye=beijing; _tr.u=rw0PincYp5DQrbEl; t_rct=20921750; PHOENIX_ID=0a010818-158198588e7-de0339',
-            'Accept'          => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Encoding' => 'gzip, deflate, sdch',
-        ];
-
         $curl = curl_init();
 
-        curl_setopt( $curl, CURLOPT_HTTPHEADER, $httpHeader );
+        //设置抓取的url
         curl_setopt( $curl, CURLOPT_URL, $url );
 
-        curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, FALSE );
-        curl_setopt( $curl, CURLOPT_SSL_VERIFYHOST, FALSE );
+        //设置头文件的信息作为数据流输出
+        curl_setopt( $curl, CURLOPT_HEADER, 1 );
 
-        if (!empty( $data )) {
-            curl_setopt( $curl, CURLOPT_POST, 1 );
-            curl_setopt( $curl, CURLOPT_POSTFIELDS, $data );
-        }
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);    //禁止 cURL 验证对等证书
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);    //是否检测服务器的域名与证书上的是否一致
 
+        //设置获取的信息以文件流的形式返回，而不是直接输出。
         curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
-        $output = curl_exec( $curl );
+
+        //设置post方式提交
+        curl_setopt( $curl, CURLOPT_POST, 1 );
+        curl_setopt( $curl, CURLOPT_POSTFIELDS, $data );
+
+        //执行命令
+        $response = curl_exec( $curl );
+
+        //关闭URL请求
         curl_close( $curl );
 
-        return $output;
+        return $response;
     }
+
 }

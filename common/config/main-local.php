@@ -4,9 +4,9 @@ return [
 
         'db' => [
             'class'       => 'yii\db\Connection',
-            'dsn'         => 'mysql:host=localhost;dbname=sql995518',
-            'username'    => 'sql995518',
-            'password'    => '0e88af04',
+            'dsn'         => 'mysql:host=localhost;dbname=sql347002',
+            'username'    => 'sql347002',
+            'password'    => '7bc93183',
             'charset'     => 'utf8',
             'tablePrefix' => 'W_', // 表前缀：t_
         ],

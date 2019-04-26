@@ -4,7 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = '优惠卷管理';
+$this->title = '卡卷管理';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="col-lg-12">
 
     <div class="form-group">
-        <a href='<?= Url::to( ['create'] ) ?>' class='btn btn-primary btn-lg' title='添加优惠卷'>添加优惠卷</a>
+        <a href='<?= Url::to( ['create'] ) ?>' class='btn btn-primary btn-lg' title='添加优惠卷'>添加卡卷</a>
         <a href='<?= Url::to( ['rooms/create'] ) ?>' class='btn btn-primary btn-lg' title='添加房间'>添加房间</a>
         <a href='<?= Url::to( ['hotels/create'] ) ?>' class='btn btn-primary btn-lg' title='添加酒店'>添加酒店</a>
     </div>
@@ -29,6 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
             创建卡券,必须先对接好公众号和小程序,要不卡券无法进行创建!
         </div>
     </div>
+
+    <?= Yii::$app->view->renderFile( '@app/views/_FormMsg.php' ); ?>
 
     <div class="panel panel-default">
 
@@ -62,9 +64,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'options'   => ['width' => 180],
                     ],
                     'denomination',
-                    'validity',
+                    'brand_name',
                     'title',
-                    'num',
+                    'quantity',
                     'quota',
                     [
                         'attribute' => 'updated_at',
@@ -86,7 +88,5 @@ $this->params['breadcrumbs'][] = $this->title;
 
         </div>
     </div>
-
-    <?= Yii::$app->view->renderFile( '@app/views/_FormMsg.php' ); ?>
 
 </div>

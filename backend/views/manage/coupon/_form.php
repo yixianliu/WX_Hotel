@@ -12,11 +12,23 @@ use phpnt\ICheck\ICheck;
 
     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
 
+        <?= Yii::$app->view->renderFile( '@app/views/_FormMsg.php' ); ?>
+
         <div class="panel panel-default">
 
             <div class="panel-heading"><h3 class="panel-title"><?= Html::encode( $this->title ) ?></h3></div>
 
             <div class="panel-body">
+
+                <?=
+                $form->field( $model, 'brand_name' )->widget( Select2::classname(), [
+                    'data'          => $result['hotel'],
+                    'options'       => ['placeholder' => '酒店'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                    ],
+                ] );
+                ?>
 
                 <?= $form->field( $model, 'title' )->textInput( ['maxlength' => true] ) ?>
 
@@ -61,11 +73,11 @@ use phpnt\ICheck\ICheck;
                 <?=
                 $form->field( $model, 'card_type' )->widget( Select2::classname(), [
                     'data'          => [
-                        'GROUPON'        => '二维码',
-                        'CASH'           => '文本',
-                        'DISCOUNT'       => '一维码',
-                        'GIFT'           => '二维码无code显示',
-                        'GENERAL_COUPON' => '一维码无code显示',
+                        'GROUPON'        => '团购券类型',
+                        'CASH'           => '代金券类型',
+                        'DISCOUNT'       => '折扣券类型',
+                        'GIFT'           => '兑换券类型',
+                        'GENERAL_COUPON' => '优惠券类型',
                     ],
                     'options'       => [],
                     'pluginOptions' => [

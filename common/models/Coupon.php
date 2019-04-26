@@ -9,13 +9,13 @@ use yii\behaviors\TimestampBehavior;
  * This is the model class for table "w_coupon".
  *
  * @property int    $id
- * @property string $coupon_key   优惠券识别KEY
- * @property string $validity     优惠券有效日期
- * @property string $title        优惠券标题
- * @property string $denomination 优惠券面额
- * @property string $quota        优惠券使用限额
- * @property string $remarks      优惠券备注
- * @property string $coupon_type  卡卷类型：折扣劵 / 优惠卷
+ * @property string $coupon_key   卡券识别KEY
+ * @property string $validity     卡券有效日期
+ * @property string $title        卡券标题
+ * @property string $denomination 卡券面额
+ * @property string $quota        卡券使用限额
+ * @property string $remarks      卡券备注
+ * @property string $card_type    卡卷类型：折扣劵 / 优惠卷
  * @property int    $created_at
  * @property int    $updated_at
  */
@@ -45,16 +45,16 @@ class Coupon extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'deal_detail', 'denomination', 'quota', 'coupon_type', 'pay_type', 'description', 'code_type'], 'required'],
+            [['title', 'brand_name', 'denomination', 'quota', 'card_type', 'pay_type', 'description', 'code_type', 'begin_time_stamp', 'end_time_stamp'], 'required'],
             [['denomination', 'quota', 'quantity'], 'integer'],
-            [['coupon_type', 'images', 'service_phone', 'code_type'], 'string'],
-            [['title'], 'string', 'max' => 125],
-            [['description', 'begin_time_stamp', 'end_time_stamp',], 'string', 'max' => 500],
+            [['card_type', 'images', 'service_phone', 'code_type', 'deal_detail'], 'string'],
+            [['title', 'card_id'], 'string', 'max' => 125],
+            [['description'], 'string', 'max' => 500],
             [['coupon_key'], 'string', 'max' => 85],
             [['coupon_key'], 'unique'],
 
             [['is_using'], 'default', 'value' => 'On'],
-            [['num'], 'default', 'value' => 10],
+            [['quantity'], 'default', 'value' => 999],
             [['service_phone'], 'default', 'value' => '40012234'],
         ];
     }
@@ -65,18 +65,18 @@ class Coupon extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'coupon_key'       => '优惠券识别KEY',
-            'validity'         => '优惠券有效日期',
-            'title'            => '优惠券标题',
-            'denomination'     => '优惠券面额',
-            'quota'            => '优惠券使用限额',
+            'coupon_key'       => '卡券识别KEY',
+            'brand_name'       => '商户名字,字数上限为12个汉字。',
+            'title'            => '卡券标题',
+            'denomination'     => '卡券面额',
+            'quota'            => '卡券使用限额',
             'description'      => '卡券使用说明',
             'quantity'         => '卡券库存的数量，上限为100000000。',
-            'images'           => '图片',
+            'images'           => '素材图片',
             'card_type'        => '卡卷类型',
             'pay_type'         => '赠送卡卷类型',
             'code_type'        => '二维码展示类型',
-            'begin_time_stamp' => '起用时间',
+            'begin_time_stamp' => '开始时间',
             'end_time_stamp'   => '结束时间',
             'is_using'         => '卡卷状态',
             'created_at'       => '添加数据时间',

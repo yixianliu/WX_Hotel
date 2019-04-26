@@ -19,8 +19,6 @@ use linslin\yii2\curl\Curl;
 class WxCouponHandel extends Model
 {
 
-    public static $AccessTokenUrl = 'https://api.weixin.qq.com/card/create?access_token=';
-
     // 颜色
     public static $CARD_COLOR = [
         'Color010' => '#63b359',
@@ -39,16 +37,38 @@ class WxCouponHandel extends Model
         'Color102' => '#5E6671',
     ];
 
+    public static function BatchGet($publicToken)
+    {
+        $url = 'https://api.weixin.qq.com/card/batchget?access_token=' . $publicToken;
+        $data = [
+            'offset'      => 0,
+            'count'       => 50,
+            'status_list' => [
+                // 'CARD_STATUS_NOT_VERIFY',  // 待审核
+                // 'CARD_STATUS_VERIFY_FAIL',  // 审核失败
+                'CARD_STATUS_VERIFY_OK',  // 通过审核
+                // 'CARD_STATUS_DELETE',  // 卡券被商户删除
+                // 'CARD_STATUS_DISPATCH'  // 在公众平台投放过的卡券
+            ],
+        ];
 
-    public static function ConnData($post, $token)
+        return curl_jsonPost( $url, $data );
+    }
+
+    /**
+     * 创建卡券
+     *
+     * @param $post
+     * @param $token
+     *
+     * @return array|bool|mixed
+     * @throws \Exception
+     */
+    public static function CreateCardData($post, $token)
     {
 
-        if (empty( $post ) || !is_array( $post ) || empty( $token )) {
+        if (empty( $post ) || !is_array( $post ) || empty( $token ) || empty( $post['card_type'] )) {
             return false;
-        }
-
-        if (empty( $post['card_type'] )) {
-            return ['status' => false, 'msg' => '卡券类型!'];
         }
 
         switch ($post['card_type']) {
@@ -62,16 +82,13 @@ class WxCouponHandel extends Model
                 break;
 
             default:
-                return ['status' => false, 'msg' => '不存在卡券类型!'];
+                return false;
                 break;
         }
 
-        $curl = new Curl();
-        $curl->setOption( CURLOPT_SSL_VERIFYPEER, false );
-        $curl->setOption( CURLOPT_SAFE_UPLOAD, false );
-        $curl->setOption( CURLOPT_POSTFIELDS, json_encode( $data ) );
+        $url = 'https://api.weixin.qq.com/card/create?access_token=' . $token;
 
-        $response = $curl->post( static::$AccessTokenUrl . $token );
+        $response = XmlHandle::postCurl( $url, $data );
 
         return json_decode( $response, true );
     }
@@ -88,29 +105,22 @@ class WxCouponHandel extends Model
 
         if (empty( $post['title'] ) ||
             empty( $post['color'] ) ||
-            empty( $post['type'] ) ||
-            empty( $post['notice'] ) ||
-            empty( $post['deal_detail'] ) ||
             empty( $post['description'] ) ||
             empty( $post['quantity'] ) || // 卡券库存的数量，上限为100000000
-            empty( $post['logo_url'] )
+            empty( $post['logo_url'] ) ||
+            empty( $post['quantity'] )
         ) {
-            return false;
-        }
-
-        if (!is_int( $post['quantity'] )) {
             return false;
         }
 
         // 数组
         $array = [
-
             'logo_url'    => $post['logo_url'],
             'code_type'   => $post['code_type'],
             'brand_name'  => $post['brand_name'],
             'title'       => $post['title'],
             'color'       => $post['color'],
-            'notice'      => $post['notice'],
+            'notice'      => (empty( $post['notice'] ) ? '使用时向服务员出示此券' : $post['notice']),
             'description' => $post['description'],
             'code_type'   => (empty( $post['code_type'] ) ? "CODE_TYPE_TEXT" : $post['code_type']),
 
@@ -161,12 +171,12 @@ class WxCouponHandel extends Model
 
         $array = [
             "use_condition"    => [
-                "accept_category"             => "鞋类",
-                "reject_category"             => "阿迪达斯",
+                "accept_category"             => "酒店类",
+                "reject_category"             => "酒店房间",
                 "can_use_with_other_discount" => true,
             ],
             "abstract"         => [
-                "abstract"      => "微信餐厅推出多种新季菜品，期待您的光临",
+                "abstract"      => "微信酒店小程序推出多种打折房间，期待您的光临",
                 "icon_url_list" => [
                     "http://mmbiz.qpic.cn/mmbiz/p98FjXy8LacgHxp3sJ3vn97bGLz0ib0Sfz1bjiaoOYA027iasqSG0sjpiby4vce3AtaPu6cIhBHkt6IjlkY9YnDsfw/0",
                 ],
@@ -214,17 +224,13 @@ class WxCouponHandel extends Model
     public static function GrouponArray($post)
     {
 
-        if (empty( $post['deal_detail'] )) {
-            return false;
-        }
-
         $array = [
             'card' => [
 
                 // 卡卷类型
                 'card_type' => $post['card_type'],
                 'groupon'   => [
-                    "deal_detail" => $post['deal_detail'], // 团购券专用0，团购详情。
+                    "deal_detail" => (empty( $post['deal_detail'] ) ? '以下是特惠酒店卡券,请注意!' : $post['deal_detail']), // 团购券专用0，团购详情。
                 ],
             ],
         ];
@@ -235,7 +241,7 @@ class WxCouponHandel extends Model
             return $array['card']['groupon']['base_info'];
         }
 
-        return json_encode( $array );
+        return json_encode( $array, JSON_UNESCAPED_UNICODE );
     }
 
     /**
@@ -270,18 +276,4 @@ class WxCouponHandel extends Model
         return json_encode( $array );
     }
 
-
-    public static function CardTypeArray()
-    {
-        return [
-            "GENERAL_COUPON" => '优惠券',
-            "GROUPON"        => '团购券',
-            "DISCOUNT"       => '折扣券',
-            "GIFT"           => '兑换券',
-            "CASH"           => '代金券',
-            "MEMBER_CARD",
-            "SCENIC_TICKET",
-            "MOVIE_TICKET",
-        ];
-    }
 }

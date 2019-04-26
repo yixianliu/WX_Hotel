@@ -248,8 +248,9 @@ DROP TABLE IF EXISTS `#DB_PREFIX#Coupon`;
 CREATE TABLE `#DB_PREFIX#Coupon`
 (
     `id`               INT(11)                        NOT NULL AUTO_INCREMENT,
+    `card_id`          VARCHAR(125)                   NULL     DEFAULT NULL COMMENT '卡券ID,公众号创建成功后生成!',
     `coupon_key`       VARCHAR(125)                   NULL     DEFAULT NULL COMMENT '优惠券识别KEY',
-    `validity`         VARCHAR(125)                   NOT NULL COMMENT '优惠券有效日期',
+    `brand_name`       VARCHAR(125)                   NOT NULL COMMENT '商户名字,字数上限为12个汉字。',
     `title`            VARCHAR(125)                   NULL COMMENT '优惠券标题',
     `quantity`         integer                        NOT NULL DEFAULT '0' COMMENT '卡券库存的数量，上限为100000000。',
     `denomination`     INT(6) UNSIGNED                NOT NULL COMMENT '优惠券面额',
