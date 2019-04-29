@@ -115,8 +115,7 @@ class WxCouponHandel extends Model
 
         // 数组
         $array = [
-            'logo_url'    => $post['logo_url'],
-            'code_type'   => $post['code_type'],
+            'logo_url'    => (empty( $post['logo_url'] ) ? 'http://mmbiz.qpic.cn/mmbiz/iaL1LJM1mF9aRKPZJkmG8xXhiaHqkKSVMMWeN3hLut7X7hicFNjakmxibMLGWpXrEXB33367o7zHN0CwngnQY7zb7g/0' : $post['logo_url']),
             'brand_name'  => $post['brand_name'],
             'title'       => $post['title'],
             'color'       => $post['color'],
@@ -274,6 +273,28 @@ class WxCouponHandel extends Model
         }
 
         return json_encode( $array );
+    }
+
+    /**
+     * 批量查询卡券列表
+     *
+     * @param $token
+     *
+     * @return mixed
+     */
+    public static function GetCouponBatch($token)
+    {
+        $urls = 'https://api.weixin.qq.com/card/batchget?access_token=' . $token;
+
+        $data = [
+            "offset"      => 0,
+            "count"       => 25,
+            "status_list" => ["CARD_STATUS_VERIFY_OK", "CARD_STATUS_DISPATCH"],
+        ];
+
+        $response = XmlHandle::postCurl( $urls, json_encode( $data ) );
+
+        return json_decode( $response, true );
     }
 
 }

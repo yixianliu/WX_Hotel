@@ -27,7 +27,8 @@ class RelevanceRoomsCoupon extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             TimestampBehavior::className(),
         ];
@@ -53,9 +54,9 @@ class RelevanceRoomsCoupon extends \yii\db\ActiveRecord
             'user_id'     => '发布用户',
             'room_id'     => '所选房间',
             'hotel_id'    => '所选酒店',
-            'coupon_key'  => '优惠卷',
-            'use_up'      => '消费了多少张优惠卷',
-            'content'     => '优惠卷描述',
+            'coupon_key'  => '卡卷',
+            'use_up'      => '消耗多少张卡卷',
+            'content'     => '卡卷描述',
             'apply_range' => '派送类别',
             'created_at'  => '添加数据时间',
             'updated_at'  => '更新数据时间',

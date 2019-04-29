@@ -158,6 +158,7 @@ CREATE TABLE `#DB_PREFIX#User`
 (
     `id`              INT(11)                  NOT NULL AUTO_INCREMENT,
     `user_id`         VARCHAR(85)              NOT NULL COMMENT '用户编号ID',
+    `openid`          VARCHAR(85)              NOT NULL COMMENT '微信生成的用户Id',
     `username`        VARCHAR(85)              NOT NULL COMMENT '邮箱 / 用户名',
     `password`        VARCHAR(255)             NOT NULL COMMENT '密码',
     `r_key`           VARCHAR(85)              NOT NULL COMMENT '角色关键KEY',

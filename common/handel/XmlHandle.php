@@ -197,17 +197,19 @@ class XmlHandle extends Model
         curl_setopt( $curl, CURLOPT_URL, $url );
 
         //设置头文件的信息作为数据流输出
-        curl_setopt( $curl, CURLOPT_HEADER, 1 );
+        curl_setopt( $curl, CURLOPT_HEADER, false );
 
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);    //禁止 cURL 验证对等证书
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);    //是否检测服务器的域名与证书上的是否一致
+        curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false );    //禁止 cURL 验证对等证书
+        curl_setopt( $curl, CURLOPT_SSL_VERIFYHOST, false );    //是否检测服务器的域名与证书上的是否一致
 
         //设置获取的信息以文件流的形式返回，而不是直接输出。
         curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
 
-        //设置post方式提交
-        curl_setopt( $curl, CURLOPT_POST, 1 );
-        curl_setopt( $curl, CURLOPT_POSTFIELDS, $data );
+        if (!empty( $data )) {
+            //设置post方式提交
+            curl_setopt( $curl, CURLOPT_POST, 1 );
+            curl_setopt( $curl, CURLOPT_POSTFIELDS, $data );
+        }
 
         //执行命令
         $response = curl_exec( $curl );

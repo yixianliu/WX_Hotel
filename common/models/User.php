@@ -39,6 +39,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['username', 'nickname'], 'string', 'max' => 30],
             [['r_key', 'birthday', 'user_id', 'password'], 'string', 'max' => 85],
             [['signature', 'address'], 'string', 'max' => 255],
+            [['tel_phone'], 'string', 'max' => 11],
             [['credit'], 'integer'],
 
             // 默认
@@ -66,7 +67,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'r_key'           => '角色',
             'nickname'        => '昵称',
             'sex'             => '性别',
-            'telphone'        => '手机号码',
+            'tel_phone'        => '手机号码',
             'rePassword'      => '二次密码',
             'birthday'        => '出生年月日',
             'login_ip'        => '登录 IP 地址',

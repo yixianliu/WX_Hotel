@@ -50,15 +50,49 @@ class CouponController extends BaseController
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider( [
-            'query' => Coupon::find()->orderBy( [
-                'id'         => SORT_DESC,
-                'coupon_key' => SORT_DESC,
-            ] ),
-        ] );
+
+        $type = Yii::$app->request->get( 'type', null );
+
+        if (empty( $type )) {
+
+            $dataProvider = new ActiveDataProvider( [
+                'query' => Coupon::find()->orderBy( [
+                    'id'         => SORT_DESC,
+                    'coupon_key' => SORT_DESC,
+                ] ),
+            ] );
+
+        } else {
+
+            // 获取公众号
+            $result['mp'] = MpConf::findOne( ['is_working' => 'On'] );
+
+            if (empty( $result['mp'] ) || empty( $result['mp']->app_id ) || empty( $result['mp']->app_secret )) {
+                Yii::$app->getSession()->setFlash( 'error', '无法获取公众号内容!' );
+                return $this->redirect( ['index', 'type' => 'wechat'] );
+            }
+
+            $token = WxConnHandel::getAccessToken( $result['mp']->app_id, $result['mp']->app_secret );
+
+            $tokenArray = json_decode( $token, true );
+
+            if (empty( $tokenArray['access_token'] )) {
+
+                if (!empty( $tokenArray['errmsg'] )) {
+                    Yii::$app->getSession()->setFlash( 'error', $tokenArray['errmsg'] . ' - ' . $tokenArray['errcode'] );
+                } else {
+                    Yii::$app->getSession()->setFlash( 'error', '没有 Token!' );
+                }
+
+                return $this->redirect( ['index', 'type' => 'wechat'] );
+            }
+
+            $dataProvider = WxCouponHandel::GetCouponBatch( $tokenArray['access_token'] );
+        }
 
         return $this->render( 'index', [
             'dataProvider' => $dataProvider,
+            'type'         => $type,
         ] );
     }
 
@@ -103,7 +137,6 @@ class CouponController extends BaseController
 
             $model->brand_name = $hotel->name;
 
-
             $result = [];
 
             // 获取公众号
@@ -117,6 +150,20 @@ class CouponController extends BaseController
 
             $token = WxConnHandel::getAccessToken( $result['mp']->app_id, $result['mp']->app_secret );
 
+            $tokenArray = json_decode( $token, true );
+
+            if (empty( $tokenArray['access_token'] )) {
+
+                if (!empty( $tokenArray['errmsg'] )) {
+                    Yii::$app->getSession()->setFlash( 'error', $tokenArray['errmsg'] . ' - ' . $tokenArray['errcode'] );
+                } else {
+                    Yii::$app->getSession()->setFlash( 'error', '没有 Token!' );
+                }
+
+                $transaction->rollBack();
+                return $this->redirect( ['create'] );
+            }
+
             $array = [
                 'title'         => $model->title,
                 'card_type'     => $model->card_type,
@@ -127,11 +174,8 @@ class CouponController extends BaseController
                 'brand_name'    => $model->brand_name, // 商户名字,字数上限为12个汉字。
                 'service_phone' => $model->service_phone, // 客服电话。
                 'description'   => $model->description,
-                'deal_detail'   => $model->deal_detail,
                 'quantity'      => $model->quantity, // 卡券库存的数量，上限为100000000
             ];
-
-            $tokenArray = json_decode( $token, true );
 
             if (!($response = WxCouponHandel::CreateCardData( $array, $tokenArray['access_token'] ))) {
                 Yii::$app->getSession()->setFlash( 'error', '创建卡券失败!' );
@@ -139,15 +183,14 @@ class CouponController extends BaseController
                 return $this->redirect( ['create'] );
             }
 
-            if (empty( $response['errcode'] ) && empty( $response['errmsg'] ) && $response['errmsg'] != 'ok') {
-                Yii::$app->getSession()->setFlash( 'error', $response['errmsg'] );
+            if (!empty( $response['errcode'] ) && !empty( $response['errmsg'] )) {
+                Yii::$app->getSession()->setFlash( 'error', $response['errmsg'] . ' - ' . $response['errcode'] );
                 $transaction->rollBack();
                 return $this->redirect( ['create'] );
             }
 
-            $responseArray = json_decode($response, true);
-
-            $model->card_id = $responseArray['card_id'];
+            // 创建公众号后生成 Card Id
+            $model->card_id = $response['card_id'];
 
             if (!$model->save()) {
                 Yii::$app->getSession()->setFlash( 'error', '保存卡券失败!' );

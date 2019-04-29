@@ -48,7 +48,8 @@ class Coupon extends \yii\db\ActiveRecord
             [['title', 'brand_name', 'denomination', 'quota', 'card_type', 'pay_type', 'description', 'code_type', 'begin_time_stamp', 'end_time_stamp'], 'required'],
             [['denomination', 'quota', 'quantity'], 'integer'],
             [['card_type', 'images', 'service_phone', 'code_type', 'deal_detail'], 'string'],
-            [['title', 'card_id'], 'string', 'max' => 125],
+            [['card_id'], 'string', 'max' => 125],
+            [['title'], 'string', 'max' => 9],
             [['description'], 'string', 'max' => 500],
             [['coupon_key'], 'string', 'max' => 85],
             [['coupon_key'], 'unique'],
@@ -65,9 +66,10 @@ class Coupon extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'card_id'          => '公众号生成卡券的Id',
             'coupon_key'       => '卡券识别KEY',
             'brand_name'       => '商户名字,字数上限为12个汉字。',
-            'title'            => '卡券标题',
+            'title'            => '卡券标题，字数上限为9个汉字。',
             'denomination'     => '卡券面额',
             'quota'            => '卡券使用限额',
             'description'      => '卡券使用说明',

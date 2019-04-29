@@ -45,12 +45,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format'    => 'html',
                         'value'     => function ($model) {
 
-                            $filenameReal = Yii::getAlias( '@webroot/../../frontend/web/temp/hotels/' ) . $model->thumb;
+                            $filenameReal = Yii::getAlias( '@webroot/../../frontend/web/temp/hotels/' ) . '/' . $model->hotel_id . '/' . $model->thumb;
 
                             if (!is_file( $filenameReal )) {
                                 $filename = Yii::getAlias( '@web/../../frontend/web/img/' ) . 'not.jpg';
                             } else {
-                                $filename = Yii::getAlias( '@web/../../frontend/web/temp/hotels/' ) . $model->thumb;
+                                $filename = Yii::getAlias( '@web/../../frontend/web/temp/hotels/' ) . '/' . $model->hotel_id . '/' . $model->thumb;
                             }
 
                             return '<img width="280" height="150" src="' . $filename . '" alt="' . $model->name . '" />';
@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     continue;
 
                                 $html .= '<div class="col-md-3">';
-                                $html .= '<img width="340" height="220" src="' . Yii::getAlias( '@web/../../frontend/web/temp/hotels/' ) . $value . '" alt="' . $model->name . '" />';
+                                $html .= '<img width="340" height="220" src="' . Yii::getAlias( '@web/../../frontend/web/temp/hotels/' ) . '/' . $model->hotel_id . '/' . $value . '" alt="' . $model->name . '" />';
                                 $html .= '</div>';
                             }
                             $html .= '</div>';

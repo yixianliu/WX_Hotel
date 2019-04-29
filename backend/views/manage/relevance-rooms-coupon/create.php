@@ -19,12 +19,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-body">
             <div class="row">
 
-                <h4><a href="#" class="sr-item-title">请选择对应的优惠卷</a></h4>
+                <h4><a href="#" class="sr-item-title">请选择对应的卡卷</a></h4>
 
                 <?=
                 $form->field( $model, 'coupon_key' )->widget( \kartik\select2\Select2::classname(), [
                     'data'          => $result['coupon'],
-                    'options'       => ['placeholder' => '请选择对应的优惠卷'],
+                    'options'       => ['placeholder' => '请选择对应的卡卷'],
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],

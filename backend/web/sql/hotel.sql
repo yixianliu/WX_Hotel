@@ -292,9 +292,10 @@ DROP TABLE IF EXISTS `#DB_PREFIX#Relevance_Rooms_Coupon`;
 CREATE TABLE `#DB_PREFIX#Relevance_Rooms_Coupon`
 (
     `id`          INT(11)                                  NOT NULL AUTO_INCREMENT,
-    `coupon_key`  VARCHAR(55)                              NOT NULL COMMENT '优惠卷关键KEY',
-    `hotel_id`    VARCHAR(55)                              NULL COMMENT '酒店关键KEY',
-    `room_id`     VARCHAR(55)                              NOT NULL COMMENT '房间关键KEY',
+    `user_id`     VARCHAR(85)                              NOT NULL COMMENT '用户 Id',
+    `coupon_key`  VARCHAR(85)                              NOT NULL COMMENT '卡卷关键KEY',
+    `hotel_id`    VARCHAR(85)                              NULL COMMENT '酒店关键KEY',
+    `room_id`     VARCHAR(85)                              NOT NULL COMMENT '房间关键KEY',
     `use_up`      integer                                  NOT NULL COMMENT '消耗了几张优惠卷',
     `content`     TEXT                                     NULL COMMENT '描述内容',
     `apply_range` SET ('hotel', 'room', 'classify', 'all') NOT NULL COMMENT '派送类别,开启为On,就是代表所有房间均可使用该劵',

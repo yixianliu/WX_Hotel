@@ -14,42 +14,42 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use dosamigos\fileupload\FileUploadUI;
 
-if ( empty($model) || empty($form) || Yii::$app->user->isGuest )
-    exit(false);
+if (empty( $model ) || empty( $form ) || Yii::$app->user->isGuest)
+    exit( false );
 
-$attribute = empty($attribute) ? 'path' : $attribute;
+$attribute = empty( $attribute ) ? 'path' : $attribute;
 
-$id = empty($id) ? null : $id;
+$id = empty( $id ) ? null : $id;
 
 // 上传文件后缀名
-$uploadType = empty($uploadType) ? 'image' : $uploadType;
+$uploadType = empty( $uploadType ) ? 'image' : $uploadType;
 
 // 数量
-$num = empty($num) ? 5 : $num;
+$num = empty( $num ) ? 5 : $num;
 
 // 初始化
 $images = [];
 
 // 取出图片,存储为数组
-if ( !empty($model->$attribute) ) {
+if (!empty( $model->$attribute )) {
 
-    $imagesArray = explode(',', $model->$attribute);
+    $imagesArray = explode( ',', $model->$attribute );
 
     foreach ($imagesArray as $value) {
 
-        if ( empty($value) )
+        if (empty( $value ))
             break;
 
         $images[] = $value;
     }
 }
 
-$text = empty($text) ? '没有描述' : $text;
+$text = empty( $text ) ? '没有描述' : $text;
 
 // 图片路径
-$imgPathArray = explode('/', Yii::$app->controller->id);
+$imgPathArray = explode( '/', Yii::$app->controller->id );
 
-$imgPath = Url::to('@web/../../frontend/web/temp/') . $imgPathArray[ 0 ];
+$imgPath = Url::to( '@web/../../frontend/web/temp/' ) . $imgPathArray[0];
 
 ?>
 
@@ -67,10 +67,19 @@ $imgPath = Url::to('@web/../../frontend/web/temp/') . $imgPathArray[ 0 ];
     <label><?= $text ?></label>
 
     <?=
-    FileUploadUI::widget([
+    FileUploadUI::widget( [
         'model'         => $model,
         'attribute'     => $attribute,
-        'url'           => [ 'upload/uploads', 'type' => $imgPathArray[ 0 ], 'attribute' => $attribute, 'ext' => $uploadType ],
+
+        // GET
+        'url'
+        => [
+            'upload/uploads',
+            'type'      => $imgPathArray[0],
+            'attribute' => $attribute,
+            'ext'       => $uploadType,
+            'id'        => $id,
+        ],
         'gallery'       => false,
         'fieldOptions'  => [
             'accept' => $uploadType . '/*',
@@ -124,10 +133,10 @@ $imgPath = Url::to('@web/../../frontend/web/temp/') . $imgPathArray[ 0 ];
                 console.log(data);
             }',
         ],
-    ]);
+    ] );
     ?>
 
-    <?= $form->field($model, $attribute)->textInput([ 'id' => 'ImagesContent_' . $attribute, 'style' => 'display:none;' ])->label(false) ?>
+    <?= $form->field( $model, $attribute )->textInput( ['id' => 'ImagesContent_' . $attribute, 'style' => 'display:none;'] )->label( false ) ?>
 
 </div>
 
@@ -135,7 +144,7 @@ $imgPath = Url::to('@web/../../frontend/web/temp/') . $imgPathArray[ 0 ];
 
 <div class="form-group">
 
-    <?php if ( !empty($images) && is_array($images) ): ?>
+    <?php if (!empty( $images ) && is_array( $images )): ?>
 
         <div class="row">
 
@@ -143,11 +152,11 @@ $imgPath = Url::to('@web/../../frontend/web/temp/') . $imgPathArray[ 0 ];
 
                 <div class="col-md-3">
 
-                    <?= Html::img($imgPath . '/' . $value, [ 'width' => 350, 'height' => 150 ]); ?>
+                    <?= Html::img( $imgPath . '/' . $value, ['width' => 350, 'height' => 150] ); ?>
 
                     <div class="portfolio-info" style="margin-top: 10px;margin-bottom: 10px;">
 
-                        <?php if ( Yii::$app->controller->id != 'sp-offer' ): ?>
+                        <?php if (Yii::$app->controller->id != 'sp-offer'): ?>
                             <a class="btn btn-danger DeleteImg" data-type="GET" title="删除这个文件 : <?= $value ?>">
                                 <input class="DeleteImgHidden" type="hidden" value="<?= $value ?>"/><i class="glyphicon glyphicon-trash"></i> <font>删除</font>
                             </a>

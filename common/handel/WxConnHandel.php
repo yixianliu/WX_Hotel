@@ -8,6 +8,7 @@
  * Date: 2018/11/14
  * Time: 11:02
  */
+
 namespace common\handel;
 
 use Yii;
@@ -20,20 +21,21 @@ class WxConnHandel extends Model
     /**
      * 获取 Token
      *
-     * @param $appid
+     * @param $app_id
      * @param $app_secret
      *
-     * @return string
+     * @return bool|mixed
+     * @throws \Exception
      */
-    public static function getAccessToken($appid, $app_secret)
+    public static function getAccessToken($app_id, $app_secret)
     {
 
-        if (empty( $appid ) || empty( $app_secret )) {
+        if (empty( $app_id ) || empty( $app_secret )) {
             return false;
         }
 
         $array = [
-            'appid'      => $appid,
+            'appid'      => $app_id,
             'secret'     => $app_secret,
             'grant_type' => 'client_credential',
         ];
@@ -44,9 +46,9 @@ class WxConnHandel extends Model
 
         $curl = new Curl();
 
-        $curl->setOption(CURLOPT_SSL_VERIFYPEER, false);
+        $curl->setOption( CURLOPT_SSL_VERIFYPEER, false );
 
-        $response = $curl->get($authUrl);
+        $response = $curl->get( $authUrl );
 
         return $response;
     }

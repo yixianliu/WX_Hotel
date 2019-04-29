@@ -22,6 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <a href='<?= Url::to( ['create'] ) ?>' class='btn btn-primary btn-lg' title='添加优惠卷'>添加卡卷</a>
         <a href='<?= Url::to( ['rooms/create'] ) ?>' class='btn btn-primary btn-lg' title='添加房间'>添加房间</a>
         <a href='<?= Url::to( ['hotels/create'] ) ?>' class='btn btn-primary btn-lg' title='添加酒店'>添加酒店</a>
+        <a href='<?= Url::to( ['index'] ) ?>' class='btn btn-primary btn-lg' title='添加酒店'>本地卡券</a>
+        <a href='<?= Url::to( ['index', 'type' => 'wechat'] ) ?>' class='btn btn-primary btn-lg' title='添加酒店'>公众号卡券</a>
     </div>
 
     <div class="form-group">
@@ -38,53 +40,99 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="panel-body">
 
-            <?= GridView::widget( [
-                'dataProvider' => $dataProvider,
-                'columns'      => [
-                    [
-                        'class'   => 'yii\grid\CheckboxColumn',
-                        'name'    => 'id',
-                        'options' => ['width' => 40],
-                    ],
-                    [
-                        'class'   => 'yii\grid\SerialColumn',
-                        'options' => ['width' => 70],
-                    ],
-                    [
-                        'attribute' => 'images',
-                        'format'    => 'html',
-                        'value'     => function ($model) {
+            <?php if (empty( $type )): ?>
 
-                            $images = (!is_file( Yii::getAlias( '@webroot/../../frontend/web/temp/coupon/' ) . $model->coupon_key . '/' . $model->images )) ?
-                                Yii::getAlias( '@web/../../frontend/web/img/not.jpg' ) :
-                                Yii::getAlias( '@web/../../frontend/web/temp/coupon/' ) . $model->coupon_key . '/' . $model->images;
+                <?=
+                GridView::widget( [
+                    'dataProvider' => $dataProvider,
+                    'columns'      => [
+                        [
+                            'class'   => 'yii\grid\CheckboxColumn',
+                            'name'    => 'id',
+                            'options' => ['width' => 40],
+                        ],
+                        [
+                            'class'   => 'yii\grid\SerialColumn',
+                            'options' => ['width' => 70],
+                        ],
+                        [
+                            'attribute' => 'images',
+                            'format'    => 'html',
+                            'value'     => function ($model) {
 
-                            return '<img width="280" height="150" src="' . $images . '" alt="' . $model->title . '" />';
-                        },
-                        'options'   => ['width' => 180],
+                                $images = (!is_file( Yii::getAlias( '@webroot/../../frontend/web/temp/coupon/' ) . $model->coupon_key . '/' . $model->images )) ?
+                                    Yii::getAlias( '@web/../../frontend/web/img/not.jpg' ) :
+                                    Yii::getAlias( '@web/../../frontend/web/temp/coupon/' ) . $model->coupon_key . '/' . $model->images;
+
+                                return '<img width="280" height="150" src="' . $images . '" alt="' . $model->title . '" />';
+                            },
+                            'options'   => ['width' => 180],
+                        ],
+                        'card_id',
+                        'denomination',
+                        'brand_name',
+                        'title',
+                        'quantity',
+                        'quota',
+                        [
+                            'attribute' => 'updated_at',
+                            'value'     => function ($model) {
+                                return date( 'Y - m -d , H:i:s', $model->updated_at );
+                            },
+                            'options'   => ['width' => 180],
+                        ],
+                        [
+                            'class'   => 'yii\grid\ActionColumn',
+                            'options' => ['width' => 100],
+                        ],
                     ],
-                    'denomination',
-                    'brand_name',
-                    'title',
-                    'quantity',
-                    'quota',
-                    [
-                        'attribute' => 'updated_at',
-                        'value'     => function ($model) {
-                            return date( 'Y - m -d , H:i:s', $model->updated_at );
-                        },
-                        'options'   => ['width' => 180],
+                    'tableOptions' => ['class' => 'table table-hover'],
+                    'pager'        => [
+                        'options' => ['class' => 'pagination'],
                     ],
-                    [
-                        'class'   => 'yii\grid\ActionColumn',
-                        'options' => ['width' => 100],
-                    ],
-                ],
-                'tableOptions' => ['class' => 'table table-hover'],
-                'pager'        => [
-                    'options' => ['class' => 'pagination'],
-                ],
-            ] ); ?>
+                ] );
+                ?>
+
+            <?php else: ?>
+
+                <div id="w0" class="grid-view">
+                    <div class="summary">共<b><?= $dataProvider['total_num'] ?></b>条数据.</div>
+                    <table class="table table-hover">
+                        <colgroup>
+                            <col width="40">
+                            <col width="70">
+                            <col width="180">
+                            <col width="180">
+                            <col width="100">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" class="select-on-check-all" name="id_all" value="1"></th>
+                            <th>#</th>
+                            <th><a href="/backend/web/coupon/index.html?sort=images" data-sort="images">公众号卡券 ID</a></th>
+                            <th class="action-column">#</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <?php foreach ($dataProvider['card_id_list'] as $value): ?>
+
+                            <tr data-key="3">
+                                <td><input type="checkbox" name="id[]" value="3"></td>
+                                <td>1</td>
+                                <td><?= $value ?></td>
+                                <td>
+                                    <a href="/backend/web/coupon/view-3.html" title="查看"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                </td>
+                            </tr>
+
+                        <?php endforeach; ?>
+
+                        </tbody>
+                    </table>
+                </div>
+
+            <?php endif; ?>
 
         </div>
     </div>

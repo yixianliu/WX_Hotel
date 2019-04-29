@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model'      => $model,
                 'attributes' => [
                     'title',
+                    'card_id',
                     'coupon_key',
                     'brand_name',
                     'quantity',

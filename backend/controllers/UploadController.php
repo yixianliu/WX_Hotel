@@ -65,6 +65,8 @@ class UploadController extends BaseController
 
         $ext = Yii::$app->request->get( 'ext', null );
 
+        $id = Yii::$app->request->get( 'id', null );
+
         $attribute = Yii::$app->request->get( 'attribute', 'images' );
 
         if (empty( $type ) || empty( $ext ) || !Yii::$app->request->isAjax) {
@@ -83,26 +85,34 @@ class UploadController extends BaseController
         }
 
         // 上传组件对应model
-        if (!($imageFile = UploadedFile::getInstance( $model, $attribute )))
+        if (!($imageFile = UploadedFile::getInstance( $model, $attribute ))) {
             return Json::encode( ['error' => '上传组件文件异常!'] );
+        }
 
         // 验证后缀名
-        if (!static::UploadExt( $ext, $imageFile->extension ))
+        if (!static::UploadExt( $ext, $imageFile->extension )) {
             return Json::encode( ['error' => '上传格式有问题!'] );
+        }
+
+        // 根据ID来生成路径
+        if (!empty($id)) {
+            $EndPath = DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR . $id;
+        } else {
+            $EndPath = DIRECTORY_SEPARATOR . $type;
+        }
 
         // 上传路径
-        $directory = Yii::getAlias( '@backend/../frontend/web/temp' ) . DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR;
+        $directory = Yii::getAlias( '@backend/../frontend/web/temp' ) . $EndPath;
 
-        if (!is_dir( $directory ))
+        if (!is_dir( $directory )) {
             FileHelper::createDirectory( $directory );
+        }
 
         $fileName = self::getRandomString() . '.' . $imageFile->extension;
 
-        $filePath = $directory . $fileName;
+        if ($imageFile->saveAs( $directory . DIRECTORY_SEPARATOR . $fileName )) {
 
-        if ($imageFile->saveAs( $filePath )) {
-
-            $path = Yii::getAlias( '@web/../../frontend/web/temp' ) . DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR . $fileName;
+            $path = Yii::getAlias( '@web/../../frontend/web/temp' ) . $EndPath . DIRECTORY_SEPARATOR . $fileName;
 
             return Json::encode( [
 

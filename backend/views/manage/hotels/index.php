@@ -46,9 +46,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format'    => 'html',
                         'value'     => function ($model) {
 
-                            $images = (!is_file( Yii::getAlias( '@webroot/../../frontend/web/temp/hotels/' ) . $model->thumb )) ?
+                            $images = (!is_file( Yii::getAlias( '@webroot/../../frontend/web/temp/hotels/' ) . '/' . $model->hotel_id . '/' . $model->thumb )) ?
                                 Yii::getAlias( '@web/../../frontend/web/img/not.jpg' ) :
-                                Yii::getAlias( '@web/../../frontend/web/temp/hotels/' ) . $model->thumb;
+                                Yii::getAlias( '@web/../../frontend/web/temp/hotels/' ) . '/' . $model->hotel_id . '/' . $model->thumb;
 
                             return '<img width="280" height="150" src="' . $images . '" alt="' . $model->name . '" />';
                         },

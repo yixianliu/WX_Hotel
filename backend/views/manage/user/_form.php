@@ -37,6 +37,8 @@ use phpnt\ICheck\ICheck;
 
             <?= $form->field( $model, 'credit' )->textInput( ['maxlength' => true] ) ?>
 
+            <?= $form->field( $model, 'tel_phone' )->textInput( ['maxlength' => true] ) ?>
+
             <?=
             $form->field( $model, 'birthday' )->widget( 'kartik\daterange\DateRangePicker', [
                 'convertFormat' => true,
