@@ -297,4 +297,37 @@ class WxCouponHandel extends Model
         return json_decode( $response, true );
     }
 
+    /**
+     * 投放卡卷
+     *
+     * @param $token
+     * @param $card_id
+     * @param $code
+     *
+     * @return mixed
+     */
+    public static function Putin($token, $card_id, $code)
+    {
+
+        $urls = 'https://api.weixin.qq.com/card/qrcode/create?access_token=' . $token;
+
+        $data = [
+            "action_name"    => "QR_CARD",
+            "expire_seconds" => 1800,
+            "action_info"    => [
+                "card" => [
+                    "card_id"        => $card_id,
+                    "code"           => $code,
+                    "openid"         => "oFS7Fjl0WsZ9AMZqrI80nbIq8xrA",
+                    "is_unique_code" => false,
+                    "outer_str"      => "12b",
+                ],
+            ],
+        ];
+
+        $response = XmlHandle::postCurl( $urls, json_encode( $data ) );
+
+        return json_decode( $response, true );
+    }
+
 }

@@ -107,8 +107,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         </colgroup>
                         <thead>
                         <tr>
-                            <th><input type="checkbox" class="select-on-check-all" name="id_all" value="1"></th>
-                            <th>#</th>
                             <th><a href="/backend/web/coupon/index.html?sort=images" data-sort="images">公众号卡券 ID</a></th>
                             <th class="action-column">#</th>
                         </tr>
@@ -117,9 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         <?php foreach ($dataProvider['card_id_list'] as $value): ?>
 
-                            <tr data-key="3">
-                                <td><input type="checkbox" name="id[]" value="3"></td>
-                                <td>1</td>
+                            <tr>
                                 <td><?= $value ?></td>
                                 <td>
                                     <a href="/backend/web/coupon/view-3.html" title="查看"><span class="glyphicon glyphicon-eye-open"></span></a>

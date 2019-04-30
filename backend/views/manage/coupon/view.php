@@ -1,13 +1,11 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Coupon */
-
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => '优惠卷管理', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '卡卷管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -30,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ] ) ?>
                 <?= Html::a( '返回列表', ['index'], ['class' => 'btn btn-primary'] ) ?>
                 <?= Html::a( '继续添加', ['create'], ['class' => 'btn btn-primary'] ) ?>
+                <?= Html::a( '投放', ['putin', 'id' => $model->id], ['class' => 'btn btn-primary', 'id' => 'PutIn'] ) ?>
             </p>
 
             <?= DetailView::widget( [
@@ -110,7 +109,31 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template'   => '<tr><th width="230">{label}</th><td>{value}</td></tr>',
             ] ) ?>
 
+            <div id="PutInQRCode"></div>
+
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+
+    $('#PutIn').on('click', function () {
+
+        $.ajax({
+            type: "GET",
+            url: "<?= Url::to( ['coupon/putin', 'id' => $model->id] ) ?>",//路径
+            dataType: "json",
+            success: function (result) {//返回数据根据结果进行相应的处理
+
+                console.log(result);
+
+                return true;
+            }
+        });
+
+        return false;
+
+    });
+
+</script>
 

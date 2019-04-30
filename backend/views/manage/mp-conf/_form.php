@@ -66,7 +66,6 @@ use yii\widgets\ActiveForm;
     </div>
 </div>
 
-
-        <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 
 

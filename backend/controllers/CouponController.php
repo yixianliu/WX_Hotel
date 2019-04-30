@@ -11,6 +11,7 @@ use common\models\Hotels;
 use common\models\MpConf;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * CouponController implements the CRUD actions for Coupon model.
@@ -268,4 +269,48 @@ class CouponController extends BaseController
         throw new NotFoundHttpException( 'The requested page does not exist.' );
     }
 
+    /**
+     * 投放卡卷
+     *
+     * @return array|bool
+     * @throws \Exception
+     */
+    public function actionPutin()
+    {
+
+        if (!Yii::$app->request->isAjax) {
+            return false;
+        }
+
+        $id = Yii::$app->request->get( 'id', null );
+
+        $result = Coupon::findOne( ['id' => $id] );
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if (empty( $result )) {
+            return ['msg' => '保存卡券失败!', 'status' => false];
+        }
+
+        $token = WxConnHandel::getAccessToken( $result['mp']->app_id, $result['mp']->app_secret );
+
+        $tokenArray = json_decode( $token, true );
+
+        if (empty( $tokenArray['access_token'] )) {
+
+            if (!empty( $tokenArray['errmsg'] )) {
+                $error = $tokenArray['errmsg'] . ' - ' . $tokenArray['errcode'];
+            } else {
+                $error = '没有 Token!';
+            }
+
+            return ['msg' => $error, 'status' => false];
+        }
+
+        if (!($response = WxCouponHandel::Putin( $tokenArray['access_token'], $result->card_id, self::getRandomString() ))) {
+            return ['msg' => '投放卡卷失败', 'status' => false];
+        }
+
+        return ['data' => $result, 'status' => true];
+    }
 }
