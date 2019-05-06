@@ -284,12 +284,13 @@ class WxCouponHandel extends Model
      */
     public static function GetCouponBatch($token)
     {
+
         $urls = 'https://api.weixin.qq.com/card/batchget?access_token=' . $token;
 
         $data = [
             "offset"      => 0,
             "count"       => 25,
-            "status_list" => ["CARD_STATUS_VERIFY_OK", "CARD_STATUS_DISPATCH"],
+            "status_list" => ["CARD_STATUS_VERIFY_OK"],
         ];
 
         $response = XmlHandle::postCurl( $urls, json_encode( $data ) );
