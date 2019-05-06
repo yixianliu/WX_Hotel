@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group">
         <a href='<?= Url::to( ['relevance-rooms-coupon/create'] ) ?>' class='btn btn-primary btn-lg' title='添加酒店房间'>添加卡卷关联</a>
-        <a href='<?= Url::to( ['coupon/create'] ) ?>' class='btn btn-primary btn-lg' title='添加房间分类'>添加优惠卷</a>
+        <a href='<?= Url::to( ['coupon/create'] ) ?>' class='btn btn-primary btn-lg' title='添加房间分类'>添加卡卷</a>
     </div>
 
     <div class="panel panel-default">
@@ -44,8 +44,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'options' => ['width' => 70],
                     ],
                     [
-                        'format'    => 'html',
-                        'value'     => function ($model) {
+                        'format'  => 'html',
+                        'value'   => function ($model) {
 
                             $images = (!is_file( Yii::getAlias( '@webroot/../../frontend/web/temp/coupon/' ) . $model->coupon->images )) ?
                                 Yii::getAlias( '@web/../../frontend/web/img/not.jpg' ) :
@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             return '<img width="280" height="150" src="' . $images . '" alt="' . $model->coupon->title . '" />';
                         },
-                        'options'   => ['width' => 180],
+                        'options' => ['width' => 180],
                     ],
                     [
                         'value' => function ($model) {
